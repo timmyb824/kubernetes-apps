@@ -104,4 +104,47 @@ vault write auth/approle/role/argocd policies=default,avp
 
 # show details of an approle
 kubectl exec vault-0 -n vault -- vault read auth/approle/role/argocd
+
+# create secret
+vault kv put engine/path key=value
+
+# read secret
+vault kv get engine/path
+
+# update secret
+vault kv patch engine/path key=value
+
+# delete secret
+vault kv delete engine/path
+
+# destroy secret
+vault kv destroy engine/path
+
+# list secrets
+vault kv list shared/mailing_list
+
+# rollback to previous version of secret
+vault kv -version=# engine/path
+
+# undelete secret
+vault kv undelete engine/path
+
+# show metadata of secret
+vault kv metadata get engine/path
+```
+
+The delete subcommand does a "soft" delete; will not return the value during a `get`. A user can still `undelete` the value if required. The `destory` removes the value entirely.
+
+Due to the additional versioning of kv pairs in v2, `rollback` allows a user to go back to a previous version of a key. The version info is visible via the `metadata` command.
+
+Options for hiding a secret in the shell history:
+
+```bash
+# Using JSON
+echo -n '{"key":"value"}' | vault kv put engine/path  -
+vault kv put engine/path @data.json
+
+# Using simple value
+echo -n "value" | vault kv put engine/path key=-
+vault kv put engine/path key=@data.txt
 ```
