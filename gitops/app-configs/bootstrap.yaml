@@ -1,0 +1,18 @@
+# created manually in the UI
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: homelab-apps
+spec:
+  destination:
+    namespace: default
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: kubernetes/manifests/argocd/argocd-apps
+    repoURL: 'https://gitea.local.timmybtech.com/tbryant/homelab-onedrive.git'
+    targetRevision: HEAD
+  project: default
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: true

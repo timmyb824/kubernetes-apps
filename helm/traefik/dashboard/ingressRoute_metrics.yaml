@@ -1,0 +1,18 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: traefik-metrics
+  namespace: traefik
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`traefik-metrics.local.timmybtech.com`) # create A record in pihole
+      kind: Rule
+      services:
+        - name: prometheus@internal
+          kind: TraefikService
+  tls:
+    secretName: local-timmybtech-com-tls # or local-example-com-staging-tls

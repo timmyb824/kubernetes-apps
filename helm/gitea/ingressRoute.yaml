@@ -1,0 +1,19 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: gitea-ingress
+  namespace: default
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`gitea.local.timmybtech.com`) # create A record in pihole
+      kind: Rule
+      services:
+        - name: gitea-http
+          port: 3000
+  tls:
+    secretName: local-timmybtech-com-tls # or local-example-com-staging-tls

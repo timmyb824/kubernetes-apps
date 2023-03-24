@@ -1,0 +1,43 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: influxdb-ingress
+  namespace: influxdb2
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`influxdb.local.timmybtech.com`) # create A record in pihole
+      kind: Rule
+      services:
+        - name: influxdb2
+          port: 80
+          sticky:
+            cookie:
+              httpOnly: true
+              name: influxdb2
+              secure: true
+              sameSite: none
+  tls:
+    secretName: local-timmybtech-com-tls # or local-example-com-staging-tls
+# ---
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: influxdb-ingress
+#   annotations:
+#     kubernetes.io/ingress.class: traefik-external
+# spec:
+#   rules:
+#   - http:
+#       paths:
+#       - path: /
+#         pathType: Prefix
+#         backend:
+#           service:
+#             name: influxdb
+#             port:
+#               number: 8086

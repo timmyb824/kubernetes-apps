@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  namespace: code-server
+  creationTimestamp: null
+  labels:
+    io.kompose.service: code-server-claim0
+  name: code-server-claim0
+spec:
+  storageClassName: nfs-csi-synologynas
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+status: {}

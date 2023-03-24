@@ -1,0 +1,15 @@
+Archive/
+.env
+
+manifests/metallb/ansible-k3s/
+manifests/wazuh/
+manifests/gitea/templates/
+# manifests/metallb/ansible-k3s/
+manifests/metallb
+helm/kube-prometheus-stack/secrets/
+!helm/kube-prometheus-stack/configMaps
+helm/kube-prometheus-stack/configMaps/*
+!helm/kube-prometheus-stack/configMaps/k8s*
+*.secrets.yaml
+helm/vault/cluster-keys.json
+helm/caretta/values.live.yaml

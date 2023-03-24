@@ -1,0 +1,19 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: duplicati-ingress
+  namespace: duplicati
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`duplicati.local.example.com`) # create A record in pihole
+      kind: Rule
+      services:
+        - name: duplicati
+          port: 8200
+  tls:
+    secretName: local-example-com-tls # or local-example-com-staging-tls

@@ -1,0 +1,20 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: code-server-ingress
+  namespace: code-server
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`code-server.local.example.com`) # create A record in pihole
+      kind: Rule
+      services:
+        - name: code-server
+          port: 8446
+  tls:
+    secretName: local-example-com-tls # or local-example-com-staging-tls

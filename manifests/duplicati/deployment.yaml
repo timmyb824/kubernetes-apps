@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: duplicati
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.26.1 (a9d05d509)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: duplicati
+  name: duplicati
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: duplicati
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.26.1 (a9d05d509)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: duplicati
+    spec:
+      containers:
+        - env:
+            - name: PGID
+              value: "1000"
+            - name: PUID
+              value: "1000"
+            - name: TZ
+              value: America/New_York
+          image: lscr.io/linuxserver/duplicati:2.0.6
+          name: duplicati
+          ports:
+            - containerPort: 8200
+              name: http
+              protocol: TCP
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          volumeMounts:
+            - mountPath: /config
+              name: duplicati-claim0
+            - mountPath: /backups
+              name: duplicati-claim1
+            - mountPath: /source
+              name: duplicati-claim2
+      restartPolicy: Always
+      volumes:
+        - name: duplicati-claim0
+          persistentVolumeClaim:
+            claimName: duplicati-claim0
+        - name: duplicati-claim1
+          persistentVolumeClaim:
+            claimName: duplicati-claim1
+        - name: duplicati-claim2
+          persistentVolumeClaim:
+            claimName: duplicati-claim2
+status: {}

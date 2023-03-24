@@ -1,0 +1,22 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: loki-ingress
+  namespace: loki
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+    # ingress.kubernetes.io/auth-type: "basic"
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`loki.local.timmybtech.com`) # create A record in pihole
+      kind: Rule
+      services:
+        - name: loki
+          port: 3100
+
+  tls:
+    secretName: local-timmybtech-com-tls # or local-timmybtech-com-staging-tls
+
