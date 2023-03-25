@@ -13,3 +13,5 @@ helm/kube-prometheus-stack/configMaps/*
 *.secrets.yaml
 helm/vault/cluster-keys.json
 helm/caretta/values.live.yaml
+!gitops/manifests/Archive/
+!gitops/app-configs/Archive
