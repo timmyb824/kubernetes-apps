@@ -10,8 +10,8 @@ spec:
     namespace: heimdall
     server: "https://kubernetes.default.svc"
   source:
-    path: kubernetes/manifests/argocd/k8s-apps/heimdall
-    repoURL: "https://gitea.local.timmybtech.com/tbryant/homelab-onedrive.git"
+    path: gitops/manifests/heimdall
+    repoURL: "https://gitea.local.timmybtech.com/tbryant/kubernetes-apps.git"
     targetRevision: HEAD
   project: default
   syncPolicy:

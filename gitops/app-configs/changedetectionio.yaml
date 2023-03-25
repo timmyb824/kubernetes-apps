@@ -10,8 +10,8 @@ spec:
     namespace: changedetection
     server: "https://kubernetes.default.svc"
   source:
-    path: kubernetes/manifests/argocd/k8s-apps/changedetectionio
-    repoURL: "https://gitea.local.timmybtech.com/tbryant/homelab-onedrive.git"
+    path: gitops/manifests/changedetectionio
+    repoURL: "https://gitea.local.timmybtech.com/tbryant/kubernetes-apps.git"
     targetRevision: HEAD
   project: default
   syncPolicy:

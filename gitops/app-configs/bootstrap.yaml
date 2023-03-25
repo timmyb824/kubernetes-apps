@@ -8,8 +8,8 @@ spec:
     namespace: default
     server: 'https://kubernetes.default.svc'
   source:
-    path: kubernetes/manifests/argocd/argocd-apps
-    repoURL: 'https://gitea.local.timmybtech.com/tbryant/homelab-onedrive.git'
+    path: gitops/app-configs
+    repoURL: 'https://gitea.local.timmybtech.com/tbryant/kubernetes-apps.git'
     targetRevision: HEAD
   project: default
   syncPolicy:
