@@ -19,6 +19,8 @@ spec:
       parameters:
       - name: "persistence.config.storageClass"
         value: "nfs-csi-synologynas"
+      - name: "persistence.config.volumeName"
+        value: "pvc-6087cf9b-d103-44e8-9841-eefa5fee94a8"
       - name: "persistence.config.enabled"
         value: "true"
         forceString: true

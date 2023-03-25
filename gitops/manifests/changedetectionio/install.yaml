@@ -9,6 +9,7 @@ metadata:
   name: changedetection-data
 spec:
   storageClassName: nfs-csi-synologynas
+  volumeName: pvc-82001dcc-f96b-4266-a15f-ad38cefe53e8
   accessModes:
     - ReadWriteOnce
   resources:
