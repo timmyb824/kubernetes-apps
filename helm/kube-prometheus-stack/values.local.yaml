@@ -501,12 +501,19 @@ prometheus:
         static_configs:
           - targets: ['argocd-metrics.local.timmybtech.com']
 
-      - job_name: 'zinc'
+      - job_name: 'gitea'
         scrape_interval: 1m
         scrape_timeout: 55s
         metrics_path: '/metrics'
         static_configs:
-          - targets: ['zinc.local.timmybtech.com']
+          - targets: ['gitea.local.timmybtech.com']
+
+      # - job_name: 'zinc'
+      #   scrape_interval: 1m
+      #   scrape_timeout: 55s
+      #   metrics_path: '/metrics'
+      #   static_configs:
+      #     - targets: ['zinc.local.timmybtech.com']
 
       # - job_name: 'netdata-scrape'
       #   metrics_path: '/api/v1/allmetrics'
