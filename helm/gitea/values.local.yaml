@@ -31,7 +31,7 @@ image:
   registry: ""
   repository: gitea/gitea
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: "1.19.0"
   pullPolicy: Always
   rootless: false # only possible when running 1.14 or later
 
@@ -275,9 +275,9 @@ gitea:
   ## @param gitea.metrics.enabled Enable Gitea metrics
   ## @param gitea.metrics.serviceMonitor.enabled Enable Gitea metrics service monitor
   metrics:
-    enabled: false
+    enabled: true
     serviceMonitor:
-      enabled: false
+      enabled: true
       #  additionalLabels:
       #    prometheus-release: prom1
 
