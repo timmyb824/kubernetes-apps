@@ -340,6 +340,9 @@ gitea:
   #  security:
   #    PASSWORD_COMPLEXITY: spec
 
+    webhook:
+      ALLOWED_HOST_LIST: jenkins.local.timmybtech.com
+
   ## @param gitea.additionalConfigSources Additional configuration from secret or configmap
   additionalConfigSources: []
   #   - secret:
