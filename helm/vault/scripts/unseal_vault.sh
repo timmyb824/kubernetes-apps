@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Initialize vault-0 with one key share and one key threshold.
+# It appears this only needs to be done once at install time.
 kubectl exec vault-0 -n vault -- vault operator init \
     -key-shares=1 \
     -key-threshold=1 \
