@@ -7,12 +7,12 @@ metadata:
   - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    namespace: monitoring
+    namespace: missing-container-metrics
     server: "https://kubernetes.default.svc"
   project: default
   source:
     repoURL: https://draganm.github.io/missing-container-metrics
-    targetRevision: 0.1.0
+    targetRevision: 0.1.1
     chart: missing-container-metrics
     helm:
       releaseName: missing-container-metrics
@@ -29,5 +29,5 @@ spec:
     automated:
       prune: true
       selfHeal: true
-    # syncOptions:
-    # - CreateNamespace=true
+    syncOptions:
+    - CreateNamespace=true
