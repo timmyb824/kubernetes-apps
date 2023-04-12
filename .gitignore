@@ -1,5 +1,6 @@
 Archive/
 .env
+.monokle
 
 manifests/metallb/ansible-k3s/
 manifests/wazuh/
