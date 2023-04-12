@@ -12,7 +12,7 @@ spec:
   project: default
   source:
     repoURL: https://draganm.github.io/missing-container-metrics
-    targetRevision: 0.1.1
+    targetRevision: 0.21.0
     chart: missing-container-metrics
     helm:
       releaseName: missing-container-metrics
