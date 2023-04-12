@@ -16,14 +16,15 @@ spec:
     chart: missing-container-metrics
     helm:
       releaseName: missing-container-metrics
-      values: |
-        resources:
-          requests:
-            memory: "64Mi"
-            cpu: "250m"
-          limits:
-            memory: "128Mi"
-            cpu: "500m"
+      parameters:
+      - name: "resources.limits.cpu"
+        value: "100m"
+      - name: "resources.limits.memory"
+        value: "128Mi"
+      - name: "resources.requests.cpu"
+        value: "100m"
+      - name: "resources.requests.memory"
+        value: "128Mi"
   syncPolicy:
     automated:
       prune: true
