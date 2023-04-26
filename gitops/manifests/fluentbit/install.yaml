@@ -50,17 +50,17 @@ data:
 
   output-elasticsearch.conf: |
     [OUTPUT]
-      Name http
-      Match *
-      URI /api/default/default/_json
-      Host zincobserve.local.timmybtech.com
-      Port 443
-      tls On
-      Format json
-      Json_date_key    _timestamp
-      Json_date_format iso8601
-      HTTP_User <path:secret/data/fluentbit#HTTP_USER>
-      HTTP_Passwd <path:secret/data/fluentbit#HTTP_PASSWORD>
+        Name http
+        Match *
+        URI /api/default/default/_json
+        Host zincobserve.local.timmybtech.com
+        Port 443
+        tls On
+        Format json
+        Json_date_key    _timestamp
+        Json_date_format iso8601
+        HTTP_User <path:secret/data/fluentbit#HTTP_USER>
+        HTTP_Passwd <path:secret/data/fluentbit#HTTP_PASSWORD>
 
   parsers.conf: |
     [PARSER]
