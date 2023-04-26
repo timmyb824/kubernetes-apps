@@ -20,6 +20,8 @@ kind: StatefulSet
 metadata:
   name: zincobserve
   namespace: zincobserve
+  annotations:
+    avp.kubernetes.io/path: "secret/data/zincobserve"
   labels:
     name: zincobserve
 spec:
@@ -46,16 +48,16 @@ spec:
           image: public.ecr.aws/zinclabs/zincobserve:latest
           env:
             - name: ZO_ROOT_USER_EMAIL
-              value: root@example.com
+              value: <ROOT_USER_EMAIL>
             - name: ZO_ROOT_USER_PASSWORD
-              value: Complexpass#123
+              value: <ROOT_USER_PASSWORD>
             - name: ZO_DATA_DIR
               value: /data
           # command: ["/bin/bash", "-c", "while true; do sleep 1; done"]
           imagePullPolicy: Always
           resources:
             limits:
-              cpu: 4096m
+              cpu: 1024m
               memory: 2048Mi
             requests:
               cpu: 256m
@@ -72,8 +74,29 @@ spec:
     spec:
       accessModes:
         - ReadWriteOnce
-      # storageClassName: default
+      storageClassName: nfs-csi-synologynas
       # NOTE: You can increase the storage size
       resources:
         requests:
-          storage: 10Gi
+          storage: 64Gi
+
+---
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: zincobserve-ingress
+  namespace: zincobserve
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`zincobserve.local.timmybtech.com`) # create A record in pihole
+      kind: Rule
+      services:
+        - name: zincobserve
+          port: 5080
+  tls:
+    secretName: local-timmybtech-com-tls # or local-example-com-staging-tls
