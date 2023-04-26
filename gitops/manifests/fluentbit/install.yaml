@@ -3,7 +3,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: fluent-bit-config
-  namespace: logging
+  namespace: fluentbit
   labels:
     k8s-app: fluent-bit
 data:
@@ -50,18 +50,17 @@ data:
 
   output-elasticsearch.conf: |
     [OUTPUT]
-        Name  es
-        Match *
-        Path /es
-        Host 192.168.86.220
-        Port 4080
-        Index zinc-index
-        Generate_ID On
-        HTTP_User <path:secret/data/fluentbit#HTTP_USER>
-        HTTP_Passwd <path:secret/data/fluentbit#HTTP_PASSWORD>
-        Logstash_Format On
-        Logstash_Prefix k8s-logs
-        Logstash_DateFormat %Y-%m-%d
+      Name http
+      Match *
+      URI /api/default/default/_json
+      Host zincobserve.local.timmybtech.com
+      Port 443
+      tls On
+      Format json
+      Json_date_key    _timestamp
+      Json_date_format iso8601
+      HTTP_User <path:secret/data/fluentbit#HTTP_USER>
+      HTTP_Passwd <path:secret/data/fluentbit#HTTP_PASSWORD>
 
   parsers.conf: |
     [PARSER]
