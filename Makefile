@@ -6,3 +6,6 @@ git-push-main:
 
 git-push-force:
 	git push -f gitea main && git push -f github main
+
+git-push-branch:
+	git push gitea -u ${BRANCH} && git push github -u ${BRANCH}
