@@ -3,7 +3,7 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
   name: loki-ingress
-  namespace: loki
+  namespace: monitoring
   annotations:
     kubernetes.io/ingress.class: traefik-external
     # ingress.kubernetes.io/auth-type: "basic"
