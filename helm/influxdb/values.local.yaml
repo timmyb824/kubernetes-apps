@@ -1,6 +1,6 @@
 image:
   repository: influxdb
-  tag: 2.5.1-alpine
+  tag: 2.7.1-alpine
   pullPolicy: IfNotPresent
 
 ## Annotations to be added to InfluxDB pods
@@ -17,17 +17,17 @@ fullnameOverride: ""
 ## Configure resource requests and limits
 ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
 ##
-resources: {}
+resources:
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  # limits:
-  #  cpu: 100m
-  #  memory: 128Mi
-  # requests:
-  #  cpu: 100m
-  #  memory: 128Mi
+  limits:
+   cpu: 100m
+   memory: 128Mi
+  requests:
+   cpu: 100m
+   memory: 128Mi
 
 ## Node labels for pod assignment
 ## ref: https://kubernetes.io/docs/user-guide/node-selection/
@@ -52,28 +52,28 @@ securityContext: {}
 livenessProbe: {}
   # path: "/health"
   # scheme: "HTTP"
-  # initialDelaySeconds: 0
+  # initialDelaySeconds: 30
   # periodSeconds: 10
   # timeoutSeconds: 1
-  # failureThreshold: 3
+  # failureThreshold: 5
 
 readinessProbe: {}
   # path: "/health"
   # scheme: "HTTP"
-  # initialDelaySeconds: 0
+  # initialDelaySeconds: 30
   # periodSeconds: 10
   # timeoutSeconds: 1
   # successThreshold: 1
-  # failureThreshold: 3
+  # failureThreshold: 5
 
-startupProbe:
-  enabled: false
+startupProbe: {}
+  # enabled: true
   # path: "/health"
   # scheme: "HTTP"
   # initialDelaySeconds: 30
   # periodSeconds: 5
   # timeoutSeconds: 1
-  # failureThreshold: 6
+  # failureThreshold: 10
 
 ## Extra environment variables to configure influxdb
 ## e.g.
@@ -110,9 +110,10 @@ adminUser:
 persistence:
   enabled: true
   ## If true will use an existing PVC instead of creating one
-  # useExisting: false
+  # useExisting: true
   ## Name of existing PVC to be used in the influx deployment
-  # name: influxdb-claim0
+  # name: influxdb2-data
+  volumeName: pvc-8835b365-69a0-431e-99c8-ba1a2271e73b
   ## influxdb data Persistent Volume Storage Class
   ## If defined, storageClassName: <storageClass>
   ## If set to "-", storageClassName: "", which disables dynamic provisioning
