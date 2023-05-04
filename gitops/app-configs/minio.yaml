@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: influxdb
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: minio
+    server: "https://kubernetes.default.svc"
+  source:
+    path: gitops/manifests/minio
+    repoURL: "https://gitea.local.timmybtech.com/tbryant/kubernetes-apps.git"
+    targetRevision: HEAD
+  project: default
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: false

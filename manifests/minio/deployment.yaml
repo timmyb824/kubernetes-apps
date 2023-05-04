@@ -55,9 +55,10 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
+  storageClassName: nfs-csi-synologynas
   resources:
     requests:
-      storage: 1Gi
+      storage: 64Gi
 ---
 apiVersion: v1
 kind: Service
@@ -78,3 +79,45 @@ spec:
     app: minio
 status:
   loadBalancer: {}
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: minio-gui-ingress
+  namespace: minio
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+    # ingress.kubernetes.io/auth-type: "basic"
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`minio-ui.local.timmybtech.com`) # create A record in pihole
+      kind: Rule
+      services:
+        - name: minio
+          port: 9001
+
+  tls:
+    secretName: local-timmybtech-com-tls # or local-timmybtech-com-staging-tls
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: minio-ingress
+  namespace: minio
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+    # ingress.kubernetes.io/auth-type: "basic"
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`minio.local.timmybtech.com`) # create A record in pihole
+      kind: Rule
+      services:
+        - name: minio
+          port: 9000
+
+  tls:
+    secretName: local-timmybtech-com-tls # or local-timmybtech-com-staging-tls

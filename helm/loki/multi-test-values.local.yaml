@@ -1,0 +1,147 @@
+# loki:
+#   storage:
+#     bucketNames:
+#       chunks: chunks
+#       ruler: ruler
+#       admin: admin
+#     type: s3
+#     s3:
+#       endpoint: http://bryantnas.local.lan:9000/
+#       secretAccessKey: kH2FXqSVHqvcIsh1OuyU72tKE019Z0Fr
+#       accessKeyId: zHiwEcMZYpwqtPjc
+#       s3ForcePathStyle: true
+#       insecure: true
+#   auth_enabled: false
+#   limits_config:
+#       retention_period: 72h
+#       enforce_metric_name: false
+#       reject_old_samples: true
+#       reject_old_samples_max_age: 168h
+#       max_cache_freshness_per_query: 10m
+#       split_queries_by_interval: 15m
+#       # for big logs tune
+#       per_stream_rate_limit: 512M
+#       per_stream_rate_limit_burst: 1024M
+#       cardinality_limit: 200000
+#       ingestion_burst_size_mb: 1000
+#       ingestion_rate_mb: 10000
+#       max_entries_limit_per_query: 1000000
+#       max_label_value_length: 20480
+#       max_label_name_length: 10240
+#       max_label_names_per_series: 300
+
+####################################
+####################################
+# loki:
+
+#   auth_enabled: false
+#   commonConfig:
+#     path_prefix: /var/loki
+#     replication_factor: 1
+
+#   storage:
+#     bucketNames:
+#       chunks: loki-chunks
+#     type: s3
+
+#   schema_config:
+#     configs:
+#     - from: "2023-05-04"
+#       index:
+#         period: 24h
+#         prefix: loki_index_
+#       store: boltdb-shipper
+#       object_store: s3
+#       schema: v12
+
+#   storage_config:
+#     s3:
+#       endpoint: http://bryantnas.local.lan:9000/
+#       secretAccessKey: kH2FXqSVHqvcIsh1OuyU72tKE019Z0Fr
+#       accessKeyId: zHiwEcMZYpwqtPjc
+#       s3ForcePathStyle: true
+#       insecure: true
+#     boltdb_shipper:
+#       active_index_directory: /var/loki/index
+#       shared_store: s3
+#   rulerConfig:
+#     storage:
+#       type: local
+#       local:
+#         directory: /var/loki/rules
+
+# serviceAccount:
+#   create: true
+# write:
+#   replicas: 2
+
+# read:
+#   replicas: 1
+
+# test:
+#   enabled: false
+# monitoring:
+#   dashboards:
+#     enabled: false
+#   rules:
+#     enabled: false
+#   alerts:
+#     enabled: false
+#   serviceMonitor:
+#     enabled: false
+#   selfMonitoring:
+#     enabled: false
+#     lokiCanary:
+#       enabled: false
+#     grafanaAgent:
+#       installOperator: false
+
+####################################
+####################################
+
+# loki:
+#   auth_enabled: false
+
+#   server:
+#     http_listen_port: 3100
+
+#   common:
+#     ring:
+#       instance_addr: 127.0.0.1
+#       kvstore:
+#         store: memberlist
+#     replication_factor: 1
+#     path_prefix: /loki # Update this accordingly, data will be stored here.
+
+#   memberlist:
+#     join_members:
+#     # You can use a headless k8s service for all distributor, ingester and querier components.
+#     - loki-gossip-ring.loki.svc.cluster.local:7946 # :7946 is the default memberlist port.
+
+#   schema_config:
+#     configs:
+#     - from: "2023-05-04"
+#       store: boltdb-shipper
+#       object_store: s3
+#       schema: v11
+#       index:
+#         prefix: index_
+#         period: 24h
+
+#   storage_config:
+#   boltdb_shipper:
+#     active_index_directory: /loki/index
+#     cache_location: /loki/index_cache
+#     shared_store: s3
+#   aws:
+#     s3: s3://zHiwEcMZYpwqtPjc:kH2FXqSVHqvcIsh1OuyU72tKE019Z0Fr@http://bryantnas.local.lan:9000/loki-chunks
+#     s3forcepathstyle: true
+#     insecure: true
+
+#   compactor:
+#     working_directory: /loki/compactor
+#     shared_store: s3
+#     compaction_interval: 5m
+
+####################################
+####################################
