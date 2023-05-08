@@ -188,6 +188,13 @@ loki:
     split_queries_by_interval: 15m
     ingestion_burst_size_mb: 1000
     ingestion_rate_mb: 10000
+    # for big logs tune
+    per_stream_rate_limit: 512M
+    per_stream_rate_limit_burst: 1024M
+    max_entries_limit_per_query: 1000000
+    max_label_value_length: 20480
+    max_label_name_length: 10240
+    max_label_names_per_series: 300
   # -- Provides a reloadable runtime configuration file for some specific configuration
   runtimeConfig: {}
   # -- Check https://grafana.com/docs/loki/latest/configuration/#common_config for more info on how to provide a common configuration
@@ -204,13 +211,13 @@ loki:
     type: s3
     s3:
       s3: null
-      endpoint: bryantnas.local.lan:9000
+      endpoint: ${MINIO_ENDPOINT_URL}
       region: null
-      secretAccessKey: zHiwEcMZYpwqtPjc
-      accessKeyId: kH2FXqSVHqvcIsh1OuyU72tKE019Z0Fr
+      secretAccessKey: ${MINIO_SECRET_ACCESS_KEY}
+      accessKeyId: ${MINIO_ACCESS_KEY_ID}
       signatureVersion: null
       s3ForcePathStyle: true
-      insecure: true
+      insecure: false
       http_config: {}
 
 serviceAccount:
@@ -734,7 +741,7 @@ singleBinary:
 # If you enable this, make sure to disable the gateway.
 # You'll need to supply authn configuration for your ingress controller.
 ingress:
-  enabled: true
+  enabled: false
   ingressClassName: ""
   annotations:
     traefik.ingress.kubernetes.io/ingress.class: "traefik-external"
@@ -746,7 +753,7 @@ ingress:
     traefik.ingress.kubernetes.io/router.tls.domains.0.sni: "loki.local.timmybtech.com"
     traefik.ingress.kubernetes.io/router.middlewares: |
       default-headers@kubernetescrd
-    traefik.ingress.kubernetes.io/router.service: "monitoring/loki"
+    traefik.ingress.kubernetes.io/router.service: "monitoring/loki-read"
     traefik.ingress.kubernetes.io/router.service.port: "3100"
   paths:
     write:

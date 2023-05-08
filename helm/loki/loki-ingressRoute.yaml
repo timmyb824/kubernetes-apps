@@ -14,8 +14,8 @@ spec:
     - match: Host(`loki.local.timmybtech.com`) # create A record in pihole
       kind: Rule
       services:
-        - name: loki
-          port: 3100
+        - name: loki-gateway
+          port: 80
 
   tls:
     secretName: local-timmybtech-com-tls # or local-timmybtech-com-staging-tls

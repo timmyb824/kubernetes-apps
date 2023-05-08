@@ -3,10 +3,8 @@ Archive/
 .monokle
 
 manifests/metallb/ansible-k3s/
-manifests/wazuh/
 manifests/gitea/templates/
 # manifests/metallb/ansible-k3s/
-manifests/metallb
 helm/kube-prometheus-stack/secrets/
 !helm/kube-prometheus-stack/configMaps
 helm/kube-prometheus-stack/configMaps/*

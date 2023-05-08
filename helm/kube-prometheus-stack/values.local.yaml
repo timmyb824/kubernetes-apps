@@ -163,6 +163,14 @@ grafana:
     version: 1
     editable: false
 
+  - name: Loki
+    type: loki
+    access: proxy
+    uid: LOKI20210108
+    url: https://loki.local.timmybtech.com
+    jsonData:
+      maxLines: 1000
+
   fullnameOverride: grafana
   forceDeployDatasources: false
   forceDeployDashboards: false
