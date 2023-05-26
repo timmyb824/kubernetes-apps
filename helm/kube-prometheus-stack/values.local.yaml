@@ -516,6 +516,13 @@ prometheus:
         static_configs:
           - targets: ['gitea.local.timmybtech.com']
 
+      - job_name: 'loki'
+        scrape_interval: 1m
+        scrape_timeout: 55s
+        metrics_path: '/metrics'
+        static_configs:
+          - targets: ['loki-write.local.timmybtech.com']
+
       # - job_name: 'influxdb'
       #   scrape_interval: 1m
       #   scrape_timeout: 55s

@@ -1,0 +1,19 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: kubeapps-ingress
+  namespace: kubeapps
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`kubeapps.local.timmybtech.com`) # create A record in pihole
+      kind: Rule
+      services:
+        - name: kubeapps
+          port: 80
+  tls:
+    secretName: local-timmybtech-com-tls # or local-timmybtech-com-staging-tls
