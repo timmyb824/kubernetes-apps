@@ -460,9 +460,9 @@ prometheus:
               # - '192.168.86.33:9090'
               - '192.168.86.42:9090'
               - '192.168.86.53:9090'
-              - '192.168.86.59:9090'
+              # - '192.168.86.59:9090'
               - '192.168.86.74:9090'
-              - '192.168.86.132:9090'
+              # - '192.168.86.132:9090'
               - '192.168.86.174:9090'
               - '192.168.86.201:9090'
               - '192.168.86.202:9090'
@@ -501,6 +501,13 @@ prometheus:
         scrape_timeout: 55s
         static_configs:
         - targets: ['traefik-metrics.local.timmybtech.com']
+
+      - job_name: 'traefik-docker'
+        scrape_interval: 1m
+        scrape_timeout: 55s
+        metrics_path: '/metrics'
+        static_configs:
+        - targets: ['traefik.timmybtech.com']
 
       - job_name: 'argocd'
         scrape_interval: 1m
