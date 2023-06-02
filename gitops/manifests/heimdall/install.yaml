@@ -93,7 +93,7 @@ spec:
             - mountPath: /config
               name: heimdall-claim
       restartPolicy: Always
-      dnsPolicy: "Default"
+      dnsPolicy: "None"
       dnsConfig:
         nameservers:
           - 192.168.86.174
