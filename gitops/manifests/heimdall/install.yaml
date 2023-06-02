@@ -79,11 +79,6 @@ spec:
               value: America/New_York
           image: lscr.io/linuxserver/heimdall:2.5.6
           name: heimdall
-          dnsPolicy: "Default"
-          dnsConfig:
-            nameservers:
-              - 192.168.86.174
-              - 192.168.86.42
           ports:
             # - containerPort: 80
             - containerPort: 443
@@ -98,6 +93,11 @@ spec:
             - mountPath: /config
               name: heimdall-claim
       restartPolicy: Always
+      dnsPolicy: "Default"
+      dnsConfig:
+        nameservers:
+          - 192.168.86.174
+          - 192.168.86.42
       volumes:
         - name: heimdall-claim
           persistentVolumeClaim:
