@@ -94,12 +94,12 @@ spec:
             - mountPath: /config
               name: heimdall-claim
       restartPolicy: Always
-      dnsPolicy: Default
-      # dnsPolicy: "None"
-      # dnsConfig:
-      #   nameservers:
-      #     - 192.168.86.174
-      #     - 192.168.86.42
+      # dnsPolicy: Default
+      dnsPolicy: "None"
+      dnsConfig:
+        nameservers:
+          - 192.168.86.174
+          - 192.168.86.42
       volumes:
         - name: heimdall-claim
           persistentVolumeClaim:
