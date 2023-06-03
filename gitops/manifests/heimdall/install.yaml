@@ -69,7 +69,6 @@ spec:
       labels:
         io.kompose.service: heimdall
     spec:
-      hostNetwork: true
       containers:
         - env:
             - name: PGID
@@ -94,6 +93,7 @@ spec:
             - mountPath: /config
               name: heimdall-claim
       restartPolicy: Always
+      # hostNetwork: true
       # dnsPolicy: Default
       # dnsPolicy: "None"
       # dnsConfig:
