@@ -34,6 +34,10 @@ spec:
           value: minioadmin
         - name: MINIO_ROOT_USER
           value: "minioadmin"
+        - name: MINIO_PROMETHEUS_URL
+          value: "https://prometheus.local.timmybtech.com"
+        - name: MINIO_PROMETHEUS_JOB_ID
+          value: "minio-job"
         ports:
         - containerPort: 9000
           hostPort: 9000

@@ -57,6 +57,12 @@ alertmanager:
       - match:
         receiver: 'slack'
         continue: true
+      - match:
+        receiver: webhook
+        continue: true
+      - match:
+        receiver: 'alerta'
+        continue: true
     receivers:
     - name: 'null'
     - name: 'slack'
@@ -68,11 +74,20 @@ alertmanager:
           {{ range .Alerts }}
             *Alert:* {{ .Annotations.summary }} - `{{ .Labels.severity }}`
             *Description:* {{ .Annotations.description }}
-            *Graph:* <{{ .GeneratorURL }}|:chart_with_upwards_trend:> *Runbook:* <{{ .Annotations.runbook }}|:spiral_note_pad:>
+            *Graph:* <{{ .GeneratorURL }}|:chart_with_upwards_trend:>
+            *Runbook:* <{{ .Annotations.runbook }}|:spiral_note_pad:>
             *Details:*
             {{ range .Labels.SortedPairs }} • *{{ .Name }}:* `{{ .Value }}`
             {{ end }}
           {{ end }}
+    - name: 'webhook'
+      webhook_configs:
+      - url: 'http://homelab-oci03.local.lan:8435/'
+        send_resolved: true
+    - name: "alerta"
+      webhook_configs:
+      - url: 'https://alerta.timmybtech.com/webhooks/prometheus?api-key=${ALERTA_API_KEY}'
+        send_resolved: true
   alertmanagerSpec:
     retention: 120h
     ## Storage is the definition of how storage will be used by the Alertmanager instances.
@@ -535,9 +550,17 @@ prometheus:
 
       - job_name: 'healthchecks-${ZEMAIL}'
         scheme: https
-        metrics_path: /projects/af02bd04-7251-40b3-bac9-c8955cfebf9f/metrics/${HEALTHCHECKS_API_KEY}
+        metrics_path: /projects/dd6ae2d4-92d3-49ef-aefb-747e0e8fc67a/metrics/${HEALTHCHECKS_API_KEY}
         static_configs:
-        - targets: ['healthchecks.io']
+        - targets: ['healthchecks.timmybtech.com']
+
+      - job_name: minio-job
+        bearer_token: ${MINIO_BEARER_TOKEN}
+        metrics_path: /minio/v2/metrics/cluster
+        scheme: https
+        static_configs:
+        - targets: [minio.local.timmybtech.com]
+
 
       # - job_name: 'influxdb'
       #   scrape_interval: 1m
