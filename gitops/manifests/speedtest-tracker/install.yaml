@@ -7,80 +7,76 @@ metadata:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: speedtest-tracker
   annotations:
-    kompose.cmd: kompose convert
-    kompose.version: 1.26.1 (HEAD)
+    avp.kubernetes.io/path: "secret/data/speedtestTracker"
+  namespace: speedtest-tracker
+  creationTimestamp: null
   labels:
-    io.kompose.service: speedtest
-  name: speedtest
+    io.kompose.service: speedtest-tracker
+  name: speedtest-tracker
 spec:
   replicas: 1
   selector:
     matchLabels:
-      io.kompose.service: speedtest
+      io.kompose.service: speedtest-tracker
   strategy:
     type: Recreate
   template:
     metadata:
-      annotations:
-        kompose.cmd: kompose convert
-        kompose.version: 1.26.1 (HEAD)
+      annotations: {}
+      creationTimestamp: null
       labels:
-        io.kompose.service: speedtest
+        io.kompose.service: speedtest-tracker
     spec:
       containers:
         - env:
-            - name: OOKLA_EULA_GDPR
-              value: "true"
-            # - name: PGID
-            #   value: "1000"
-            # - name: PUID
-            #   value: "1000"
-            # - name: SLACK_WEBHOOK
-            #   value: ${SLACK_APP_URL}
-            # - name: TZ
-            #   value: America/New_York
-          image: henrywhitaker3/speedtest-tracker:latest
-          name: speedtest
+            - name: DB_CONNECTION
+              value: pgsql
+            - name: DB_DATABASE
+              value: speedtest_tracker
+            - name: DB_HOST
+              value: vm303.local.lan
+            - name: DB_PASSWORD
+              value: <DB_PASSWORD>
+            - name: DB_PORT
+              value: "5432"
+            - name: DB_USERNAME
+              value: <DB_USER>
+            - name: PGID
+              value: "1000"
+            - name: PUID
+              value: "1000"
+          image: ghcr.io/alexjustesen/speedtest-tracker:latest
+          name: speedtest-tracker
           ports:
             - containerPort: 80
-          # livenessProbe:
-          #   httpGet:
-          #     path: /
-          #     port: 80
-          #   initialDelaySeconds: 10
-          #   periodSeconds: 10
-          #   timeoutSeconds: 5
-          #   failureThreshold: 3
-          #   successThreshold: 1
-          # readinessProbe:
-          #   httpGet:
-          #     path: /
-          #     port: 80
-          #   initialDelaySeconds: 10
-          #   periodSeconds: 10
-          #   timeoutSeconds: 5
-          #   failureThreshold: 3
-          #   successThreshold: 1
-          resources: {}
+            - containerPort: 443
+          resources:
+            limits:
+              cpu: 500m
+              memory: 500Mi
+            requests:
+              cpu: 100m
+              memory: 100Mi
           volumeMounts:
             - mountPath: /config
-              name: speedtest-claim
+              name: speedtest-tracker-claim
+            - mountPath: /etc/ssl/web
+              name: speedtest-tracker-claim
       restartPolicy: Always
       volumes:
-        - name: speedtest-claim
+        - name: speedtest-tracker-claim
           persistentVolumeClaim:
-            claimName: speedtest-claim
+            claimName: speedtest-tracker-claim
 status: {}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
+  creationTimestamp: null
   labels:
-    io.kompose.service: speedtest-claim
-  name: speedtest-claim
-  namespace: speedtest-tracker
+    io.kompose.service: speedtest-tracker-claim
+  name: speedtest-tracker-claim
 spec:
   storageClassName: nfs-csi-synologynas
   accessModes:
@@ -104,30 +100,31 @@ spec:
     - match: Host(`speedtest.local.timmybtech.com`) # create A record in pihole
       kind: Rule
       services:
-        - name: speedtest
-          port: 8765
+        - name: speedtest-tracker
+          port: 8443
   tls:
     secretName: local-timmybtech-com-tls # or local-example-com-staging-tls
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  namespace: speedtest-tracker
-  annotations:
-    kompose.cmd: kompose convert
-    kompose.version: 1.26.1 (HEAD)
-    # metallb.universe.tf/allow-shared-ip: "192.168.86.220"
+  annotations: {}
+  creationTimestamp: null
   labels:
-    io.kompose.service: speedtest
-  name: speedtest
+    io.kompose.service: speedtest-tracker
+  name: speedtest-tracker
 spec:
-  # type: LoadBalancer
   ports:
-    - name: http
-      port: 8765
+    - name: "8080"
+      port: 8080
       targetPort: 80
+    - name: "8443"
+      port: 8443
+      targetPort: 443
   selector:
-    io.kompose.service: speedtest
+    io.kompose.service: speedtest-tracker
+status:
+  loadBalancer: {}
 ---
 apiVersion: v1
 kind: ServiceAccount
