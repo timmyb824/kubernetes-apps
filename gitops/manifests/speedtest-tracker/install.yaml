@@ -83,7 +83,6 @@ metadata:
   namespace: speedtest-tracker
 spec:
   storageClassName: nfs-csi-synologynas
-  volumeName: pvc-8fadd832-b455-445c-bd81-c694df7f6148
   accessModes:
     - ReadWriteOnce
   resources:
