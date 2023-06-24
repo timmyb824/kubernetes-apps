@@ -86,7 +86,7 @@ alertmanager:
         send_resolved: true
     - name: "alerta"
       webhook_configs:
-      - url: 'https://alerta.timmybtech.com/webhooks/prometheus?api-key=${ALERTA_API_KEY}'
+      - url: 'https://alerta.timmybtech.com/api/webhooks/prometheus?api-key=${ALERTA_API_KEY}'
         send_resolved: true
   alertmanagerSpec:
     retention: 120h
@@ -560,6 +560,14 @@ prometheus:
         scheme: https
         static_configs:
         - targets: [minio.local.timmybtech.com]
+
+      # - job_name: alerta
+      #   metrics_path: /api/management/metrics
+      #   params:
+      #     api-key: [${ALERTA_API_KEY}]
+      #   scheme: https
+      #   static_configs:
+      #   - targets: [alerta.timmybtech.com]
 
 
       # - job_name: 'influxdb'
