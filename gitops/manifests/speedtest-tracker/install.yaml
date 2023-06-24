@@ -7,13 +7,10 @@ metadata:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  annotations:
-    avp.kubernetes.io/path: "secret/data/speedtestTracker"
   namespace: speedtest-tracker
-  creationTimestamp: null
+  name: speedtest-tracker
   labels:
     io.kompose.service: speedtest-tracker
-  name: speedtest-tracker
 spec:
   replicas: 1
   selector:
@@ -23,8 +20,8 @@ spec:
     type: Recreate
   template:
     metadata:
-      annotations: {}
-      creationTimestamp: null
+      annotations:
+        avp.kubernetes.io/path: "secret/data/speedtestTracker"
       labels:
         io.kompose.service: speedtest-tracker
     spec:
@@ -126,8 +123,8 @@ spec:
 status:
   loadBalancer: {}
 ---
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: speedtest
-  namespace: speedtest-tracker
+# apiVersion: v1
+# kind: ServiceAccount
+# metadata:
+#   name: speedtest
+#   namespace: speedtest-tracker
