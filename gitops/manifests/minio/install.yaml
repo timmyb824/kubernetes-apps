@@ -23,6 +23,7 @@ spec:
       containers:
       - name: minio
         image: docker.io/minio/minio:latest
+        imagePullPolicy: Always
         resources: {}
         args:
         - server
