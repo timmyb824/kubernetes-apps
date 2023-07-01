@@ -60,9 +60,9 @@ alertmanager:
       - match:
         receiver: webhook
         continue: true
-      - match:
-        receiver: 'alerta'
-        continue: true
+      # - match:
+      #   receiver: 'alerta'
+      #   continue: true
     receivers:
     - name: 'null'
     - name: 'slack'
@@ -84,10 +84,10 @@ alertmanager:
       webhook_configs:
       - url: 'http://homelab-oci03.local.lan:8435/'
         send_resolved: true
-    - name: "alerta"
-      webhook_configs:
-      - url: 'https://alerta.timmybtech.com/api/webhooks/prometheus?api-key=${ALERTA_API_KEY}'
-        send_resolved: true
+    # - name: "alerta"
+    #   webhook_configs:
+    #   - url: 'https://alerta.timmybtech.com/api/webhooks/prometheus?api-key=${ALERTA_API_KEY}'
+    #     send_resolved: true
   alertmanagerSpec:
     retention: 120h
     ## Storage is the definition of how storage will be used by the Alertmanager instances.
