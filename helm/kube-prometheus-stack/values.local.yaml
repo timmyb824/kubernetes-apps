@@ -213,6 +213,7 @@ grafana:
     - grafana-clock-panel
     - grafana-piechart-panel
     - alexanderzobnin-zabbix-app
+    - https://github.com/performancecopilot/grafana-pcp/releases/download/v5.1.1/performancecopilot-pcp-app-5.1.1.zip;performancecopilot-pcp-app'
   persistence:
     type: pvc
     enabled: true
