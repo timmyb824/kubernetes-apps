@@ -27,4 +27,4 @@ instrumentor:
 odiglet:
   image:
     repository: ghcr.io/keyval-dev/odigos/odiglet
-    tag: v0.1.38
+    tag: v0.1.57
