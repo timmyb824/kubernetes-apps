@@ -47,7 +47,7 @@ spec:
       # terminationGracePeriodSeconds: 0
       containers:
         - name: zinc
-          image: public.ecr.aws/zinclabs/zinc:0.4.2
+          image: public.ecr.aws/zinclabs/zinc:0.4.3
           env:
             - name: ZINC_FIRST_ADMIN_USER
               value: <ZINC_FIRST_ADMIN_USER>
