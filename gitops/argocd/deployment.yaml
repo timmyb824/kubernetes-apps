@@ -9911,7 +9911,7 @@ spec:
         - ""
         - --appendonly
         - "no"
-        image: redis:7.0.4-alpine
+        image: redis:7.0.12-alpine
         imagePullPolicy: Always
         name: redis
         ports:
