@@ -11,7 +11,7 @@ spec:
     server: "https://kubernetes.default.svc"
   source:
     path: gitops/manifests/heimdall
-    repoURL: "https://gitea.local.timmybtech.com/tbryant/kubernetes-apps.git"
+    repoURL: "https://github.com/timmyb824/kubernetes-apps.git"
     targetRevision: HEAD
   project: default
   syncPolicy:

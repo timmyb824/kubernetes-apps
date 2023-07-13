@@ -2,15 +2,17 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: homelab-apps
+  name: homelab-bootstrap
 spec:
   destination:
     namespace: default
     server: 'https://kubernetes.default.svc'
   source:
     path: gitops/app-configs
-    repoURL: 'https://gitea.local.timmybtech.com/tbryant/kubernetes-apps.git'
+    repoURL: 'https://github.com/timmyb824/kubernetes-apps.git'
     targetRevision: HEAD
+    # plugin:
+    #   name: argocd-vault-plugin
   project: default
   syncPolicy:
     automated:
