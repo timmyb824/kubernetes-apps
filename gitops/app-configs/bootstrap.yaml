@@ -11,6 +11,7 @@ spec:
     path: gitops/app-configs
     repoURL: 'https://github.com/timmyb824/kubernetes-apps.git'
     targetRevision: HEAD
+    # not needed for this app, but if you want to use the vault
     # plugin:
     #   name: argocd-vault-plugin
   project: default
