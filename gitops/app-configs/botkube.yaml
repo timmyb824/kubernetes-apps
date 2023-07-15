@@ -45,9 +45,11 @@ spec:
         value: "firing"
       - name: "sources.prometheus.botkube/prometheus.config.ignoreOldAlerts"
         value: "true"
-      - name: "'executors.k8s-default-tools.botkube/kubectl.enabled'"
+      - name: "plugins.repositories.botkube"
+        value: "https://github.com/kubeshop/botkube/releases/download/v1.1.1/plugins-index.yaml"
+      - name: "executors.k8s-default-tools.botkube/kubectl.enabled"
         value: "true"
-      - name: "'executors.k8s-default-tools.botkube/helm.enabled'"
+      - name: "executors.k8s-default-tools.botkube/helm.enabled"
         value: "true"
   syncPolicy:
     automated:
