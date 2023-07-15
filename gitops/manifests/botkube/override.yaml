@@ -1,0 +1,156 @@
+## Global Botkube configuration.
+settings:
+  # -- Cluster name to differentiate incoming messages.
+  clusterName: default
+
+# -- Map of communication groups. Communication group contains settings for multiple communication platforms.
+# The property name under `communications` object is an alias for a given configuration group. You can define multiple communication groups with different names.
+# @default -- See the `values.yaml` file for full object.
+#
+## Format: communications.{alias}
+communications:
+  'default-group':
+    ## Settings for Discord.
+    discord:
+      # -- If true, enables Discord bot.
+      enabled: true
+      # -- Botkube Bot Token.
+      token: <DISCORD_TOKEN>
+      # -- Botkube Application Client ID.
+      botID: <DISCORD_BOT_ID>
+      # -- Map of configured channels. The property name under `channels` object is an alias for a given configuration.
+      #
+      ## Format: channels.{alias}
+      channels:
+        'default':
+          # -- Discord channel ID for receiving Botkube alerts.
+          # The Botkube user needs to be added to it.
+          id: <DISCORD_CHANNEL_ID>
+          notification:
+            # -- If true, the notifications are not sent to the channel. They can be enabled with `@Botkube` command anytime.
+            disabled: false
+          bindings:
+            # -- Executors configuration for a given channel.
+            executors:
+              - k8s-default-tools
+              - bins-management
+              - ai
+            # -- Notification sources configuration for a given channel.
+            sources:
+              - k8s-err-events
+              - k8s-recommendation-events
+              - k8s-err-events-with-ai-support
+
+plugins:
+  repositories:
+    botkube:
+      url: https://github.com/kubeshop/botkube/releases/download/v1.1.1/plugins-index.yaml
+
+# Map of executors. The `executors` property name is an alias for a given configuration.
+# Key name is used as a binding reference.
+#
+# Format: executors.{alias}
+executors:
+  "k8s-tools":
+    # Kubectl executor configuration.
+    botkube/kubectl:
+      enabled: true
+      config:
+        # Configures the default Namespace for executing Botkube `kubectl` commands. If not set, uses the 'default'.
+        defaultNamespace: "default"
+        # Configures the interactive kubectl command builder.
+        interactiveBuilder:
+          allowed:
+            # Configures which K8s namespace are displayed in namespace dropdown.
+            # If not specified, plugin needs to have access to fetch all Namespaces, otherwise Namespace dropdown won't be visible at all.
+            namespaces: ["default"]
+            # Configures which `kubectl` methods are displayed in commands dropdown.
+            verbs: ["api-resources", "api-versions", "cluster-info", "describe", "explain", "get", "logs", "top"]
+            # Configures which K8s resource are displayed in resources dropdown.
+            resources: ["deployments", "pods", "namespaces"]
+      context:
+        # RBAC configuration for this plugin.
+        rbac:
+          group:
+            # Static impersonation for given group.
+            type: Static
+            static:
+              # Name of group.rbac.authorization.k8s.io the plugin role will be bound to.
+              values: [botkube-plugins-default]
+
+    botkube/helm: # Plugin name syntax: <repo>/<plugin>[@<version>]. If version is not provided, the latest version from repository is used.
+      enabled: true # If not enabled, plugin is not downloaded and started.
+      config: # Plugin's specific configuration.
+        helmDriver: "secret" # Allowed values are configmap, secret, memory.
+        helmCacheDir: "/tmp/helm/.cache"
+        helmConfigDir: "/tmp/helm/"
+      context:
+        # RBAC configuration for this plugin.
+        rbac:
+          group:
+            # Static impersonation for given group.
+            type: Static
+            static:
+              # Name of group.rbac.authorization.k8s.io the plugin role will be bound to.
+              values: [botkube-plugins-default]
+
+  ai:
+    ## Doctor executor configuration.
+    ## Plugin name syntax: <repo>/<plugin>[@<version>]. If version is not provided, the latest version from repository is used.
+    botkube/doctor:
+      enabled: true
+      context: *default-plugin-context
+      ## -- Custom doctor plugin configuration.
+      config:
+        ## -- Open API key for accessing the ChatGPT engine. You can get it at https://platform.openai.com/account/api-keys.
+        apiKey: <OPENAI_API_KEY>
+
+## Parameters for anonymous analytics collection.
+analytics:
+  # -- If true, sending anonymous analytics is disabled. To learn what date we collect,
+  # see [Privacy Policy](https://docs.botkube.io/privacy#privacy-policy).
+  disable: true
+
+# Map of sources. The `sources` property name is an alias for a given configuration.
+# Key name is used as a binding reference.
+#
+# Format: sources.{alias}
+sources:
+  'prometheus':
+    ## Prometheus source configuration
+    ## Plugin name syntax: <repo>/<plugin>[@<version>]. If version is not provided, the latest version from repository is used.
+    botkube/prometheus:
+      # -- If true, enables `prometheus` source.
+      enabled: true
+      config:
+        # -- Prometheus endpoint without api version and resource.
+        url: "https://prometheus.local.timmybtech.com"
+        # -- If set as true, Prometheus source plugin will not send alerts that is created before plugin start time.
+        ignoreOldAlerts: true
+        # -- Only the alerts that have state provided in this config will be sent as notification. https://pkg.go.dev/github.com/prometheus/prometheus/rules#AlertState
+        alertStates: ["firing", "pending", "inactive"]
+        # -- Logging configuration
+        log:
+          # -- Log level
+          level: info
+
+# -- Custom aliases for given commands.
+# The aliases are replaced with the underlying command before executing it.
+# Aliases can replace a single word or multiple ones. For example, you can define a `k` alias for `kubectl`, or `kgp` for `kubectl get pods`.
+# @default -- See the `values.yaml` file for full object.
+#
+## Format: aliases.{alias}
+aliases:
+  kk:
+    command: kubectl
+    displayName: "Kubectl alias"
+  chatgpt:
+    command: doctor
+    displayName: "Doctor alias"
+  x:
+    command: exec
+    displayName: "Exec alias"
+  # Multi-word alias example:
+  kgp:
+    command: kubectl get pods
+    displayName: "Get pods"
