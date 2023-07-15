@@ -45,9 +45,9 @@ spec:
         value: "firing"
       - name: "sources.prometheus.botkube/prometheus.config.ignoreOldAlerts"
         value: "true"
-      - name: "executors.kubectl-read-only.botkube/kubectl.enabled"
+      - name: "executors.default.botkube/kubectl.enabled"
         value: "true"
-      - name: "executors.helm.botkube/helm.enabled"
+      - name: "executors.default.helm.botkube/helm.enabled"
         value: "true"
         forceString: true
   syncPolicy:
