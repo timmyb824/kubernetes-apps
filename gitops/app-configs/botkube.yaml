@@ -92,9 +92,6 @@ spec:
           chatgpt:
             command: doctor
             displayName: "Doctor alias"
-          x:
-            command: exec
-            displayName: "Exec alias"
           kgp:
             command: kubectl get pods
             displayName: "Get pods"
