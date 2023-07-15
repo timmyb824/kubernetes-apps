@@ -71,15 +71,6 @@ spec:
                     static:
                       values: [botkube-plugins-default]
 
-          bins-management:
-
-          ai:
-            botkube/doctor:
-              enabled: true
-              context: *default-plugin-context
-              config:
-                apiKey: <OPENAI_API_KEY>
-
         analytics:
           disable: true
 
