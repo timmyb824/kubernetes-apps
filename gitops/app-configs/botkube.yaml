@@ -34,6 +34,12 @@ spec:
       - name: "communications.default-group.discord.channels.default.id"
         value: "<DISCORD_CHANNEL_ID>"
 
+      - name: "communications.default-group.discord.channels.default.bindings.sources[0]"
+        value: "k8s-recommendation-events"
+
+      - name: "communications.default-group.discord.channels.default.bindings.sources[1]"
+        value: "k8s-err-events"
+
       - name: "communications.default-group.discord.channels.default.bindings.sources[2]"
         value: "prometheus"
 
