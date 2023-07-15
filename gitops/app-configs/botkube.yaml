@@ -34,9 +34,6 @@ spec:
       - name: "communications.default-group.discord.channels.default.id"
         value: "<DISCORD_CHANNEL_ID>"
 
-      - name: "communications.default-group.discord.channels.default.bindings.executors[0]"
-        value: "k8s-default-tools"
-
       - name: "sources.prometheus.botkube/prometheus.enabled"
         value: "true"
 
