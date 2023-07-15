@@ -12,8 +12,8 @@ spec:
     namespace: botkube
     server: "https://kubernetes.default.svc"
   project: default
-  source:
-    repoURL: https://charts.botkube.io
+  sources:
+  - repoURL: https://charts.botkube.io
     targetRevision: 1.1.1
     chart: botkube
     helm:
@@ -31,70 +31,11 @@ spec:
         value: "true"
       - name: "executors.ai.botkube/doctor.config.apiKey"
         value: "<OPENAI_API_KEY>"
-      values: |
-        settings:
-          clusterName: default
-
-        plugins:
-          repositories:
-            botkube:
-              url: https://github.com/kubeshop/botkube/releases/download/v1.1.1/plugins-index.yaml
-
-        executors:
-          "k8s-tools":
-            botkube/kubectl:
-              enabled: true
-              config:
-                defaultNamespace: "default"
-                interactiveBuilder:
-                  allowed:
-                    namespaces: ["default"]
-                    verbs: ["api-resources", "api-versions", "cluster-info", "describe", "explain", "get", "logs", "top"]
-                    resources: ["deployments", "pods", "namespaces"]
-              context:
-                rbac:
-                  group:
-                    type: Static
-                    static:
-                      values: [botkube-plugins-default]
-
-            botkube/helm:
-              enabled: true
-              config:
-                helmDriver: "secret"
-                helmCacheDir: "/tmp/helm/.cache"
-                helmConfigDir: "/tmp/helm/"
-              context:
-                rbac:
-                  group:
-                    type: Static
-                    static:
-                      values: [botkube-plugins-default]
-
-        analytics:
-          disable: true
-
-        sources:
-          'prometheus':
-            botkube/prometheus:
-              enabled: true
-              config:
-                url: "https://prometheus.local.timmybtech.com"
-                ignoreOldAlerts: true
-                alertStates: ["firing", "pending", "inactive"]
-                log:
-                  level: info
-
-        aliases:
-          kk:
-            command: kubectl
-            displayName: "Kubectl alias"
-          chatgpt:
-            command: doctor
-            displayName: "Doctor alias"
-          kgp:
-            command: kubectl get pods
-            displayName: "Get pods"
+      valueFiles:
+      - $values/gitops/manifests/botkube/overrides.yaml
+  - repoURL: 'https://github.com/timmyb824/kubernetes-apps.git'
+    targetRevision: HEAD
+    ref: values
 
   syncPolicy:
     automated:
