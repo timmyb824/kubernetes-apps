@@ -6,7 +6,7 @@ metadata:
   finalizers:
   - resources-finalizer.argocd.argoproj.io
   annotations:
-    avp.kubernetes.io/path: "secret/data/slack"
+    avp.kubernetes.io/path: "secret/data/botkube"
 spec:
   destination:
     namespace: botkube
@@ -27,6 +27,14 @@ spec:
         value: "<SLACK_API_APP_TOKEN>"
       - name: "communications.default-group.socketSlack.botToken"
         value: "<SLACK_API_BOT_TOKEN>"
+      - name: "communications.default-group.discord.enabled"
+        value: "true"
+      - name: "communications.default-group.discord.botID"
+        value: "<DISCORD_BOT_ID>"
+      - name: "communications.default-group.discord.token"
+        value: "<DISCORD_TOKEN>"
+      - name: "communications.default-group.discord.channels.default.id"
+        value: "<DISCORD_CHANNEL_ID>"
       - name: "settings.clusterName"
         value: "default"
       - name: "executors.kubectl-read-only.kubectl.enabled"
