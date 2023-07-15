@@ -12,30 +12,63 @@ spec:
     namespace: botkube
     server: "https://kubernetes.default.svc"
   project: default
-  sources:
-  - repoURL: https://charts.botkube.io
+  source:
+    repoURL: https://charts.botkube.io
     targetRevision: 1.1.1
     chart: botkube
     helm:
       releaseName: botkube
       parameters:
+      - name: "settings.clusterName"
+        value: "default"
+
       - name: "communications.default-group.discord.enabled"
         value: "true"
+
       - name: "communications.default-group.discord.botID"
         value: "<DISCORD_BOT_ID>"
+
       - name: "communications.default-group.discord.token"
         value: "<DISCORD_TOKEN>"
+
       - name: "communications.default-group.discord.channels.default.id"
         value: "<DISCORD_CHANNEL_ID>"
+
+      - name: "communications.default-group.discord.channels.default.bindings.executors[0]"
+        value: "k8s-default-tools"
+
+      - name: "sources.prometheus.botkube/prometheus.enabled"
+        value: "true"
+
+      - name: "sources.prometheus.botkube/prometheus.config.url"
+        value: "https://prometheus.local.timmybtech.com"
+
+      - name: "sources.prometheus.botkube/prometheus.config.ignoreOldAlerts"
+        value: "true"
+
+      - name: "plugins.repositories.botkube.url"
+        value: "https://github.com/kubeshop/botkube/releases/download/v1.1.1/plugins-index.yaml"
+
+      - name: "executors.k8s-default-tools.botkube/kubectl.enabled"
+        value: "true"
+
+      - name: "executors.k8s-default-tools.botkube/helm.enabled"
+        value: "true"
+
       - name: "executors.ai.botkube/doctor.enabled"
         value: "true"
+
       - name: "executors.ai.botkube/doctor.config.apiKey"
         value: "<OPENAI_API_KEY>"
-      valueFiles:
-      - $values/gitops/manifests/botkube/overrides.yaml
-  - repoURL: 'https://github.com/timmyb824/kubernetes-apps.git'
-    targetRevision: HEAD
-    ref: values
+
+      - name: "aliases.k.displayName"
+        value: "Kubectl alias"
+
+      - name: "aliases.kk.command"
+        value: "kubectl"
+
+      - name: "analytics.disable"
+        value: "true"
 
   syncPolicy:
     automated:
