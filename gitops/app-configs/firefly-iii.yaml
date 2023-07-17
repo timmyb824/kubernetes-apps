@@ -19,7 +19,7 @@ spec:
     chart: firefly-iii
     helm:
       releaseName: firefly-iii
-      value: |
+      values: |
         replicaCount: 1
 
         image:
