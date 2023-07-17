@@ -64,6 +64,7 @@ spec:
             env:
               APP_PASSWORD: <path:secret/data/firefly#APP_PASSWORD>
               DB_PASSWORD: <path:secret/data/postgres_db#PASSWORD>
+              APP_KEY: <path:secret/data/firefly#APP_KEY>
 
           # -- A cronjob for [recurring Firefly III tasks](https://docs.firefly-iii.org/firefly-iii/advanced-installation/cron/).
           cronjob:
