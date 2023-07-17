@@ -66,7 +66,7 @@ spec:
           secrets:
             env:
               APP_PASSWORD: <path:secret/data/firefly#APP_PASSWORD>
-              DB_PASSWORD: <path:secret/data/postgres_db#USER>
+              DB_PASSWORD: <path:secret/data/postgres_db#PASSWORD>
 
           # -- A cronjob for [recurring Firefly III tasks](https://docs.firefly-iii.org/firefly-iii/advanced-installation/cron/).
           cronjob:
@@ -82,7 +82,7 @@ spec:
               secretKey: "token"
 
               # -- The token in plain text
-              token: ${FIREFLY_CRONJOB_TOKEN}
+              token: <path:secret/data/firefly#FIREFLY_CRONJOB_TOKEN>
 
             # -- Annotations for the CronJob
             annotations: {}
