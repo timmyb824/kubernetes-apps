@@ -52,6 +52,7 @@ spec:
               DB_CONNECTION: pgsql
               DB_PORT: "5432"
               DB_DATABASE: firefly
+              DB_HOST: <path:secret/data/postgres_db#HOST_IP>
               DB_USERNAME: <path:secret/data/postgres_db#USER>
               DEFAULT_LANGUAGE: "en_US"
               DEFAULT_LOCALE: "equal"
