@@ -16,13 +16,9 @@ spec:
     repoURL: https://firefly-iii.github.io/kubernetes/
     targetRevision: 1.4.0
     chart: firefly-iii
-    # helm:
-    #   releaseName: firefly-iii
-    #   values: |
-    plugin:
-      env:
-        - name: HELM_VALUES
-          value: |
+    helm:
+      releaseName: firefly-iii
+      values: |
           replicaCount: 1
 
           image:
