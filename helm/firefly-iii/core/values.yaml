@@ -78,7 +78,7 @@ cronjob:
   image:
     repository: curlimages/curl
     pullPolicy: IfNotPresent
-    tag: 7.81.0
+    tag: 7.88.1
 
   imagePullSecrets: []
 
