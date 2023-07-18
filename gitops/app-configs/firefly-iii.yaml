@@ -38,6 +38,7 @@ spec:
             storage: 8Gi
             # -- If you want to use an existing claim, set it here
             existingClaim: "firefly-iii"
+
           # -- Environment variables for Firefly III. See docs at: https://github.com/firefly-iii/firefly-iii/blob/main/.env.example
           config:
             # -- Set this to the name of a secret to load environment variables from. If defined, values in the secret will override values in config.env
@@ -82,7 +83,7 @@ spec:
               # Docs: The [token] value can be found on your /profile under the "Command line token" header.
               # An alternative to this token value is the STATIC_CRON_TOKEN environment variable.
               token: <path:secret/data/firefly#FIREFLY_CRONJOB_TOKEN>
-17
+
             # -- Annotations for the CronJob
             annotations: {}
 
