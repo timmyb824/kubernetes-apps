@@ -70,6 +70,9 @@ spec:
       - name: "executors.ai.botkube/doctor.config.apiKey"
         value: "<OPENAI_API_KEY>"
 
+      - name: "executors.bins-management.botkube/exec.enabled"
+        value: "true"
+
       - name: "aliases.k.displayName"
         value: "Kubectl alias"
 
