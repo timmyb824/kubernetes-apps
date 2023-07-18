@@ -70,7 +70,7 @@ spec:
           # -- A cronjob for [recurring Firefly III tasks](https://docs.firefly-iii.org/firefly-iii/advanced-installation/cron/).
           cronjob:
             # -- Set to true to enable the CronJob. Note that you need to specify either cronjob.auth.existingSecret or cronjob.auth.token for it to actually be deployed.
-            enabled: false
+            enabled: true
 
             # -- Authorization for the CronJob. See https://docs.firefly-iii.org/firefly-iii/advanced-installation/cron/#request-a-page-over-the-web
             auth:
@@ -83,7 +83,7 @@ spec:
               # -- The token in plain text
               # Docs: The [token] value can be found on your /profile under the "Command line token" header.
               # An alternative to this token value is the STATIC_CRON_TOKEN environment variable.
-              # token: <path:secret/data/firefly#FIREFLY_CRONJOB_TOKEN>
+              token: <path:secret/data/firefly#FIREFLY_CRONJOB_TOKEN>
 
             # -- Annotations for the CronJob
             annotations: {}
