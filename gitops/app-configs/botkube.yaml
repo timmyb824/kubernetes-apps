@@ -56,7 +56,7 @@ spec:
         value: "firing"
 
       - name: "plugins.repositories.botkube.url"
-        value: "https://github.com/kubeshop/botkube/releases/download/v1.1.1/plugins-index.yaml"
+        value: "https://github.com/kubeshop/botkube/releases/download/v1.2.0/plugins-index.yaml"
 
       - name: "executors.k8s-default-tools.botkube/kubectl.enabled"
         value: "true"
