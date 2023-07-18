@@ -142,7 +142,7 @@ spec:
     - match: Host(`firefly-importer.local.timmybtech.com`)
       kind: Rule
       services:
-        - name: importer
+        - name: firefly-importer
           port: 80
   tls:
     secretName: local-timmybtech-com-tls # or local-example-com-staging-tls
