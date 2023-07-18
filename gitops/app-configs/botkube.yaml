@@ -14,7 +14,7 @@ spec:
   project: default
   source:
     repoURL: https://charts.botkube.io
-    targetRevision: 1.1.1
+    targetRevision: 1.2.0
     chart: botkube
     helm:
       releaseName: botkube
