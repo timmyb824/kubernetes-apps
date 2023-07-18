@@ -55,6 +55,12 @@ spec:
       - name: "sources.prometheus.botkube/prometheus.config.alertStates[0]"
         value: "firing"
 
+      - name: "sources.prometheus.botkube/prometheus.config.alertStates[1]"
+        value: ""
+
+      - name: "sources.prometheus.botkube/prometheus.config.alertStates[2]"
+        value: ""
+
       - name: "plugins.repositories.botkube.url"
         value: "https://github.com/kubeshop/botkube/releases/download/v1.1.1/plugins-index.yaml"
 
