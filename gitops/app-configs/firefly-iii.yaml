@@ -37,7 +37,7 @@ spec:
             accessModes: ReadWriteOnce
             storage: 8Gi
             # -- If you want to use an existing claim, set it here
-            existingClaim: "firefly-iii"
+            existingClaim: ""
 
           # -- Environment variables for Firefly III. See docs at: https://github.com/firefly-iii/firefly-iii/blob/main/.env.example
           config:
