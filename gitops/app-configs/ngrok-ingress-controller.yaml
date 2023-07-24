@@ -14,7 +14,7 @@ spec:
   project: default
   source:
     repoURL: https://ngrok.github.io/kubernetes-ingress-controller
-    targetRevision: 0.10.0
+    targetRevision: helm-chart-0.10.0
     chart: ngrok/kubernetes-ingress-controller
     helm:
       releaseName: ngrok-ingress-controller
