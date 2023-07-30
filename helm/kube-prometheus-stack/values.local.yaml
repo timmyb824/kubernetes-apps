@@ -54,6 +54,12 @@ alertmanager:
       - match:
           alertname: DeadMansSwitch
         receiver: 'null'
+      - match:
+          alertname: Watchdog
+        receiver: 'null'
+      - match:
+          alertname: InfoInhibitor
+        receiver: 'null'
       # - match:
       #   receiver: 'slack'
       #   continue: true
