@@ -105,4 +105,3 @@ spec:
           port: 720
   tls:
     secretName: local-timmybtech-com-tls # or local-example-com-staging-tls
-

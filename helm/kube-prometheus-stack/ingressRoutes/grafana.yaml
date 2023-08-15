@@ -23,4 +23,3 @@ spec:
               sameSite: none
   tls:
     secretName: local-timmybtech-com-tls # or local-timmybtech-com-staging-tls
-

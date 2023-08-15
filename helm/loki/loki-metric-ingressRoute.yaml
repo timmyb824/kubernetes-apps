@@ -19,4 +19,3 @@ spec:
 
   tls:
     secretName: local-timmybtech-com-tls # or local-timmybtech-com-staging-tls
-

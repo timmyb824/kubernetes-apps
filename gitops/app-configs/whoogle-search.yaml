@@ -154,7 +154,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`whoogle-search.local.timmybtech.com`)
+    - match: Host(`whoogle.local.timmybtech.com`)
       kind: Rule
       services:
         - name: whoogle-search

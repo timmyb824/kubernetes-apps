@@ -275,5 +275,3 @@ zabbixAgent:
     ## If you are using PodSecurityPolicies you can enable the previous behaviour by setting `rbac.pspEnabled: true`
     pspEnabled: false
     pspAnnotations: {}
-
-

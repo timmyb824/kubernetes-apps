@@ -206,4 +206,3 @@ kind: ServiceAccount
 metadata:
   name: fluent-bit
   namespace: fluentbit
-

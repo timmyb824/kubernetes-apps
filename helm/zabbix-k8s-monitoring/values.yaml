@@ -229,7 +229,7 @@ zabbixAgent:
     ## List can be extended with other environment variables listed here: https://github.com/zabbix/zabbix-docker/tree/5.4/agent/alpine#other-variables
     ## For example:
     ## The variable is comma separated list of allowed Zabbix server or proxy hosts for connections to Zabbix agent container. You may specify port.
-    ## - name: ZBX_ACTIVESERVERS 
+    ## - name: ZBX_ACTIVESERVERS
     ##   value: ''
       ## The variable is list of comma separated loadable Zabbix modules. It works with volume /var/lib/zabbix/modules.
     ## - name: ZBX_LOADMODULE
@@ -275,5 +275,3 @@ zabbixAgent:
     ## If you are using PodSecurityPolicies you can enable the previous behaviour by setting `rbac.pspEnabled: true`
     pspEnabled: false
     pspAnnotations: {}
-
-
