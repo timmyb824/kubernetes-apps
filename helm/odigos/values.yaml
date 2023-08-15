@@ -16,7 +16,7 @@ langDetector:
 ui:
   image:
     repository: ghcr.io/keyval-dev/odigos/ui
-    tag: v0.1.61
+    tag: v0.1.63
 
 instrumentor:
   deleteLangDetectionPods: true
