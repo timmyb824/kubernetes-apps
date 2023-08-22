@@ -1,7 +1,7 @@
 autoscaler:
   image:
     repository: ghcr.io/keyval-dev/odigos/autoscaler
-    tag: v0.1.63
+    tag: v0.1.67
 
 scheduler:
   image:
