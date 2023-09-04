@@ -81,7 +81,7 @@ metadata:
   namespace: default
   labels:
     app.kubernetes.io/name: homepage
-  annotations:
+  annotations: {}
 spec:
   type: ClusterIP
   ports:
@@ -115,6 +115,8 @@ spec:
       serviceAccountName: homepage
       automountServiceAccountToken: true
       # dnsPolicy: ClusterFirst
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
       enableServiceLinks: true
       containers:
         - name: homepage
@@ -124,6 +126,13 @@ spec:
             - name: http
               containerPort: 3000
               protocol: TCP
+          resources:
+            limits:
+              cpu: 500m
+              memory: 512Mi
+            requests:
+              cpu: 250m
+              memory: 256Mi
           volumeMounts:
             - name: homepage-config
               mountPath: /app/config
