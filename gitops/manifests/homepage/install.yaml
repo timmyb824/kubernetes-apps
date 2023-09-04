@@ -115,8 +115,11 @@ spec:
       serviceAccountName: homepage
       automountServiceAccountToken: true
       # dnsPolicy: ClusterFirst
-      hostNetwork: true
-      dnsPolicy: ClusterFirstWithHostNet
+      dnsPolicy: "None"
+      dnsConfig:
+        nameservers:
+          - 192.168.86.174
+          - 192.168.86.42
       enableServiceLinks: true
       containers:
         - name: homepage
@@ -251,10 +254,11 @@ data:
         expanded: true
         cpu: true
         memory: true
-    - search:
-        provider: custom
-        url: https://whoogle.local.timmybtech.com/
-        target: _blank
-    - weather:
-        provider: weatherapi
+    # - search:
+    #     provider: custom
+    #     url: https://whoogle.local.timmybtech.com/
+    #     target: _blank
+    - openweathermap:
+        provider: openweathermap
+        cache: 5 # Time in minutes to cache API responses, to stay within limits
   docker.yaml: ""
