@@ -114,13 +114,13 @@ spec:
     spec:
       serviceAccountName: homepage
       automountServiceAccountToken: true
-      # dnsPolicy: ClusterFirst
-      dnsPolicy: "None"
-      dnsConfig:
-        nameservers:
-          - 192.168.86.174
-          - 192.168.86.42
-      enableServiceLinks: true
+      dnsPolicy: ClusterFirst
+      # dnsPolicy: "None"
+      # dnsConfig:
+      #   nameservers:
+      #     - 192.168.86.174
+      #     - 192.168.86.42
+      # enableServiceLinks: true
       containers:
         - name: homepage
           image: "ghcr.io/benphelps/homepage:latest"
