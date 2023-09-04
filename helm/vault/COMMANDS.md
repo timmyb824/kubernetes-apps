@@ -49,7 +49,7 @@ kubectl exec vault-0 -- vault operator unseal $VAULT_UNSEAL_KEY
 jq -r ".root_token" cluster-keys.json
 
 # start interactive shell
-kubectl exec --stdin=true --tty=true vault-0 -- /bin/sh
+kubectl exec --stdin=true --tty=true vault-0 -n vault -- /bin/sh
 
 # login with root token
 vault login
