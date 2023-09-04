@@ -114,7 +114,7 @@ spec:
     spec:
       serviceAccountName: homepage
       automountServiceAccountToken: true
-      dnsPolicy: Default
+      # dnsPolicy: ClusterFirst
       enableServiceLinks: true
       containers:
         - name: homepage
@@ -246,4 +246,6 @@ data:
         provider: custom
         url: https://whoogle.local.timmybtech.com/
         target: _blank
+    - weather:
+        provider: weatherapi
   docker.yaml: ""
