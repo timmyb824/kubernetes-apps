@@ -1,0 +1,167 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: planka
+  namespace: planka
+spec: {}
+status: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    avp.kubernetes.io/path: "secret/data/postgres_db"
+  labels:
+    io.kompose.service: planka
+  name: planka
+  namespace: planka
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: planka
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        io.kompose.network/planka-default: "true"
+        io.kompose.service: planka
+    spec:
+      containers:
+        - args:
+            - bash
+            - -c
+            - |-
+              for i in `seq 1 30`; do
+                  ./start.sh &&
+                  s=$()? && break || s=$()?;
+                  echo "Tried $(i) times. Waiting 5 seconds...";
+                  sleep 5;
+                done; (exit $(s))
+          env:
+            - name: BASE_URL
+              value: https://planka.local.timmybtech.com
+            - name: DATABASE_URL
+              value: postgresql://<USER>:<PASSWORD>@<HOST_NAME>:5432/planka
+            - name: SECRET_KEY
+              value: <SECRET_KEY>
+            - name: TRUST_PROXY
+              value: "0"
+          image: ghcr.io/plankanban/planka:latest
+          name: planka
+          ports:
+            - containerPort: 1337
+              hostPort: 3001
+              protocol: TCP
+          resources:
+            limits:
+              cpu: 500m
+              memory: 512Mi
+            requests:
+              cpu: 250m
+              memory: 256Mi
+          volumeMounts:
+            - mountPath: /app/public/user-avatars
+              name: user-avatars
+            - mountPath: /app/public/project-background-images
+              name: project-background-images
+            - mountPath: /app/private/attachments
+              name: attachments
+      volumes:
+        - name: user-avatars
+          persistentVolumeClaim:
+            claimName: user-avatars
+        - name: project-background-images
+          persistentVolumeClaim:
+            claimName: project-background-images
+        - name: attachments
+          persistentVolumeClaim:
+            claimName: attachments
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    io.kompose.service: planka
+  name: planka
+  namespace: planka
+spec:
+  ports:
+    - name: "3001"
+      port: 3001
+      targetPort: 1337
+  selector:
+    io.kompose.service: planka
+status:
+  loadBalancer: {}
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: planka-ingress
+  namespace: planka
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`planka.local.timmybtech.com`)
+      kind: Rule
+      services:
+        - name: planka
+          port: 3001
+  tls:
+    secretName: local-timmybtech-com-tls
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    io.kompose.service: attachments
+  name: attachments
+  namespace: planka
+spec:
+  storageClassName: nfs-csi-synologynas
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 32Gi
+status: {}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    io.kompose.service: project-background-images
+  name: project-background-images
+  namespace: planka
+spec:
+  storageClassName: nfs-csi-synologynas
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 24Gi
+status: {}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    io.kompose.service: user-avatars
+  name: user-avatars
+  namespace: planka
+spec:
+  storageClassName: nfs-csi-synologynas
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 16Gi
+status: {}
