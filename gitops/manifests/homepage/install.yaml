@@ -234,7 +234,7 @@ data:
             icon: healthchecks.png
             href: https://healthchecks.timmybtech.com/
             description: cron job monitoring
-        - Uptime-Kuma
+        - Uptime Kuma
             icon: uptime-kuma.png
             href: https://uptimekuma.timmybtech.com/
             description: uptime monitoring
