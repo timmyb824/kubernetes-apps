@@ -341,7 +341,7 @@ data:
         - ArchiveBox:
             icon: archivebox.png
             href: https://archivebox.timmybtech.com/
-            ping: https://archivebox.timmybtech.com/public/
+            ping: http://vm304.local.lan:8000
         - Firefly-iii:
             icon: firefly.png
             href: https://firefly.local.timmybtech.com/
