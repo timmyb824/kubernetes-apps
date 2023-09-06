@@ -221,7 +221,7 @@ data:
             href: https://semaphore.timmybtech.com/auth/login
             description: Open-source web UI for Ansible
         - ChangeDetectionIO:
-            icon: changedetectionio.png
+            icon: changedetection-io.png
             href: https://changedetection.local.timmybtech.com/
             description: ChangeDetection.io is a free service to monitor changes to HTML pages
             namespace: changedetection
@@ -231,7 +231,7 @@ data:
                 url: https://changedetection.local.timmybtech.com
                 key: <CHANGEDTECTIONIO_API_KEY>
         - Home Assistant:
-            icon: homeassistant.png
+            icon: home-assistant.png
             href: https://hass.timmybtech.com/
             description: Open-source home automation platform
 
@@ -244,6 +244,8 @@ data:
             icon: jenkins.png
             href: https://jenkins.local.timmybtech.com/
             description: Open-source automation server
+            namespace: jenkins
+            app: jenkins-server
 
     - Networking:
         - Adguard Home:
@@ -357,10 +359,14 @@ data:
             icon: firefly.png
             href: https://firefly.local.timmybtech.com/
             description: Open-source personal finance manager
+            namespace: firefly-iii
+            app: firefly-iii
         - Firefly-iii Importer:
             icon: firefly.png
             href: https://firefly-importer.local.timmybtech.com/
             description: Firefly-iii Importer
+            namespace: firefly-iii
+            app: importer
         - Gitea:
             icon: gitea.png
             href: "https://gitea.local.timmybtech.com/"
