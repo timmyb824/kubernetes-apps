@@ -292,8 +292,8 @@ data:
     #     url: https://whoogle.local.timmybtech.com/
     #     target: _blank
     - weatherapi:
-        latitude: 41.8930
-        longitude: 70.9108
+        latitude: 41.8978
+        longitude: 70.9090
         units: imperial
         apiKey: <WEATHERAPI_API_KEY>
         cache: 15
