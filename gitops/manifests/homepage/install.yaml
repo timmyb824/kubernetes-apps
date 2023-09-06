@@ -374,6 +374,14 @@ data:
         - Zipline:
             icon: zipline.png
             href: https://zipline.timmybtech.com/
+        - Gotify:
+            icon: gotify.png
+            href: https://gotify.timmybtech.com/
+            ping:
+            widget:
+                type: gotify
+                url: http://homelab-oci03.local.lan:8080
+                key: <GOTIFY_CLIENT_TOKEN>
 
   widgets.yaml: |
     - kubernetes:
