@@ -209,15 +209,6 @@ data:
             icon: prometheus.png
             href: https://karma.timmybtech.com/
             description: Alertmanager UI
-        - Grafana:
-            icon: grafana.png
-            href: https://grafana.local.timmybtech.com/
-            description: open source analytics & monitoring solution
-            widget:
-                type: grafana
-                url: https://grafana.local.timmybtech.com
-                username: <GRAFANA_USER>
-                password: <GRAFANA_PASSWORD>
         - Prometheus:
             icon: prometheus.png
             href: https://prometheus.local.timmybtech.com/
@@ -229,6 +220,15 @@ data:
             icon: prometheus.png
             href: http://pihole2.local.lan:9116/
             description: SNMP Exporter
+        - Grafana:
+            icon: grafana.png
+            href: https://grafana.local.timmybtech.com/
+            description: open source analytics & monitoring solution
+            widget:
+                type: grafana
+                url: https://grafana.local.timmybtech.com
+                username: <GRAFANA_USER>
+                password: <GRAFANA_PASSWORD>
     - Observability (docker):
         - Healthchecks:
             icon: healthchecks.png
@@ -240,7 +240,7 @@ data:
             description: uptime monitoring
             widget:
                 type: uptimekuma
-                url: https://uptimekuma.timmybtech.com
+                url: http://pihole2.local.lan:3001
                 slug: homelab
 
     - CICD:
