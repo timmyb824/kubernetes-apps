@@ -225,7 +225,6 @@ data:
             href: https://changedetection.local.timmybtech.com/
             description: ChangeDetection.io is a free service to monitor changes to HTML pages
             namespace: changedetection
-            podSelector: io.kompose.service=changedetection
             widget:
                 type: changedetectionio
                 url: https://changedetection.local.timmybtech.com
@@ -240,6 +239,8 @@ data:
             icon: argocd.png
             href: https://argocd.local.timmybtech.com/
             description: Continuous delivery tool for Kubernetes
+            namespace: argocd
+            app: argocd-server
         - Jenkins:
             icon: jenkins.png
             href: https://jenkins.local.timmybtech.com/
