@@ -295,7 +295,7 @@ data:
             description: This program runs a speedtest check and graphs the results
             widget:
                 type: speedtest
-                url: https://speedtest.timmybtech.com
+                url: http://vm304.local.lan:8083
     - CICD:
         - ArgoCD:
             icon: argocd.png
