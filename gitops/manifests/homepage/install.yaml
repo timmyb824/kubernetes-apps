@@ -248,7 +248,7 @@ data:
 
     - Networking:
         - Adguard Home:
-            icon: adguard.png
+            icon: adguard-home.png
             href: https://adguard.timmybtech.com/
             description: network-wide software for blocking ads & tracking
             widget:
@@ -257,7 +257,7 @@ data:
                 username: <ADGUARD_USER>
                 password: <ADGUARD_PASSWORD>
         - Adguard Home Replica:
-            icon: adguard.png
+            icon: adguard-home.png
             href: https://adguard2.timmybtech.com/
             description: network-wide software for blocking ads & tracking
             widget:
