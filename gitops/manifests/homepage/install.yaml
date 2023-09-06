@@ -185,6 +185,7 @@ data:
   # settings.yaml: ""
   settings.yaml: |
     title: Bryant Homelab
+    headerStyle: boxed
     providers:
       weatherapi: <WEATHERAPI_API_KEY>
   bookmarks.yaml: |
