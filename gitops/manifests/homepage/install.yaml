@@ -240,6 +240,31 @@ data:
                 type: uptimekuma
                 url: http://pihole2.local.lan:3001
                 slug: homelab
+    - Observability (system):
+        - Zabbix:
+            icon: zabbix.png
+            href: https://zabbix.timmybtech.com/
+            description: open-source monitoring software
+
+    - Networking:
+        - Adguard Home:
+            icon: adguard.png
+            href: https://adguard.timmybtech.com/
+            description: network-wide software for blocking ads & tracking
+            widget:
+                type: adguard
+                url: http://pihole2.local.lan
+                username: <ADGUARD_USER>
+                password: <ADGUARD_PASSWORD>
+        - Adguard Home Replica:
+            icon: adguard.png
+            href: https://adguard2.timmybtech.com/
+            description: network-wide software for blocking ads & tracking
+            widget:
+                type: adguard
+                url: http://rasberrypi.local.lan
+                username: <ADGUARD_USER>
+                password: <ADGUARD_PASSWORD>
 
     - CICD:
         - ArgoCD:
