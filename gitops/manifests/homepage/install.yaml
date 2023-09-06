@@ -198,10 +198,10 @@ data:
             icon: prometheus.png
             href: https://alertmanager.local.timmybtech.com/
             description: Prometheus Alertmanager
-          - Karma:
-            icon: prometheus.png
-            href: https://karma.timmybtech.com/
-            description: Karma
+        - Karma:
+          icon: prometheus.png
+          href: https://karma.timmybtech.com/
+          description: Karma
         - Grafana:
             icon: grafana.png
             href: https://grafana.local.timmybtech.com/
