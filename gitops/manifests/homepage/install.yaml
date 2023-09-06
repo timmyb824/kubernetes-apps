@@ -197,6 +197,10 @@ data:
         - Netdata Cloud:
             - abbr: NC
               href: https://app.netdata.cloud/
+    - Networking:
+        - Cloudflare:
+            - abbr: CF
+              href: https://dash.cloudflare.com/
   services.yaml: |
     - Observability (k8s):
         - AlertManager:
@@ -265,6 +269,10 @@ data:
                 url: http://rasberrypi.local.lan
                 username: <ADGUARD_USER>
                 password: <ADGUARD_PASSWORD>
+        - Adguard Home Sync:
+            icon: adguard-home.png
+            href: http://192.168.86.174:8080/
+            description: syncs Adguard Home settings between instances
         - Traefik-docker:
             icon: traefik.png
             href: https://traefik.timmybtech.com/
@@ -281,7 +289,13 @@ data:
               url: https://traefik.local.timmybtech.com
               username: <TRAEFIK_USER>
               password: <TRAEFIK_PASSWORD>
-
+        - Speedtest-tracker:
+            icon: speedtest-tracker.png
+            href: https://speedtest.timmybtech.com/
+            description: This program runs a speedtest check and graphs the results
+            widget:
+                type: speedtest
+                url: https://speedtest.timmybtech.com
     - CICD:
         - ArgoCD:
             icon: argocd.png
