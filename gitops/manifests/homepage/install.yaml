@@ -192,8 +192,15 @@ data:
         - Github:
             - abbr: GH
               href: https://github.com/
-  services.yaml: |
     - Observability:
+        - Grafana Cloud:
+            - abbr: GC
+              href: https://grafana.com/auth/sign-in/?plcmt=top-nav&cta=myaccount
+        - Netdata Cloud:
+            - abbr: NC
+              href: https://app.netdata.cloud/
+  services.yaml: |
+    - Observability (k8s):
         - AlertManager:
             icon: prometheus.png
             href: https://alertmanager.local.timmybtech.com/
@@ -211,6 +218,31 @@ data:
                 url: https://grafana.local.timmybtech.com
                 username: <GRAFANA_USER>
                 password: <GRAFANA_PASSWORD>
+        - Prometheus:
+            icon: prometheus.png
+            href: https://prometheus.local.timmybtech.com/
+            description: open-source monitoring system
+            widget:
+                type: prometheus
+                url: https://prometheus.local.timmybtech.com
+        - SNMP Exporter:
+            icon: prometheus.png
+            href: http://pihole2.local.lan:9116/
+            description: SNMP Exporter
+    - Observability (docker):
+        - Healthchecks:
+            icon: healthchecks.png
+            href: https://healthchecks.timmybtech.com/
+            description: cron job monitoring
+        - Uptime-Kuma
+            icon: uptime-kuma.png
+            href: https://uptimekuma.timmybtech.com/
+            description: uptime monitoring
+            widget:
+                type: uptimekuma
+                url: https://uptimekuma.timmybtech.com
+                slug: homelab
+
     - CICD:
         - ArgoCD:
             icon: argocd.png
