@@ -16,6 +16,11 @@ repos:
     -   id: mixed-line-ending
         args: ['--fix=auto']
 
+-   repo: https://github.com/sirwart/ripsecrets
+    rev: v0.1.6  # Use latest tag on GitHub
+    hooks:
+    -   id: ripsecrets-system
+
 # Example of local hook
 # -   repo: local
 #     hooks:
