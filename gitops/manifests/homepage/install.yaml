@@ -186,6 +186,16 @@ data:
     title: Bryant Homelab
     headerStyle: boxed
   bookmarks.yaml: |
+    - CICD:
+        - Netlify:
+            - abbr: NL
+              href: https://app.netlify.com/
+        - Renovate (GitHub App):
+            - abbr: RG
+              href: https://developer.mend.io/
+        - Terraform Cloud:
+            - abbr: TC
+              href: https://app.terraform.io/app/Bryant-homelab/workspaces
     - Developer:
         - Github:
             - abbr: GH
@@ -205,11 +215,35 @@ data:
             - abbr: NG
               href: https://dashboard.ngrok.com/
   services.yaml: |
+    - Automation:
+        - Ansible Semaphore:
+            icon: ansible.png
+            href: https://semaphore.timmybtech.com/auth/login
+            description: Open-source web UI for Ansible
+        - ChangeDetectionIO:
+            icon: changedetectionio.png
+            href: https://changedetection.local.timmybtech.com/
+            description: ChangeDetection.io is a free service to monitor changes to HTML pages
+            namespace: changedetection
+            podSelector: io.kompose.service=changedetection
+            widget:
+                type: changedetectionio
+                url: https://changedetection.local.timmybtech.com
+                key: <CHANGEDTECTIONIO_API_KEY>
+        - Home Assistant:
+            icon: homeassistant.png
+            href: https://hass.timmybtech.com/
+            description: Open-source home automation platform
+
     - CICD:
         - ArgoCD:
             icon: argocd.png
             href: https://argocd.local.timmybtech.com/
-            description: continuous delivery tool for Kubernetes
+            description: Continuous delivery tool for Kubernetes
+        - Jenkins:
+            icon: jenkins.png
+            href: https://jenkins.local.timmybtech.com/
+            description: Open-source automation server
 
     - Networking:
         - Adguard Home:
@@ -315,12 +349,28 @@ data:
             description: Open-source monitoring software
 
     - Productivity:
+        - ArchiveBox:
+            icon: archivebox.png
+            href: https://archivebox.timmybtech.com/
+            description: Open-source self-hosted web archive
+        - Firefly-iii:
+            icon: firefly.png
+            href: https://firefly.local.timmybtech.com/
+            description: Open-source personal finance manager
+        - Firefly-iii Importer:
+            icon: firefly.png
+            href: https://firefly-importer.local.timmybtech.com/
+            description: Firefly-iii Importer
         - Gitea:
             icon: gitea.png
             href: "https://gitea.local.timmybtech.com/"
             description: self-hosted git service
             namespace: default
             app: gitea
+        - Homebox:
+            icon: homebox.png
+            href: https://homebox.timmybtech.com/
+            description: Track, Organize, and Manage your Things.
 
   widgets.yaml: |
     - kubernetes:
