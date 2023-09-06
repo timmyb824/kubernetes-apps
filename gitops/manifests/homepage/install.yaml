@@ -377,7 +377,7 @@ data:
         - Gotify:
             icon: gotify.png
             href: https://gotify.timmybtech.com/
-            ping:
+            ping: http://homelab-oci03.local.lan:8080
             widget:
                 type: gotify
                 url: http://homelab-oci03.local.lan:8080
