@@ -201,8 +201,11 @@ data:
         - Cloudflare:
             - abbr: CF
               href: https://dash.cloudflare.com/
+        - Ngrok:
+            - abbr: NG
+              href: https://dashboard.ngrok.com/
   services.yaml: |
-    - Observability (k8s):
+    - Observability:
         - AlertManager:
             icon: prometheus.png
             href: https://alertmanager.local.timmybtech.com/
@@ -214,7 +217,7 @@ data:
         - Prometheus:
             icon: prometheus.png
             href: https://prometheus.local.timmybtech.com/
-            description: open-source monitoring system
+            description: Open-source monitoring system
             widget:
                 type: prometheus
                 url: https://prometheus.local.timmybtech.com
@@ -225,36 +228,34 @@ data:
         - Grafana:
             icon: grafana.png
             href: https://grafana.local.timmybtech.com/
-            description: open source analytics & monitoring solution
+            description: Open-source analytics & monitoring solution
             widget:
                 type: grafana
                 url: https://grafana.local.timmybtech.com
                 username: <GRAFANA_USER>
                 password: <GRAFANA_PASSWORD>
-    - Observability (docker):
         - Healthchecks:
             icon: healthchecks.png
             href: https://healthchecks.timmybtech.com/
-            description: cron job monitoring
+            description: Cron-job monitoring
         - Uptime Kuma:
             icon: uptime-kuma.png
             href: https://uptimekuma.timmybtech.com/
-            description: uptime monitoring
+            description: Uptime monitoring
             widget:
                 type: uptimekuma
                 url: http://pihole2.local.lan:3001
                 slug: homelab
-    - Observability (system):
         - Zabbix:
             icon: zabbix.png
             href: https://zabbix.timmybtech.com/
-            description: open-source monitoring software
+            description: Open-source monitoring software
 
     - Networking:
         - Adguard Home:
             icon: adguard-home.png
             href: https://adguard.timmybtech.com/
-            description: network-wide software for blocking ads & tracking
+            description: Network-wide software for blocking ads & local DNS
             widget:
                 type: adguard
                 url: http://pihole2.local.lan
@@ -263,7 +264,7 @@ data:
         - Adguard Home Replica:
             icon: adguard-home.png
             href: https://adguard2.timmybtech.com/
-            description: network-wide software for blocking ads & tracking
+            description: Network-wide software for blocking ads & local DNS
             widget:
                 type: adguard
                 url: http://rasberrypi.local.lan
@@ -272,18 +273,18 @@ data:
         - Adguard Home Sync:
             icon: adguard-home.png
             href: http://192.168.86.174:8080/
-            description: syncs Adguard Home settings between instances
+            description: Syncs Adguard Home settings between instances
         - Traefik-docker:
             icon: traefik.png
             href: https://traefik.timmybtech.com/
-            description: open-source reverse proxy and load balancer
+            description: Open-source reverse proxy and load balancer
             widget:
               type: traefik
               url: http://vm304.local.lan:8080
         - Traefik-k8s:
             icon: traefik.png
             href: https://traefik.local.timmybtech.com/
-            description: open-source reverse proxy and load balancer
+            description: Open-source reverse proxy and load balancer
             widget:
               type: traefik
               url: https://traefik.local.timmybtech.com
@@ -296,6 +297,15 @@ data:
             widget:
                 type: speedtest
                 url: http://vm304.local.lan:8083
+        - WatchYourLAN:
+            icon: homepage.png
+            href: https://wyl.timmybtech.com/
+            description: WatchYourLAN is a simple network monitoring tool
+        - Tailscale:
+            icon: tailscale.png
+            href: https://login.tailscale.com/
+            description: Tailscale makes it easy to create a secure network between your devices
+
     - CICD:
         - ArgoCD:
             icon: argocd.png
