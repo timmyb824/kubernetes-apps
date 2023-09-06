@@ -302,6 +302,36 @@ data:
         - Karma:
             icon: prometheus.png
             href: https://karma.timmybtech.com/
+        - Portainer (k8s):
+            icon: portainer.png
+            href: https://portainer.local.timmybtech.com/
+            namespace: portainer
+            app: portainer
+            widget:
+                type: portainer
+                url: https://portainer.local.timmybtech.com
+                env: 1
+                key: <PORTAINER_ACCESS_TOKEN>
+        - Portainer (vm304):
+            icon: portainer.png
+            href: https://portainer.local.timmybtech.com/#!/12/docker/dashboard/
+            namespace: portainer
+            app: portainer
+            widget:
+                type: portainer
+                url: https://portainer.local.timmybtech.com
+                env: 12
+                key: <PORTAINER_ACCESS_TOKEN>
+        - Portainer (homelab-oci03):
+            icon: portainer.png
+            href: https://portainer.local.timmybtech.com/
+            namespace: portainer
+            app: portainer
+            widget:
+                type: portainer
+                url: https://portainer.local.timmybtech.com/#!/13/docker/dashboard
+                env: 13
+                key: <PORTAINER_ACCESS_TOKEN>
         - Prometheus:
             icon: prometheus.png
             href: https://prometheus.local.timmybtech.com/
@@ -371,26 +401,6 @@ data:
         - LinkAce:
             icon: linkace.png
             href: https://linkace.timmybtech.com/
-        - Portainer (k8s):
-            icon: portainer.png
-            href: https://portainer.local.timmybtech.com/
-            namespace: portainer
-            app: portainer
-            widget:
-                type: portainer
-                url: https://portainer.local.timmybtech.com
-                env: 1
-                key: <PORTAINER_ACCESS_TOKEN>
-        - Portainer (vm304):
-            icon: portainer.png
-            href: https://portainer.local.timmybtech.com/
-            namespace: portainer
-            app: portainer
-            widget:
-                type: portainer
-                url: https://portainer.local.timmybtech.com
-                env: 12
-                key: <PORTAINER_ACCESS_TOKEN>
         - SyncThing:
             icon: syncthing.png
             href: https://syncthing.timmybtech.com/
