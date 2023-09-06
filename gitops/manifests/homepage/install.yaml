@@ -265,13 +265,6 @@ data:
                 url: http://rasberrypi.local.lan
                 username: <ADGUARD_USER>
                 password: <ADGUARD_PASSWORD>
-
-    - CICD:
-        - ArgoCD:
-            icon: argocd.png
-            href: https://argocd.local.timmybtech.com/
-            description: continuous delivery tool for Kubernetes
-    - Networking:
         - Traefik-docker:
             icon: traefik.png
             href: https://traefik.timmybtech.com/
@@ -288,6 +281,12 @@ data:
               url: https://traefik.local.timmybtech.com
               username: <TRAEFIK_USER>
               password: <TRAEFIK_PASSWORD>
+
+    - CICD:
+        - ArgoCD:
+            icon: argocd.png
+            href: https://argocd.local.timmybtech.com/
+            description: continuous delivery tool for Kubernetes
         - Gitea:
             icon: gitea.png
             href: "https://gitea.local.timmybtech.com/"
