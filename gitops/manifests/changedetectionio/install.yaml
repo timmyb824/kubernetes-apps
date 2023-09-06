@@ -43,6 +43,7 @@ spec:
       creationTimestamp: null
       labels:
         io.kompose.service: changedetection
+        app.kubernetes.io/name: changedetection
     spec:
       containers:
         - env:
@@ -132,6 +133,7 @@ spec:
       labels:
         io.kompose.network/changedetectionio-default: "true"
         io.kompose.service: playwright-chrome
+        app.kubernetes.io/name: playwright-chrome
     spec:
       containers:
         - env:

@@ -225,6 +225,7 @@ data:
             href: https://changedetection.local.timmybtech.com/
             description: ChangeDetection.io is a free service to monitor changes to HTML pages
             namespace: changedetection
+            app: changedetection
             widget:
                 type: changedetectionio
                 url: https://changedetection.local.timmybtech.com
