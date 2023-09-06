@@ -18,6 +18,7 @@ spec:
     metadata:
       labels:
         app: jenkins-server
+        app.kubernetes.io/name: jenkins
     spec:
       securityContext:
             fsGroup: 1000

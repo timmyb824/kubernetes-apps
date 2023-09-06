@@ -219,11 +219,9 @@ data:
         - Ansible Semaphore:
             icon: ansible.png
             href: https://semaphore.timmybtech.com/auth/login
-            description: Open-source web UI for Ansible
         - ChangeDetectionIO:
             icon: changedetection-io.png
             href: https://changedetection.local.timmybtech.com/
-            description: ChangeDetection.io is a free service to monitor changes to HTML pages
             namespace: changedetection
             app: changedetection
             widget:
@@ -233,27 +231,23 @@ data:
         - Home Assistant:
             icon: home-assistant.png
             href: https://hass.timmybtech.com/
-            description: Open-source home automation platform
 
     - CICD:
         - ArgoCD:
             icon: argocd.png
             href: https://argocd.local.timmybtech.com/
-            description: Continuous delivery tool for Kubernetes
             namespace: argocd
             app: argocd-server
         - Jenkins:
             icon: jenkins.png
             href: https://jenkins.local.timmybtech.com/
-            description: Open-source automation server
             namespace: jenkins
-            app: jenkins-server
+            app: jenkins
 
     - Networking:
         - Adguard Home:
             icon: adguard-home.png
             href: https://adguard.timmybtech.com/
-            description: Network-wide software for blocking ads & local DNS
             widget:
                 type: adguard
                 url: http://pihole2.local.lan
@@ -262,7 +256,6 @@ data:
         - Adguard Home Replica:
             icon: adguard-home.png
             href: https://adguard2.timmybtech.com/
-            description: Network-wide software for blocking ads & local DNS
             widget:
                 type: adguard
                 url: http://rasberrypi.local.lan
@@ -271,25 +264,23 @@ data:
         - Adguard Home Sync:
             icon: adguard-home.png
             href: http://192.168.86.174:8080/
-            description: Syncs Adguard Home settings between instances
         - Speedtest-tracker:
             icon: speedtest-tracker.png
             href: https://speedtest.timmybtech.com/
-            description: This program runs a speedtest check and graphs the results
             widget:
                 type: speedtest
                 url: http://vm304.local.lan:8083
         - Traefik-docker:
             icon: traefik.png
             href: https://traefik.timmybtech.com/
-            description: Open-source reverse proxy and load balancer
             widget:
               type: traefik
               url: http://vm304.local.lan:8080
         - Traefik-k8s:
             icon: traefik.png
             href: https://traefik.local.timmybtech.com/
-            description: Open-source reverse proxy and load balancer
+            namespace: traefik
+            app: traefik
             widget:
               type: traefik
               url: https://traefik.local.timmybtech.com
@@ -298,36 +289,33 @@ data:
         - Tailscale:
             icon: tailscale.png
             href: https://login.tailscale.com/
-            description: Tailscale makes it easy to create a secure network between your devices
         - WatchYourLAN:
             icon: homepage.png
             href: https://wyl.timmybtech.com/
-            description: WatchYourLAN is a simple network monitoring tool
 
     - Observability:
         - AlertManager:
             icon: prometheus.png
             href: https://alertmanager.local.timmybtech.com/
-            description: Prometheus Alertmanager
+            namespace: monitoring
+            app: alertmanager
         - Karma:
             icon: prometheus.png
             href: https://karma.timmybtech.com/
-            description: Alertmanager UI
         - Prometheus:
             icon: prometheus.png
             href: https://prometheus.local.timmybtech.com/
-            description: Open-source monitoring system
+            namespace: monitoring
+            app: prometheus
             widget:
                 type: prometheus
                 url: https://prometheus.local.timmybtech.com
         - SNMP Exporter:
             icon: prometheus.png
             href: http://pihole2.local.lan:9116/
-            description: SNMP Exporter
         - Grafana:
             icon: grafana.png
             href: https://grafana.local.timmybtech.com/
-            description: Open-source analytics & monitoring solution
             namespace: monitoring
             app: grafana
             widget:
@@ -338,11 +326,9 @@ data:
         - Healthchecks:
             icon: healthchecks.png
             href: https://healthchecks.timmybtech.com/
-            description: Cron-job monitoring
         - Uptime Kuma:
             icon: uptime-kuma.png
             href: https://uptimekuma.timmybtech.com/
-            description: Uptime monitoring
             widget:
                 type: uptimekuma
                 url: http://pihole2.local.lan:3001
@@ -350,35 +336,43 @@ data:
         - Zabbix:
             icon: zabbix.png
             href: https://zabbix.timmybtech.com/
-            description: Open-source monitoring software
 
     - Productivity:
         - ArchiveBox:
             icon: archivebox.png
             href: https://archivebox.timmybtech.com/
-            description: Open-source self-hosted web archive
         - Firefly-iii:
             icon: firefly.png
             href: https://firefly.local.timmybtech.com/
-            description: Open-source personal finance manager
             namespace: firefly-iii
             app: firefly-iii
         - Firefly-iii Importer:
             icon: firefly.png
             href: https://firefly-importer.local.timmybtech.com/
-            description: Firefly-iii Importer
             namespace: firefly-iii
             app: importer
         - Gitea:
             icon: gitea.png
             href: "https://gitea.local.timmybtech.com/"
-            description: self-hosted git service
             namespace: default
             app: gitea
         - Homebox:
             icon: homebox.png
             href: https://homebox.timmybtech.com/
-            description: Track, Organize, and Manage your Things.
+        - LinkAce:
+            icon: linkace.png
+            href: https://linkace.timmybtech.com/
+        - SyncThing:
+            icon: syncthing.png
+            href: https://syncthing.timmybtech.com/
+        - Whoogle:
+            icon: whooglesearch.png
+            href: https://whoogle.local.timmybtech.com/
+            namespace: whoogle-search
+            app: whoogle
+        - Zipline:
+            icon: zipline.png
+            href: https://zipline.timmybtech.com/
 
   widgets.yaml: |
     - kubernetes:
