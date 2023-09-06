@@ -184,9 +184,9 @@ data:
     mode: cluster
   # settings.yaml: ""
   settings.yaml: |
+    title: Bryant Homelab
     providers:
-      openweathermap: openweathermapapikey
-      weatherapi: <OPENWEATHER_API_KEY>
+      weatherapi: <WEATHERAPI_API_KEY>
   bookmarks.yaml: |
     - Developer:
         - Github:
@@ -293,10 +293,10 @@ data:
     #     provider: custom
     #     url: https://whoogle.local.timmybtech.com/
     #     target: _blank
-    - openweathermap:
+    - weather:
         label: Middleboro
         latitude: 41.90111891658694
         longitude: -70.90942180436052
-        provider: openweathermap
-        cache: 5 # Time in minutes to cache API responses, to stay within limits
+        provider: weatherapi
+        cache: 15 # Time in minutes to cache API responses, to stay within limits
   docker.yaml: ""
