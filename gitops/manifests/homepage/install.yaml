@@ -293,7 +293,7 @@ data:
     #     target: _blank
     - weatherapi:
         latitude: 41.8978
-        longitude: 70.9090
+        longitude: -70.9090
         units: imperial
         apiKey: <WEATHERAPI_API_KEY>
         cache: 15
