@@ -205,51 +205,11 @@ data:
             - abbr: NG
               href: https://dashboard.ngrok.com/
   services.yaml: |
-    - Observability:
-        - AlertManager:
-            icon: prometheus.png
-            href: https://alertmanager.local.timmybtech.com/
-            description: Prometheus Alertmanager
-        - Karma:
-            icon: prometheus.png
-            href: https://karma.timmybtech.com/
-            description: Alertmanager UI
-        - Prometheus:
-            icon: prometheus.png
-            href: https://prometheus.local.timmybtech.com/
-            description: Open-source monitoring system
-            widget:
-                type: prometheus
-                url: https://prometheus.local.timmybtech.com
-        - SNMP Exporter:
-            icon: prometheus.png
-            href: http://pihole2.local.lan:9116/
-            description: SNMP Exporter
-        - Grafana:
-            icon: grafana.png
-            href: https://grafana.local.timmybtech.com/
-            description: Open-source analytics & monitoring solution
-            widget:
-                type: grafana
-                url: https://grafana.local.timmybtech.com
-                username: <GRAFANA_USER>
-                password: <GRAFANA_PASSWORD>
-        - Healthchecks:
-            icon: healthchecks.png
-            href: https://healthchecks.timmybtech.com/
-            description: Cron-job monitoring
-        - Uptime Kuma:
-            icon: uptime-kuma.png
-            href: https://uptimekuma.timmybtech.com/
-            description: Uptime monitoring
-            widget:
-                type: uptimekuma
-                url: http://pihole2.local.lan:3001
-                slug: homelab
-        - Zabbix:
-            icon: zabbix.png
-            href: https://zabbix.timmybtech.com/
-            description: Open-source monitoring software
+    - CICD:
+        - ArgoCD:
+            icon: argocd.png
+            href: https://argocd.local.timmybtech.com/
+            description: continuous delivery tool for Kubernetes
 
     - Networking:
         - Adguard Home:
@@ -274,6 +234,13 @@ data:
             icon: adguard-home.png
             href: http://192.168.86.174:8080/
             description: Syncs Adguard Home settings between instances
+        - Speedtest-tracker:
+            icon: speedtest-tracker.png
+            href: https://speedtest.timmybtech.com/
+            description: This program runs a speedtest check and graphs the results
+            widget:
+                type: speedtest
+                url: http://vm304.local.lan:8083
         - Traefik-docker:
             icon: traefik.png
             href: https://traefik.timmybtech.com/
@@ -290,33 +257,71 @@ data:
               url: https://traefik.local.timmybtech.com
               username: <TRAEFIK_USER>
               password: <TRAEFIK_PASSWORD>
-        - Speedtest-tracker:
-            icon: speedtest-tracker.png
-            href: https://speedtest.timmybtech.com/
-            description: This program runs a speedtest check and graphs the results
-            widget:
-                type: speedtest
-                url: http://vm304.local.lan:8083
-        - WatchYourLAN:
-            icon: homepage.png
-            href: https://wyl.timmybtech.com/
-            description: WatchYourLAN is a simple network monitoring tool
         - Tailscale:
             icon: tailscale.png
             href: https://login.tailscale.com/
             description: Tailscale makes it easy to create a secure network between your devices
+        - WatchYourLAN:
+            icon: homepage.png
+            href: https://wyl.timmybtech.com/
+            description: WatchYourLAN is a simple network monitoring tool
 
-    - CICD:
-        - ArgoCD:
-            icon: argocd.png
-            href: https://argocd.local.timmybtech.com/
-            description: continuous delivery tool for Kubernetes
+    - Observability:
+        - AlertManager:
+            icon: prometheus.png
+            href: https://alertmanager.local.timmybtech.com/
+            description: Prometheus Alertmanager
+        - Karma:
+            icon: prometheus.png
+            href: https://karma.timmybtech.com/
+            description: Alertmanager UI
+        - Prometheus:
+            icon: prometheus.png
+            href: https://prometheus.local.timmybtech.com/
+            description: Open-source monitoring system
+            widget:
+                type: prometheus
+                url: https://prometheus.local.timmybtech.com
+        - SNMP Exporter:
+            icon: prometheus.png
+            href: http://pihole2.local.lan:9116/
+            description: SNMP Exporter
+        - Grafana:
+            icon: grafana.png
+            href: https://grafana.local.timmybtech.com/
+            description: Open-source analytics & monitoring solution
+            namespace: monitoring
+            app: grafana
+            widget:
+                type: grafana
+                url: https://grafana.local.timmybtech.com
+                username: <GRAFANA_USER>
+                password: <GRAFANA_PASSWORD>
+        - Healthchecks:
+            icon: healthchecks.png
+            href: https://healthchecks.timmybtech.com/
+            description: Cron-job monitoring
+        - Uptime Kuma:
+            icon: uptime-kuma.png
+            href: https://uptimekuma.timmybtech.com/
+            description: Uptime monitoring
+            widget:
+                type: uptimekuma
+                url: http://pihole2.local.lan:3001
+                slug: homelab
+        - Zabbix:
+            icon: zabbix.png
+            href: https://zabbix.timmybtech.com/
+            description: Open-source monitoring software
+
+    - Productivity:
         - Gitea:
             icon: gitea.png
             href: "https://gitea.local.timmybtech.com/"
             description: self-hosted git service
             namespace: default
             app: gitea
+
   widgets.yaml: |
     - kubernetes:
         cluster:
