@@ -292,9 +292,9 @@ data:
     #     url: https://whoogle.local.timmybtech.com/
     #     target: _blank
     - weatherapi:
-        latitude: 50.449684
-        longitude: 30.525026
-        units: metric
+        latitude: 41.8930
+        longitude: 70.9108
+        units: imperial
         apiKey: <WEATHERAPI_API_KEY>
         cache: 15
   docker.yaml: ""
