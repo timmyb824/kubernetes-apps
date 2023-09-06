@@ -357,12 +357,40 @@ data:
             href: "https://gitea.local.timmybtech.com/"
             namespace: default
             app: gitea
+        - Gotify:
+            icon: gotify.png
+            href: https://gotify.timmybtech.com/
+            ping: http://homelab-oci03.local.lan:8080
+            widget:
+                type: gotify
+                url: http://homelab-oci03.local.lan:8080
+                key: <GOTIFY_CLIENT_TOKEN>
         - Homebox:
             icon: homebox.png
             href: https://homebox.timmybtech.com/
         - LinkAce:
             icon: linkace.png
             href: https://linkace.timmybtech.com/
+        - Portainer (k8s):
+            icon: portainer.png
+            href: https://portainer.local.timmybtech.com/
+            namespace: portainer
+            app: portainer
+            widget:
+                type: portainer
+                url: https://portainer.local.timmybtech.com
+                env: 1
+                key: <PORTAINER_ACCESS_TOKEN>
+        - Portainer (vm304):
+            icon: portainer.png
+            href: https://portainer.local.timmybtech.com/
+            namespace: portainer
+            app: portainer
+            widget:
+                type: portainer
+                url: https://portainer.local.timmybtech.com
+                env: 12
+                key: <PORTAINER_ACCESS_TOKEN>
         - SyncThing:
             icon: syncthing.png
             href: https://syncthing.timmybtech.com/
@@ -374,14 +402,6 @@ data:
         - Zipline:
             icon: zipline.png
             href: https://zipline.timmybtech.com/
-        - Gotify:
-            icon: gotify.png
-            href: https://gotify.timmybtech.com/
-            ping: http://homelab-oci03.local.lan:8080
-            widget:
-                type: gotify
-                url: http://homelab-oci03.local.lan:8080
-                key: <GOTIFY_CLIENT_TOKEN>
 
   widgets.yaml: |
     - kubernetes:
