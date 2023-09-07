@@ -184,7 +184,7 @@ data:
     mode: cluster
   settings.yaml: |
     title: Bryant Homelab
-    headerStyle: boxedWidgets
+    headerStyle: boxed
     layout:
       Automation:
         icon: mdi-factory
@@ -528,9 +528,9 @@ data:
           showLabel: true
     - resources:
         backend: resources
-        expanded: true
-        cpu: true
-        memory: true
+        expanded: false
+        cpu: false
+        memory: false
     # - search:
     #     provider: custom
     #     url: https://whoogle.local.timmybtech.com/
