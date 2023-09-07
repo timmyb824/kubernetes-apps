@@ -404,6 +404,16 @@ data:
             icon: zabbix.png
             href: https://zabbix.timmybtech.com/
 
+    - Server:
+        - Proxmox2:
+            icon: proxmox.png
+            href: https://pve.timmybtech.com/
+            ping: https://192.168.86.160:8006
+        - Proxmox 3:
+            icon: proxmox.png
+            href: https://pve3.local.lan
+            ping: https://192.168.86.199:8006
+
     - Productivity:
         - ArchiveBox:
             icon: archivebox.png
