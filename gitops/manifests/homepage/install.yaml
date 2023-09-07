@@ -185,6 +185,35 @@ data:
   settings.yaml: |
     title: Bryant Homelab
     headerStyle: boxed
+    layout:
+      Automation:
+        icon: mdi-factory
+        style: row
+        columns: 3
+      CICD:
+        icon: mdi-sail-boat
+        style: row
+        columns: 2
+      Data Storage:
+        icon: mdi-database-check
+        style: row
+        columns: 5
+      Networking:
+        icon: mdi-network
+        style: row
+        columns: 2
+      Observability:
+        icon: mdi-chart-box
+        style: row
+        columns: 4
+      Productivity:
+        icon: mdi-briefcase-outline
+        style: row
+        columns: 4
+      Server:
+        icon: mdi-server
+        style: row
+        columns: 2
   bookmarks.yaml: |
     - CICD:
         - Netlify:
@@ -272,6 +301,7 @@ data:
         - Synology:
             icon: synology.png
             href: https://synology.timmybtech.com/
+            ping: http://192.168.86.44:5000/
             widget:
                 type: diskstation
                 url: http://192.168.86.44:5000/
@@ -328,6 +358,7 @@ data:
         - Tailscale:
             icon: tailscale.png
             href: https://login.tailscale.com/
+            ping: https://login.tailscale.com/
         - WatchYourLAN:
             icon: homepage.png
             href: https://wyl.timmybtech.com/
@@ -403,9 +434,11 @@ data:
         - Healthchecks:
             icon: healthchecks.png
             href: https://healthchecks.timmybtech.com/
+            ping: http://homelab-oci03.local.lan:8000
         - Uptime Kuma:
             icon: uptime-kuma.png
             href: https://uptimekuma.timmybtech.com/
+            ping: http://pihole2.local.lan:3001
             widget:
                 type: uptimekuma
                 url: http://pihole2.local.lan:3001
@@ -413,16 +446,7 @@ data:
         - Zabbix:
             icon: zabbix.png
             href: https://zabbix.timmybtech.com/
-
-    - Server:
-        - Proxmox2:
-            icon: proxmox.png
-            href: https://pve.timmybtech.com/
-            ping: https://192.168.86.160:8006
-        - Proxmox 3:
-            icon: proxmox.png
-            href: https://pve3.local.lan
-            ping: https://192.168.86.199:8006
+            ping: http://vm306.local.lan:8080
 
     - Productivity:
         - ArchiveBox:
@@ -480,6 +504,15 @@ data:
             href: https://zipline.timmybtech.com/
             ping: http://vm304.local.lan:3000
 
+    - Server:
+        - Proxmox2:
+            icon: proxmox.png
+            href: https://pve.timmybtech.com/
+            ping: https://192.168.86.160:8006
+        - Proxmox 3:
+            icon: proxmox.png
+            href: https://pve3.local.lan
+            ping: https://192.168.86.199:8006
   widgets.yaml: |
     - kubernetes:
         cluster:
