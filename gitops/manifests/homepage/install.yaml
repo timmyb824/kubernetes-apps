@@ -223,6 +223,7 @@ data:
         - Ansible Semaphore:
             icon: ansible.png
             href: https://semaphore.timmybtech.com/auth/login
+            ping: http://vm304.local.lan:3005
         - ChangeDetectionIO:
             icon: changedetection-io.png
             href: https://changedetection.local.timmybtech.com/
@@ -235,6 +236,7 @@ data:
         - Home Assistant:
             icon: home-assistant.png
             href: https://hass.timmybtech.com/
+            ping: http://ct100.local.lan:8123
 
     - CICD:
         - ArgoCD:
@@ -280,6 +282,7 @@ data:
         - Adguard Home:
             icon: adguard-home.png
             href: https://adguard.timmybtech.com/
+            ping: http://pihole2.local.lan
             widget:
                 type: adguard
                 url: http://pihole2.local.lan
@@ -288,6 +291,7 @@ data:
         - Adguard Home Replica:
             icon: adguard-home.png
             href: https://adguard2.timmybtech.com/
+            ping: http://rasberrypi.local.lan
             widget:
                 type: adguard
                 url: http://rasberrypi.local.lan
@@ -296,15 +300,18 @@ data:
         - Adguard Home Sync:
             icon: adguard-home.png
             href: http://192.168.86.174:8080/
+            ping: http://192.168.86.174:8080/
         - Speedtest-tracker:
             icon: speedtest-tracker.png
             href: https://speedtest.timmybtech.com/
+            ping: http://vm304.local.lan:8083
             widget:
                 type: speedtest
                 url: http://vm304.local.lan:8083
         - Traefik-docker:
             icon: traefik.png
             href: https://traefik.timmybtech.com/
+            ping: http://vm304.local.lan:8080
             widget:
               type: traefik
               url: http://vm304.local.lan:8080
@@ -324,6 +331,7 @@ data:
         - WatchYourLAN:
             icon: homepage.png
             href: https://wyl.timmybtech.com/
+            ping: http://vm304.local.lan:8840
 
     - Observability:
         - AlertManager:
@@ -334,6 +342,7 @@ data:
         - Karma:
             icon: prometheus.png
             href: https://karma.timmybtech.com/
+            ping: http://vm304.local.lan:8082
         - Portainer (k8s):
             icon: portainer.png
             href: https://portainer.local.timmybtech.com/
@@ -380,6 +389,7 @@ data:
         - SNMP Exporter:
             icon: prometheus.png
             href: http://pihole2.local.lan:9116/
+            ping: http://pihole2.local.lan:9116/
         - Grafana:
             icon: grafana.png
             href: https://grafana.local.timmybtech.com/
@@ -444,13 +454,17 @@ data:
                 key: <GOTIFY_CLIENT_TOKEN>
         - Homebox:
             icon: homebox.png
-            href: https://homebox.timmybtech.com/
+            href: https://homebox.local.timmybtech.com/
+            namespace: homebox
+            app: homebox
         - LinkAce:
             icon: linkace.png
             href: https://linkace.timmybtech.com/
+            ping: http://vm304.local.lan:718
         - SyncThing:
             icon: syncthing.png
             href: https://syncthing.timmybtech.com/
+            ping: http://ct102.local.lan:8384
         - Vault:
             icon: vault.png
             href: https://vault.local.timmybtech.com/
@@ -464,6 +478,7 @@ data:
         - Zipline:
             icon: zipline.png
             href: https://zipline.timmybtech.com/
+            ping: http://vm304.local.lan:3000
 
   widgets.yaml: |
     - kubernetes:

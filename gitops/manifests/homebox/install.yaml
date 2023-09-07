@@ -33,6 +33,7 @@ spec:
     metadata:
       labels:
         io.kompose.service: homebox
+        app.kubernetes.io/name: homebox
     spec:
       containers:
         - env:
