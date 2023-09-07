@@ -196,10 +196,10 @@ data:
         - Terraform Cloud:
             - abbr: TC
               href: https://app.terraform.io/app/Bryant-homelab/workspaces
-    - Developer:
-        - Github:
-            - abbr: GH
-              href: https://github.com/
+    - Storage:
+        - Synology Account:
+            - abbr: SYA
+              href: https://account.synology.com/en-us/overview?en-us=
     - Observability:
         - Grafana Cloud:
             - abbr: GC
@@ -214,6 +214,10 @@ data:
         - Ngrok:
             - abbr: NG
               href: https://dashboard.ngrok.com/
+    - Tools:
+        - Border0:
+            - abbr: B0
+              href: https://portal.border0.com/login/
   services.yaml: |
     - Automation:
         - Ansible Semaphore:
@@ -243,6 +247,34 @@ data:
             href: https://jenkins.local.timmybtech.com/
             namespace: jenkins
             app: jenkins
+
+    - Data Storage:
+        - InfluxDB:
+            icon: influxdb.png
+            href: https://influxdb.local.timmybtech.com/
+            namespace: influxdb
+            app: influxdb
+        - MinIO:
+            icon: minio.png
+            href: https://minio.local.timmybtech.com/
+            namespace: minio
+            app: minio
+        - PGweb (vm303):
+            icon: postgres.png
+            href: https://pgweb.timmybtech.com/
+            ping: http://vm303.local.lan:8081
+        - PGweb (oci):
+            icon: postgres.png
+            href: https://pgweb2.timmybtech.com/
+            ping: http://homelab-oci03.local.lan:8083
+        - Synology:
+            icon: synology.png
+            href: https://synology.timmybtech.com/
+            widget:
+                type: diskstation
+                url: http://192.168.86.44:5000/
+                username: <SYNOLOGY_USER>
+                password: <SYNOLOGY_PASSWORD>
 
     - Networking:
         - Adguard Home:
@@ -307,11 +339,6 @@ data:
             href: https://portainer.local.timmybtech.com/
             namespace: portainer
             app: portainer
-            widget:
-                type: portainer
-                url: https://portainer.local.timmybtech.com
-                env: 1
-                key: <PORTAINER_ACCESS_TOKEN>
         - Portainer (vm303):
             icon: portainer.png
             href: https://portainer.local.timmybtech.com/#!/11/docker/dashboard
@@ -414,6 +441,11 @@ data:
         - SyncThing:
             icon: syncthing.png
             href: https://syncthing.timmybtech.com/
+        - Vault:
+            icon: vault.png
+            href: https://vault.local.timmybtech.com/
+            namespace: vault
+            app: vault
         - Whoogle:
             icon: whooglesearch.png
             href: https://whoogle.local.timmybtech.com/
