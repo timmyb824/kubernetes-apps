@@ -184,12 +184,12 @@ data:
     mode: cluster
   settings.yaml: |
     title: Bryant Homelab
-    headerStyle: boxed
+    headerStyle: boxedWidgets
     layout:
       Automation:
         icon: mdi-factory
         style: row
-        columns: 3
+        columns: 2
       CICD:
         icon: mdi-sail-boat
         style: row
@@ -253,6 +253,10 @@ data:
             icon: ansible.png
             href: https://semaphore.timmybtech.com/auth/login
             ping: http://vm304.local.lan:3005
+        - Home Assistant:
+            icon: home-assistant.png
+            href: https://hass.timmybtech.com/
+            ping: http://ct100.local.lan:8123
         - ChangeDetectionIO:
             icon: changedetection-io.png
             href: https://changedetection.local.timmybtech.com/
@@ -262,10 +266,6 @@ data:
                 type: changedetectionio
                 url: https://changedetection.local.timmybtech.com
                 key: <CHANGEDTECTIONIO_API_KEY>
-        - Home Assistant:
-            icon: home-assistant.png
-            href: https://hass.timmybtech.com/
-            ping: http://ct100.local.lan:8123
 
     - CICD:
         - ArgoCD:
