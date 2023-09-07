@@ -312,9 +312,19 @@ data:
                 url: https://portainer.local.timmybtech.com
                 env: 1
                 key: <PORTAINER_ACCESS_TOKEN>
+        - Portainer (vm303):
+            icon: portainer.png
+            href: https://portainer.local.timmybtech.com/#!/11/docker/dashboard
+            namespace: portainer
+            app: portainer
+            widget:
+                type: portainer
+                url: https://portainer.local.timmybtech.com
+                env: 11
+                key: <PORTAINER_ACCESS_TOKEN>
         - Portainer (vm304):
             icon: portainer.png
-            href: https://portainer.local.timmybtech.com/#!/12/docker/dashboard/
+            href: https://portainer.local.timmybtech.com/#!/12/docker/dashboard
             namespace: portainer
             app: portainer
             widget:
@@ -324,12 +334,12 @@ data:
                 key: <PORTAINER_ACCESS_TOKEN>
         - Portainer (homelab-oci03):
             icon: portainer.png
-            href: https://portainer.local.timmybtech.com/
+            href: https://portainer.local.timmybtech.com/#!/13/docker/dashboard
             namespace: portainer
             app: portainer
             widget:
                 type: portainer
-                url: https://portainer.local.timmybtech.com/#!/13/docker/dashboard
+                url: https://portainer.local.timmybtech.com
                 env: 13
                 key: <PORTAINER_ACCESS_TOKEN>
         - Prometheus:
