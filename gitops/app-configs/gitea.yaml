@@ -281,7 +281,7 @@ spec:
           enabled: true
           create: true
           mount: true
-          claimName: pvc-016ce254-83f2-459d-b361-49673f312f15
+          claimName: ""
           size: 16Gi
           accessModes:
             - ReadWriteOnce
