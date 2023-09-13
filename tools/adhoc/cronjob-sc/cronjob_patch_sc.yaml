@@ -1,0 +1,26 @@
+
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: patch-storageclass
+  namespace: tools
+spec:
+  schedule: "* * * * *"  # Run every minute
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: storageclass-patcher-sa
+          containers:
+          - name: kubectl-patch
+            image: bitnami/kubectl:latest  # Using a kubectl image
+            command:
+            - /bin/sh
+            - -c
+            - |
+              for i in {1..6}; do  # Execute 6 times, sleeping for 10 seconds between each run, resulting in 60 seconds total
+                echo "Patching storage class..."
+                kubectl patch storageclass local-path -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"false"}}}'
+                sleep 10
+              done
+          restartPolicy: OnFailure
