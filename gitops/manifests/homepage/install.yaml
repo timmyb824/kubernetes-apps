@@ -327,7 +327,7 @@ data:
         - Gitea:
             icon: gitea.png
             href: "https://gitea.local.timmybtech.com/"
-            namespace: default
+            namespace: gitea
             app: gitea
         - Homebox:
             icon: homebox.png
