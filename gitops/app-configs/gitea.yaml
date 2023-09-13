@@ -279,9 +279,9 @@ spec:
         ## @param persistence.volumeName Name of persistent volume in PVC
         persistence:
           enabled: true
-          create: true
-          mount: true
-          claimName: ""
+          # create: true
+          # mount: true
+          # claimName: ""
           size: 16Gi
           accessModes:
             - ReadWriteOnce
