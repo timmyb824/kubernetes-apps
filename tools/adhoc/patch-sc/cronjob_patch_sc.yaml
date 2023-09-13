@@ -5,7 +5,7 @@ metadata:
   name: patch-storageclass
   namespace: tools
 spec:
-  schedule: "* * * * *"  # Run every minute
+  schedule: "*/1 * * * *"  # Run every minute
   jobTemplate:
     spec:
       template:
@@ -18,9 +18,14 @@ spec:
             - /bin/sh
             - -c
             - |
-              for i in {1..6}; do  # Execute 6 times, sleeping for 10 seconds between each run, resulting in 60 seconds total
-                echo "Patching storage class..."
+              # for i in 1 2 3 4; do
+              #   echo "Patching storage class..."
+              #   kubectl patch storageclass local-path -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"false"}}}'
+              #   sleep 15
+              # done
+              while true; do
                 kubectl patch storageclass local-path -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"false"}}}'
+
                 sleep 10
               done
           restartPolicy: OnFailure
