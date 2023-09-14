@@ -28,6 +28,7 @@ spec:
       labels:
         io.kompose.network/planka-default: "true"
         io.kompose.service: planka
+        app.kubernetes.io/name: planka
     spec:
       containers:
         - args:

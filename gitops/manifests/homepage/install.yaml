@@ -229,7 +229,7 @@ data:
       Other:
         icon: mdi-server
         style: row
-        columns: 3
+        columns: 4
   bookmarks.yaml: |
     - CICD:
         - Netlify:
@@ -536,6 +536,11 @@ data:
             icon: zabbix.png
             href: https://zabbix.timmybtech.com/
             ping: http://vm306.local.lan:8080
+        - Planka:
+            icon: planka.png
+            href: https://planka.local.timmybtech.com/
+            namespace: planka
+            app: planka
   widgets.yaml: |
     - kubernetes:
         cluster:
