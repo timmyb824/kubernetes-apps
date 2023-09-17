@@ -427,7 +427,7 @@ spec:
               ROOT_URL: https://gitea.local.timmybtech.com
               DOMAIN: gitea.local.timmybtech.com
             webhook:
-              ALLOWED_HOST_LIST: jenkins.local.timmybtech.com
+              ALLOWED_HOST_LIST: jenkins.local.timmybtech.com, discord.com
 
           #
           #  security:
