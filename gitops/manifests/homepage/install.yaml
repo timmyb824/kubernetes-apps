@@ -201,7 +201,7 @@ data:
       OCI hidden:
         header: false
         style: row
-        columns: 2
+        columns: 3
       PI Servers:
         icon: mdi-fruit-grapes-outline
         style: row
@@ -394,6 +394,10 @@ data:
             icon: postgres.png
             href: https://pgweb2.timmybtech.com/
             ping: http://homelab-oci03.local.lan:8083
+        - IT-Tools:
+            icon: it-tools.png
+            href: https://it-tools.timmybtech.com/
+            ping: http://homelab-oci03.local.lan:5884
 
     - Storage:
         - Synology:
