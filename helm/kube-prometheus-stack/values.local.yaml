@@ -486,6 +486,7 @@ prometheus:
         static_configs:
           - targets:
               - '${PROMETHEUS_OCI01}'
+              - '${PROMETHEUS_OCI02}'
               - '${PROMETHEUS_OCI03}'
               - '192.168.86.42:9090'
               - '192.168.86.53:9090'
