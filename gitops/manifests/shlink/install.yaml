@@ -17,7 +17,7 @@ spec:
       annotations: {}
       labels:
         io.kompose.network/shlink-default: "true"
-        io.kompose.service:
+        io.kompose.service: shlink
         app.kubernetes.io/name: shlink
     spec:
       containers:
