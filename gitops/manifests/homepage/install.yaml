@@ -193,7 +193,7 @@ data:
       Kubernetes hidden:
         header: false
         style: row
-        columns: 4
+        columns: 2
       OCI:
         icon: mdi-server
         style: row
@@ -354,6 +354,16 @@ data:
             href: https://portainer.local.timmybtech.com/
             namespace: portainer
             app: portainer
+        - Shlink:
+            icon: shlink.png
+            href: https://shlink.local.timmybtech.com/
+            namespace: shlink
+            app: shlink
+        - Shlink-web:
+            icon: shlink.png
+            href: https://shlink-web.local.timmybtech.com/
+            namespace: shlink
+            app: shlink-web
         - Vault:
             icon: vault.png
             href: https://vault.local.timmybtech.com/
