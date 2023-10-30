@@ -70,6 +70,6 @@ spec:
       kind: Rule
       services:
         - name: shlink-web
-          port: 80
+          port: 8000
   tls:
     secretName: local-timmybtech-com-tls
