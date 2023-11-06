@@ -41,4 +41,3 @@ OR
 ## Default storage error (remove default annotation from local-path)
 
 `kubectl patch storageclass local-path -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"false"}}}'`
-
