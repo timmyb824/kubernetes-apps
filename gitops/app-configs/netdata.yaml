@@ -1,0 +1,48 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: netdata
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+  annotations:
+    avp.kubernetes.io/path: "secret/data/netdata"
+spec:
+  destination:
+    namespace: netdata
+    server: "https://kubernetes.default.svc"
+  project: default
+  source:
+    repoURL: https://netdata.github.io/helmchart/
+    targetRevision: v1.43.2
+    chart: netdata
+    helm:
+      releaseName: netdata
+      parameters:
+      - name: "image.tag"
+        value: "edge"
+
+      - name: "parent.claiming.enabled"
+        value: "true"
+
+      - name: "parent.claiming.token"
+        value: "<CLAIM_TOKEN>"
+
+      - name: "parent.claiming.rooms"
+        value: "<CLAIM_ROOM>"
+
+      - name: "child.claiming.enabled"
+        value: "true"
+
+      - name: "child.claiming.token"
+        value: "<CLAIM_TOKEN>"
+
+      - name: "child.claiming.rooms"
+        value: "<CLAIM_ROOM>"
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
