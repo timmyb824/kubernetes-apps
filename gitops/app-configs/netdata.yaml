@@ -40,6 +40,9 @@ spec:
       - name: "child.claiming.rooms"
         value: "<CLAIM_ROOM>"
 
+      - name: "ingress.enabled"
+        value: "false"
+
   syncPolicy:
     automated:
       prune: true
