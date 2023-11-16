@@ -45,7 +45,7 @@ spec:
               value: "10"
             - name: TZ
               value: America/New_York
-          image: ghcr.io/hay-kot/homebox:v0.9.2
+          image: ghcr.io/hay-kot/homebox:v0.10.2
           name: homebox
           ports:
             - containerPort: 7745
