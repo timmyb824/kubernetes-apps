@@ -103,4 +103,4 @@ spec:
         - name: homebox
           port: 3100
   tls:
-    secretName: local-timmybtech-com-tls # or local-example-com-staging-tls
+    secretName: local-timmybtech-com-tls
