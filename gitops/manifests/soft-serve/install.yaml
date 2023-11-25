@@ -21,8 +21,6 @@ metadata:
     avp.kubernetes.io/path: "secret/data/postgres_db"
   name: soft-serve-config
   namespace: soft-serve
-  resourceVersion: '194879324'
-  creationTimestamp: '2023-11-25T04:01:58Z'
 data:
   config.yaml: |+
     # Soft Serve Server configurations
