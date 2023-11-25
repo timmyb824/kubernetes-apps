@@ -412,7 +412,7 @@ data:
     - Storage:
         - Synology:
             icon: synology.png
-            href: https://synology.timmybtech.com/
+            href: https://nas.timmybtech.com/
             ping: http://192.168.86.44:5000/
             widget:
                 type: diskstation
