@@ -21,20 +21,8 @@ metadata:
     avp.kubernetes.io/path: "secret/data/postgres_db"
   name: soft-serve-config
   namespace: soft-serve
-  uid: 08e026c7-7a46-4afc-81d4-981cacd56ad4
   resourceVersion: '194879324'
   creationTimestamp: '2023-11-25T04:01:58Z'
-  managedFields:
-    - manager: kubectl-create
-      operation: Update
-      apiVersion: v1
-      time: '2023-11-25T04:01:58Z'
-      fieldsType: FieldsV1
-      fieldsV1:
-        f:data:
-          .: {}
-          f:config.yaml: {}
-  selfLink: /api/v1/namespaces/soft-serve/configmaps/soft-serve-config
 data:
   config.yaml: |+
     # Soft Serve Server configurations
@@ -176,8 +164,9 @@ spec:
           volumeMounts:
             - mountPath: /soft-serve
               name: soft-serve-claim0
-            - mountPath: /soft-serve
+            - mountPath: /soft-serve/config.yaml
               name: soft-serve-config
+              subPath: config.yaml
       restartPolicy: Always
       volumes:
         - name: soft-serve-claim0
