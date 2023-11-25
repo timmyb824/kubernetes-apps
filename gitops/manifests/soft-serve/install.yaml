@@ -189,16 +189,16 @@ metadata:
   name: soft-serve
 spec:
   ports:
-    - name: "ssh server"
+    - name: "ssh-server"
       port: 23231
       targetPort: 23231
-    - name: "http server"
+    - name: "http-server"
       port: 23232
       targetPort: 23232
-    - name: "stats server"
+    - name: "stats-server"
       port: 23233
       targetPort: 23233
-    - name: "git daemon"
+    - name: "git-daemon"
       port: 9418
       targetPort: 9418
   selector:
