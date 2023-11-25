@@ -114,8 +114,8 @@ data:
       # The address on which the stats server will listen.
       listen_addr: ":23233"
     # Additional admin keys.
-    #initial_admin_keys:
-    #  - "ssh-rsa AAAAB3NzaC1yc2EAAAAAAAAAAAA"
+    initial_admin_keys:
+      - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG2iB7F01dMALwcGHFY9+140neloiAfJ1j5jlBOe+FF1 master-key"
 ---
 apiVersion: apps/v1
 kind: Deployment
