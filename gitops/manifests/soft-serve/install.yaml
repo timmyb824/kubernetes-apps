@@ -147,7 +147,7 @@ spec:
           name: soft-serve
           ports:
             - containerPort: 23231
-              hostPort: 22
+              hostPort: 23231
               protocol: TCP
             - containerPort: 23232
               hostPort: 23232
@@ -188,7 +188,7 @@ metadata:
 spec:
   ports:
     - name: "ssh-server"
-      port: 22
+      port: 23231
       targetPort: 23231
     - name: "http-server"
       port: 23232
@@ -204,23 +204,3 @@ spec:
   type: LoadBalancer
 status:
   loadBalancer: {}
----
-apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRoute
-metadata:
-  name: soft-serve-ingress
-  namespace: soft-serve
-  annotations:
-    kubernetes.io/ingress.class: traefik-external
-    traefik.ingress.kubernetes.io/router.entrypoints: websecure
-spec:
-  entryPoints:
-    - websecure
-  routes:
-    - match: Host(`soft-serve.local.timmybtech.com`)
-      kind: Rule
-      services:
-        - name: soft-serve
-          port: 22
-  tls:
-    secretName: local-timmybtech-com-tls
