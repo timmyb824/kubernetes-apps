@@ -35,7 +35,7 @@ data:
     # The SSH server configuration.
     ssh:
       # The address on which the SSH server will listen.
-      listen_addr: "soft-serve.local.timmybtech.com" # ":23231"
+      listen_addr: ":23231"
 
       # The public URL of the SSH server.
       # This is the address that will be used to clone repositories.
