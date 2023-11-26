@@ -147,7 +147,7 @@ spec:
           name: soft-serve
           ports:
             - containerPort: 23231
-              hostPort: 23231
+              hostPort: 22
               protocol: TCP
             - containerPort: 23232
               hostPort: 23232
