@@ -188,7 +188,7 @@ metadata:
 spec:
   ports:
     - name: "ssh-server"
-      port: 23231
+      port: 22
       targetPort: 23231
     - name: "http-server"
       port: 23232
