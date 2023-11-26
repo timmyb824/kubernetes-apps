@@ -22,7 +22,7 @@ instrumentor:
   deleteLangDetectionPods: true
   image:
     repository: ghcr.io/keyval-dev/odigos/instrumentor
-    tag: v0.1.85
+    tag: v1.0.2
 
 odiglet:
   image:
