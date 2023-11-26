@@ -221,6 +221,6 @@ spec:
       kind: Rule
       services:
         - name: soft-serve
-          port: 23231
+          port: 22
   tls:
     secretName: local-timmybtech-com-tls
