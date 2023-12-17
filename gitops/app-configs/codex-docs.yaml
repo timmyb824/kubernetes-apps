@@ -20,66 +20,66 @@ spec:
     helm:
       releaseName: codex-docs
       values: |
-          replicaCount: 1
+        replicaCount: 1
 
-          annotations:
+        annotations:
 
-          configuration:
-            port: 3000
-            host: "0.0.0.0"
-            uploads:
-              driver: "s3"
-              s3:
-                bucket: "codex-docs"
-                region: "us-east-1"
-                baseUrl: "<ENDPOINT>"
-                keyPrefix: "/"
-                accessKeyId: "<ACCESS_KEY>"
-                secretAccessKey: "<SECRET_ACCESS_KEY>"
-            frontend:
-              title: "TimmyB Docs"
-              description: "A documentation website for TimmyB Tech"
-              startPage: ""
-              misprintsChatId: "12344564"
-              yandexMetrikaId: "<METRICA_ID>"
-              carbon:
-                serve: ""
-                placement: ""
-              menu: []
-            auth:
-              password: "<AUTH_PASSWORD>"
-              secret: "<AUTH_SECRET>"
+        configuration:
+          port: 3000
+          host: "0.0.0.0"
+          uploads:
+            driver: "s3"
+            s3:
+              bucket: "codex-docs"
+              region: "us-east-1"
+              baseUrl: "<ENDPOINT>"
+              keyPrefix: "/"
+              accessKeyId: "<ACCESS_KEY>"
+              secretAccessKey: "<SECRET_ACCESS_KEY>"
+          frontend:
+            title: "TimmyB Docs"
+            description: "A documentation website for TimmyB Tech"
+            startPage: ""
+            misprintsChatId: "12344564"
+            yandexMetrikaId: "<METRICA_ID>"
+            carbon:
+              serve: ""
+              placement: ""
+            menu: []
+          auth:
+            password: "<AUTH_PASSWORD>"
+            secret: "<AUTH_SECRET>"
 
-            database:
-              driver: mongodb # you can change database driver here. 'mongodb' or 'local'
-              mongodb:
-                uri: "<MONGODB_URI>"
+          database:
+            driver: mongodb # you can change database driver here. 'mongodb' or 'local'
+            mongodb:
+              uri: <MONGODB_URI>
 
-          image:
-            repository: ghcr.io/codex-team/codex.docs
-            pullPolicy: IfNotPresent
-            tag: ""
+        image:
+          repository: ghcr.io/codex-team/codex.docs
+          pullPolicy: IfNotPresent
+          tag: ""
 
-          imagePullSecrets: []
-          fullnameOverride: ""
+        imagePullSecrets: []
+        fullnameOverride: ""
 
-          podAnnotations: {}
+        podAnnotations: {}
 
-          podSecurityContext: {}
+        podSecurityContext: {}
 
-          securityContext: {}
+        securityContext: {}
 
-          service:
-            type: ClusterIP
-            port: 3000
+        service:
+          type: ClusterIP
+          port: 3000
 
-          resources: {}
+        resources: {}
 
-          nodeSelector: {}
+        nodeSelector: {}
 
-          tolerations: []
+        tolerations: []
 
-          affinity: {}
+        affinity: {}
 
   syncPolicy:
     automated:
