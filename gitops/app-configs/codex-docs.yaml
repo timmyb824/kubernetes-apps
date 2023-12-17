@@ -14,7 +14,7 @@ spec:
     server: "https://kubernetes.default.svc"
   project: default
   source:
-    repoURL: oci:ghcr.io/codex-team/codex.docs.chart/codex-docs
+    repoURL: ghcr.io/codex-team/codex.docs.chart/codex-docs
     targetRevision: 2.1.0
     chart: codex-docs
     helm:
