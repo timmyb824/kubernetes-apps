@@ -1,0 +1,132 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: codex-docs
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+  annotations:
+    avp.kubernetes.io/path: "secret/data/codex-docs"
+spec:
+  destination:
+    namespace: codex-docs
+    server: "https://kubernetes.default.svc"
+  project: default
+  source:
+    repoURL: ghcr.io/codex-team/codex.docs.chart
+    targetRevision: 2.1.0
+    chart: codex-docs
+    helm:
+      releaseName: codex-docs
+      values: |
+        replicaCount: 1
+
+        annotations:
+
+        configuration:
+          port: 3000
+          host: "0.0.0.0"
+          uploads:
+            driver: "local"
+            local:
+              path: "./uploads"
+            s3: {}
+          frontend:
+            title: "TimmyB Docs"
+            description: "A documentation website for TimmyB Tech"
+            startPage: ""
+            misprintsChatId: "12344564"
+            yandexMetrikaId: "<METRIKA_ID>"
+            carbon:
+              serve: ""
+              placement: ""
+            menu: []
+          auth:
+            password: ""
+            secret: ""
+
+          database:
+            driver: local # you can change database driver here. 'mongodb' or 'local'
+            local:
+              path: "./db"
+            mongodb: {}
+
+        # Additional Environment variables
+        env: {}
+        # Authentication parameters
+        auth:
+          # Auth password
+          # Defaults to a random 20-character alphanumeric string if not set
+          #
+          password: ""
+          # The name of an existing secret with auth credentials
+          # NOTE: When it's set, the previous `auth.password` parameter is ignored
+          #
+          existingSecret: ""
+          # Password key to be retrieved from existing secret
+          # NOTE: ignored unless `auth.existingSecret` parameter is set
+          #
+          existingSecretPasswordKey: ""
+
+        image:
+          repository: ghcr.io/codex-team/codex.docs
+          pullPolicy: IfNotPresent
+          tag: ""
+
+        imagePullSecrets: []
+        fullnameOverride: ""
+
+        podAnnotations: {}
+
+        podSecurityContext: {}
+
+        securityContext: {}
+
+        service:
+          type: ClusterIP
+          port: 3000
+
+        resources: {}
+
+        volumes:
+          db:
+            storage: 16Gi
+            storageClassName: "nfs-csi-synologynas"
+          uploads:
+            storage: 32Gi
+            storageClassName: "nfs-csi-synologynas"
+
+        nodeSelector: {}
+
+        tolerations: []
+
+        affinity: {}
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: codex-docs-ingress
+  namespace: codex-docs
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+    # argocd.argoproj.io/hook: Sync
+    helm.sh/hook: "post-install"
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`docs.local.timmybtech.com`)
+      kind: Rule
+      services:
+        - name: codex-docs
+          port: 3000
+  tls:
+    secretName: local-timmybtech-com-tls # or local-example-com-staging-tls
