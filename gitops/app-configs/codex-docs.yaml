@@ -92,7 +92,7 @@ spec:
           className: "ngrok"
           annotations: {}
           hosts:
-            - host: ${NGROK_SUBDOMAIN}.ngrok.io
+            - host: winning-faithful-troll.ngrok-free.app
               paths:
                 - path: /
                   pathType: Prefix
