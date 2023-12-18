@@ -87,6 +87,21 @@ spec:
           type: ClusterIP
           port: 3000
 
+        ingress:
+          enabled: true
+          className: "ngrok"
+          annotations: {}
+          hosts:
+            - host: ${NGROK_SUBDOMAIN}.ngrok.io
+              paths:
+                - path: /
+                  pathType: Prefix
+                  backend:
+                    service:
+                      name: codex-docs
+                      port:
+                        number: 3000
+
         resources: {}
 
         volumes:
