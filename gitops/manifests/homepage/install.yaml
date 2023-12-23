@@ -197,7 +197,7 @@ data:
       OCI:
         icon: mdi-server
         style: row
-        columns: 2
+        columns: 3
       OCI hidden:
         header: false
         style: row
@@ -394,6 +394,14 @@ data:
                 url: https://portainer.local.timmybtech.com
                 env: 13
                 key: <PORTAINER_ACCESS_TOKEN>
+        - Uptime Kuma:
+            icon: uptime-kuma.png
+            href: https://uptime-kuma.timmybtech.com/
+            ping: http://homelab-oci03.local.lan:3001
+            widget:
+                type: uptimekuma
+                url: http:///homelab-oci03.local.lan:3001
+                slug: bryant-homelab
 
     - OCI hidden:
         - Healthchecks:
