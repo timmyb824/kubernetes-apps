@@ -205,7 +205,7 @@ data:
       PI Servers:
         icon: mdi-fruit-grapes-outline
         style: row
-        columns: 3
+        columns: 2
       PI Servers hidden:
         header: false
         style: row
@@ -447,14 +447,6 @@ data:
                 url: http://rasberrypi.local.lan
                 username: <ADGUARD_USER>
                 password: <ADGUARD_PASSWORD>
-        - Uptime Kuma:
-            icon: uptime-kuma.png
-            href: https://uptimekuma.timmybtech.com/
-            ping: http://pihole2.local.lan:3001
-            widget:
-                type: uptimekuma
-                url: http://pihole2.local.lan:3001
-                slug: homelab
 
     - PI Servers hidden:
         - Adguard Home Sync:
