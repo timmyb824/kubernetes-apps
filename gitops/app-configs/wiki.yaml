@@ -54,7 +54,7 @@ spec:
 kind: Secret
 apiVersion: v1
 metadata:
-  namspace: wiki
+  namespace: wiki
   name: wiki-postgresql-secret
   annotations:
     avp.kubernetes.io/path: "secret/data/postgres_db"
