@@ -1,13 +1,3 @@
-kind: Secret
-apiVersion: v1
-metadata:
-  namspace: wiki
-  name: wiki-postgresql-secret
-  annotations:
-    avp.kubernetes.io/path: "secret/data/postgres_db"
-    helm.sh/hook: "pre-install"
-data:
-  postgresql-password: <BASE64_ENCODED_PASSWORD>
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
@@ -60,6 +50,17 @@ spec:
       selfHeal: true
     syncOptions:
     - CreateNamespace=true
+---
+kind: Secret
+apiVersion: v1
+metadata:
+  namspace: wiki
+  name: wiki-postgresql-secret
+  annotations:
+    avp.kubernetes.io/path: "secret/data/postgres_db"
+    helm.sh/hook: "post-install"
+data:
+  postgresql-password: <BASE64_ENCODED_PASSWORD>
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
