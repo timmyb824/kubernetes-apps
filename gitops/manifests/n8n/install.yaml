@@ -1,0 +1,234 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: n8n
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    service: n8n-claim0
+  name: n8n-claim0
+  namespace: n8n
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: nfs-csi-synologynas
+  resources:
+    requests:
+      storage: 8Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    avp.kubernetes.io/path: "secret/data/postgres_db"
+  labels:
+    service: n8n
+  name: n8n
+  namespace: n8n
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: n8n
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        service: n8n
+        app.kubernetes.io/name: n8n
+    spec:
+      initContainers:
+        - name: volume-permissions
+          image: busybox:1.36
+          command: ["sh", "-c", "chown 1000:1000 /data"]
+          volumeMounts:
+            - name: n8n-claim0
+              mountPath: /data
+      containers:
+        - command:
+            - /bin/sh
+          args:
+            - -c
+            - sleep 5; n8n start
+          env:
+            - name: DB_TYPE
+              value: postgresdb
+            - name: DB_POSTGRESDB_HOST
+              value: <HOST_NAME>
+            - name: DB_POSTGRESDB_PORT
+              value: "5432"
+            - name: DB_POSTGRESDB_DATABASE
+              value: n8n
+            - name: DB_POSTGRESDB_USER
+              value: <USER>
+            - name: DB_POSTGRESDB_PASSWORD
+              value: <PASSWORD>
+            - name: N8N_PROTOCOL
+              value: http
+            - name: N8N_PORT
+              value: "5678"
+          image: n8nio/n8n
+          name: n8n
+          ports:
+            - containerPort: 5678
+          resources:
+            requests:
+              memory: "250Mi"
+            limits:
+              memory: "500Mi"
+          volumeMounts:
+            - mountPath: /home/node/.n8n
+              name: n8n-claim0
+      restartPolicy: Always
+      volumes:
+        - name: n8n-claim0
+          persistentVolumeClaim:
+            claimName: n8n-claim0
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    service: n8n
+  name: n8n
+  namespace: n8n
+spec:
+  ports:
+    - name: "5678"
+      port: 5678
+      targetPort: 5678
+      protocol: TCP
+  selector:
+    service: n8n
+status:
+  loadBalancer: {}
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: n8n-ingress
+  namespace: n8n
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`n8n.local.timmybtech.com`)
+      kind: Rule
+      services:
+        - name: n8n
+          port: 5678
+  tls:
+    secretName: local-timmybtech-com-tls
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  annotations:
+    avp.kubernetes.io/path: "secret/data/cloudflared"
+  name: tunnel-credentials
+type: Opaque
+stringData:
+  credentials.json: >-
+    <CREDENTIALS>
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloudflared
+  namespace: n8n
+spec:
+  selector:
+    matchLabels:
+      app: cloudflared
+  replicas: 2 # You could also consider elastic scaling for this deployment
+  template:
+    metadata:
+      labels:
+        app: cloudflared
+    spec:
+      containers:
+      - name: cloudflared
+        image: cloudflare/cloudflared:2022.3.0
+        args:
+        - tunnel
+        # Points cloudflared to the config file, which configures what
+        # cloudflared will actually do. This file is created by a ConfigMap
+        # below.
+        - --config
+        - /etc/cloudflared/config/config.yaml
+        - run
+        livenessProbe:
+          httpGet:
+            # Cloudflared has a /ready endpoint which returns 200 if and only if
+            # it has an active connection to the edge.
+            path: /ready
+            port: 2000
+          failureThreshold: 1
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        volumeMounts:
+        - name: config
+          mountPath: /etc/cloudflared/config
+          readOnly: true
+        # Each tunnel has an associated "credentials file" which authorizes machines
+        # to run the tunnel. cloudflared will read this file from its local filesystem,
+        # and it'll be stored in a k8s secret.
+        - name: creds
+          mountPath: /etc/cloudflared/creds
+          readOnly: true
+      volumes:
+      - name: creds
+        secret:
+          # By default, the credentials file will be created under ~/.cloudflared/<tunnel ID>.json
+          # when you run `cloudflared tunnel create`. You can move it into a secret by using:
+          # ```sh
+          # kubectl create secret generic tunnel-credentials \
+          # --from-file=credentials.json=/Users/yourusername/.cloudflared/<tunnel ID>.json
+          # ```
+          secretName: tunnel-credentials
+      # Create a config.yaml file from the ConfigMap below.
+      - name: config
+        configMap:
+          name: cloudflared
+          items:
+          - key: config.yaml
+            path: config.yaml
+---
+# This ConfigMap is just a way to define the cloudflared config.yaml file in k8s.
+# It's useful to define it in k8s, rather than as a stand-alone .yaml file, because
+# this lets you use various k8s templating solutions (e.g. Helm charts) to
+# parameterize your config, instead of just using string literals.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cloudflared
+  namespace: n8n
+data:
+  config.yaml: |
+    # Name of the tunnel you want to run
+    tunnel: n8n
+    credentials-file: /etc/cloudflared/creds/credentials.json
+    # Serves the metrics server under /metrics and the readiness server under /ready
+    metrics: 0.0.0.0:2000
+    # Autoupdates applied in a k8s pod will be lost when the pod is removed or restarted, so
+    # autoupdate doesn't make sense in Kubernetes. However, outside of Kubernetes, we strongly
+    # recommend using autoupdate.
+    no-autoupdate: true
+    # The `ingress` block tells cloudflared which local service to route incoming
+    # requests to. For more about ingress rules, see
+    # https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/configuration/ingress
+    #
+    # Remember, these rules route traffic from cloudflared to a local service. To route traffic
+    # from the internet to cloudflared, run `cloudflared tunnel route dns <tunnel> <hostname>`.
+    # E.g. `cloudflared tunnel route dns example-tunnel tunnel.example.com`.
+    ingress:
+    - hostname: docs.timmybtech.com
+      service: http://n8n.n8n.svc.cluster.local:5678
+    # This rule matches any traffic which didn't match a previous rule, and responds with HTTP 404.
+    - service: http_status:404
