@@ -14,7 +14,7 @@ spec:
   project: default
   source:
     repoURL: https://charts.js.wiki
-    targetRevision: 0.2.3
+    targetRevision: 2.2.0
     chart: requarks/wiki
     helm:
       releaseName: wiki
