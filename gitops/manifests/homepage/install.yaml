@@ -248,6 +248,9 @@ data:
         - Netdata Cloud:
             - abbr: NC
               href: https://app.netdata.cloud/
+        - Yandex Metrica:
+            - abbr: YM
+              href: https://metrica.yandex.com/
     - Networking:
         - Cloudflare:
             - abbr: CF
