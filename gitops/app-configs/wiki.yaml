@@ -190,7 +190,7 @@ spec:
             ##
             enabled: false
             ## concourse data Persistent Volume Storage Class
-            ## If defined, storageClassName: <storageClass>
+            ## If defined, storageClassName: [storageClass]
             ## If set to "-", storageClassName: "", which disables dynamic provisioning
             ## If undefined (the default) or set to null, no storageClassName spec is
             ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
@@ -233,6 +233,7 @@ spec:
 apiVersion: v1
 kind: Secret
 metadata:
+  namespace: wiki
   annotations:
     avp.kubernetes.io/path: "secret/data/cloudflared"
   name: tunnel-credentials
@@ -289,11 +290,11 @@ spec:
       volumes:
       - name: creds
         secret:
-          # By default, the credentials file will be created under ~/.cloudflared/<tunnel ID>.json
+          # By default, the credentials file will be created under ~/.cloudflared/[tunnel ID].json
           # when you run `cloudflared tunnel create`. You can move it into a secret by using:
           # ```sh
           # kubectl create secret generic tunnel-credentials \
-          # --from-file=credentials.json=/Users/yourusername/.cloudflared/<tunnel ID>.json
+          # --from-file=credentials.json=/Users/yourusername/.cloudflared/[tunnel ID].json
           # ```
           secretName: tunnel-credentials
       # Create a config.yaml file from the ConfigMap below.
@@ -329,7 +330,7 @@ data:
     # https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/configuration/ingress
     #
     # Remember, these rules route traffic from cloudflared to a local service. To route traffic
-    # from the internet to cloudflared, run `cloudflared tunnel route dns <tunnel> <hostname>`.
+    # from the internet to cloudflared, run `cloudflared tunnel route dns [tunnel] [hostname]`.
     # E.g. `cloudflared tunnel route dns example-tunnel tunnel.example.com`.
     ingress:
     - hostname: wiki.timmybtech.com
