@@ -135,7 +135,7 @@ metadata:
 type: Opaque
 stringData:
   credentials.json: >-
-    <CREDENTIALS>
+    <N8N_CREDENTIALS>
 ---
 apiVersion: apps/v1
 kind: Deployment
