@@ -1,3 +1,14 @@
+kind: Secret
+apiVersion: v1
+metadata:
+  namspace: wiki
+  name: wiki-postgresql-secret
+  annotations:
+    avp.kubernetes.io/path: "secret/data/postgres_db"
+    helm.sh/hook: "pre-install"
+data:
+  postgresql-password: <BASE64_ENCODED_PASSWORD>
+---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -39,6 +50,9 @@ spec:
 
       - name: "postgresql.postgresqlPort"
         value: "5432"
+
+      - name: "postgresql.existingSecret"
+        value: "wiki-postgresql-secret"
 
   syncPolicy:
     automated:
