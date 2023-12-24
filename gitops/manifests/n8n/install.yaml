@@ -228,7 +228,7 @@ data:
     # from the internet to cloudflared, run `cloudflared tunnel route dns <tunnel> <hostname>`.
     # E.g. `cloudflared tunnel route dns example-tunnel tunnel.example.com`.
     ingress:
-    - hostname: docs.timmybtech.com
+    - hostname: n8n.timmybtech.com
       service: http://n8n.n8n.svc.cluster.local:5678
     # This rule matches any traffic which didn't match a previous rule, and responds with HTTP 404.
     - service: http_status:404
