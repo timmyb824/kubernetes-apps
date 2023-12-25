@@ -1,13 +1,3 @@
-kind: Secret
-apiVersion: v1
-metadata:
-  namespace: coder
-  name: coder-db-url
-  annotations:
-    avp.kubernetes.io/path: "secret/data/postgres_db"
-    helm.sh/hook: "pre-install"
-data:
-  url: <BASE64_ENCODED_CODER_URL>
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
@@ -197,3 +187,14 @@ data:
       service: http://coder.coder.svc.cluster.local:80
     # This rule matches any traffic which didn't match a previous rule, and responds with HTTP 404.
     - service: http_status:404
+---
+kind: Secret
+apiVersion: v1
+metadata:
+  namespace: coder
+  name: coder-db-url
+  annotations:
+    avp.kubernetes.io/path: "secret/data/postgres_db"
+    helm.sh/hook: "post-install"
+data:
+  url: <BASE64_ENCODED_CODER_URL>
