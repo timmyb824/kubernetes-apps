@@ -62,7 +62,8 @@ spec:
     automated:
       prune: true
       selfHeal: true
----
+    syncOptions:
+    - CreateNamespace=true
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
