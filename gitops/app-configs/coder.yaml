@@ -13,7 +13,7 @@ spec:
   project: default
   source:
     repoURL: https://helm.coder.com/v2
-    targetRevision: 0.1.0
+    targetRevision: 2.6.0
     chart: coder-v2/coder
     helm:
       releaseName: coder
