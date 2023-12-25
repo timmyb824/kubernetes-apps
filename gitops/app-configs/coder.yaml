@@ -22,7 +22,7 @@ spec:
     server: "https://kubernetes.default.svc"
   project: default
   source:
-    repoURL: https://coder.github.io/kubernetes/
+    repoURL: https://helm.coder.com/v2
     targetRevision: 0.1.0
     chart: coder
     helm:
