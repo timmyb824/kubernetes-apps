@@ -61,10 +61,31 @@ spec:
     syncOptions:
     - CreateNamespace=true
 ---
+---
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
   name: coder-ingress
+  namespace: coder
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+    helm.sh/hook: "post-install"
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`coder.local.timmybtech.com`)
+      kind: Rule
+      services:
+        - name: coder
+          port: 80
+  tls:
+    secretName: local-timmybtech-com-tls
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: coder-metrics-ingress
   namespace: coder
   annotations:
     kubernetes.io/ingress.class: traefik-external

@@ -576,12 +576,12 @@ prometheus:
         static_configs:
         - targets: [minio.local.timmybtech.com]
 
-      - job_name: "coder"
-        scheme: "http"
+      - job_name: coder
+        scheme: http
         static_configs:
           - targets: ["coder-metrics.local.timmybtech.com"]
             labels:
-              apps: "coder"
+              apps: coder
 
       # - job_name: alerta
       #   metrics_path: /api/management/metrics
