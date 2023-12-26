@@ -579,7 +579,7 @@ prometheus:
       - job_name: "coder"
         scheme: "http"
         static_configs:
-          - targets: ["coder.local.timmybtech.com:2112"]
+          - targets: ["coder-metrics.local.timmybtech.com"]
             labels:
               apps: "coder"
 

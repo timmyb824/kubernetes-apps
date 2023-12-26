@@ -73,11 +73,11 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`coder.local.timmybtech.com`)
+    - match: Host(`coder-metrics.local.timmybtech.com`)
       kind: Rule
       services:
         - name: coder
-          port: 80
+          port: 2112
   tls:
     secretName: local-timmybtech-com-tls
 ---
