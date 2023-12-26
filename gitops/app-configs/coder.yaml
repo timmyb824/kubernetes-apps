@@ -41,6 +41,9 @@ spec:
             - name: CODER_PROMETHEUS_ADDRESS
               value: 0.0.0.0:2112
 
+            - name: CODER_PROMETHEUS_ENABLE
+              value: "true"
+
             # (Optional) For production deployments the access URL should be set.
             # If you're just trying Coder, access the dashboard via the service IP.
             - name: CODER_ACCESS_URL
