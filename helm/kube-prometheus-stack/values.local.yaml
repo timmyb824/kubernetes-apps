@@ -428,11 +428,11 @@ prometheus:
   prometheusSpec:
     resources:
       requests:
-        cpu: 200m
-        memory: 2000Mi
-      limits:
         cpu: 500m
-        memory: 3000Mi
+        memory: 2500Mi
+      limits:
+        cpu: 750m
+        memory: 3250Mi
     replicas: 1
     replicaExternalLabelName: "replica"
     ruleSelectorNilUsesHelmValues: false
@@ -486,20 +486,20 @@ prometheus:
         static_configs:
           - targets:
               - '${PROMETHEUS_OCI01}'
-              # - '${PROMETHEUS_OCI02}'
               - '${PROMETHEUS_OCI03}'
-              # - '192.168.86.42:9090'
               - '192.168.86.53:9090'
               - '192.168.86.74:9090'
               - '192.168.86.174:9090'
               - '192.168.86.201:9090'
-              - '192.168.86.202:9090'
-              - '192.168.86.203:9090'
+              # - '192.168.86.202:9090'
+              # - '192.168.86.203:9090'
               # - '192.168.86.132:9090'
               # - '192.168.86.59:9090'
               # - '${PROMETHEUS_LINODE01}'
               # - '${PROMETHEUS_AWS01}'
               # - '192.168.86.33:9090'
+              # - '${PROMETHEUS_OCI02}'
+              # - '192.168.86.42:9090'
 
       # - job_name: caretta
       #   scrape_interval: 1m
