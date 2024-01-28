@@ -1,126 +1,133 @@
 ---
-apiVersion: argoproj.io/v1alpha1
-kind: Application
+apiVersion: v1
+kind: Namespace
 metadata:
-  name: coder
-  namespace: argocd
-  finalizers:
-  - resources-finalizer.argocd.argoproj.io
+  name: grafana
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: grafana-pvc
+  namespace: grafana
 spec:
-  destination:
-    namespace: coder
-    server: "https://kubernetes.default.svc"
-  project: default
-  source:
-    repoURL: https://helm.coder.com/v2
-    targetRevision: 2.6.0
-    chart: coder
-    helm:
-      releaseName: coder
-      values: |
-        coder:
-          # You can specify any environment variables you'd like to pass to Coder
-          # here. Coder consumes environment variables listed in
-          # `coder server --help`, and these environment variables are also passed
-          # to the workspace provisioner (so you can consume them in your Terraform
-          # templates for auth keys etc.).
-          #
-          # Please keep in mind that you should not set `CODER_HTTP_ADDRESS`,
-          # `CODER_TLS_ENABLE`, `CODER_TLS_CERT_FILE` or `CODER_TLS_KEY_FILE` as
-          # they are already set by the Helm chart and will cause conflicts.
-          env:
-            - name: CODER_PG_CONNECTION_URL
-              valueFrom:
-                secretKeyRef:
-                  # You'll need to create a secret called coder-db-url with your
-                  # Postgres connection URL like:
-                  # postgres://coder:password@postgres:5432/coder?sslmode=disable
-                  name: coder-db-url
-                  key: url
-
-            - name: CODER_PROMETHEUS_ADDRESS
-              value: 0.0.0.0:2112
-
-            - name: CODER_PROMETHEUS_ENABLE
-              value: "true"
-
-            # (Optional) For production deployments the access URL should be set.
-            # If you're just trying Coder, access the dashboard via the service IP.
-            - name: CODER_ACCESS_URL
-              value: "https://coder.timmybtech.com"
-
-          #tls:
-          #  secretNames:
-          #    - my-tls-secret-name
-
-
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
-    syncOptions:
-    - CreateNamespace=true
+  storageClassName: nfs-csi-synologynas
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 8Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: grafana
+  name: grafana
+  namespace: grafana
+spec:
+  selector:
+    matchLabels:
+      app: grafana
+  template:
+    metadata:
+      labels:
+        app: grafana
+        app.kubernetes.io/name: grafana
+    spec:
+      securityContext:
+        fsGroup: 472
+        supplementalGroups:
+          - 0
+      containers:
+        - name: grafana
+          image: grafana/grafana:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+              name: http-grafana
+              protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /robots.txt
+              port: 3000
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 30
+            successThreshold: 1
+            timeoutSeconds: 2
+          livenessProbe:
+            failureThreshold: 3
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            tcpSocket:
+              port: 3000
+            timeoutSeconds: 1
+          resources:
+            requests:
+              cpu: 250m
+              memory: 750Mi
+          volumeMounts:
+            - mountPath: /var/lib/grafana
+              name: grafana-pv
+      volumes:
+        - name: grafana-pv
+          persistentVolumeClaim:
+            claimName: grafana-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: grafana
+  namespace: grafana
+spec:
+  ports:
+    - port: 3000
+      protocol: TCP
+      targetPort: http-grafana
+  selector:
+    app: grafana
+  sessionAffinity: None
+  type: LoadBalancer
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
-  name: coder-ingress
-  namespace: coder
+  name: homebox-ingress
+  namespace: homebox
   annotations:
     kubernetes.io/ingress.class: traefik-external
-    helm.sh/hook: "post-install"
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
 spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`coder.local.timmybtech.com`)
+    - match: Host(`grafana.local.timmybtech.com`)
       kind: Rule
       services:
-        - name: coder
-          port: 80
-  tls:
-    secretName: local-timmybtech-com-tls
----
-apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRoute
-metadata:
-  name: coder-metrics-ingress
-  namespace: coder
-  annotations:
-    kubernetes.io/ingress.class: traefik-external
-    helm.sh/hook: "post-install"
-spec:
-  entryPoints:
-    - websecure
-  routes:
-    - match: Host(`coder-metrics.local.timmybtech.com`)
-      kind: Rule
-      services:
-        - name: coder
-          port: 2112
+        - name: grafana
+          port: 3000
   tls:
     secretName: local-timmybtech-com-tls
 ---
 apiVersion: v1
 kind: Secret
 metadata:
-  namespace: coder
   annotations:
     avp.kubernetes.io/path: "secret/data/cloudflared"
-    helm.sh/hook: "post-install"
   name: tunnel-credentials
+  namespace: grafana
 type: Opaque
 stringData:
   credentials.json: >-
-    <CODER_CREDENTIALS>
+    <GRAFANA_CREDENTIALS>
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: cloudflared
-  namespace: coder
-  annotations:
-    helm.sh/hook: "post-install"
+  namespace: grafana
 spec:
   selector:
     matchLabels:
@@ -164,11 +171,11 @@ spec:
       volumes:
       - name: creds
         secret:
-          # By default, the credentials file will be created under ~/.cloudflared/[tunnel ID].json
+          # By default, the credentials file will be created under ~/.cloudflared/<tunnel ID>.json
           # when you run `cloudflared tunnel create`. You can move it into a secret by using:
           # ```sh
           # kubectl create secret generic tunnel-credentials \
-          # --from-file=credentials.json=/Users/yourusername/.cloudflared/[tunnel ID].json
+          # --from-file=credentials.json=/Users/yourusername/.cloudflared/<tunnel ID>.json
           # ```
           secretName: tunnel-credentials
       # Create a config.yaml file from the ConfigMap below.
@@ -187,13 +194,11 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: cloudflared
-  namespace: coder
-  annotations:
-    helm.sh/hook: "post-install"
+  namespace: grafana
 data:
   config.yaml: |
     # Name of the tunnel you want to run
-    tunnel: coder
+    tunnel: grafana
     credentials-file: /etc/cloudflared/creds/credentials.json
     # Serves the metrics server under /metrics and the readiness server under /ready
     metrics: 0.0.0.0:2000
@@ -206,21 +211,10 @@ data:
     # https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/configuration/ingress
     #
     # Remember, these rules route traffic from cloudflared to a local service. To route traffic
-    # from the internet to cloudflared, run `cloudflared tunnel route dns [tunnel] [hostname]`.
+    # from the internet to cloudflared, run `cloudflared tunnel route dns <tunnel> <hostname>`.
     # E.g. `cloudflared tunnel route dns example-tunnel tunnel.example.com`.
     ingress:
-    - hostname: coder.timmybtech.com
-      service: http://coder.coder.svc.cluster.local:80
+    - hostname: grafana.timmybtech.com
+      service: http://grafana.grafana.svc.cluster.local:3000
     # This rule matches any traffic which didn't match a previous rule, and responds with HTTP 404.
     - service: http_status:404
----
-kind: Secret
-apiVersion: v1
-metadata:
-  namespace: coder
-  name: coder-db-url
-  annotations:
-    avp.kubernetes.io/path: "secret/data/postgres_db"
-    helm.sh/hook: "post-install"
-data:
-  url: <BASE64_ENCODED_CODER_URL>

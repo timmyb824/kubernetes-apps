@@ -3,13 +3,13 @@
 1. Log-in to cloudflare
 
     ```bash
-    cloudflare login
+    cloudflared login
     ```
 
 2. Create a new tunnel and copy the credentials to the clipboard
 
     ```bash
-    cloudflare tunnel create <tunnel-name>
+    cloudflared tunnel create <tunnel-name>
 
     # output
     Tunnel credentials written to /Users/timothybryant/.cloudflared/5a526789-1234-be75-54321-12334rfgdfg4.json. cloudflared chose this file based on where your origin certificate was found. Keep this file secret. To revoke these credentials, delete the tunnel.
