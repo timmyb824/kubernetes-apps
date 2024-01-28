@@ -255,7 +255,7 @@ spec:
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
-  name: kube-state-metrics-ingress
+  name: kube-state-metrics-telemetry-ingress
   namespace: kube-system
   annotations:
     kubernetes.io/ingress.class: traefik-external
