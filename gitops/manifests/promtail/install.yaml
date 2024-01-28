@@ -1,4 +1,9 @@
 ---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: logging
+---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
@@ -39,7 +44,7 @@ data:
       grpc_listen_port: 0
 
     clients:
-    - url: https://loki.local.timmybtech.com/loki/api/v1/push
+    - url: https://loki.timmybtech.com/loki/api/v1/push
 
     positions:
       filename: /tmp/positions.yaml
