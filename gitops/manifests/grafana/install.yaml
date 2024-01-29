@@ -17,6 +17,14 @@ spec:
     requests:
       storage: 8Gi
 ---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-env
+  namespace: grafana
+data:
+  GF_INSTALL_PLUGINS: grafana-clock-panel,grafana-piechart-panel,alexanderzobnin-zabbix-app,https://github.com/performancecopilot/grafana-pcp/releases/download/v5.1.1/performancecopilot-pcp-app-5.1.1.zip;performancecopilot-pcp-app
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -42,6 +50,9 @@ spec:
         - name: grafana
           image: grafana/grafana:latest
           imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: grafana-env
           ports:
             - containerPort: 3000
               name: http-grafana
