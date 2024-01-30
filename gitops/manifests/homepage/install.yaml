@@ -504,7 +504,7 @@ data:
             widget:
                 type: prometheus
                 url: https://prometheus.timmybtech.com
-        - Dockge
+        - Dockge:
             icon: docker.png
             href: https://dockge.timmybtech.com/
             ping: http://vm304.local.lan:5001
