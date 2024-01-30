@@ -189,11 +189,11 @@ data:
       Kubernetes:
         icon: mdi-sail-boat
         style: row
-        columns: 2
+        columns: 3
       Kubernetes hidden:
         header: false
         style: row
-        columns: 2
+        columns: 3
       OCI:
         icon: mdi-server
         style: row
@@ -279,12 +279,12 @@ data:
                 key: <CHANGEDTECTIONIO_API_KEY>
         - Grafana:
             icon: grafana.png
-            href: https://grafana.local.timmybtech.com/
-            namespace: monitoring
+            href: https://grafana.timmybtech.com/
+            namespace: grafana
             app: grafana
             widget:
                 type: grafana
-                url: https://grafana.local.timmybtech.com
+                url: https://grafana.timmybtech.com
                 username: <GRAFANA_USER>
                 password: <GRAFANA_PASSWORD>
         - Traefik-k8s:
@@ -297,21 +297,8 @@ data:
               url: https://traefik.local.timmybtech.com
               username: <TRAEFIK_USER>
               password: <TRAEFIK_PASSWORD>
-        - Prometheus:
-            icon: prometheus.png
-            href: https://prometheus.local.timmybtech.com/
-            namespace: monitoring
-            app: prometheus
-            widget:
-                type: prometheus
-                url: https://prometheus.local.timmybtech.com
 
     - Kubernetes hidden:
-        - AlertManager:
-            icon: prometheus.png
-            href: https://alertmanager.local.timmybtech.com/
-            namespace: monitoring
-            app: alertmanager
         - ArgoCD:
             icon: argocd.png
             href: https://argocd.local.timmybtech.com/
@@ -322,11 +309,6 @@ data:
             href: https://firefly.local.timmybtech.com/
             namespace: firefly-iii
             app: firefly-iii
-        - Coder:
-            icon: coder.png
-            href: https://coder.local.timmybtech.com/
-            namespace: coder
-            app: coder
         - Firefly-iii Importer:
             icon: firefly.png
             href: https://firefly-importer.local.timmybtech.com/
@@ -347,11 +329,11 @@ data:
             href: https://influxdb.local.timmybtech.com/
             namespace: influxdb
             app: influxdb
-        - Jenkins:
-            icon: jenkins.png
-            href: https://jenkins.local.timmybtech.com/
-            namespace: jenkins
-            app: jenkins
+        - Kube-State-Metrics:
+            icon: kubernetes.png
+            href: https://kube-state-metrics.local.timmybtech.com/
+            namespace: kube-system
+            app: kube-state-metrics
         - MinIO:
             icon: minio.png
             href: https://minio.local.timmybtech.com/
@@ -516,6 +498,13 @@ data:
                 url: https://portainer.local.timmybtech.com
                 env: 12
                 key: <PORTAINER_ACCESS_TOKEN>
+        - Prometheus:
+            icon: prometheus.png
+            href: https://prometheus.timmybtech.com/
+            widget:
+                type: prometheus
+                url: https://prometheus.timmybtech.com
+
     - VM Servers hidden:
         - Ansible Semaphore:
             icon: ansible.png
@@ -529,14 +518,14 @@ data:
             icon: code-server.png
             href: https://code-server.timmybtech.com/
             ping: http://vm304.local.lan:8443
-        - Karma:
-            icon: prometheus.png
-            href: https://karma.timmybtech.com/
-            ping: http://vm304.local.lan:8082
         - LinkAce:
             icon: linkace.png
             href: https://linkace.timmybtech.com/
             ping: http://vm304.local.lan:718
+        - Loki:
+            icon: loki.png
+            href: https://loki.timmybtech.com/
+            ping: http://vm305.local.lan:3100
         - PGweb (vm303):
             icon: postgres.png
             href: https://pgweb.timmybtech.com/
