@@ -225,7 +225,7 @@ data:
       VM Servers hidden:
         header: false
         style: row
-        columns: 4
+        columns: 3
       Other:
         icon: mdi-server
         style: row
@@ -503,11 +503,7 @@ data:
             href: https://prometheus.timmybtech.com/
             widget:
                 type: prometheus
-                url: https://prometheus.timmybtech.com
-        - Dockge:
-            icon: docker.png
-            href: https://dockge.timmybtech.com/
-            ping: http://vm304.local.lan:5001
+                url: http://vm305.local.lan:9090
 
     - VM Servers hidden:
         - Ansible Semaphore:
@@ -522,6 +518,10 @@ data:
             icon: code-server.png
             href: https://code-server.timmybtech.com/
             ping: http://vm304.local.lan:8443
+        - Dockge:
+            icon: docker.png
+            href: https://dockge.timmybtech.com/
+            ping: http://vm304.local.lan:5001
         - LinkAce:
             icon: linkace.png
             href: https://linkace.timmybtech.com/
@@ -529,7 +529,7 @@ data:
         - Loki:
             icon: loki.png
             href: https://loki.timmybtech.com/
-            ping: http://vm305.local.lan:3100
+            ping: http://vm305.local.lan:3100/loki/api/v1/status/buildinfo
         - PGweb (vm303):
             icon: postgres.png
             href: https://pgweb.timmybtech.com/
