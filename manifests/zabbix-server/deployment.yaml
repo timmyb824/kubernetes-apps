@@ -336,7 +336,7 @@ spec:
           secretName: zabbix-mysql-server-tls-certs
       containers:
         - name: zabbix-db
-          image: mysql:8.2-oracle
+          image: mysql:8.3-oracle
           args:
            - mysqld
            - --character-set-server=utf8
