@@ -1,9 +1,4 @@
 ---
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: node-exporter
----
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
@@ -11,7 +6,7 @@ metadata:
     app.kubernetes.io/component: exporter
     app.kubernetes.io/name: node-exporter
   name: node-exporter
-  namespace: node-exporter
+  namespace: monitoring
 spec:
   selector:
     matchLabels:
@@ -64,7 +59,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: node-exporter
-  namespace: node-exporter
+  namespace: monitoring
   annotations:
       prometheus.io/scrape: 'true'
       prometheus.io/port:   '9100'
@@ -77,24 +72,3 @@ spec:
     protocol: TCP
     port: 9100
     targetPort: 9100
----
----
-apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRoute
-metadata:
-  name: node-exporter-ingress
-  namespace: node-exporter
-  annotations:
-    kubernetes.io/ingress.class: traefik-external
-spec:
-  entryPoints:
-    - websecure
-  routes:
-    - match: Host(`node-exporter.local.timmybtech.com`)
-      kind: Rule
-      services:
-        - name: node-exporter
-          port: 9100
-
-  tls:
-    secretName: local-timmybtech-com-tls
