@@ -40,10 +40,10 @@ spec:
 
           postgresql:
             enabled: false
-            host: <PG_HOST>
+            host: "<PG_HOST>"
             name: "authentik"
-            user: <PG_USER>
-            password: <PG_PASSWORD>
+            user: "<PG_USER>"
+            password: "<PG_PASSWORD>"
             port: 5432
           redis:
               enabled: true
