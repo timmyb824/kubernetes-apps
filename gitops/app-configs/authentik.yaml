@@ -84,7 +84,10 @@ spec:
               - name: authentik
                 namespace: traefik
           priority: 10
-          services: authentik
+          services:
+              - kind: Service
+                name: authentik
+                port: 80
         # This part is only required for single-app setups
         - kind: Rule
           match: "Host(`authentic.local.timmybtech.com`) && PathPrefix(`/outpost.goauthentik.io/`)"
