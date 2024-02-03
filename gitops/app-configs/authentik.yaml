@@ -82,6 +82,6 @@ spec:
         services:
             - kind: Service
               name: authentik
-              port: 9000
+              port: 80
   tls:
     secretName: local-timmybtech-com-tls
