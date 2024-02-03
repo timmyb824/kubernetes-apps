@@ -32,17 +32,18 @@ spec:
               # performance data to sentry.io, and is fully opt-in
               error_reporting:
                   enabled: false
+              postgresql:
+                  host: <PG_HOST>
+                  name: "authentik"
+                  user: <PG_USER>
+                  password: <PG_PASSWORD>
+                  port: 5432
 
           ingress:
               enabled: false
 
           postgresql:
             enabled: false
-            host: <PG_HOST>
-            name: "authentik"
-            user: <PG_USER>
-            password: <PG_PASSWORD>
-            port: 5432
           redis:
               enabled: true
 
