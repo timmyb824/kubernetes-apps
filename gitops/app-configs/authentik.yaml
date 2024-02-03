@@ -75,6 +75,8 @@ metadata:
 #         - name: authentik
 #           port: 80
 spec:
+    entryPoints:
+      - websecure
     routes:
         - kind: Rule
           match: "Host(`authentik.local.timmybtech.com`)"
