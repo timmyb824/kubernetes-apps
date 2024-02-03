@@ -71,6 +71,15 @@ spec:
   routes:
     - match: Host(`authentik.local.timmybtech.com`)
       kind: Rule
+      Priority: 10
+      services:
+        - name: authentik
+          port: 80
+      middlewares:
+        - name: authentik
+    - match: "Host(`authentik.local.timmybtech.com`) && PathPrefix(`/outpost.goauthentik.io/`)"
+      kind: Rule
+      Priority: 15
       services:
         - name: authentik
           port: 80
