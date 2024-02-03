@@ -74,5 +74,7 @@ spec:
       services:
         - name: authentik
           port: 80
+      middlewares:
+        - name: authentik
   tls:
     secretName: local-timmybtech-com-tls
