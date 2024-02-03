@@ -82,6 +82,7 @@ spec:
           match: "Host(`authentik.local.timmybtech.com`)"
           middlewares:
               - name: authentik
+                namespace: authentik
           priority: 10
           services:
               - kind: Service
