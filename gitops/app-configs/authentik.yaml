@@ -33,17 +33,21 @@ spec:
               error_reporting:
                   enabled: false
               postgresql:
-                  host: <PG_HOST>
-                  name: "authentik"
-                  user: <PG_USER>
-                  password: <PG_PASSWORD>
-                  port: 5432
+                host: <PG_HOST>
+                name: "authentik"
+                user: <PG_USER>
+                password: <PG_PASSWORD>
+                port: 5432
 
           ingress:
               enabled: false
 
           postgresql:
             enabled: false
+            postgresqlMaxConnections: 500
+            postgresqlUsername: <PG_USER>
+            postgresqlPassword: <PG_PASSWORD>
+            postgresqlDatabase: "authentik"
           redis:
               enabled: true
 
