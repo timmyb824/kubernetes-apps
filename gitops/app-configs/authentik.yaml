@@ -69,7 +69,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: "Host(`authentik.local.timmybtech.com`) && PathPrefix(`/outpost.goauthentik.io/`)"
+    - match: Host(`authentik.local.timmybtech.com`)
       kind: Rule
       services:
         - name: authentik
