@@ -70,12 +70,13 @@ spec:
     - websecure
   routes:
     - match: Host(`authentik.local.timmybtech.com`)
+      middlewares:
+        - name: authentik
+          namespace: authentik
       kind: Rule
       services:
         - name: authentik
           port: 80
-      middlewares:
-        - name: authentik
-          namespace: traefik
+
   tls:
     secretName: local-timmybtech-com-tls
