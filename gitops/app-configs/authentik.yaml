@@ -76,5 +76,6 @@ spec:
           port: 80
       middlewares:
         - name: authentik
+          namespace: traefik
   tls:
     secretName: local-timmybtech-com-tls
