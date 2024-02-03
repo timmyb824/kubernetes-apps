@@ -69,19 +69,12 @@ spec:
   entryPoints:
     - websecure
   routes:
-      - kind: Rule
-        match: "Host(`authentik.local.timmybtech.com`)"
-        middlewares:
-            - name: authentik
-              namespace: authentik
-        priority: 10
-        services: # Unchanged
-      - kind: Rule
-        match: "Host(`authentik.local.timmybtech.com`) && PathPrefix(`/outpost.goauthentik.io/`)"
-        priority: 15
-        services:
-            - kind: Service
-              name: authentik
-              port: 80
+    - match: "Host(`authentik.local.timmybtech.com`) && PathPrefix(`/outpost.goauthentik.io/`)"
+      kind: Rule
+      services:
+        - name: authentik
+          port: 80
+      middlewares:
+        - name: authentik
   tls:
     secretName: local-timmybtech-com-tls
