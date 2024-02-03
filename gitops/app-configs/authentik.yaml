@@ -71,7 +71,6 @@ spec:
   routes:
     - match: Host(`authentik.local.timmybtech.com`)
       kind: Rule
-      Priority: 10
       services:
         - name: authentik
           port: 80
