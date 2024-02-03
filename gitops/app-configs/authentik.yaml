@@ -82,7 +82,7 @@ spec:
           match: "Host(`authentik.local.timmybtech.com`)"
           middlewares:
               - name: authentik
-                namespace: authentik
+                namespace: traefik
           priority: 10
           services: # Unchanged
         # This part is only required for single-app setups
