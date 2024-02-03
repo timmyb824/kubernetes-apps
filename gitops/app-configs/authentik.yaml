@@ -65,41 +65,41 @@ metadata:
   namespace: authentik
   annotations:
     kubernetes.io/ingress.class: traefik-external
-spec:
-  entryPoints:
-    - websecure
-  routes:
-    - match: Host(`authentik.local.timmybtech.com`)
-      kind: Rule
-      services:
-        - name: authentik
-          port: 80
-  tls:
-    secretName: local-timmybtech-com-tls
 # spec:
-#     entryPoints:
-#       - websecure
-#     routes:
-#         - kind: Rule
-#           match: "Host(`authentik.local.timmybtech.com`)"
-#           middlewares:
-#               - name: authentik
-#                 namespace: authentik
-#           priority: 10
-#           services:
-#               - kind: Service
-#                 name: authentik
-#                 port: 80
-#         This part is only required for single-app setups
-#         - kind: Rule
-#           match: "Host(`authentic.local.timmybtech.com`) && PathPrefix(`/outpost.goauthentik.io/`)"
-#           priority: 15
-#           services:
-#               - kind: Service
-#                 Or, to use an external Outpost, create an ExternalName service and reference that here.
-#                 See https://kubernetes.io/docs/concepts/services-networking/service/#externalname
-#                 name: authentik
-#                 port: 80
+#   entryPoints:
+#     - websecure
+#   routes:
+#     - match: Host(`authentik.local.timmybtech.com`)
+#       kind: Rule
+#       services:
+#         - name: authentik
+#           port: 80
+#   tls:
+#     secretName: local-timmybtech-com-tls
+spec:
+    entryPoints:
+      - websecure
+    routes:
+        - kind: Rule
+          match: "Host(`authentik.local.timmybtech.com`)"
+          middlewares:
+              - name: authentik
+                namespace: authentik
+          priority: 10
+          services:
+              - kind: Service
+                name: authentik
+                port: 80
+        # This part is only required for single-app setups
+        - kind: Rule
+          match: "Host(`authentic.local.timmybtech.com`) && PathPrefix(`/outpost.goauthentik.io/`)"
+          priority: 15
+          services:
+              - kind: Service
+                # Or, to use an external Outpost, create an ExternalName service and reference that here.
+                # See https://kubernetes.io/docs/concepts/services-networking/service/#externalname
+                name: authentik
+                port: 80
 
-#     tls:
-#       secretName: local-timmybtech-com-tls
+    tls:
+      secretName: local-timmybtech-com-tls
