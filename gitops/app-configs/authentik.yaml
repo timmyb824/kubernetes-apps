@@ -70,9 +70,6 @@ spec:
     - websecure
   routes:
     - match: Host(`authentik.local.timmybtech.com`)
-      middlewares:
-        - name: authentik
-          namespace: authentik
       kind: Rule
       services:
         - name: authentik
