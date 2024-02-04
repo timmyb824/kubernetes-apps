@@ -34,13 +34,6 @@ spec:
             - name: DATABASE_URL
               value: <path:secret/data/umami#PG_URL>
           image: ghcr.io/umami-software/umami:postgresql-latest
-          livenessProbe:
-            exec:
-              command:
-                - curl http://localhost:3000/api/heartbeat
-            failureThreshold: 5
-            periodSeconds: 5
-            timeoutSeconds: 5
           name: umami
           ports:
             - containerPort: 3000
