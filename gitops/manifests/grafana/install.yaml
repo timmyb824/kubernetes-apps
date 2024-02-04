@@ -24,8 +24,8 @@ metadata:
   namespace: grafana
 data:
   GF_INSTALL_PLUGINS: grafana-clock-panel,grafana-piechart-panel,alexanderzobnin-zabbix-app,https://github.com/performancecopilot/grafana-pcp/releases/download/v5.1.1/performancecopilot-pcp-app-5.1.1.zip;performancecopilot-pcp-app
-  GF_METRICS_BASIC_AUTH_USERNAME: <path:secret/data/grafana#GRAFANA_METRICS_BASIC_AUTH_USERNAME>
-  GF_METRICS_BASIC_AUTH_PASSWORD: <path:secret/data/grafana#GRAFANA_METRICS_BASIC_AUTH_PASSWORD>
+  GF_METRICS_BASIC_AUTH_USERNAME: <path:secret/data/grafana#GF_METRICS_BASIC_AUTH_USERNAME>
+  GF_METRICS_BASIC_AUTH_PASSWORD: <path:secret/data/grafana#GF_METRICS_BASIC_AUTH_PASSWORD>
 ---
 apiVersion: apps/v1
 kind: Deployment
