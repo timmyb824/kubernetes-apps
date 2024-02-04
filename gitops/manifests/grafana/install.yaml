@@ -22,8 +22,12 @@ kind: ConfigMap
 metadata:
   name: grafana-env
   namespace: grafana
+  annotations:
+    avp.kubernetes.io/path: "secret/data/grafana"
 data:
   GF_INSTALL_PLUGINS: grafana-clock-panel,grafana-piechart-panel,alexanderzobnin-zabbix-app,https://github.com/performancecopilot/grafana-pcp/releases/download/v5.1.1/performancecopilot-pcp-app-5.1.1.zip;performancecopilot-pcp-app
+  GF_METRICS_BASIC_AUTH_USERNAME: <GRAFANA_METRICS_BASIC_AUTH_USERNAME>
+  GF_METRICS_BASIC_AUTH_PASSWORD: <GRAFANA_METRICS_BASIC_AUTH_PASSWORD>
 ---
 apiVersion: apps/v1
 kind: Deployment
