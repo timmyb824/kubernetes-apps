@@ -28,7 +28,7 @@ spec:
       containers:
         - env:
             - name: APP_SECRET
-              value: <path:secret/data/umami#APP_SECRETL>
+              value: <path:secret/data/umami#APP_SECRET>
             - name: DATABASE_TYPE
               value: postgresql
             - name: DATABASE_URL
