@@ -1,16 +1,16 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: n8n
+  name: umami
   namespace: argocd
   finalizers:
   - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    namespace: n8n
+    namespace: umami
     server: "https://kubernetes.default.svc"
   source:
-    path: gitops/manifests/n8n
+    path: gitops/manifests/umami
     repoURL: "https://github.com/timmyb824/kubernetes-apps.git"
     targetRevision: HEAD
   project: default
