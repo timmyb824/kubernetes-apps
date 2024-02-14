@@ -193,7 +193,7 @@ etcd:
   image:
     registry: docker.io
     repository: bitnami/etcd
-    tag: 3.5.9-debian-11-r10
+    tag: 3.5.12-debian-11-r10
     digest: ""
   auth:
     rbac:
