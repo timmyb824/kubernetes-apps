@@ -72,6 +72,9 @@ data:
       scrape_interval: 60s
       scrape_timeout: 55s
 
+      external_labels:
+        origin_prometheus: k3s-cluster
+
     #   evaluation_interval: 60s # how often rules in a group are evaluated
     # rule_files:
     #   - /etc/prometheus/prometheus.rules
