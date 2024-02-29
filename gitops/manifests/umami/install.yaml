@@ -35,6 +35,7 @@ spec:
               value: <path:secret/data/umami#PG_URL>
           image: ghcr.io/umami-software/umami:postgresql-latest
           name: umami
+          imagePullPolicy: Always
           ports:
             - containerPort: 3000
               hostPort: 3000
