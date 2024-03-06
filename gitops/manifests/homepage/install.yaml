@@ -501,6 +501,7 @@ data:
         - Prometheus:
             icon: prometheus.png
             href: https://prometheus.timmybtech.com/
+            ping: http://vm305.local.lan:9090
             widget:
                 type: prometheus
                 url: http://vm305.local.lan:9090
