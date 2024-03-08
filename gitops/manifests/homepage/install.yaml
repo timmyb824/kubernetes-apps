@@ -229,7 +229,7 @@ data:
       Other:
         icon: mdi-server
         style: row
-        columns: 4
+        columns: 2
   bookmarks.yaml: |
     - CICD:
         - Netlify:
@@ -241,6 +241,10 @@ data:
         - Terraform Cloud:
             - abbr: TC
               href: https://app.terraform.io/app/Bryant-homelab/workspaces
+    - Cloudflare:
+        - Oracle Cloud:
+            - abbr: OC
+              href: https://cloud.oracle.com/
     - Observability:
         - Grafana Cloud:
             - abbr: GC
@@ -344,6 +348,11 @@ data:
             href: https://n8n.local.timmybtech.com/
             namespace: n8n
             app: n8n
+        - Planka:
+            icon: planka.png
+            href: https://planka.local.timmybtech.com/
+            namespace: planka
+            app: planka
         - Portainer (k8s):
             icon: portainer.png
             href: https://portainer.local.timmybtech.com/
@@ -548,20 +557,11 @@ data:
         - Home Assistant:
             icon: home-assistant.png
             href: https://hass.timmybtech.com/
-            ping: http://ct100.local.lan:8123
+            ping: http://vm100.local.lan:8123
         - Tailscale:
             icon: tailscale.png
             href: https://login.tailscale.com/
             ping: https://login.tailscale.com/
-        - Zabbix:
-            icon: zabbix.png
-            href: https://zabbix.timmybtech.com/
-            ping: http://vm306.local.lan:8080
-        - Planka:
-            icon: planka.png
-            href: https://planka.local.timmybtech.com/
-            namespace: planka
-            app: planka
   widgets.yaml: |
     - kubernetes:
         cluster:
