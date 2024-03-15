@@ -226,10 +226,6 @@ data:
         header: false
         style: row
         columns: 3
-      Other:
-        icon: mdi-server
-        style: row
-        columns: 2
   bookmarks.yaml: |
     - CICD:
         - Netlify:
@@ -241,7 +237,7 @@ data:
         - Terraform Cloud:
             - abbr: TC
               href: https://app.terraform.io/app/Bryant-homelab/workspaces
-    - Cloudflare:
+    - Cloud:
         - Oracle Cloud:
             - abbr: OC
               href: https://cloud.oracle.com/
@@ -259,6 +255,9 @@ data:
         - Cloudflare:
             - abbr: CF
               href: https://dash.cloudflare.com/
+        - Tailscale:
+            - abbr: TS
+              href: https://login.tailscale.com/
         - Ngrok:
             - abbr: NG
               href: https://dashboard.ngrok.com/
@@ -266,10 +265,6 @@ data:
         - Synology Account:
             - abbr: SYA
               href: https://account.synology.com/en-us/overview?en-us=
-    - Tools:
-        - Border0:
-            - abbr: B0
-              href: https://portal.border0.com/login/
   services.yaml: |
     - Kubernetes:
         - ChangeDetection IO:
@@ -532,6 +527,10 @@ data:
             icon: docker.png
             href: https://dockge.timmybtech.com/
             ping: http://vm304.local.lan:5001
+        - Home Assistant:
+            icon: home-assistant.png
+            href: https://hass.timmybtech.com/
+            ping: http://vm100.local.lan:8123
         - LinkAce:
             icon: linkace.png
             href: https://linkace.timmybtech.com/
@@ -552,16 +551,6 @@ data:
             icon: zipline.png
             href: https://zipline.timmybtech.com/
             ping: http://vm304.local.lan:3000
-
-    - Other:
-        - Home Assistant:
-            icon: home-assistant.png
-            href: https://hass.timmybtech.com/
-            ping: http://vm100.local.lan:8123
-        - Tailscale:
-            icon: tailscale.png
-            href: https://login.tailscale.com/
-            ping: https://login.tailscale.com/
   widgets.yaml: |
     - kubernetes:
         cluster:
