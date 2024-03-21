@@ -4,39 +4,13 @@ kind: Namespace
 metadata:
   name: focalboard
 ---
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: focalboard-config
-  namespace: focalboard
-  annotations:
-    avp.kubernetes.io/path: "secret/data/postgres_db"
-data:
-  config.json: |
-    {
-      "serverRoot": "http://localhost:8000",
-      "port": 8000,
-      "dbtype": "postgres",
-      "dbconfig": "postgres://<USER>:<PASSWORD>@<HOST_NAME>:5432/focalboard?sslmode=disable&connect_timeout=10",
-      "postgres_dbconfig": "dbname=focalboard sslmode=disable",
-      "useSSL": false,
-      "webpath": "./pack",
-      "filespath": "./data/files",
-      "telemetry": true,
-      "prometheusaddress": ":9092",
-      "session_expire_time": 2592000,
-      "session_refresh_time": 18000,
-      "localOnly": false,
-      "enableLocalMode": true,
-      "localModeSocketLocation": "/var/tmp/focalboard_local.socket"
-    }
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: focalboard
   namespace: focalboard
-  annotations: {}
+  annotations:
+    avp.kubernetes.io/path: "secret/data/postgres_db"
   labels:
     io.kompose.service: focalboard
 spec:
@@ -58,19 +32,11 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 8000
-          volumeMounts:
-          - name: config-volume
-            mountPath: /opt/focalboard-config
           env:
-          - name: FOCALBOARD_CONFIG
-            value: "/opt/focalboard-config/config.json"
-      volumes:
-      - name: config-volume
-        configMap:
-          name: focalboard-config
-          items:
-          - key: config.json
-            path: config.json
+          - name: FOCALBOARD_DBTYPE
+            value: "postgres"
+          - name: FOCALBOARD_DBCONFIGSTRING
+            value: "postgres://<USER>:<PASSWORD>@<HOST_NAME>:5432/focalboard?sslmode=disable&connect_timeout=10"
 ---
   apiVersion: v1
   kind: Service
