@@ -1,0 +1,59 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: botkube
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+  annotations:
+    avp.kubernetes.io/path: "secret/data/botkube"
+spec:
+  destination:
+    namespace: botkube
+    server: "https://kubernetes.default.svc"
+  project: default
+  source:
+    repoURL: https://charts.botkube.io
+    targetRevision: 1.1.1
+    chart: botkube
+    helm:
+      releaseName: botkube
+      parameters:
+      - name: "communications.default-group.socketSlack.enabled"
+        value: "true"
+      - name: "communications.default-group.socketSlack.channels.default.name"
+        value: "homelab"
+      - name: "communications.default-group.socketSlack.appToken"
+        value: "<SLACK_API_APP_TOKEN>"
+      - name: "communications.default-group.socketSlack.botToken"
+        value: "<SLACK_API_BOT_TOKEN>"
+      - name: "communications.default-group.discord.enabled"
+        value: "true"
+      - name: "communications.default-group.discord.botID"
+        value: "<DISCORD_BOT_ID>"
+      - name: "communications.default-group.discord.token"
+        value: "<DISCORD_TOKEN>"
+      - name: "communications.default-group.discord.channels.default.id"
+        value: "<DISCORD_CHANNEL_ID>"
+      - name: "settings.clusterName"
+        value: "default"
+      - name: "sources.prometheus.botkube/prometheus.enabled"
+        value: "true"
+      - name: "sources.prometheus.botkube/prometheus.url"
+        value: "https://prometheus.local.timmybtech.com"
+      - name: "sources.prometheus.botkube/prometheus.config.alertStates"
+        value: "firing"
+      - name: "sources.prometheus.botkube/prometheus.config.ignoreOldAlerts"
+        value: "true"
+      - name: "plugins.repositories.botkube"
+        value: "https://github.com/kubeshop/botkube/releases/download/v1.1.1/plugins-index.yaml"
+      - name: "executors.k8s-default-tools.botkube/kubectl.enabled"
+        value: "true"
+      - name: "executors.k8s-default-tools.botkube/helm.enabled"
+        value: "true"
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
