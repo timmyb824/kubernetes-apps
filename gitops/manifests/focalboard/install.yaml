@@ -60,10 +60,10 @@ spec:
             - containerPort: 8000
           volumeMounts:
           - name: config-volume
-            mountPath: /opt/focalboard
+            mountPath: /opt/focalboard-config
           env:
           - name: FOCALBOARD_CONFIG
-            value: "/opt/focalboard/config.json"
+            value: "/opt/focalboard-config/config.json"
       volumes:
       - name: config-volume
         configMap:
