@@ -47,8 +47,8 @@ spec:
     name: focalboard
   spec:
     ports:
-      - name: "80"
-        port: 80
+      - name: "8000"
+        port: 8000
         targetPort: 8000
     selector:
       io.kompose.service: focalboard
@@ -69,6 +69,6 @@ spec:
       kind: Rule
       services:
         - name: focalboard
-          port: 3000
+          port: 8000
   tls:
     secretName: local-timmybtech-com-tls
