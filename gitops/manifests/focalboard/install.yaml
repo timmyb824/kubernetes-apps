@@ -1,0 +1,108 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: focalboard
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: focalboard-config
+  namespace: focalboard
+  annotations:
+    avp.kubernetes.io/path: "secret/data/postgres_db"
+data:
+  config.json: |
+    {
+      "serverRoot": "http://localhost:8000",
+      "port": 8000,
+      "dbtype": "postgres",
+      "dbconfig": "postgres://<USER>:<PASSWORD>@<HOST_NAME>:5432/focalboard?sslmode=disable&connect_timeout=10",
+      "postgres_dbconfig": "dbname=focalboard sslmode=disable",
+      "useSSL": false,
+      "webpath": "./pack",
+      "filespath": "./data/files",
+      "telemetry": true,
+      "prometheusaddress": ":9092",
+      "session_expire_time": 2592000,
+      "session_refresh_time": 18000,
+      "localOnly": false,
+      "enableLocalMode": true,
+      "localModeSocketLocation": "/var/tmp/focalboard_local.socket"
+    }
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: focalboard
+  namespace: focalboard
+  annotations: {}
+  labels:
+    io.kompose.service: focalboard
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: focalboard
+  template:
+    metadata:
+      annotations:
+        app.kubernetes.io/name: focalboard
+      labels:
+        io.kompose.network/temp-default: "true"
+        io.kompose.service: focalboard
+    spec:
+      containers:
+        - image: mattermost/focalboard
+          name: focalboard
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8000
+          volumeMounts:
+          - name: config-volume
+            mountPath: /opt/focalboard
+          env:
+          - name: FOCALBOARD_CONFIG
+            value: "/opt/focalboard/config.json"
+      volumes:
+      - name: config-volume
+        configMap:
+          name: focalboard-config
+          items:
+          - key: config.json
+            path: config.json
+---
+  apiVersion: v1
+  kind: Service
+  metadata:
+    annotations: {}
+    labels:
+      io.kompose.service: focalboard
+    name: focalboard
+  spec:
+    ports:
+      - name: "80"
+        port: 80
+        targetPort: 8000
+    selector:
+      io.kompose.service: focalboard
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: focalboard-ingress
+  namespace: focalboard
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`focalboard.local.timmybtech.com`) # create A record in pihole
+      kind: Rule
+      services:
+        - name: focalboard
+          port: 3000
+  tls:
+    secretName: local-timmybtech-com-tls
