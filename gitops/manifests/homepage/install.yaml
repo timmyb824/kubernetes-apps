@@ -117,7 +117,7 @@ spec:
     spec:
       serviceAccountName: homepage
       automountServiceAccountToken: true
-      dnsPolicy: ClusterFirst
+      dnsPolicy: Default
       enableServiceLinks: true
       containers:
         - name: homepage
