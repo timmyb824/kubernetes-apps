@@ -380,7 +380,7 @@ data:
         - Gotify:
             icon: gotify.png
             href: https://gotify.timmybtech.com/
-            ping: http://homelab-oci03.local.lan:8080
+            ping: http://homelab-oci03.tailscale.lan:8080
             widget:
                 type: gotify
                 url: http://homelab-oci03.local.lan:8080
@@ -398,7 +398,7 @@ data:
         - Uptime Kuma:
             icon: uptime-kuma.png
             href: https://uptime-kuma.timmybtech.com/
-            ping: http://homelab-oci03.local.lan:3001
+            ping: http://homelab-oci03.tailscale.lan:3001
             widget:
                 type: uptimekuma
                 url: http:///homelab-oci03.local.lan:3001
@@ -408,15 +408,15 @@ data:
         - Healthchecks:
             icon: healthchecks.png
             href: https://healthchecks.timmybtech.com/
-            ping: http://homelab-oci03.local.lan:8000
+            ping: http://homelab-oci03.tailscale.lan:8000
         - PGweb (oci):
             icon: postgres.png
             href: https://pgweb2.timmybtech.com/
-            ping: http://homelab-oci03.local.lan:8083
+            ping: http://homelab-oci03.tailscale.lan:8083
         - IT-Tools:
             icon: it-tools.png
             href: https://it-tools.timmybtech.com/
-            ping: http://homelab-oci03.local.lan:5884
+            ping: http://homelab-oci03.tailscale.lan:5884
 
     - Storage:
         - Synology:
