@@ -473,17 +473,17 @@ data:
         - Speedtest-tracker:
             icon: speedtest-tracker.png
             href: https://speedtest.timmybtech.com/
-            ping: http://vm304.local.lan:8083
+            ping: http://vm307.local.lan:8083
             widget:
                 type: speedtest
-                url: http://vm304.local.lan:8083
+                url: http://vm307.local.lan:8083
         - Traefik-docker:
             icon: traefik.png
             href: https://traefik.timmybtech.com/
-            ping: http://vm304.local.lan:8080
+            ping: http://vm307.local.lan:8080
             widget:
               type: traefik
-              url: http://vm304.local.lan:8080
+              url: http://vm307.local.lan:8080
         - Portainer (vm303):
             icon: portainer.png
             href: https://portainer.local.timmybtech.com/#!/11/docker/dashboard
@@ -516,19 +516,19 @@ data:
         - Ansible Semaphore:
             icon: ansible.png
             href: https://semaphore.timmybtech.com/auth/login
-            ping: http://vm304.local.lan:3005
+            ping: http://vm307.local.lan:3005
         - ArchiveBox:
             icon: archivebox.png
             href: https://archivebox.timmybtech.com/
-            ping: http://vm304.local.lan:8000
+            ping: http://vm307.local.lan:8000
         - Code Server:
             icon: code-server.png
             href: https://code-server.timmybtech.com/
-            ping: http://vm304.local.lan:8443
+            ping: http://vm307.local.lan:8443
         - Dockge:
             icon: docker.png
             href: https://dockge.timmybtech.com/
-            ping: http://vm304.local.lan:5001
+            ping: http://vm307.local.lan:5001
         - Home Assistant:
             icon: home-assistant.png
             href: https://hass.timmybtech.com/
@@ -536,7 +536,7 @@ data:
         - LinkAce:
             icon: linkace.png
             href: https://linkace.timmybtech.com/
-            ping: http://vm304.local.lan:718
+            ping: http://vm307.local.lan:718
         - Loki:
             icon: loki.png
             href: https://loki.timmybtech.com/
@@ -548,11 +548,11 @@ data:
         - WatchYourLAN:
             icon: homepage.png
             href: https://wyl.timmybtech.com/
-            ping: http://vm304.local.lan:8840
+            ping: http://vm307.local.lan:8840
         - Zipline:
             icon: zipline.png
             href: https://zipline.timmybtech.com/
-            ping: http://vm304.local.lan:3000
+            ping: http://vm307.local.lan:3000
   widgets.yaml: |
     - kubernetes:
         cluster:
