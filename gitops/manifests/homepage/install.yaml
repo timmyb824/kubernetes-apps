@@ -143,8 +143,7 @@ spec:
           configMap:
             name: homepage
         - name: logs
-          emptyDir:
-            {}
+          emptyDir: {}
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
@@ -473,14 +472,14 @@ data:
         - Speedtest-tracker:
             icon: speedtest-tracker.png
             href: https://speedtest.timmybtech.com/
-            ping: http://vm307.local.lan:8083
+            ping: http://192.168.86.240:8083
             widget:
                 type: speedtest
                 url: http://vm307.local.lan:8083
         - Traefik-docker:
             icon: traefik.png
             href: https://traefik.timmybtech.com/
-            ping: http://vm307.local.lan:8080
+            ping: http://192.168.86.240:8080
             widget:
               type: traefik
               url: http://vm307.local.lan:8080
@@ -494,16 +493,6 @@ data:
                 url: https://portainer.local.timmybtech.com
                 env: 11
                 key: <PORTAINER_ACCESS_TOKEN>
-        - Portainer (vm304):
-            icon: portainer.png
-            href: https://portainer.local.timmybtech.com/#!/12/docker/dashboard
-            namespace: portainer
-            app: portainer
-            widget:
-                type: portainer
-                url: https://portainer.local.timmybtech.com
-                env: 12
-                key: <PORTAINER_ACCESS_TOKEN>
         - Prometheus:
             icon: prometheus.png
             href: https://prometheus.timmybtech.com/
@@ -516,19 +505,15 @@ data:
         - Ansible Semaphore:
             icon: ansible.png
             href: https://semaphore.timmybtech.com/auth/login
-            ping: http://vm307.local.lan:3005
+            ping: http://192.168.86.240:3005
         - ArchiveBox:
             icon: archivebox.png
             href: https://archivebox.timmybtech.com/
-            ping: http://vm307.local.lan:8000
+            ping: http://192.168.86.240:8000
         - Code Server:
             icon: code-server.png
             href: https://code-server.timmybtech.com/
-            ping: http://vm307.local.lan:8443
-        - Dockge:
-            icon: docker.png
-            href: https://dockge.timmybtech.com/
-            ping: http://vm307.local.lan:5001
+            ping: http://192.168.86.240:8443
         - Home Assistant:
             icon: home-assistant.png
             href: https://hass.timmybtech.com/
@@ -536,7 +521,7 @@ data:
         - LinkAce:
             icon: linkace.png
             href: https://linkace.timmybtech.com/
-            ping: http://vm307.local.lan:718
+            ping: http://192.168.86.240:718
         - Loki:
             icon: loki.png
             href: https://loki.timmybtech.com/
@@ -548,11 +533,11 @@ data:
         - WatchYourLAN:
             icon: homepage.png
             href: https://wyl.timmybtech.com/
-            ping: http://vm307.local.lan:8840
+            ping: http://192.168.86.240:8840
         - Zipline:
             icon: zipline.png
             href: https://zipline.timmybtech.com/
-            ping: http://vm307.local.lan:3000
+            ping: http://192.168.86.240:3000
   widgets.yaml: |
     - kubernetes:
         cluster:
