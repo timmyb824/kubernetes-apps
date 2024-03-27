@@ -533,7 +533,7 @@ data:
         - WatchYourLAN:
             icon: homepage.png
             href: https://wyl.timmybtech.com/
-            ping: http://192.168.86.240:8840
+            ping: http://192.168.86.202:8840
         - Zipline:
             icon: zipline.png
             href: https://zipline.timmybtech.com/
