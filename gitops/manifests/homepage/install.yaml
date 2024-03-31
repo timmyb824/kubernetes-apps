@@ -369,6 +369,11 @@ data:
             href: https://vault.local.timmybtech.com/
             namespace: vault
             app: vault
+        - WikiJS:
+            icon: wikijs.png
+            href: https://wiki.local.timmybtech.com/
+            namespace: wiki
+            app: wiki
         - Whoogle:
             icon: whooglesearch.png
             href: https://whoogle.local.timmybtech.com/
