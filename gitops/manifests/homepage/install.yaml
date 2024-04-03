@@ -511,10 +511,6 @@ data:
             icon: ansible.png
             href: https://semaphore.timmybtech.com/auth/login
             ping: http://192.168.86.240:3005
-        - ArchiveBox:
-            icon: archivebox.png
-            href: https://archivebox.timmybtech.com/
-            ping: http://192.168.86.240:8000
         - Code Server:
             icon: code-server.png
             href: https://code-server.timmybtech.com/
