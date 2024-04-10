@@ -96,7 +96,6 @@ spec:
   tls:
     secretName: local-timmybtech-com-tls
 ---
----
 apiVersion: v1
 kind: Secret
 metadata:
@@ -199,6 +198,6 @@ data:
     # E.g. `cloudflared tunnel route dns example-tunnel tunnel.example.com`.
     ingress:
     - hostname: plandex.timmybtech.com
-      service: http://plandex-server.plandex-server.svc.cluster.local:8080
+      service: http://plandex-server.plandex.svc.cluster.local:8080
     # This rule matches any traffic which didn't match a previous rule, and responds with HTTP 404.
     - service: http_status:404
