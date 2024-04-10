@@ -369,6 +369,11 @@ data:
             href: https://vault.local.timmybtech.com/
             namespace: vault
             app: vault
+        - WikiJS:
+            icon: wikijs.png
+            href: https://wiki.local.timmybtech.com/
+            namespace: wiki
+            app: wiki
         - Whoogle:
             icon: whooglesearch.png
             href: https://whoogle.local.timmybtech.com/
@@ -506,10 +511,6 @@ data:
             icon: ansible.png
             href: https://semaphore.timmybtech.com/auth/login
             ping: http://192.168.86.240:3005
-        - ArchiveBox:
-            icon: archivebox.png
-            href: https://archivebox.timmybtech.com/
-            ping: http://192.168.86.240:8000
         - Code Server:
             icon: code-server.png
             href: https://code-server.timmybtech.com/
