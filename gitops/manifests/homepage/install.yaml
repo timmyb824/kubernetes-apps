@@ -344,6 +344,11 @@ data:
             href: https://n8n.local.timmybtech.com/
             namespace: n8n
             app: n8n
+        - Plandex:
+            icon: openai.png
+            href: https://plandex.local.timmybtech.com/health
+            namespace: plandex
+            app: plandex-server
         - Planka:
             icon: planka.png
             href: https://planka.local.timmybtech.com/
@@ -359,11 +364,6 @@ data:
             href: https://shlink.local.timmybtech.com/
             namespace: shlink
             app: shlink
-        - Shlink-web:
-            icon: shlink.png
-            href: https://shlink-web.local.timmybtech.com/
-            namespace: shlink
-            app: shlink-web
         - Vault:
             icon: vault.png
             href: https://vault.local.timmybtech.com/
