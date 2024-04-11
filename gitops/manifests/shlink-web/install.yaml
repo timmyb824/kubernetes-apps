@@ -25,7 +25,7 @@ spec:
             - name: SHLINK_SERVER_API_KEY
               value: <SHLINK_SERVER_API_KEY>
             - name: SHLINK_SERVER_URL
-              value: https://<SHLINK_SERVER_URL>
+              value: http://shlink:8080
           image: shlinkio/shlink-web-client
           name: shlink-web
           imagePullPolicy: Always
