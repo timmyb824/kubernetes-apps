@@ -190,7 +190,7 @@ data:
       Kubernetes:
         icon: mdi-sail-boat
         style: row
-        columns: 3
+        columns: 2
       Kubernetes hidden:
         header: false
         style: row
@@ -277,16 +277,6 @@ data:
                 type: changedetectionio
                 url: https://changedetection.local.timmybtech.com
                 key: <CHANGEDTECTIONIO_API_KEY>
-        - Grafana:
-            icon: grafana.png
-            href: https://grafana.timmybtech.com/
-            namespace: grafana
-            app: grafana
-            widget:
-                type: grafana
-                url: https://grafana.timmybtech.com
-                username: <GRAFANA_USER>
-                password: <GRAFANA_PASSWORD>
         - Traefik-k8s:
             icon: traefik.png
             href: https://traefik.local.timmybtech.com/
@@ -319,6 +309,16 @@ data:
             href: "https://gitea.local.timmybtech.com/"
             namespace: gitea
             app: gitea
+        - Grafana:
+            icon: grafana.png
+            href: https://grafana.timmybtech.com/
+            namespace: grafana
+            app: grafana
+            # widget:
+            #     type: grafana
+            #     url: https://grafana.timmybtech.com
+            #     username: <GRAFANA_USER>
+            #     password: <GRAFANA_PASSWORD>
         - Homebox:
             icon: homebox.png
             href: https://homebox.local.timmybtech.com/
