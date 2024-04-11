@@ -361,7 +361,7 @@ data:
             app: portainer
         - Shlink:
             icon: shlink.png
-            href: https://shlink.local.timmybtech.com/
+            href: https://app.shlink.io/
             namespace: shlink
             app: shlink
         - Vault:
