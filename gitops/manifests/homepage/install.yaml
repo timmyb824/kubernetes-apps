@@ -515,6 +515,10 @@ data:
             icon: code-server.png
             href: https://code-server.timmybtech.com/
             ping: http://192.168.86.240:8443
+        - Focal-Board:
+            icon: focalboard.png
+            href: https://focal-board.timmybtech.com/
+            ping: http://192.168.86.240:8001
         - Home Assistant:
             icon: home-assistant.png
             href: https://hass.timmybtech.com/
