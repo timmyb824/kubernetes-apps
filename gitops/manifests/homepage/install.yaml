@@ -206,11 +206,7 @@ data:
       Local DNS:
         icon: mdi-dns
         style: row
-        columns: 1
-      Local DNS hidden:
-        icon: mdi-fruit-grapes-outline
-        style: row
-        columns: 2
+        columns: 3
       PI Servers:
         header: false
         style: row
@@ -447,8 +443,6 @@ data:
                 url: http://pihole2.local.lan
                 username: <ADGUARD_USER>
                 password: <ADGUARD_PASSWORD>
-
-    - Local DNS hidden:
         - Adguard Home Replica:
             icon: adguard-home.png
             href: https://adguard2.timmybtech.com/
