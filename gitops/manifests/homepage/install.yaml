@@ -203,11 +203,15 @@ data:
         header: false
         style: row
         columns: 3
-      PI Servers:
+      Local DNS:
+        icon: mdi-dns
+        style: row
+        columns: 1
+      Local DNS hidden:
         icon: mdi-fruit-grapes-outline
         style: row
-        columns: 3
-      PI Servers hidden:
+        columns: 2
+      PI Servers:
         header: false
         style: row
         columns: 2
@@ -433,7 +437,7 @@ data:
                 username: <SYNOLOGY_USER>
                 password: <SYNOLOGY_PASSWORD>
 
-    - PI Servers:
+    - Local DNS:
         - Adguard Home:
             icon: adguard-home.png
             href: https://adguard.timmybtech.com/
@@ -443,6 +447,8 @@ data:
                 url: http://pihole2.local.lan
                 username: <ADGUARD_USER>
                 password: <ADGUARD_PASSWORD>
+
+    - Local DNS hidden:
         - Adguard Home Replica:
             icon: adguard-home.png
             href: https://adguard2.timmybtech.com/
@@ -462,7 +468,7 @@ data:
                 username: <ADGUARD_USER>
                 password: <ADGUARD_PASSWORD>
 
-    - PI Servers hidden:
+    - PI Servers:
         - Adguard Home Sync:
             icon: adguard-home.png
             href: http://192.168.86.174:8080/
