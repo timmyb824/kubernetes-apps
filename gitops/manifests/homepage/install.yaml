@@ -210,7 +210,7 @@ data:
       PI Servers hidden:
         header: false
         style: row
-        columns: 2
+        columns: 3
       Proxmox:
         icon: mdi-server
         style: row
@@ -450,6 +450,15 @@ data:
             widget:
                 type: adguard
                 url: http://rasberrypi.local.lan
+                username: <ADGUARD_USER>
+                password: <ADGUARD_PASSWORD>
+        - Adguard Home Replica2:
+            icon: adguard-home.png
+            href: https://adguard3.timmybtech.com/
+            ping: http://hp-laptop-ubuntu.local.lan
+            widget:
+                type: adguard
+                url: http://hp-laptop-ubuntu.local.lan
                 username: <ADGUARD_USER>
                 password: <ADGUARD_PASSWORD>
 
