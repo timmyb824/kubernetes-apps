@@ -5,6 +5,15 @@ kind: Namespace
 metadata:
   name: ntfy
 ---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ntfy
+data:
+  server.yml: |
+    # Template: https://github.com/binwiederhier/ntfy/blob/main/server/server.yml
+    base-url: https://ntfy.timmybtech.com
+---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
