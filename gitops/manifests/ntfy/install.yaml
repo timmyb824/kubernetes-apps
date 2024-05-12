@@ -413,6 +413,8 @@ spec:
           readOnly: true
         - name: cache
           mountPath: "/var/cache/ntfy"
+        - name: user-db
+          mountPath: "/var/lib/ntfy"
       volumes:
         - name: config
           configMap:
@@ -427,6 +429,15 @@ spec:
       resources:
         requests:
           storage: 2Gi
+  - metadata:
+      name: user-db
+      namespace: ntfy
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: nfs-csi-synologynas
+      resources:
+        requests:
+          storage: 1Gi
 ---
 apiVersion: v1
 kind: Service
