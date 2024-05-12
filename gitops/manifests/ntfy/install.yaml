@@ -105,6 +105,7 @@ data:
     #   If you are running ntfy with systemd, make sure this user database file is owned by the
     #   ntfy user and group by running: chown ntfy.ntfy <filename>.
     #
+    # Create user: ntfy user add --role=admin <username>
     auth-file: "/var/lib/ntfy/user.db"
     auth-default-access: "deny-all"
     # auth-startup-queries:
