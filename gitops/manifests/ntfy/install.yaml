@@ -106,8 +106,8 @@ data:
     #   ntfy user and group by running: chown ntfy.ntfy <filename>.
     #
     # Create user: ntfy user add --role=admin <username>
-    auth-file: "/var/lib/ntfy/user.db"
-    auth-default-access: "deny-all"
+    # auth-file: "/var/lib/ntfy/user.db"
+    # auth-default-access: "deny-all"
     # auth-startup-queries:
 
     # If set, the X-Forwarded-For header is used to determine the visitor IP address
@@ -337,7 +337,7 @@ data:
     # - metrics-listen-http exposes the metrics endpoint via a dedicated [IP]:port. If set, this option implicitly
     #   enables metrics as well, e.g. "10.0.1.1:9090" or ":9090"
     #
-    # enable-metrics: false
+    enable-metrics: true
     # metrics-listen-http:
 
     # Profiling
