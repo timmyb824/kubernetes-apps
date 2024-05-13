@@ -8,7 +8,17 @@ metadata:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: ntfy
+  name: ntfy-user-config
+  labels:
+    app.kubernetes.io/name: ntfy
+data:
+  NTFY_USERNAME: <path:secret/data/ntfy#NTFY_USER>
+  NTFY_PASSWORD: <path:secret/data/ntfy#NTFY_PASSWORD>
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ntfy-server-config
 data:
   server.yml: |
     # Template: https://github.com/binwiederhier/ntfy/blob/main/server/server.yml
@@ -106,8 +116,8 @@ data:
     #   ntfy user and group by running: chown ntfy.ntfy <filename>.
     #
     # Create user: ntfy user add --role=admin <username>
-    # auth-file: "/var/lib/ntfy/user.db"
-    # auth-default-access: "deny-all"
+    auth-file: "/var/lib/ntfy/user.db"
+    auth-default-access: "deny-all"
     # auth-startup-queries:
 
     # If set, the X-Forwarded-For header is used to determine the visitor IP address
@@ -126,7 +136,7 @@ data:
     # - attachment-file-size-limit is the per-file attachment size limit (e.g. 300k, 2M, 100M)
     # - attachment-expiry-duration is the duration after which uploaded attachments will be deleted (e.g. 3h, 20h)
     #
-    # attachment-cache-dir:
+    attachment-cache-dir: "/var/cache/ntfy/attachments"
     # attachment-total-size-limit: "5G"
     # attachment-file-size-limit: "15M"
     # attachment-expiry-duration: "3h"
@@ -399,29 +409,48 @@ spec:
     metadata:
       labels:
         app: ntfy
+        app.kubernetes.io/name: ntfy
     spec:
+      initContainers:
+      - name: init-user-db
+        image: binwiederhier/ntfy:latest
+        imagePullPolicy: Always
+        command: ["/bin/sh", "-c"]
+        args:
+        - |
+          ntfy serve &
+           if [ $? -eq 0 ]; then
+             while true; do sleep 3 && test -f /var/lib/ntfy/user.db && break; done
+             ntfy user add --role=admin $NTFY_USERNAME
+             pkill -TERM ntfy
+           else
+             exit $?
+           fi
       containers:
       - name: ntfy
         image: binwiederhier/ntfy
+        imagePullPolicy: Always
         args: ["serve", "--cache-file", "/var/cache/ntfy/cache.db"]
         ports:
         - containerPort: 80
           name: http
         volumeMounts:
-        - name: config
+        - name: ntfy-server-config
           mountPath: "/etc/ntfy"
           readOnly: true
-        - name: cache
+        - name: ntfy-cache
           mountPath: "/var/cache/ntfy"
-        - name: user-db
-          mountPath: "/var/lib/ntfy"
+        - name: ntfy-attachements
+          mountPath: "/var/cache/ntfy/attachments"
+        - name: ntfy-user-db
+          mountPath: "/var/lib/ntfy/"
       volumes:
         - name: config
           configMap:
-            name: ntfy
+            name: ntfy-server-config
   volumeClaimTemplates:
   - metadata:
-      name: cache
+      name: ntfy-cache
       namespace: ntfy
     spec:
       accessModes: [ "ReadWriteOnce" ]
@@ -430,7 +459,16 @@ spec:
         requests:
           storage: 2Gi
   - metadata:
-      name: user-db
+      name: ntfy-attachements
+      namespace: ntfy
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: nfs-csi-synologynas
+      resources:
+        requests:
+          storage: 8Gi
+  - metadata:
+      name: ntfy-user-db
       namespace: ntfy
     spec:
       accessModes: [ "ReadWriteOnce" ]
