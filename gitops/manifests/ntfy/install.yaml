@@ -6,6 +6,45 @@ metadata:
   name: ntfy
 ---
 apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ntfy-cache
+  namespace: ntfy
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: nfs-csi-synologynas
+  resources:
+    requests:
+      storage: 2Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ntfy-attachements
+  namespace: ntfy
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: nfs-csi-synologynas
+  resources:
+    requests:
+      storage: 8Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ntfy-user-db
+  namespace: ntfy
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: nfs-csi-synologynas
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
 kind: ConfigMap
 metadata:
   name: ntfy-server-config
@@ -461,34 +500,6 @@ spec:
         - name: ntfy-user-db
           persistentVolumeClaim:
             claimName: ntfy-user-db
-  volumeClaimTemplates:
-    - metadata:
-        name: ntfy-cache
-        namespace: ntfy
-      spec:
-        accessModes: ["ReadWriteOnce"]
-        storageClassName: nfs-csi-synologynas
-        resources:
-          requests:
-            storage: 2Gi
-    - metadata:
-        name: ntfy-attachements
-        namespace: ntfy
-      spec:
-        accessModes: ["ReadWriteOnce"]
-        storageClassName: nfs-csi-synologynas
-        resources:
-          requests:
-            storage: 8Gi
-    - metadata:
-        name: ntfy-user-db
-        namespace: ntfy
-      spec:
-        accessModes: ["ReadWriteOnce"]
-        storageClassName: nfs-csi-synologynas
-        resources:
-          requests:
-            storage: 1Gi
 ---
 apiVersion: v1
 kind: Service
