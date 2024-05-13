@@ -445,7 +445,7 @@ spec:
         - name: ntfy-user-db
           mountPath: "/var/lib/ntfy/"
       volumes:
-        - name: config
+        - name: ntfy-server-config
           configMap:
             name: ntfy-server-config
   volumeClaimTemplates:
