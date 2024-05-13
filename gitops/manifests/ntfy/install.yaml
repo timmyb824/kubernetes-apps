@@ -486,7 +486,8 @@ spec:
             - name: ntfy-attachements
               mountPath: "/var/cache/ntfy/attachments"
             - name: ntfy-user-db
-              mountPath: "/var/lib/ntfy/"
+              subPath: user.db
+              mountPath: "/var/lib/ntfy/user.db"
       volumes:
         - name: ntfy-server-config
           configMap:
