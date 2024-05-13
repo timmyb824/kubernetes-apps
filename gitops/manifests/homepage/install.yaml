@@ -344,6 +344,11 @@ data:
             href: https://n8n.local.timmybtech.com/
             namespace: n8n
             app: n8n
+        - ntfy
+            icon: ntfy.png
+            href: https://ntfy.local.timmybtech.com/
+            namespace: ntfy
+            app: ntfy
         - Plandex:
             icon: openai.png
             href: https://plandex.local.timmybtech.com/health
