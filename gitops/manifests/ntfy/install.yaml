@@ -8,16 +8,6 @@ metadata:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: ntfy-user-config
-  labels:
-    app.kubernetes.io/name: ntfy
-data:
-  NTFY_USERNAME: <path:secret/data/ntfy#NTFY_USER>
-  NTFY_PASSWORD: <path:secret/data/ntfy#NTFY_PASSWORD>
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
   name: ntfy-server-config
 data:
   server.yml: |
@@ -92,7 +82,7 @@ data:
     #   If you are running ntfy with systemd, make sure this cache file is owned by the
     #   ntfy user and group by running: chown ntfy.ntfy <filename>.
     #
-    # cache-file: <filename>
+    cache-file: "/var/cache/ntfy/cache.db"
     # cache-duration: "12h"
     # cache-startup-queries:
     # cache-batch-size: 0
@@ -397,7 +387,7 @@ data:
     # log-file:
 ---
 apiVersion: apps/v1
-kind: StatefulSet
+kind: Deployment
 metadata:
   name: ntfy
 spec:
@@ -412,70 +402,93 @@ spec:
         app.kubernetes.io/name: ntfy
     spec:
       initContainers:
-      - name: init-user-db
-        image: binwiederhier/ntfy:latest
-        imagePullPolicy: Always
-        command: ["/bin/sh", "-c"]
-        args:
-        - |
-          ntfy serve &
-           if [ $? -eq 0 ]; then
-             while true; do sleep 3 && test -f /var/lib/ntfy/user.db && break; done
-             ntfy user add --role=admin $NTFY_USERNAME
-             pkill -TERM ntfy
-           else
-             exit $?
-           fi
+        - name: init-user-db
+          image: binwiederhier/ntfy:latest
+          imagePullPolicy: Always
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              ntfy serve &
+               if [ $? -eq 0 ]; then
+                 while true; do sleep 3 && test -f /var/lib/ntfy/user.db && break; done
+                 ntfy user add --role=admin <path:secret/data/ntfy#NTFY_USER>
+                 pkill -TERM ntfy
+               else
+                 exit $?
+               fi
       containers:
-      - name: ntfy
-        image: binwiederhier/ntfy
-        imagePullPolicy: Always
-        args: ["serve", "--cache-file", "/var/cache/ntfy/cache.db"]
-        ports:
-        - containerPort: 80
-          name: http
-        volumeMounts:
-        - name: ntfy-server-config
-          mountPath: "/etc/ntfy"
-          readOnly: true
-        - name: ntfy-cache
-          mountPath: "/var/cache/ntfy"
-        - name: ntfy-attachements
-          mountPath: "/var/cache/ntfy/attachments"
-        - name: ntfy-user-db
-          mountPath: "/var/lib/ntfy/"
+        - name: ntfy
+          image: binwiederhier/ntfy
+          imagePullPolicy: Always
+          args: ["serve"]
+          env:
+            - name: TZ
+              value: "America/New_York"
+            - name: NTFY_DEBUG
+              value: "false"
+            - name: NTFY_LOG_LEVEL
+              value: INFO
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+              requests:
+                cpu: 150m
+                memory: 150Mi
+          ports:
+            - containerPort: 80
+              name: http
+          volumeMounts:
+            - name: ntfy-server-config
+              mountPath: "/etc/ntfy"
+              readOnly: true
+            - name: ntfy-cache
+              mountPath: "/var/cache/ntfy"
+            - name: ntfy-attachements
+              mountPath: "/var/cache/ntfy/attachments"
+            - name: ntfy-user-db
+              mountPath: "/var/lib/ntfy/"
       volumes:
         - name: ntfy-server-config
           configMap:
             name: ntfy-server-config
+        - name: ntfy-cache
+          persistentVolumeClaim:
+            claimName: ntfy-cache
+        - name: ntfy-attachements
+          persistentVolumeClaim:
+            claimName: ntfy-attachements
+        - name: ntfy-user-db
+          persistentVolumeClaim:
+            claimName: ntfy-user-db
   volumeClaimTemplates:
-  - metadata:
-      name: ntfy-cache
-      namespace: ntfy
-    spec:
-      accessModes: [ "ReadWriteOnce" ]
-      storageClassName: nfs-csi-synologynas
-      resources:
-        requests:
-          storage: 2Gi
-  - metadata:
-      name: ntfy-attachements
-      namespace: ntfy
-    spec:
-      accessModes: [ "ReadWriteOnce" ]
-      storageClassName: nfs-csi-synologynas
-      resources:
-        requests:
-          storage: 8Gi
-  - metadata:
-      name: ntfy-user-db
-      namespace: ntfy
-    spec:
-      accessModes: [ "ReadWriteOnce" ]
-      storageClassName: nfs-csi-synologynas
-      resources:
-        requests:
-          storage: 1Gi
+    - metadata:
+        name: ntfy-cache
+        namespace: ntfy
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: nfs-csi-synologynas
+        resources:
+          requests:
+            storage: 2Gi
+    - metadata:
+        name: ntfy-attachements
+        namespace: ntfy
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: nfs-csi-synologynas
+        resources:
+          requests:
+            storage: 8Gi
+    - metadata:
+        name: ntfy-user-db
+        namespace: ntfy
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: nfs-csi-synologynas
+        resources:
+          requests:
+            storage: 1Gi
 ---
 apiVersion: v1
 kind: Service
