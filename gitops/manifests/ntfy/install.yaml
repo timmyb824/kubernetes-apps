@@ -430,11 +430,11 @@ spec:
               value: INFO
           resources:
             limits:
-              memory: "128Mi"
               cpu: "500m"
-              requests:
-                cpu: 150m
-                memory: 150Mi
+              memory: "128Mi"
+            requests:
+              cpu: "150m"
+              memory: "150Mi"
           ports:
             - containerPort: 80
               name: http
