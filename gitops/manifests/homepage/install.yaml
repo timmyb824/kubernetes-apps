@@ -344,7 +344,7 @@ data:
             href: https://n8n.local.timmybtech.com/
             namespace: n8n
             app: n8n
-        - ntfy
+        - ntfy:
             icon: ntfy.png
             href: https://ntfy.local.timmybtech.com/
             namespace: ntfy
