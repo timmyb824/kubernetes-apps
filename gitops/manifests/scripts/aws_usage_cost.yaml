@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: aws-usage-cost
-        image: timmyb824/aws_usage_cost:latest
+        image: timmyb824/aws-usage-cost:latest
         env:
         - name: NTFY_TOPIC
           value: <path:secret/data/scripts#NTFY_TOPIC>
