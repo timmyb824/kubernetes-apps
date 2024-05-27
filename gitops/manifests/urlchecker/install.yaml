@@ -1,0 +1,252 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: urlchecker
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: checks
+  namespace: urlchecker
+data:
+  checks.yaml: |
+    - name: adguardhome
+      url: https://adguard.timmybtech.com
+      retries: 3
+      status_accepted:
+        - 200
+
+    - name: adguardhome-replica
+      url: https://adguard2.timmybtech.com
+      retries: 3
+      status_accepted:
+        - 200
+
+    - name: adguardhome-replica2
+      url: https://adguard3.timmybtech.com
+      retries: 3
+      status_accepted:
+        - 200
+
+    - name: ansible-semaphore
+      url: https://semaphore.timmybtech.com
+      retries: 3
+      status_accepted:
+        - 200
+
+    - name: argocd
+      url: https://argocd.local.timmybtech.com
+      retries: 3
+      status_accepted:
+        - 200
+
+    #- name: changedetection.io
+    #  url: https://changedetection.local.timmybtech.com
+    #  retries: 3
+    #  status_accepted:
+    #    - 200
+
+    - name: code-server
+      url: https://code-server.timmybtech.com
+      retries: 2
+      status_accepted:
+        - 200
+
+    - name: firefly-iii
+      url: https://firefly.local.timmybtech.com
+      retries: 3
+      status_accepted:
+        - 200
+
+    - name: focal-board
+      url: https://focal-board.timmybtech.com
+      retries: 3
+      status_accepted:
+        - 200
+
+    - name: gitea
+      url: https://gitea.local.timmybtech.com
+      retries: 3
+      status_accepted:
+        - 200
+
+    - name: gotify
+      url: https://gotify.timmybtech.com
+      retries: 3
+      status_accepted:
+        - 200
+
+    - name: grafana
+      url: https://grafana.local.timmybtech.com
+      retries: 3
+      status_accepted:
+        - 200
+
+    - name: healthchecks
+      url: https://healthchecks.timmybtech.com
+      retries: 3
+      status_accepted:
+        - 200
+
+    - name: home-assistant
+      url: https://hass.timmybtech.com
+      retries: 3
+      status_accepted:
+        - 200
+
+    - name: influxdb
+      url: https://influxdb.local.timmybtech.com
+      retries: 3
+      status_accepted:
+        - 200
+
+    - name: it-tools
+      url: https://it-tools.timmybtech.com
+      retries: 3
+      status_accepted:
+        - 200
+
+    - name: linkace
+      url: https://linkace.timmybtech.com
+      retries: 3
+      status_accepted:
+        - 200
+
+    - name: loki
+      url: https://loki.timmybtech.com/loki/api/v1/status/buildinfo
+      retries: 3
+      status_accepted:
+        - 200
+
+    - name: nas
+      url: https://nas.timmybtech.com
+      retries: 3
+      status_accepted:
+        - 200
+
+    #- name: n8n
+    #  url: https://n8n.local.timmybtech.com
+    #  retries: 3
+    #  status_accepted:
+    #    - 200
+
+    #- name: plandex
+    #  url: https://plandex.local.timmybtech.com/health
+    #  retries: 3
+    #  status_accepted:
+    #    - 200
+
+    - name: planka
+      url: https://planka.local.timmybtech.com
+      retries: 3
+      status_accepted:
+        - 200
+
+    - name: portainer
+      url: https://portainer.local.timmybtech.com
+      retries: 3
+      status_accepted:
+        - 200
+
+    - name: prometheus
+      url: https://prometheus.timmybtech.com
+      retries: 3
+      status_accepted:
+        - 200
+
+    #- name: pve2
+    #  url: https://pve2.timmybtech.com
+    #  retries: 3
+    #  status_accepted:
+    #    - 200
+
+    #- name: pve3
+    #  url: https://pve3.local.com:8006
+    #  retries: 3
+    #  status_accepted:
+    #    - 200
+
+    - name: shlink
+      url: https://shlink.local.timmybtech.com
+      retries: 3
+      status_accepted:
+        - 404
+
+    - name: speedtest-tracker
+      url: https://speedtest.timmybtech.com
+      retries: 3
+      status_accepted:
+        - 200
+
+    - name: uptime-kuma
+      url: https://uptime-kuma.timmybtech.com
+      retries: 3
+      status_accepted:
+        - 200
+
+    - name: vault
+      url: https://vault.local.timmybtech.com
+      retries: 3
+      status_accepted:
+        - 200
+
+    - name: watchyourlan
+      url: https://wyl.timmybtech.com
+      retries: 3
+      status_accepted:
+        - 200
+
+    - name: whoogle
+      url: https://whoogle.local.timmybtech.com
+      retries: 3
+      status_accepted:
+        - 200
+
+    #- name: wikijs
+    #  url: https://wiki.local.timmybtech.com
+    #  retries: 3
+    #  status_accepted:
+    #    - 200
+
+    - name: zipline
+      url: https://zipline.timmybtech.com
+      retries: 3
+      status_accepted:
+        - 200
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: urlchecker
+  namespace: urlchecker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: urlchecker
+  template:
+    metadata:
+      labels:
+        app: urlchecker
+    spec:
+      containers:
+      - name: urlchecker
+        image: timmyb824/python-urlchecker:latest
+        env:
+        - name: APPRISE_DISCORD
+          value:
+        - name: APPRISE_GOTIFY
+          value: <path:secret/data/urlchecker#APPRISE_GOTIFY>
+        - name: APPRISE_DISCORD
+          value: <path:secret/data/urlchecker#APPRISE_DISCORD>
+        - name: TIME_BETWEEN_SCHEDULED_CHECKS
+          value: "120"
+        volumeMounts:
+        - name: checks
+          mountPath: /app/checks.yaml
+          subPath: checks.yaml
+      volumes:
+      - name: checks
+        configMap:
+          name: checks
