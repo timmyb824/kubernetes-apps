@@ -231,23 +231,23 @@ spec:
         app: urlchecker
     spec:
       containers:
-      - name: urlchecker
-        image: timmyb824/python-urlchecker:latest
-        imagePullPolicy: Always
-        env:
-        - name: APPRISE_DISCORD
-          value:
-        - name: APPRISE_GOTIFY
-          value: <path:secret/data/urlchecker#APPRISE_GOTIFY>
-        - name: APPRISE_DISCORD
-          value: <path:secret/data/urlchecker#APPRISE_DISCORD>
-        - name: TIME_BETWEEN_SCHEDULED_CHECKS
-          value: "120"
-        volumeMounts:
-        - name: checks
-          mountPath: /app/checks.yaml
-          subPath: checks.yaml
+        - name: urlchecker
+          image: timmyb824/python-urlchecker:latest
+          imagePullPolicy: Always
+          env:
+            - name: HEALTHCHECKS_URL_PYTHON_URLCHECKER
+              value: <path:secret/data/urlchecker#HEALTHCHECKS_URL>
+            - name: APPRISE_GOTIFY
+              value: <path:secret/data/urlchecker#APPRISE_GOTIFY>
+            - name: APPRISE_DISCORD
+              value: <path:secret/data/urlchecker#APPRISE_DISCORD>
+            - name: TIME_BETWEEN_SCHEDULED_CHECKS
+              value: "120"
+          volumeMounts:
+            - name: checks
+              mountPath: /app/checks.yaml
+              subPath: checks.yaml
       volumes:
-      - name: checks
-        configMap:
-          name: checks
+        - name: checks
+          configMap:
+            name: checks
