@@ -63,7 +63,7 @@ spec:
           subPath: oci.pem
         - name: oci-config
           mountPath: /scripts/config
-          subPath: oci-config
+          subPath: config
       volumes:
       - name: oci-pem
         configMap:
