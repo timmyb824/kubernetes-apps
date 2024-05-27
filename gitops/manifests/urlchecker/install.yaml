@@ -233,6 +233,7 @@ spec:
       containers:
       - name: urlchecker
         image: timmyb824/python-urlchecker:latest
+        imagePullPolicy: Always
         env:
         - name: APPRISE_DISCORD
           value:
