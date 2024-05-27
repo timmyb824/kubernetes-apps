@@ -49,7 +49,7 @@ spec:
           value: <path:secret/data/scripts#GOTIFY_HOST>
         - name: GOTIFY_TOKEN_ADHOC_SCRIPTS
           value: <path:secret/data/scripts#GOTIFY_TOKEN_ADHOC_SCRIPTS>
-        - name: HEALTHCHECKS_URL_AWS_USAGE_COST
+        - name: HEALTHCHECKS_URL_OCI_USAGE_COST
           value: <path:secret/data/scripts#HEALTHCHECKS_URL_OCI_USAGE_COST>
         - name: DISCORD_WEBHOOK_URL
           value: <path:secret/data/scripts#DISCORD_WEBHOOK_URL>
