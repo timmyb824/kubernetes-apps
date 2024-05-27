@@ -1,0 +1,73 @@
+apiVersion: v1
+data:
+  config: |
+    <path:secret/data/scripts#OCI_PEM>
+kind: ConfigMap
+metadata:
+  namespace: scripts
+  annotations:
+    use-subpath: "true"
+  name: oci-pem
+---
+apiVersion: v1
+data:
+  config: |
+    <path:secret/data/scripts#OCI_CONFIG>
+kind: ConfigMap
+metadata:
+  namespace: scripts
+  annotations:
+    use-subpath: "true"
+  name: oci-config
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: oci-usage-cost
+  namespace: scripts
+  labels:
+    app: oci-usage-cost
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: oci-usage-cost
+  template:
+    metadata:
+      labels:
+        app: oci-usage-cost
+    spec:
+      containers:
+      - name: oci-usage-cost
+        image: timmyb824/oci-usage-cost:latest
+        env:
+        - name: NTFY_TOPIC
+          value: <path:secret/data/scripts#NTFY_TOPIC>
+        - name: NTFY_ACCESS_TOKEN
+          value: <path:secret/data/scripts#NTFY_ACCESS_TOKEN>
+        - name: GOTIFY_HOST
+          value: <path:secret/data/scripts#GOTIFY_HOST>
+        - name: GOTIFY_TOKEN_ADHOC_SCRIPTS
+          value: <path:secret/data/scripts#GOTIFY_TOKEN_ADHOC_SCRIPTS>
+        - name: HEALTHCHECKS_URL_AWS_USAGE_COST
+          value: <path:secret/data/scripts#HEALTHCHECKS_URL_OCI_USAGE_COST>
+        - name: DISCORD_WEBHOOK_URL
+          value: <path:secret/data/scripts#DISCORD_WEBHOOK_URL>
+        - name: THRESHOLD
+          value: "5"
+        - name: INTERVAL_MINS
+          value: "60"
+        volumeMounts:
+        - name: oci-pem
+          mountPath: /scripts/oci.pem
+          subPath: oci.pem
+        - name: oci-config
+          mountPath: /scripts/config
+          subPath: oci-config
+      volumes:
+      - name: oci-pem
+        configMap:
+          name: oci-pem
+      - name: oci-config
+        configMap:
+          name: oci-config
