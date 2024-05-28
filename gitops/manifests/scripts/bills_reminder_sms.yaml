@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bills-reminder-sms
+  namespace: scripts
+  labels:
+    app: bills-reminder-sms
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bills-reminder-sms
+  template:
+    metadata:
+      labels:
+        app: bills-reminder-sms
+    spec:
+      containers:
+      - name: bills-reminder-sms
+        image: timmyb824/bills-reminder-sms:latest
+        imagePullPolicy: Always
+        env:
+        - name: EMAIL
+          value: <path:secret/data/scripts#EMAIL>
+        - name: GOOGLE_APP_PASSWORD
+          value: <path:secret/data/scripts#GOOGLE_APP_PASSWORD>
+        - name: PHONE_NUMBER
+          value: <path:secret/data/scripts#PHONE_NUMBER>
+        - name: HEALTHCHECKS_URL_BILLS_REMINDER_SMS
+          value: <path:secret/data/scripts#HEALTHCHECKS_URL_BILLS_REMINDER_SMS>
+        - name: HEALTHCHECKS_URL_AWS_USAGE_COST
+          value: <path:secret/data/scripts#HEALTHCHECKS_URL_AWS_USAGE_COST>
