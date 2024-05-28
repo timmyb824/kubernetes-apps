@@ -18,6 +18,7 @@ spec:
       containers:
       - name: aws-usage-cost
         image: timmyb824/aws-usage-cost:latest
+        imagePullPolicy: Always
         env:
         - name: NTFY_TOPIC
           value: <path:secret/data/scripts#NTFY_TOPIC>
@@ -37,3 +38,5 @@ spec:
           value: <path:secret/data/scripts#AWS_SECRET_ACCESS_KEY>
         - name: THRESHOLD
           value: "5"
+        - name: INTERVAL_SCHEDULE
+          value: "12 hours"
