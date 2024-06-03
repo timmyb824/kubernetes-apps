@@ -89,11 +89,11 @@ data:
       status_accepted:
         - 200
 
-    - name: home-assistant
-      url: https://hass.timmybtech.com
-      retries: 3
-      status_accepted:
-        - 200
+    # - name: home-assistant
+    #   url: https://hass.timmybtech.com
+    #   retries: 3
+    #   status_accepted:
+    #     - 200
 
     - name: influxdb
       url: https://influxdb.local.timmybtech.com
