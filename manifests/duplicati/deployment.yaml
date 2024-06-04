@@ -33,7 +33,7 @@ spec:
               value: "1000"
             - name: TZ
               value: America/New_York
-          image: lscr.io/linuxserver/duplicati:2.0.7
+          image: lscr.io/linuxserver/duplicati:2.0.8
           name: duplicati
           ports:
             - containerPort: 8200
