@@ -1271,7 +1271,7 @@ spec:
             path: /var/run
             type: ''
 ---
-apiVersion: autoscaling/v2beta1
+apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   name: zabbix-web
