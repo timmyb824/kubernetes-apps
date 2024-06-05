@@ -56,11 +56,57 @@ providers:
                         - websecure
                     tls:
                         certResolver: default
+                loki:
+                    rule: Host(`loki.local.timmybtech.com`)
+                    service: wyl
+                    entrypoints:
+                        - websecure
+                    tls:
+                        certResolver: default
+                nas:
+                    rule: Host(`nas.local.timmybtech.com`)
+                    service: nas
+                    entrypoints:
+                        - websecure
+                    tls:
+                        certResolver: default
+
+                pve:
+                    rule: Host(`pve.local.timmybtech.com`)
+                    service: pve
+                    entryPoints:
+                        - websecure
+                    tls:
+                        certResolver: default
+
             services:
                 wyl:
                     loadBalancer:
                         servers:
                             - url: http://192.168.86.202:8840
+                loki:
+                    loadBalancer:
+                        servers:
+                            - url: http://192.168.86.202:3100
+                nas:
+                    loadBalancer:
+                        passHostHeader: true
+                        serversTransport: nas
+                        servers:
+                            - url: https://192.168.86.44:5001
+                pve:
+                    loadBalancer:
+                        passHostHeader: true
+                        serversTransport: pve
+                        servers:
+                            - url: https://192.168.86.199:8006
+
+            serversTransports:
+                pve:
+                    insecureSkipVerify: true
+                nas:
+                    insecureSkipVerify: true
+
 volumes:
   - name: local-timmybtech-com-tls
     mountPath: /certs
