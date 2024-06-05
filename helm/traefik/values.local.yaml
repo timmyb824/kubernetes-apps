@@ -16,7 +16,8 @@ deployment:
 
 ports:
   web:
-    redirectTo: websecure
+    redirectTo:
+      port: websecure
   websecure:
     tls:
       enabled: true
@@ -33,6 +34,42 @@ providers:
     enabled: true
     publishedService:
       enabled: false
+  file:
+    enabled: true
+    watch: true
+    content: |
+      tls:
+          certificates:
+            - certFile: /certs/tls.crt
+              keyFile: /certs/tls.key
+        stores:
+            default:
+              defaultCertificate:
+                certFile: /certs/tls.crt
+                keyFile: /certs/tls.key
+        http:
+            routers:
+                wyl:
+                    rule: Host(`wyl.local.timmybtech.com`)
+                    service: wyl
+                    entrypoints:
+                        - websecure
+                    tls:
+                        certResolver: default
+            services:
+                wyl:
+                    loadBalancer:
+                        servers:
+                            - url: http://192.168.86.202:8840
+volumes:
+  - name: local-timmybtech-com-tls
+    mountPath: /certs
+    type: secret
+
+additionalVolumeMounts:
+  - name: local-timmybtech-com-tls
+    mountPath: /certs
+    readOnly: true
 
 rbac:
   enabled: true
