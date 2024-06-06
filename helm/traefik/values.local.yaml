@@ -39,73 +39,40 @@ providers:
     watch: true
     content: |
       tls:
-          certificates:
-            - certFile: /certs/tls.crt
-              keyFile: /certs/tls.key
+        certificates:
+          - certFile: /certs/tls.crt
+            keyFile: /certs/tls.key
         stores:
-            default:
-              defaultCertificate:
-                certFile: /certs/tls.crt
-                keyFile: /certs/tls.key
-        http:
-            routers:
-                wyl:
-                    rule: Host(`wyl.local.timmybtech.com`)
-                    service: wyl
-                    entrypoints:
-                        - websecure
-                    tls:
-                        certResolver: default
-                loki:
-                    rule: Host(`loki.local.timmybtech.com`)
-                    service: wyl
-                    entrypoints:
-                        - websecure
-                    tls:
-                        certResolver: default
-                nas:
-                    rule: Host(`nas.local.timmybtech.com`)
-                    service: nas
-                    entrypoints:
-                        - websecure
-                    tls:
-                        certResolver: default
+          default:
+            defaultCertificate:
+              certFile: /certs/tls.crt
+              keyFile: /certs/tls.key
 
-                pve:
-                    rule: Host(`pve.local.timmybtech.com`)
-                    service: pve
-                    entryPoints:
-                        - websecure
-                    tls:
-                        certResolver: default
-
-            services:
-                wyl:
-                    loadBalancer:
-                        servers:
-                            - url: http://192.168.86.202:8840
-                loki:
-                    loadBalancer:
-                        servers:
-                            - url: http://192.168.86.202:3100
-                nas:
-                    loadBalancer:
-                        passHostHeader: true
-                        serversTransport: nas
-                        servers:
-                            - url: https://192.168.86.44:5001
-                pve:
-                    loadBalancer:
-                        passHostHeader: true
-                        serversTransport: pve
-                        servers:
-                            - url: https://192.168.86.199:8006
-
-            serversTransports:
-                pve:
-                    insecureSkipVerify: true
-                nas:
-                    insecureSkipVerify: true
+      http:
+        routers:
+          wyl:
+            rule: Host(`wyl.local.timmybtech.com`)
+            service: wyl
+            entrypoints:
+              - websecure
+            tls:
+              certResolver: default
+          linkace:
+            rule: Host(`linkace.local.timmybtech.com`)
+            service: linkace
+            entrypoints:
+              - websecure
+            tls:
+              certResolver: default
+        services:
+          wyl:
+            loadBalancer:
+              servers:
+                - url: http://192.168.86.202:8840
+          linkace:
+            loadBalancer:
+              servers:
+                - url: http://192.168.86.240:718
 
 volumes:
   - name: local-timmybtech-com-tls
