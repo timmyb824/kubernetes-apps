@@ -392,8 +392,8 @@ data:
     - OCI hidden:
         - Healthchecks:
             icon: healthchecks.png
-            href: https://healthchecks.timmybtech.com/
-            ping: http://homelab-oci03.tailscale.lan:8000
+            href: https://healthchecks.local.timmybtech.com/
+            ping: http://homelab-oci03.tbryant.headscale.com:8000
         - PGweb (oci):
             icon: postgres.png
             href: https://pgweb2.timmybtech.com/
