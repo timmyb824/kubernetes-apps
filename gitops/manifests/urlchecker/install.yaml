@@ -150,7 +150,7 @@ data:
         - 200
 
     - name: prometheus
-      url: https://prometheus.tbryant.headscale.com:9090
+      url: http://prometheus.tbryant.headscale.com:9090
       retries: 3
       status_accepted:
         - 200
