@@ -382,11 +382,11 @@ data:
                 key: <PORTAINER_ACCESS_TOKEN>
         - Uptime Kuma:
             icon: uptime-kuma.png
-            href: https://uptime-kuma.timmybtech.com/
-            ping: http://homelab-oci03.tailscale.lan:3001
+            href: https://uptime-kuma.local.timmybtech.com/
+            ping: http://homelab-oci03.tbryant.headscale.com:3001
             widget:
                 type: uptimekuma
-                url: http:///homelab-oci03.local.lan:3001
+                url: http:///homelab-oci03.tbryant.headscale.com:3001
                 slug: bryant-homelab
 
     - OCI hidden:
@@ -396,17 +396,17 @@ data:
             ping: http://homelab-oci03.tbryant.headscale.com:8000
         - PGweb (oci):
             icon: postgres.png
-            href: https://pgweb2.timmybtech.com/
-            ping: http://homelab-oci03.tailscale.lan:8083
+            href: https://pgweb-oci.local.timmybtech.com/
+            ping: http://homelab-oci03.tbryant.headscale.com:8083
         - IT-Tools:
             icon: it-tools.png
-            href: https://it-tools.timmybtech.com/
-            ping: http://homelab-oci03.tailscale.lan:5884
+            href: https://it-tools.local.timmybtech.com/
+            ping: http://homelab-oci03.tbryant.headscale.com:5884
 
     - Storage:
         - Synology:
             icon: synology.png
-            href: https://nas.timmybtech.com/
+            href: https://nas.local.timmybtech.com/
             ping: http://192.168.86.44:5000/
             widget:
                 type: diskstation
@@ -466,18 +466,11 @@ data:
     - VM Servers:
         - Speedtest-tracker:
             icon: speedtest-tracker.png
-            href: https://speedtest.timmybtech.com/
+            href: https://speedtest.local.timmybtech.com/
             ping: http://192.168.86.240:8083
             widget:
                 type: speedtest
                 url: http://vm307.local.lan:8083
-        - Traefik-docker:
-            icon: traefik.png
-            href: https://traefik.timmybtech.com/
-            ping: http://192.168.86.240:8080
-            widget:
-              type: traefik
-              url: http://vm307.local.lan:8080
         - Portainer (vm303):
             icon: portainer.png
             href: https://portainer.local.timmybtech.com/#!/11/docker/dashboard
@@ -490,11 +483,11 @@ data:
                 key: <PORTAINER_ACCESS_TOKEN>
         - Prometheus:
             icon: prometheus.png
-            href: https://prometheus.timmybtech.com/
-            ping: http://vm305.local.lan:9090
+            href: http://prometheus.tbryant.headscale.com:9090/
+            ping: http://prometheus.tbryant.headscale.com:9090
             widget:
                 type: prometheus
-                url: http://vm305.local.lan:9090
+                url: http://prometheus.tbryant.headscale.com:9090
 
     - VM Servers hidden:
         - Ansible Semaphore:
