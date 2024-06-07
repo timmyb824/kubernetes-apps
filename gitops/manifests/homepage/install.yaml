@@ -496,8 +496,8 @@ data:
             ping: http://192.168.86.240:3005
         - Code Server:
             icon: code-server.png
-            href: https://code-server.timmybtech.com/
-            ping: http://192.168.86.240:8443
+            href: https://code-server.local.timmybtech.com/
+            ping: http://192.168.86.159:8680
         - Focal-Board:
             icon: focalboard.png
             href: https://focal-board.timmybtech.com/

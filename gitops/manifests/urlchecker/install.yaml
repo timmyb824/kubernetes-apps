@@ -48,7 +48,7 @@ data:
     #    - 200
 
     - name: code-server
-      url: https://code-server.timmybtech.com
+      url: https://code-server.local.timmybtech.com
       retries: 2
       status_accepted:
         - 200

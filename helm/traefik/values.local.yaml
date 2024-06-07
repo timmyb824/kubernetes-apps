@@ -124,6 +124,13 @@ providers:
                         - websecure
                     tls:
                         certResolver: default
+                code-server:
+                    rule: Host(`code-server.local.timmybtech.com`)
+                    service: code-server
+                    entrypoints:
+                        - websecure
+                    tls:
+                        certResolver: default
               services:
                 watchyourlan:
                   loadBalancer:
@@ -143,8 +150,10 @@ providers:
                       - url: http://192.168.86.240:8088
                 nas:
                   loadBalancer:
+                    passHostHeader: true
+                    serversTransport: nas
                     servers:
-                      - url: http://192.168.86.44:5000
+                      - url: http://192.168.86.44:5001
                 healthchecks:
                   loadBalancer:
                     servers:
@@ -169,6 +178,15 @@ providers:
                     loadBalancer:
                         servers:
                         - url: http://vm303.tbryant.headscale.com:8081
+                code-server:
+                    loadBalancer:
+                        servers:
+                        - url: http://192.168.86.159:8680
+              serversTransports:
+                pve:
+                    insecureSkipVerify: true
+                nas:
+                    insecureSkipVerify: true
 volumes:
     - name: local-timmybtech-com-tls
       mountPath: /certs
