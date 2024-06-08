@@ -131,6 +131,20 @@ providers:
                         - websecure
                     tls:
                         certResolver: default
+                headscale:
+                    rule: Host(`headscale.local.timmybtech.com`)
+                    service: headscale
+                    entrypoints:
+                        - websecure
+                    tls:
+                        certResolver: default
+                pve:
+                    rule: Host(`pve.local.timmybtech.com`)
+                    service: pve
+                    entrypoints:
+                        - websecure
+                    tls:
+                        certResolver: default
               services:
                 watchyourlan:
                   loadBalancer:
@@ -155,7 +169,7 @@ providers:
                 healthchecks:
                   loadBalancer:
                     servers:
-                      - url: http://homelab-oci03.tbryant.headscale.com:8000
+                      - url: http://homelab-oci03.tbryant.headscale.com:8000Z
                 uptime-kuma:
                   loadBalancer:
                     servers:
@@ -180,6 +194,14 @@ providers:
                     loadBalancer:
                         servers:
                         - url: http://192.168.86.159:8680
+                headscale:
+                    loadBalancer:
+                        servers:
+                        - url: http://192.168.86.214:8080
+                pve:
+                    loadBalancer:
+                        servers:
+                        - url: https://192.168.86.160:8006
 volumes:
     - name: local-timmybtech-com-tls
       mountPath: /certs

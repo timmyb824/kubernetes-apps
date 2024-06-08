@@ -415,39 +415,12 @@ data:
                 password: <SYNOLOGY_PASSWORD>
 
     - Local DNS:
-        - Adguard Home:
-            icon: adguard-home.png
-            href: https://adguard.timmybtech.com/
-            ping: http://pihole2.local.lan
-            widget:
-                type: adguard
-                url: http://pihole2.local.lan
-                username: <ADGUARD_USER>
-                password: <ADGUARD_PASSWORD>
-        - Adguard Home Replica:
-            icon: adguard-home.png
-            href: https://adguard2.timmybtech.com/
-            ping: http://rasberrypi.local.lan
-            widget:
-                type: adguard
-                url: http://rasberrypi.local.lan
-                username: <ADGUARD_USER>
-                password: <ADGUARD_PASSWORD>
-        - Adguard Home Replica2:
-            icon: adguard-home.png
-            href: https://adguard3.timmybtech.com/
-            ping: http://hp-laptop-ubuntu.local.lan
-            widget:
-                type: adguard
-                url: http://hp-laptop-ubuntu.local.lan
-                username: <ADGUARD_USER>
-                password: <ADGUARD_PASSWORD>
+        - Technitium:
+            icon: technitium.png
+            href: https://technitium.local.timmybtech.com/
+            ping: http://192.168.86.213:5380
 
     - PI Servers:
-        - Adguard Home Sync:
-            icon: adguard-home.png
-            href: http://192.168.86.174:8080/
-            ping: http://192.168.86.174:8080/
         - SNMP Exporter:
             icon: prometheus.png
             href: http://pihole2.local.lan:9116/
