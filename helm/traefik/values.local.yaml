@@ -183,7 +183,7 @@ providers:
                 healthchecks:
                   loadBalancer:
                     servers:
-                      - url: http://homelab-oci03.tbryant.headscale.com:8000Z
+                      - url: http://homelab-oci03.tbryant.headscale.com:8000
                 uptime-kuma:
                   loadBalancer:
                     servers:
