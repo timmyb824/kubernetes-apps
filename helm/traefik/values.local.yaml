@@ -175,7 +175,7 @@ providers:
                 speedtest:
                   loadBalancer:
                     servers:
-                      - url: http://192.168.86.240:8088
+                      - url: http://192.168.86.143:8083
                 nas:
                   loadBalancer:
                     servers:

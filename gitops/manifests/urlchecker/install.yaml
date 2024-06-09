@@ -173,11 +173,11 @@ data:
       status_accepted:
         - 404
 
-    # - name: speedtest-tracker
-    #   url: https://speedtest.local.timmybtech.com
-    #   retries: 3
-    #   status_accepted:
-    #     - 200
+    - name: speedtest-tracker
+      url: https://speedtest.local.timmybtech.com
+      retries: 3
+      status_accepted:
+        - 200
 
     - name: uptime-kuma
       url: https://uptime-kuma.local.timmybtech.com
