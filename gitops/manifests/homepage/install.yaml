@@ -477,8 +477,8 @@ data:
             ping: http://192.168.86.143:8001
         - Home Assistant:
             icon: home-assistant.png
-            href: https://hass.timmybtech.com/
-            ping: http://vm100.local.lan:8123
+            href: https://homeassistant.local.timmybtech.com/
+            ping: http://192.168.86.144:8123
         - LinkAce:
             icon: linkace.png
             href: https://linkace.local.timmybtech.com/

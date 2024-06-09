@@ -159,6 +159,13 @@ providers:
                         - websecure
                     tls:
                         certResolver: default
+                homeassistant:
+                    rule: Host(`homeassistant.local.timmybtech.com`)
+                    service: homeassistant
+                    entrypoints:
+                        - websecure
+                    tls:
+                        certResolver: default
               services:
                 watchyourlan:
                   loadBalancer:
@@ -224,6 +231,10 @@ providers:
                     loadBalancer:
                         servers:
                         - url: https://192.168.86.160:8006
+                homeassistant:
+                    loadBalancer:
+                        servers:
+                        - url: http://192.168.86.144:8123
 volumes:
     - name: local-timmybtech-com-tls
       mountPath: /certs
