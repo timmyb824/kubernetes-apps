@@ -145,6 +145,20 @@ providers:
                         - websecure
                     tls:
                         certResolver: default
+                focal-board:
+                    rule: Host(`focal-board.local.timmybtech.com`)
+                    service: focal-board
+                    entrypoints:
+                        - websecure
+                    tls:
+                        certResolver: default
+                zipline:
+                    rule: Host(`zipline.local.timmybtech.com`)
+                    service: zipline
+                    entrypoints:
+                        - websecure
+                    tls:
+                        certResolver: default
               services:
                 watchyourlan:
                   loadBalancer:
@@ -153,7 +167,7 @@ providers:
                 linkace:
                   loadBalancer:
                     servers:
-                      - url: http://192.168.86.240:718
+                      - url: http://192.168.86.143:718
                 technitium:
                   loadBalancer:
                     servers:
@@ -198,6 +212,14 @@ providers:
                     loadBalancer:
                         servers:
                         - url: http://192.168.86.214:8080
+                focal-board:
+                    loadBalancer:
+                        servers:
+                        - url: http://192.168.86.143:8001
+                zipline:
+                    loadBalancer:
+                        servers:
+                        - url: http://192.168.86.143:3000
                 pve:
                     loadBalancer:
                         servers:

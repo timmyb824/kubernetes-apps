@@ -59,11 +59,11 @@ data:
       status_accepted:
         - 200
 
-    # - name: focal-board
-    #   url: https://focal-board.timmybtech.com
-    #   retries: 3
-    #   status_accepted:
-    #     - 200
+    - name: focal-board
+      url: https://focal-board.local.timmybtech.com
+      retries: 3
+      status_accepted:
+        - 200
 
     - name: gitea
       url: https://gitea.local.timmybtech.com
@@ -209,11 +209,11 @@ data:
     #  status_accepted:
     #    - 200
 
-    # - name: zipline
-    #   url: https://zipline.timmybtech.com
-    #   retries: 3
-    #   status_accepted:
-    #     - 200
+    - name: zipline
+      url: https://zipline.local.timmybtech.com
+      retries: 3
+      status_accepted:
+        - 200
 ---
 apiVersion: apps/v1
 kind: Deployment

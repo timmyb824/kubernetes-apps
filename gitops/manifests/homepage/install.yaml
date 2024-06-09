@@ -473,16 +473,16 @@ data:
             ping: http://192.168.86.159:8680
         - Focal-Board:
             icon: focalboard.png
-            href: https://focal-board.timmybtech.com/
-            ping: http://192.168.86.240:8001
+            href: https://focal-board.local.timmybtech.com/
+            ping: http://192.168.86.143:8001
         - Home Assistant:
             icon: home-assistant.png
             href: https://hass.timmybtech.com/
             ping: http://vm100.local.lan:8123
         - LinkAce:
             icon: linkace.png
-            href: https://linkace.timmybtech.com/
-            ping: http://192.168.86.240:718
+            href: https://linkace.local.timmybtech.com/
+            ping: http://192.168.86.143:718
         - Loki:
             icon: loki.png
             href: https://loki.timmybtech.com/
@@ -497,8 +497,8 @@ data:
             ping: http://192.168.86.202:8840
         - Zipline:
             icon: zipline.png
-            href: https://zipline.timmybtech.com/
-            ping: http://192.168.86.240:3000
+            href: https://zipline.local.timmybtech.com/
+            ping: http://192.168.86.143:3000
   widgets.yaml: |
     - kubernetes:
         cluster:
