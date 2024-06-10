@@ -215,6 +215,10 @@ data:
         icon: mdi-server
         style: row
         columns: 3
+      VM/LXC hidden:
+        header: false
+        style: row
+        columns: 3
   bookmarks.yaml: |
     - CICD:
         - Netlify:
@@ -413,14 +417,6 @@ data:
             ping: https://192.168.86.199:8006
 
     - VM/LXC:
-        - Technitium:
-            icon: technitium.png
-            href: https://technitium.local.timmybtech.com/
-            ping: http://192.168.86.213:5380
-        - SNMP Exporter:
-            icon: prometheus.png
-            href: http://192.168.86.174:9116/
-            ping: http://192.168.86.174:9116/
         - Speedtest-tracker:
             icon: speedtest-tracker.png
             href: https://speedtest.local.timmybtech.com/
@@ -445,6 +441,16 @@ data:
             widget:
                 type: prometheus
                 url: http://prometheus.tbryant.headscale.com:9090
+
+    - VM/LXC hidden:
+        - SNMP Exporter:
+            icon: prometheus.png
+            href: http://192.168.86.174:9116/
+            ping: http://192.168.86.174:9116/
+        - Technitium:
+            icon: technitium.png
+            href: https://technitium.local.timmybtech.com/
+            ping: http://192.168.86.213:5380
         - Code Server:
             icon: code-server.png
             href: https://code-server.local.timmybtech.com/
