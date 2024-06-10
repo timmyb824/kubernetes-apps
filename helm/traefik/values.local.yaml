@@ -173,6 +173,13 @@ providers:
                         - websecure
                     tls:
                         certResolver: default
+                prometheus:
+                    rule: Host(`prometheus.local.timmybtech.com`)
+                    service: prometheus
+                    entrypoints:
+                        - websecure
+                    tls:
+                        certResolver: default
               services:
                 watchyourlan:
                   loadBalancer:
@@ -246,6 +253,10 @@ providers:
                     loadBalancer:
                         servers:
                         - url: http://192.168.86.146:3100
+                prometheus:
+                    loadBalancer:
+                        servers:
+                        - url: http://192.168.86.198:9090
 volumes:
     - name: local-timmybtech-com-tls
       mountPath: /certs
