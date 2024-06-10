@@ -360,7 +360,7 @@ data:
             ping: http://homelab-oci03.tbryant.headscale.com:8080
             widget:
                 type: gotify
-                url: http://homelab-oci03.local.lan:8080
+                url: http://homelab-oci03.tbryant.headscale.com:8080
                 key: <GOTIFY_CLIENT_TOKEN>
         - Portainer (homelab-oci03):
             icon: portainer.png
