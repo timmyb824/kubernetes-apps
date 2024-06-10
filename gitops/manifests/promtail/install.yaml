@@ -44,7 +44,7 @@ data:
       grpc_listen_port: 0
 
     clients:
-    - url: https://loki.timmybtech.com/loki/api/v1/push
+    - url: https://loki.local.timmybtech.com/loki/api/v1/push
 
     positions:
       filename: /tmp/positions.yaml
