@@ -272,7 +272,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`prometheus.local.timmybtech.com`)
+    - match: Host(`prometheus-k8s.local.timmybtech.com`)
       kind: Rule
       services:
         - name: prometheus-service
