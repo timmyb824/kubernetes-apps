@@ -478,7 +478,7 @@ data:
         - Home Assistant:
             icon: home-assistant.png
             href: https://homeassistant.local.timmybtech.com/
-            ping: http://192.168.86.144:8123
+            ping: http://192.168.86.147:8123
         - LinkAce:
             icon: linkace.png
             href: https://linkace.local.timmybtech.com/

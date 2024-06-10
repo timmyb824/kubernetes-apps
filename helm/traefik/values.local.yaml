@@ -241,7 +241,7 @@ providers:
                 homeassistant:
                     loadBalancer:
                         servers:
-                        - url: http://192.168.86.144:8123
+                        - url: http://192.168.86.147:8123
                 loki:
                     loadBalancer:
                         servers:
