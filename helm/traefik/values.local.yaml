@@ -217,7 +217,7 @@ providers:
                 pgweb:
                     loadBalancer:
                         servers:
-                        - url: http://vm303.tbryant.headscale.com:8081
+                        - url: http://192.168.86.74:8081
                 code-server:
                     loadBalancer:
                         servers:
