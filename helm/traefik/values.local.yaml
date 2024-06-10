@@ -166,6 +166,13 @@ providers:
                         - websecure
                     tls:
                         certResolver: default
+                loki:
+                    rule: Host(`loki.local.timmybtech.com`)
+                    service: loki
+                    entrypoints:
+                        - websecure
+                    tls:
+                        certResolver: default
               services:
                 watchyourlan:
                   loadBalancer:
@@ -235,6 +242,10 @@ providers:
                     loadBalancer:
                         servers:
                         - url: http://192.168.86.144:8123
+                loki:
+                    loadBalancer:
+                        servers:
+                        - url: http://192.168.86.146:3100
 volumes:
     - name: local-timmybtech-com-tls
       mountPath: /certs
