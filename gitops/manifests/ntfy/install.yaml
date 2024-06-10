@@ -433,7 +433,6 @@ spec:
   selector:
     matchLabels:
       app: ntfy
-  serviceName: ntfy
   template:
     metadata:
       labels:
