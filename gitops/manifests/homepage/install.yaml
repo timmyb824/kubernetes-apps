@@ -436,7 +436,7 @@ data:
                 key: <PORTAINER_ACCESS_TOKEN>
         - Prometheus:
             icon: prometheus.png
-            href: http://prometheus.tbryant.headscale.com:9090/
+            href: http://prometheus.local.timmybtech.com/
             ping: http://prometheus.tbryant.headscale.com:9090
             widget:
                 type: prometheus
