@@ -11,41 +11,11 @@ metadata:
   namespace: urlchecker
 data:
   checks.yaml: |
-    # - name: adguardhome
-    #   url: https://adguard.timmybtech.com
-    #   retries: 3
-    #   status_accepted:
-    #     - 200
-
-    # - name: adguardhome-replica
-    #   url: https://adguard2.timmybtech.com
-    #   retries: 3
-    #   status_accepted:
-    #     - 200
-
-    # - name: adguardhome-replica2
-    #   url: https://adguard3.timmybtech.com
-    #   retries: 3
-    #   status_accepted:
-    #     - 200
-
-    # - name: ansible-semaphore
-    #   url: https://semaphore.timmybtech.com
-    #   retries: 3
-    #   status_accepted:
-    #     - 200
-
     - name: argocd
       url: https://argocd.local.timmybtech.com
       retries: 3
       status_accepted:
         - 200
-
-    #- name: changedetection.io
-    #  url: https://changedetection.local.timmybtech.com
-    #  retries: 3
-    #  status_accepted:
-    #    - 200
 
     - name: code-server
       url: https://code-server.local.timmybtech.com
@@ -89,7 +59,7 @@ data:
       status_accepted:
         - 200
 
-    # - name: home-assistant
+    # - name: homeassistant
     #   url: https://homeassistant.local.timmybtech.com
     #   retries: 3
     #   status_accepted:
@@ -113,29 +83,17 @@ data:
       status_accepted:
         - 200
 
-    # - name: loki
-    #   url: https://loki.timmybtech.com/loki/api/v1/status/buildinfo
-    #   retries: 3
-    #   status_accepted:
-    #     - 200
+    - name: loki
+      url: https://loki.local.timmybtech.com/loki/api/v1/status/buildinfo
+      retries: 3
+      status_accepted:
+        - 200
 
     - name: nas
       url: https://nas.local.timmybtech.com
       retries: 3
       status_accepted:
         - 200
-
-    #- name: n8n
-    #  url: https://n8n.local.timmybtech.com
-    #  retries: 3
-    #  status_accepted:
-    #    - 200
-
-    #- name: plandex
-    #  url: https://plandex.local.timmybtech.com/health
-    #  retries: 3
-    #  status_accepted:
-    #    - 200
 
     - name: planka
       url: https://planka.local.timmybtech.com
@@ -154,18 +112,6 @@ data:
       retries: 3
       status_accepted:
         - 200
-
-    #- name: pve2
-    #  url: https://pve2.timmybtech.com
-    #  retries: 3
-    #  status_accepted:
-    #    - 200
-
-    #- name: pve3
-    #  url: https://pve3.local.com:8006
-    #  retries: 3
-    #  status_accepted:
-    #    - 200
 
     - name: shlink
       url: https://shlink.local.timmybtech.com
@@ -202,12 +148,6 @@ data:
       retries: 3
       status_accepted:
         - 200
-
-    #- name: wikijs
-    #  url: https://wiki.local.timmybtech.com
-    #  retries: 3
-    #  status_accepted:
-    #    - 200
 
     - name: zipline
       url: https://zipline.local.timmybtech.com
