@@ -357,10 +357,10 @@ data:
         - Gotify:
             icon: gotify.png
             href: https://gotify.local.timmybtech.com/
-            ping: http://homelab-oci03.tbryant.headscale.com:8080
+            ping: http://homelab-oci03.tailebee.ts.net:8080
             widget:
                 type: gotify
-                url: http://homelab-oci03.tbryant.headscale.com:8080
+                url: http://homelab-oci03.tailebee.ts.net:8080
                 key: <GOTIFY_CLIENT_TOKEN>
         - Portainer (homelab-oci03):
             icon: portainer.png
@@ -375,25 +375,25 @@ data:
         - Uptime Kuma:
             icon: uptime-kuma.png
             href: https://uptime-kuma.local.timmybtech.com/
-            ping: http://homelab-oci03.tbryant.headscale.com:3001
+            ping: http://homelab-oci03.tailebee.ts.net:3001
             widget:
                 type: uptimekuma
-                url: http:///homelab-oci03.tbryant.headscale.com:3001
+                url: http:///homelab-oci03.tailebee.ts.net:3001
                 slug: bryant-homelab
 
     - OCI hidden:
         - Healthchecks:
             icon: healthchecks.png
             href: https://healthchecks.local.timmybtech.com/
-            ping: http://homelab-oci03.tbryant.headscale.com:8000
+            ping: http://homelab-oci03.tailebee.ts.net:8000
         - PGweb (oci):
             icon: postgres.png
             href: https://pgweb-oci.local.timmybtech.com/
-            ping: http://homelab-oci03.tbryant.headscale.com:8083
+            ping: http://homelab-oci03.tailebee.ts.net:8083
         - IT-Tools:
             icon: it-tools.png
             href: https://it-tools.local.timmybtech.com/
-            ping: http://homelab-oci03.tbryant.headscale.com:5884
+            ping: http://homelab-oci03.tailebee.ts.net:5884
 
     - Storage:
         - Synology:
@@ -437,10 +437,10 @@ data:
         - Prometheus:
             icon: prometheus.png
             href: http://prometheus.local.timmybtech.com/
-            ping: http://prometheus.tbryant.headscale.com:9090
+            ping: http://prometheus.tailebee.ts.net:9090
             widget:
                 type: prometheus
-                url: http://prometheus.tbryant.headscale.com:9090
+                url: http://prometheus.tailebee.ts.net:9090
 
     - VM/LXC hidden:
         - SNMP Exporter:
