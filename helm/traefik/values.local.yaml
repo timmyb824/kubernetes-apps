@@ -204,23 +204,23 @@ providers:
                 healthchecks:
                   loadBalancer:
                     servers:
-                      - url: http://homelab-oci03.tbryant.headscale.com:8000
+                      - url: http://homelab-oci03.tailebee.ts.net:8000
                 uptime-kuma:
                   loadBalancer:
                     servers:
-                      - url: http://homelab-oci03.tbryant.headscale.com:3001
+                      - url: http://homelab-oci03.tailebee.ts.net:3001
                 gotify:
                     loadBalancer:
                         servers:
-                        - url: http://homelab-oci03.tbryant.headscale.com:8080
+                        - url: http://homelab-oci03.tailebee.ts.net:8080
                 it-tools:
                     loadBalancer:
                         servers:
-                        - url: http://homelab-oci03.tbryant.headscale.com:5884
+                        - url: http://homelab-oci03.tailebee.ts.net:5884
                 pgweb-oci:
                     loadBalancer:
                         servers:
-                        - url: http://homelab-oci03.tbryant.headscale.com:8083
+                        - url: http://homelab-oci03.tailebee.ts.net:8083
                 pgweb:
                     loadBalancer:
                         servers:
