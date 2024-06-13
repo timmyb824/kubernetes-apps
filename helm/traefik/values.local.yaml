@@ -180,6 +180,13 @@ providers:
                         - websecure
                     tls:
                         certResolver: default
+                actualbudget:
+                    rule: Host(`actualbudget.local.timmybtech.com`)
+                    service: actualbudget
+                    entrypoints:
+                        - websecure
+                    tls:
+                        certResolver: default
               services:
                 watchyourlan:
                   loadBalancer:
@@ -257,6 +264,10 @@ providers:
                     loadBalancer:
                         servers:
                         - url: http://192.168.86.198:9090
+                actualbudget:
+                    loadBalancer:
+                        servers:
+                        - url: http://192.168.86.203:5006
 volumes:
     - name: local-timmybtech-com-tls
       mountPath: /certs
