@@ -11,6 +11,12 @@ metadata:
   namespace: urlchecker
 data:
   checks.yaml: |
+    - name: actualbudget
+      url: https://budget.local.timmybtech.com
+      retries: 3
+      status_accepted:
+        - 200
+
     - name: argocd
       url: https://argocd.local.timmybtech.com
       retries: 3

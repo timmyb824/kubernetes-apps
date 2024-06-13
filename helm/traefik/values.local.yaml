@@ -181,7 +181,7 @@ providers:
                     tls:
                         certResolver: default
                 actualbudget:
-                    rule: Host(`actualbudget.local.timmybtech.com`)
+                    rule: Host(`budget.local.timmybtech.com`)
                     service: actualbudget
                     entrypoints:
                         - websecure
