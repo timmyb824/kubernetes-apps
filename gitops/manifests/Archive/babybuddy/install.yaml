@@ -52,7 +52,7 @@ spec:
               value: "TRUE"
             - name: TZ
               value: America/New_York
-          image: linuxserver/babybuddy:2.2.1
+          image: linuxserver/babybuddy:2.5.0
           name: babybuddy
           ports:
             - containerPort: 8000
