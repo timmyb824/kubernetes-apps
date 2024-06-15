@@ -131,13 +131,6 @@ providers:
                         - websecure
                     tls:
                         certResolver: default
-                headscale:
-                    rule: Host(`headscale.local.timmybtech.com`)
-                    service: headscale
-                    entrypoints:
-                        - websecure
-                    tls:
-                        certResolver: default
                 pve:
                     rule: Host(`pve.local.timmybtech.com`)
                     service: pve
@@ -236,10 +229,6 @@ providers:
                     loadBalancer:
                         servers:
                         - url: http://192.168.86.159:8680
-                headscale:
-                    loadBalancer:
-                        servers:
-                        - url: http://192.168.86.214:8080
                 focal-board:
                     loadBalancer:
                         servers:
