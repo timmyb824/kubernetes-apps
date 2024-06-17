@@ -29,12 +29,6 @@ data:
       status_accepted:
         - 200
 
-    - name: firefly-iii
-      url: https://firefly.local.timmybtech.com
-      retries: 3
-      status_accepted:
-        - 200
-
     - name: focal-board
       url: https://focal-board.local.timmybtech.com
       retries: 3
