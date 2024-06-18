@@ -1,279 +1,290 @@
 # THIS FILE IS A SECRET
 globalArguments:
-    - --global.sendanonymoususage=false
-    - --global.checknewversion=false
+  - --global.sendanonymoususage=false
+  - --global.checknewversion=false
 additionalArguments:
-    - --serversTransport.insecureSkipVerify=true
-    - --log.level=INFO
+  - --serversTransport.insecureSkipVerify=true
+  - --log.level=INFO
 deployment:
-    enabled: true
-    replicas: 3
-    annotations: {}
-    podAnnotations: {}
-    additionalContainers: []
-    initContainers: []
+  enabled: true
+  replicas: 3
+  annotations: {}
+  podAnnotations: {}
+  additionalContainers: []
+  initContainers: []
 ports:
-    web:
-        redirectTo:
-            port: websecure
-    websecure:
-        tls:
-            enabled: true
+  web:
+    redirectTo:
+      port: websecure
+  websecure:
+    tls:
+      enabled: true
 ingressRoute:
-    dashboard:
-        enabled: false
+  dashboard:
+    enabled: false
 providers:
-    kubernetesCRD:
-        enabled: true
-        # can name this anything
-        ingressClass: traefik-external
-    kubernetesIngress:
-        enabled: true
-        publishedService:
-            enabled: false
-    file:
-        enabled: true
-        watch: true
-        content: |
-            tls:
-              certificates:
-                - certFile: /certs/tls.crt
-                  keyFile: /certs/tls.key
-              stores:
-                default:
-                  defaultCertificate:
-                    certFile: /certs/tls.crt
-                    keyFile: /certs/tls.key
+  kubernetesCRD:
+    enabled: true
+    # can name this anything
+    ingressClass: traefik-external
+  kubernetesIngress:
+    enabled: true
+    publishedService:
+      enabled: false
+  file:
+    enabled: true
+    watch: true
+    content: |
+      tls:
+        certificates:
+          - certFile: /certs/tls.crt
+            keyFile: /certs/tls.key
+        stores:
+          default:
+            defaultCertificate:
+              certFile: /certs/tls.crt
+              keyFile: /certs/tls.key
 
-            http:
-              routers:
-                watchyourlan:
-                  rule: Host(`watchyourlan.local.timmybtech.com`)
-                  service: watchyourlan
-                  entrypoints:
-                    - websecure
-                  tls:
-                    certResolver: default
-                linkace:
-                  rule: Host(`linkace.local.timmybtech.com`)
-                  service: linkace
-                  entrypoints:
-                    - websecure
-                  tls:
-                    certResolver: default
-                technitium:
-                  rule: Host(`technitium.local.timmybtech.com`)
-                  service: technitium
-                  entrypoints:
-                    - websecure
-                  tls:
-                    certResolver: default
-                speedtest:
-                  rule: Host(`speedtest.local.timmybtech.com`)
-                  service: speedtest
-                  entrypoints:
-                    - websecure
-                  tls:
-                    certResolver: default
-                nas:
-                  rule: Host(`nas.local.timmybtech.com`)
-                  service: nas
-                  entrypoints:
-                    - websecure
-                  tls:
-                    certResolver: default
-                healthchecks:
-                  rule: Host(`healthchecks.local.timmybtech.com`)
-                  service: healthchecks
-                  entrypoints:
-                    - websecure
-                  tls:
-                    certResolver: default
-                uptime-kuma:
-                  rule: Host(`uptime-kuma.local.timmybtech.com`)
-                  service: uptime-kuma
-                  entrypoints:
-                    - websecure
-                  tls:
-                    certResolver: default
-                gotify:
-                  rule: Host(`gotify.local.timmybtech.com`)
-                  service: gotify
-                  entrypoints:
-                    - websecure
-                  tls:
-                    certResolver: default
-                it-tools:
-                  rule: Host(`it-tools.local.timmybtech.com`)
-                  service: it-tools
-                  entrypoints:
-                    - websecure
-                  tls:
-                    certResolver: default
-                pgweb-oci:
-                  rule: Host(`pgweb-oci.local.timmybtech.com`)
-                  service: pgweb-oci
-                  entrypoints:
-                    - websecure
-                  tls:
-                    certResolver: default
-                pgweb:
-                    rule: Host(`pgweb.local.timmybtech.com`)
-                    service: pgweb
-                    entrypoints:
-                        - websecure
-                    tls:
-                        certResolver: default
-                code-server:
-                    rule: Host(`code-server.local.timmybtech.com`)
-                    service: code-server
-                    entrypoints:
-                        - websecure
-                    tls:
-                        certResolver: default
-                pve:
-                    rule: Host(`pve.local.timmybtech.com`)
-                    service: pve
-                    entrypoints:
-                        - websecure
-                    tls:
-                        certResolver: default
-                focal-board:
-                    rule: Host(`focal-board.local.timmybtech.com`)
-                    service: focal-board
-                    entrypoints:
-                        - websecure
-                    tls:
-                        certResolver: default
-                zipline:
-                    rule: Host(`zipline.local.timmybtech.com`)
-                    service: zipline
-                    entrypoints:
-                        - websecure
-                    tls:
-                        certResolver: default
-                homeassistant:
-                    rule: Host(`homeassistant.local.timmybtech.com`)
-                    service: homeassistant
-                    entrypoints:
-                        - websecure
-                    tls:
-                        certResolver: default
-                loki:
-                    rule: Host(`loki.local.timmybtech.com`)
-                    service: loki
-                    entrypoints:
-                        - websecure
-                    tls:
-                        certResolver: default
-                prometheus:
-                    rule: Host(`prometheus.local.timmybtech.com`)
-                    service: prometheus
-                    entrypoints:
-                        - websecure
-                    tls:
-                        certResolver: default
-                actualbudget:
-                    rule: Host(`budget.local.timmybtech.com`)
-                    service: actualbudget
-                    entrypoints:
-                        - websecure
-                    tls:
-                        certResolver: default
-              services:
-                watchyourlan:
-                  loadBalancer:
-                    servers:
-                      - url: http://192.168.86.217:8840
-                linkace:
-                  loadBalancer:
-                    servers:
-                      - url: http://192.168.86.143:718
-                technitium:
-                  loadBalancer:
-                    servers:
-                      - url: http://192.168.86.213:5380
-                speedtest:
-                  loadBalancer:
-                    servers:
-                      - url: http://192.168.86.143:8083
-                nas:
-                  loadBalancer:
-                    servers:
-                      - url: http://192.168.86.44:5000
-                healthchecks:
-                  loadBalancer:
-                    servers:
-                      - url: http://homelab-oci03.tailebee.ts.net:8000
-                uptime-kuma:
-                  loadBalancer:
-                    servers:
-                      - url: http://homelab-oci03.tailebee.ts.net:3001
-                gotify:
-                    loadBalancer:
-                        servers:
-                        - url: http://homelab-oci03.tailebee.ts.net:8080
-                it-tools:
-                    loadBalancer:
-                        servers:
-                        - url: http://homelab-oci03.tailebee.ts.net:5884
-                pgweb-oci:
-                    loadBalancer:
-                        servers:
-                        - url: http://homelab-oci03.tailebee.ts.net:8083
-                pgweb:
-                    loadBalancer:
-                        servers:
-                        - url: http://192.168.86.74:8081
-                code-server:
-                    loadBalancer:
-                        servers:
-                        - url: http://192.168.86.159:8680
-                focal-board:
-                    loadBalancer:
-                        servers:
-                        - url: http://192.168.86.143:8001
-                zipline:
-                    loadBalancer:
-                        servers:
-                        - url: http://192.168.86.143:3000
-                pve:
-                    loadBalancer:
-                        servers:
-                        - url: https://192.168.86.160:8006
-                homeassistant:
-                    loadBalancer:
-                        servers:
-                        - url: http://192.168.86.147:8123
-                loki:
-                    loadBalancer:
-                        servers:
-                        - url: http://192.168.86.146:3100
-                prometheus:
-                    loadBalancer:
-                        servers:
-                        - url: http://192.168.86.198:9090
-                actualbudget:
-                    loadBalancer:
-                        servers:
-                        - url: http://192.168.86.203:5006
+      http:
+        routers:
+          watchyourlan:
+            rule: Host(`watchyourlan.local.timmybtech.com`)
+            service: watchyourlan
+            entrypoints:
+              - websecure
+            tls:
+              certResolver: default
+          linkace:
+            rule: Host(`linkace.local.timmybtech.com`)
+            service: linkace
+            entrypoints:
+              - websecure
+            tls:
+              certResolver: default
+          technitium:
+            rule: Host(`technitium.local.timmybtech.com`)
+            service: technitium
+            entrypoints:
+              - websecure
+            tls:
+              certResolver: default
+          speedtest:
+            rule: Host(`speedtest.local.timmybtech.com`)
+            service: speedtest
+            entrypoints:
+              - websecure
+            tls:
+              certResolver: default
+          nas:
+            rule: Host(`nas.local.timmybtech.com`)
+            service: nas
+            entrypoints:
+              - websecure
+            tls:
+              certResolver: default
+          healthchecks:
+            rule: Host(`healthchecks.local.timmybtech.com`)
+            service: healthchecks
+            entrypoints:
+              - websecure
+            tls:
+              certResolver: default
+          uptime-kuma:
+            rule: Host(`uptime-kuma.local.timmybtech.com`)
+            service: uptime-kuma
+            entrypoints:
+              - websecure
+            tls:
+              certResolver: default
+          gotify:
+            rule: Host(`gotify.local.timmybtech.com`)
+            service: gotify
+            entrypoints:
+              - websecure
+            tls:
+              certResolver: default
+          it-tools:
+            rule: Host(`it-tools.local.timmybtech.com`)
+            service: it-tools
+            entrypoints:
+              - websecure
+            tls:
+              certResolver: default
+          pgweb-oci:
+            rule: Host(`pgweb-oci.local.timmybtech.com`)
+            service: pgweb-oci
+            entrypoints:
+              - websecure
+            tls:
+              certResolver: default
+          pgweb:
+              rule: Host(`pgweb.local.timmybtech.com`)
+              service: pgweb
+              entrypoints:
+                  - websecure
+              tls:
+                  certResolver: default
+          code-server:
+              rule: Host(`code-server.local.timmybtech.com`)
+              service: code-server
+              entrypoints:
+                  - websecure
+              tls:
+                  certResolver: default
+          code-server-ts
+              rule: Host(`code-server-ts.local.timmybtech.com`)
+              service: code-server-ts
+              entrypoints:
+                  - websecure
+              tls:
+                  certResolver: default
+          pve:
+              rule: Host(`pve.local.timmybtech.com`)
+              service: pve
+              entrypoints:
+                  - websecure
+              tls:
+                  certResolver: default
+          focal-board:
+              rule: Host(`focal-board.local.timmybtech.com`)
+              service: focal-board
+              entrypoints:
+                  - websecure
+              tls:
+                  certResolver: default
+          zipline:
+              rule: Host(`zipline.local.timmybtech.com`)
+              service: zipline
+              entrypoints:
+                  - websecure
+              tls:
+                  certResolver: default
+          homeassistant:
+              rule: Host(`homeassistant.local.timmybtech.com`)
+              service: homeassistant
+              entrypoints:
+                  - websecure
+              tls:
+                  certResolver: default
+          loki:
+              rule: Host(`loki.local.timmybtech.com`)
+              service: loki
+              entrypoints:
+                  - websecure
+              tls:
+                  certResolver: default
+          prometheus:
+              rule: Host(`prometheus.local.timmybtech.com`)
+              service: prometheus
+              entrypoints:
+                  - websecure
+              tls:
+                  certResolver: default
+          actualbudget:
+              rule: Host(`budget.local.timmybtech.com`)
+              service: actualbudget
+              entrypoints:
+                  - websecure
+              tls:
+                  certResolver: default
+        services:
+          watchyourlan:
+            loadBalancer:
+              servers:
+                - url: http://192.168.86.217:8840
+          linkace:
+            loadBalancer:
+              servers:
+                - url: http://192.168.86.143:718
+          technitium:
+            loadBalancer:
+              servers:
+                - url: http://192.168.86.213:5380
+          speedtest:
+            loadBalancer:
+              servers:
+                - url: http://192.168.86.143:8083
+          nas:
+            loadBalancer:
+              servers:
+                - url: http://192.168.86.44:5000
+          healthchecks:
+            loadBalancer:
+              servers:
+                - url: http://homelab-oci03.tailebee.ts.net:8000
+          uptime-kuma:
+            loadBalancer:
+              servers:
+                - url: http://homelab-oci03.tailebee.ts.net:3001
+          gotify:
+              loadBalancer:
+                  servers:
+                  - url: http://homelab-oci03.tailebee.ts.net:8080
+          it-tools:
+              loadBalancer:
+                  servers:
+                  - url: http://homelab-oci03.tailebee.ts.net:5884
+          pgweb-oci:
+              loadBalancer:
+                  servers:
+                  - url: http://homelab-oci03.tailebee.ts.net:8083
+          pgweb:
+              loadBalancer:
+                  servers:
+                  - url: http://192.168.86.74:8081
+          code-server:
+              loadBalancer:
+                  servers:
+                  - url: http://192.168.86.159:8680
+          code-server-ts:
+              loadBalancer:
+                  servers:
+                  - url: http://code-server.tailebee.ts.net:8680
+          focal-board:
+              loadBalancer:
+                  servers:
+                  - url: http://192.168.86.143:8001
+          zipline:
+              loadBalancer:
+                  servers:
+                  - url: http://192.168.86.143:3000
+          pve:
+              loadBalancer:
+                  servers:
+                  - url: https://192.168.86.160:8006
+          homeassistant:
+              loadBalancer:
+                  servers:
+                  - url: http://192.168.86.147:8123
+          loki:
+              loadBalancer:
+                  servers:
+                  - url: http://192.168.86.146:3100
+          prometheus:
+              loadBalancer:
+                  servers:
+                  - url: http://192.168.86.198:9090
+          actualbudget:
+              loadBalancer:
+                  servers:
+                  - url: http://192.168.86.203:5006
 volumes:
-    - name: local-timmybtech-com-tls
-      mountPath: /certs
-      type: secret
+  - name: local-timmybtech-com-tls
+    mountPath: /certs
+    type: secret
 additionalVolumeMounts:
-    - name: local-timmybtech-com-tls
-      mountPath: /certs
-      readOnly: true
+  - name: local-timmybtech-com-tls
+    mountPath: /certs
+    readOnly: true
 rbac:
-    enabled: true
+  enabled: true
 service:
-    enabled: true
-    type: LoadBalancer
-    annotations: {}
-    labels: {}
-    spec:
-        # this should be an IP in the MetalLB range
-        loadBalancerIP: 192.168.86.224
-    loadBalancerSourceRanges: []
-    externalIPs: []
+  enabled: true
+  type: LoadBalancer
+  annotations: {}
+  labels: {}
+  spec:
+    # this should be an IP in the MetalLB range
+    loadBalancerIP: 192.168.86.224
+  loadBalancerSourceRanges: []
+  externalIPs: []
