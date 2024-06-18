@@ -131,13 +131,6 @@ providers:
                   - websecure
               tls:
                   certResolver: default
-          code-server-ts
-              rule: Host(`code-server-ts.local.timmybtech.com`)
-              service: code-server-ts
-              entrypoints:
-                  - websecure
-              tls:
-                  certResolver: default
           pve:
               rule: Host(`pve.local.timmybtech.com`)
               service: pve
@@ -236,10 +229,6 @@ providers:
               loadBalancer:
                   servers:
                   - url: http://192.168.86.159:8680
-          code-server-ts:
-              loadBalancer:
-                  servers:
-                  - url: http://100.103.164.128:8680
           focal-board:
               loadBalancer:
                   servers:
