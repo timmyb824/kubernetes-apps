@@ -239,7 +239,7 @@ providers:
           code-server-ts:
               loadBalancer:
                   servers:
-                  - url: http://code-server.tailebee.ts.net:8680
+                  - url: http://100.103.164.128:8680
           focal-board:
               loadBalancer:
                   servers:
