@@ -265,6 +265,7 @@ additionalVolumeMounts:
   - name: local-timmybtech-com-tls
     mountPath: /certs
     readOnly: true
+
 rbac:
   enabled: true
 service:
