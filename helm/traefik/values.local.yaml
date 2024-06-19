@@ -204,7 +204,7 @@ providers:
           healthchecks:
             loadBalancer:
               servers:
-                - url: http://homelab-oci03.tailebee.ts.net:8000
+                - url: http://192.168.86.143:8000
           uptime-kuma:
             loadBalancer:
               servers:
