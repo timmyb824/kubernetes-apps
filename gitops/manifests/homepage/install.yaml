@@ -170,28 +170,28 @@ spec:
           port: 3000
   tls:
     secretName: local-timmybtech-com-tls
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: homepage
-  namespace: default
-  annotations:
-    kubernetes.io/ingress.class: tailscale
-    gethomepage.dev/description: Dynamically Detected Homepage
-    gethomepage.dev/enabled: "true"
-    gethomepage.dev/group: Cluster Management
-    gethomepage.dev/icon: homepage.png
-    gethomepage.dev/name: Homepage
-spec:
-  defaultBackend:
-    service:
-      name: tailscale
-      port:
-        number: 3000
-  tls:
-    - hosts:
-        - homepage
+# ---
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: homepage
+#   namespace: default
+#   annotations:
+#     kubernetes.io/ingress.class: tailscale
+#     gethomepage.dev/description: Dynamically Detected Homepage
+#     gethomepage.dev/enabled: "true"
+#     gethomepage.dev/group: Cluster Management
+#     gethomepage.dev/icon: homepage.png
+#     gethomepage.dev/name: Homepage
+# spec:
+#   defaultBackend:
+#     service:
+#       name: tailscale
+#       port:
+#         number: 3000
+#   tls:
+#     - hosts:
+#         - homepage
 ---
 apiVersion: v1
 kind: ConfigMap
