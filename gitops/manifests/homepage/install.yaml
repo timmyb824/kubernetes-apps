@@ -177,7 +177,6 @@ metadata:
   name: homepage
   namespace: default
   annotations:
-    kubernetes.io/ingress.class: tailscale
     gethomepage.dev/description: Dynamically Detected Homepage
     gethomepage.dev/enabled: "true"
     gethomepage.dev/group: Cluster Management
