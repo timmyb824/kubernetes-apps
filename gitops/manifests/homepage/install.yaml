@@ -309,16 +309,6 @@ data:
             href: https://argocd.local.timmybtech.com/
             namespace: argocd
             app: argocd-server
-        - Firefly-iii:
-            icon: firefly.png
-            href: https://firefly.local.timmybtech.com/
-            namespace: firefly-iii
-            app: firefly-iii
-        - Firefly-iii Importer:
-            icon: firefly.png
-            href: https://firefly-importer.local.timmybtech.com/
-            namespace: firefly-iii
-            app: importer
         - Gitea:
             icon: gitea.png
             href: "https://gitea.local.timmybtech.com/"
@@ -397,17 +387,17 @@ data:
         - Uptime Kuma:
             icon: uptime-kuma.png
             href: https://uptime-kuma.local.timmybtech.com/
-            ping: http://homelab-oci03.tailebee.ts.net:3001
+            ping: http://192.168.86.143:3001
             widget:
                 type: uptimekuma
-                url: http:///homelab-oci03.tailebee.ts.net:3001
+                url: http:///192.168.86.143:3001
                 slug: bryant-homelab
 
     - OCI hidden:
         - Healthchecks:
             icon: healthchecks.png
             href: https://healthchecks.local.timmybtech.com/
-            ping: http://homelab-oci03.tailebee.ts.net:8000
+            ping: http://192.168.86.143:8000
         - PGweb (oci):
             icon: postgres.png
             href: https://pgweb-oci.local.timmybtech.com/
@@ -415,7 +405,7 @@ data:
         - IT-Tools:
             icon: it-tools.png
             href: https://it-tools.local.timmybtech.com/
-            ping: http://homelab-oci03.tailebee.ts.net:5884
+            ping: http://192.168.86.143:5884
 
     - Storage:
         - Synology:
