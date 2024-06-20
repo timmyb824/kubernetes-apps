@@ -45,7 +45,7 @@ spec:
             - name: BASE_URL
               value: https://planka.local.timmybtech.com
             - name: DATABASE_URL
-              value: postgresql://<USER>:<PASSWORD>@<HOST_NAME>:5432/planka
+              value: postgresql://<USER>:<PASSWORD>@<HOST_IP>:5432/planka
             - name: SECRET_KEY
               value: <SECRET_KEY>
             - name: TRUST_PROXY
