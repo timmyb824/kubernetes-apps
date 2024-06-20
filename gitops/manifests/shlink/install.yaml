@@ -26,12 +26,12 @@ spec:
               value: postgres
             - name: DB_HOST
               value: <DB_HOST>
-            - name: DB_PASSWORD
+            - name: DB_PASSWORDxx
               value: <DB_PASSWORD>
             - name: DB_USER
               value: <DB_USER>
             - name: DEFAULT_DOMAIN
-              value: shlink.local.timmybtech.com
+              value: shlink.timmybtech.com
             - name: GEOLITE_LICENSE_KEY
               value: <GEOLITE_LICENSE_KEY>
             - name: IS_HTTPS_ENABLED
