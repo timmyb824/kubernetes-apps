@@ -31,7 +31,7 @@ spec:
             - name: DB_USER
               value: <DB_USER>
             - name: DEFAULT_DOMAIN
-              value: shlink.timmybtech.com
+              value: shlink.local.timmybtech.com
             - name: GEOLITE_LICENSE_KEY
               value: <GEOLITE_LICENSE_KEY>
             - name: IS_HTTPS_ENABLED
