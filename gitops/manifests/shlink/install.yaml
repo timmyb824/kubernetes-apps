@@ -26,7 +26,7 @@ spec:
               value: postgres
             - name: DB_HOST
               value: <DB_HOST>
-            - name: DB_PASSWORDxx
+            - name: DB_PASSWORD
               value: <DB_PASSWORD>
             - name: DB_USER
               value: <DB_USER>
