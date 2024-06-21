@@ -180,6 +180,13 @@ providers:
                   - websecure
               tls:
                   certResolver: default
+          adguard:
+              rule: Host(`adguard.local.timmybtech.com`)
+              service: adguard
+              entrypoints:
+                  - websecure
+              tls:
+                  certResolver: default
         services:
           watchyourlan:
             loadBalancer:
@@ -257,6 +264,10 @@ providers:
               loadBalancer:
                   servers:
                   - url: http://192.168.86.203:5006
+          adguard:
+              loadBalancer:
+                  servers:
+                  - url: http://192.168.86.214:80
 volumes:
   - name: local-timmybtech-com-tls
     mountPath: /certs
