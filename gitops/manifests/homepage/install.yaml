@@ -217,14 +217,10 @@ data:
         header: false
         style: row
         columns: 3
-      OCI:
-        icon: mdi-server
+      DNS:
+        icon: mdi-dns
         style: row
-        columns: 3
-      OCI hidden:
-        header: false
-        style: row
-        columns: 3
+        columns: 2
       Proxmox:
         icon: mdi-server
         style: row
@@ -364,48 +360,25 @@ data:
             href: https://whoogle.local.timmybtech.com/
             namespace: whoogle-search
             app: whoogle
-
-    - OCI:
-        - Gotify:
-            icon: gotify.png
-            href: https://gotify.local.timmybtech.com/
-            ping: http://homelab-oci03.tailebee.ts.net:8080
+    - DNS:
+        - Adguard Home:
+            icon: adguard-home.png
+            href: https://adguard.local.timmybtech.com/
+            ping: http://192.168.86.181
             widget:
-                type: gotify
-                url: http://homelab-oci03.tailebee.ts.net:8080
-                key: <GOTIFY_CLIENT_TOKEN>
-        - Portainer (homelab-oci03):
-            icon: portainer.png
-            href: https://portainer.local.timmybtech.com/#!/13/docker/dashboard
-            namespace: portainer
-            app: portainer
+                type: adguard
+                url: http://192.168.86.181
+                username: <ADGUARD_USER>
+                password: <ADGUARD_PASSWORD>
+        - Adguard Home Secondary:
+            icon: adguard-home.png
+            href: https://adguard-secondary.local.timmybtech.com/
+            ping: http://pihole2.local.lan
             widget:
-                type: portainer
-                url: https://portainer.local.timmybtech.com
-                env: 13
-                key: <PORTAINER_ACCESS_TOKEN>
-        - Uptime Kuma:
-            icon: uptime-kuma.png
-            href: https://uptime-kuma.local.timmybtech.com/
-            ping: http://192.168.86.143:3001
-            widget:
-                type: uptimekuma
-                url: http:///192.168.86.143:3001
-                slug: bryant-homelab
-
-    - OCI hidden:
-        - Healthchecks:
-            icon: healthchecks.png
-            href: https://healthchecks.local.timmybtech.com/
-            ping: http://192.168.86.143:8000
-        - PGweb (oci):
-            icon: postgres.png
-            href: https://pgweb-oci.local.timmybtech.com/
-            ping: http://homelab-oci03.tailebee.ts.net:8083
-        - IT-Tools:
-            icon: it-tools.png
-            href: https://it-tools.local.timmybtech.com/
-            ping: http://192.168.86.143:5884
+                type: adguard
+                url: http://pihole2.local.lan
+                username: <ADGUARD_USER>
+                password: <ADGUARD_PASSWORD>
 
     - Storage:
         - Synology:
@@ -436,16 +409,6 @@ data:
             widget:
                 type: speedtest
                 url: http://192.168.86.143:8083
-        - Portainer (vm303):
-            icon: portainer.png
-            href: https://portainer.local.timmybtech.com/#!/11/docker/dashboard
-            namespace: portainer
-            app: portainer
-            widget:
-                type: portainer
-                url: https://portainer.local.timmybtech.com
-                env: 11
-                key: <PORTAINER_ACCESS_TOKEN>
         - Prometheus:
             icon: prometheus.png
             href: http://prometheus.local.timmybtech.com/
@@ -453,6 +416,14 @@ data:
             widget:
                 type: prometheus
                 url: http://prometheus.tailebee.ts.net:9090
+        - Uptime Kuma:
+            icon: uptime-kuma.png
+            href: https://uptime-kuma.local.timmybtech.com/
+            ping: http://192.168.86.143:3001
+            widget:
+                type: uptimekuma
+                url: http:///192.168.86.143:3001
+                slug: bryant-homelab
 
     - VM/LXC hidden:
         - SNMP Exporter:
@@ -471,10 +442,18 @@ data:
             icon: focalboard.png
             href: https://focal-board.local.timmybtech.com/
             ping: http://192.168.86.143:8001
+        - Healthchecks:
+            icon: healthchecks.png
+            href: https://healthchecks.local.timmybtech.com/
+            ping: http://192.168.86.143:8000
         - Home Assistant:
             icon: home-assistant.png
             href: https://homeassistant.local.timmybtech.com/
             ping: http://192.168.86.147:8123
+        - IT-Tools:
+            icon: it-tools.png
+            href: https://it-tools.local.timmybtech.com/
+            ping: http://192.168.86.143:5884
         - LinkAce:
             icon: linkace.png
             href: https://linkace.local.timmybtech.com/
@@ -483,10 +462,10 @@ data:
             icon: loki.png
             href: https://loki.local.timmybtech.com/
             ping: http://192.168.86.146:3100/loki/api/v1/status/buildinfo
-        - PGweb (vm303):
+        - PGweb :
             icon: postgres.png
             href: https://pgweb.local.timmybtech.com/
-            ping: http://192.168.86.74:8081
+            ping: http://192.168.86.143:8081
         - WatchYourLAN:
             icon: homepage.png
             href: https://watchyourlan.local.timmybtech.com/

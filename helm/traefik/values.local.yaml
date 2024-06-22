@@ -110,13 +110,6 @@ providers:
               - websecure
             tls:
               certResolver: default
-          pgweb-oci:
-            rule: Host(`pgweb-oci.local.timmybtech.com`)
-            service: pgweb-oci
-            entrypoints:
-              - websecure
-            tls:
-              certResolver: default
           pgweb:
               rule: Host(`pgweb.local.timmybtech.com`)
               service: pgweb
@@ -231,14 +224,10 @@ providers:
               loadBalancer:
                   servers:
                   - url: http://192.168.86.143:5884
-          pgweb-oci:
-              loadBalancer:
-                  servers:
-                  - url: http://homelab-oci03.tailebee.ts.net:8083
           pgweb:
               loadBalancer:
                   servers:
-                  - url: http://192.168.86.74:8081
+                  - url: http://192.168.86.143:8084
           code-server:
               loadBalancer:
                   servers:
