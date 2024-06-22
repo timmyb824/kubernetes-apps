@@ -364,10 +364,10 @@ data:
         - Adguard Home:
             icon: adguard-home.png
             href: https://adguard.local.timmybtech.com/
-            ping: http://192.168.86.181
+            ping: http://192.168.86.214
             widget:
                 type: adguard
-                url: http://192.168.86.181
+                url: http://192.168.86.214
                 username: <ADGUARD_USER>
                 password: <ADGUARD_PASSWORD>
         - Adguard Home Secondary:
