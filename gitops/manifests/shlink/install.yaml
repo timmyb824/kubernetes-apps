@@ -35,7 +35,7 @@ spec:
             - name: GEOLITE_LICENSE_KEY
               value: <GEOLITE_LICENSE_KEY>
             - name: IS_HTTPS_ENABLED
-              value: "true"
+              value: "false"
           image: shlinkio/shlink:stable
           name: shlink
           imagePullPolicy: Always
@@ -50,15 +50,19 @@ status: {}
 apiVersion: v1
 kind: Service
 metadata:
+  annotations: {}
+  labels:
+    io.kompose.service: shlink
   name: shlink
-  namespace: shlink
 spec:
   ports:
-  - name: http-shlink
-    port: 8080
-    targetPort: 8080
+    - name: "8080"
+      port: 8080
+      targetPort: 8080
   selector:
-    app: shlink
+    io.kompose.service: shlink
+status:
+  loadBalancer: {}
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
