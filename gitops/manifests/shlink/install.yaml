@@ -54,13 +54,11 @@ metadata:
   namespace: shlink
 spec:
   ports:
-    - port: 8080
-      protocol: TCP
-      targetPort: http-shlink
+  - name: http-shlink
+    port: 8080
+    targetPort: 8080
   selector:
     app: shlink
-  sessionAffinity: None
-  type: LoadBalancer
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
@@ -85,8 +83,9 @@ spec:
 apiVersion: v1
 kind: Secret
 metadata:
-  namespace: shlink
+  annotations: {}
   name: tunnel-credentials
+  namespace: shlink
 type: Opaque
 stringData:
   credentials.json: >-
@@ -109,7 +108,7 @@ spec:
     spec:
       containers:
       - name: cloudflared
-        image: cloudflare/cloudflared:2024.6.0
+        image: cloudflare/cloudflared:2024.6.1
         args:
         - tunnel
         # Points cloudflared to the config file, which configures what
