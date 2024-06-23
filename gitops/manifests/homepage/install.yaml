@@ -373,10 +373,10 @@ data:
         - Adguard Home Secondary:
             icon: adguard-home.png
             href: https://adguard-secondary.local.timmybtech.com/
-            ping: http://pihole2.local.lan
+            ping: http://192.168.86.174
             widget:
                 type: adguard
-                url: http://pihole2.local.lan
+                url: http://192.168.86.174
                 username: <ADGUARD_USER>
                 password: <ADGUARD_PASSWORD>
 
@@ -434,6 +434,10 @@ data:
             icon: technitium.png
             href: https://technitium.local.timmybtech.com/
             ping: http://192.168.86.213:5380
+        - ActualBudget:
+            icon: actualbudget.png
+            href: https://budget.local.timmybtech.com/
+            ping: http://192.168.86.203:5006
         - Code Server:
             icon: code-server.png
             href: https://code-server.local.timmybtech.com/
