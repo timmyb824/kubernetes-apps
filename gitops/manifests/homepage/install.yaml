@@ -435,7 +435,7 @@ data:
             href: https://technitium.local.timmybtech.com/
             ping: http://192.168.86.213:5380
         - ActualBudget:
-            icon: actualbudget.png
+            icon: actual.png
             href: https://budget.local.timmybtech.com/
             ping: http://192.168.86.203:5006
         - Code Server:
