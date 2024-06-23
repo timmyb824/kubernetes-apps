@@ -50,17 +50,17 @@ status: {}
 apiVersion: v1
 kind: Service
 metadata:
-  annotations: {}
-  labels:
-    io.kompose.service: shlink
   name: shlink
+  namespace: shlink
 spec:
   ports:
-    - name: "8080"
-      port: 8080
-      targetPort: 8080
+    - port: 8080
+      protocol: TCP
+      targetPort: http-shlink
   selector:
-    io.kompose.service: shlink
+    app: shlink
+  sessionAffinity: None
+  type: LoadBalancer
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
