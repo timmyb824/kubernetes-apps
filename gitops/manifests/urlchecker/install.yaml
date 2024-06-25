@@ -23,8 +23,8 @@ data:
       status_accepted:
         - 200
 
-    - name: code-server
-      url: https://code-server.local.timmybtech.com
+    - name: adguard
+      url: https://adguard.local.timmybtech.com
       retries: 2
       status_accepted:
         - 200
