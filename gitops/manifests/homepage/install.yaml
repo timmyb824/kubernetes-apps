@@ -429,6 +429,10 @@ data:
             icon: technitium.png
             href: https://technitium.local.timmybtech.com/
             ping: http://192.168.86.213:5380
+        - Adguard Sync:
+            icon: adguard-home.png
+            href: http://pihole2.homelab.lan:8080/
+            ping: http://pihole2.homelab.lan:8080
         - ActualBudget:
             icon: actual.png
             href: https://budget.local.timmybtech.com/
