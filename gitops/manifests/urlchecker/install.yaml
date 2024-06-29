@@ -181,6 +181,8 @@ spec:
               value: <path:secret/data/urlchecker#APPRISE_GOTIFY>
             - name: APPRISE_DISCORD
               value: <path:secret/data/urlchecker#APPRISE_DISCORD>
+            - name: APPRISE_NTFY
+              value: <path:secret/data/urlchecker#APPRISE_NTFY>
             - name: TIME_BETWEEN_SCHEDULED_CHECKS
               value: "120"
           volumeMounts:
