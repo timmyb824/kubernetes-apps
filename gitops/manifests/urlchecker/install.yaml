@@ -170,6 +170,10 @@ spec:
       labels:
         app: urlchecker
     spec:
+      dnsPolicy: "None" # Use "None" to ensure custom DNS settings are applied
+      dnsConfig:
+        nameservers:
+          - 192.168.86.214
       containers:
         - name: urlchecker
           image: timmyb824/python-urlchecker:latest
@@ -189,9 +193,6 @@ spec:
             - name: checks
               mountPath: /app/checks.yaml
               subPath: checks.yaml
-          dnsConfig:
-            nameservers:
-              - 192.168.86.214
       volumes:
         - name: checks
           configMap:
