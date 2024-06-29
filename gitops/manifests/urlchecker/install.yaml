@@ -189,6 +189,9 @@ spec:
             - name: checks
               mountPath: /app/checks.yaml
               subPath: checks.yaml
+          dnsConfig:
+            nameservers:
+              - 192.168.86.214
       volumes:
         - name: checks
           configMap:
