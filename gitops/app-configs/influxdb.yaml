@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: influxdb
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: influxdb
+    server: "https://kubernetes.default.svc"
+  source:
+    path: gitops/manifests/influxdb
+    repoURL: "https://github.com/timmyb824/kubernetes-apps.git"
+    targetRevision: HEAD
+  project: default
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: false
