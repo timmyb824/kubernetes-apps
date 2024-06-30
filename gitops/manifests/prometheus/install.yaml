@@ -44,6 +44,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   storageClassName: nfs-csi-synologynas
+  volumeName: pvc-74b2d795-4984-43cd-b434-207afe78f3c3
   resources:
     requests:
       storage: "64Gi"
