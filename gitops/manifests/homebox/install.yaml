@@ -8,6 +8,7 @@ metadata:
   name: homebox-data
 spec:
   storageClassName: nfs-csi-synologynas
+  volumeName: pvc-629cf6fa-e7aa-4abe-80e0-045c7eff242c
   accessModes:
     - ReadWriteOnce
   resources:
