@@ -14,6 +14,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   storageClassName: nfs-csi-synologynas
+  # volumeName: pvc-fb9adadf-b1b1-4f00-90fc-01b03916fd54
   resources:
     requests:
       storage: 2Gi
@@ -27,6 +28,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   storageClassName: nfs-csi-synologynas
+  # volumeName: pvc-152a185c-cfca-4d2c-a1c7-f58639678575
   resources:
     requests:
       storage: 8Gi
@@ -40,6 +42,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   storageClassName: nfs-csi-synologynas
+  # volumeName: pvc-48368e3f-c8fd-4473-a394-cbad3da5fc8b
   resources:
     requests:
       storage: 1Gi
