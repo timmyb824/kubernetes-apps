@@ -407,10 +407,10 @@ data:
         - Prometheus:
             icon: prometheus.png
             href: http://prometheus.local.timmybtech.com/
-            ping: http://prometheus.tailebee.ts.net:9090
+            ping: http://prometheus.homelab.lan:9090
             widget:
                 type: prometheus
-                url: http://prometheus.tailebee.ts.net:9090
+                url: http://prometheus.homelab.lan:9090
         - Uptime Kuma:
             icon: uptime-kuma.png
             href: https://uptime-kuma.local.timmybtech.com/
@@ -425,10 +425,6 @@ data:
             icon: prometheus.png
             href: http://192.168.86.174:9116/
             ping: http://192.168.86.174:9116/
-        - Technitium:
-            icon: technitium.png
-            href: https://technitium.local.timmybtech.com/
-            ping: http://192.168.86.213:5380
         - Adguard Sync:
             icon: adguard-home.png
             href: http://pihole2.homelab.lan:8080/
@@ -437,10 +433,6 @@ data:
             icon: actual.png
             href: https://budget.local.timmybtech.com/
             ping: http://192.168.86.203:5006
-        - Code Server:
-            icon: code-server.png
-            href: https://code-server.local.timmybtech.com/
-            ping: http://192.168.86.159:8680
         - Focal-Board:
             icon: focalboard.png
             href: https://focal-board.local.timmybtech.com/
