@@ -41,12 +41,6 @@ data:
       status_accepted:
         - 200
 
-    # - name: gotify
-    #   url: https://gotify.local.timmybtech.com
-    #   retries: 3
-    #   status_accepted:
-    #     - 200
-
     - name: grafana
       url: https://grafana.local.timmybtech.com
       retries: 3
@@ -112,12 +106,6 @@ data:
       retries: 3
       status_accepted:
         - 200
-
-    - name: shlink
-      url: https://shlink.local.timmybtech.com
-      retries: 3
-      status_accepted:
-        - 404
 
     - name: speedtest-tracker
       url: https://speedtest.local.timmybtech.com
