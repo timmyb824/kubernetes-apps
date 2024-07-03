@@ -445,6 +445,10 @@ data:
             icon: home-assistant.png
             href: https://homeassistant.local.timmybtech.com/
             ping: http://192.168.86.147:8123
+        - Hoarder:
+            icon: hoarder.png
+            href: https://hoarder.timmybtech.com/
+            ping: https://hoarder.timmybtech.com
         - IT-Tools:
             icon: it-tools.png
             href: https://it-tools.local.timmybtech.com/
@@ -457,6 +461,10 @@ data:
             icon: loki.png
             href: https://loki.local.timmybtech.com/
             ping: http://192.168.86.146:3100/loki/api/v1/status/buildinfo
+        - Netalertx:
+            icon: netalertx.png
+            href: https://netalertx.local.timmybtech.com/
+            ping: http://192.168.86.44:20211
         - PGweb :
             icon: postgres.png
             href: https://pgweb.local.timmybtech.com/
