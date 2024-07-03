@@ -279,7 +279,7 @@ data:
     - Tooling:
         - Web Check:
             - abbr: WCK
-            - href: https://web-check.xyz/
+              href: https://web-check.xyz/
   services.yaml: |
     - Kubernetes:
         - Grafana:
