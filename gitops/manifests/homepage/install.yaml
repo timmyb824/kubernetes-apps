@@ -276,6 +276,10 @@ data:
         - Synology Account:
             - abbr: SYA
               href: https://account.synology.com/en-us/overview?en-us=
+    - Tooling:
+        - Web Check:
+            - abbr: WCK
+            - href: https://web-check.xyz/
   services.yaml: |
     - Kubernetes:
         - Grafana:
