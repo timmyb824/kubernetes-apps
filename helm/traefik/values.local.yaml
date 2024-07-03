@@ -117,9 +117,9 @@ providers:
                   - websecure
               tls:
                   certResolver: default
-          code-server:
-              rule: Host(`code-server.local.timmybtech.com`)
-              service: code-server
+          netalertx:
+              rule: Host(`netalertx.local.timmybtech.com`)
+              service: netalertx
               entrypoints:
                   - websecure
               tls:
@@ -228,10 +228,10 @@ providers:
               loadBalancer:
                   servers:
                   - url: http://192.168.86.143:8084
-          code-server:
+          netalertx:
               loadBalancer:
                   servers:
-                  - url: http://192.168.86.159:8680
+                  - url: http://192.168.86.44:20211
           focal-board:
               loadBalancer:
                   servers:
