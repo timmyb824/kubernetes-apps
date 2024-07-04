@@ -339,6 +339,11 @@ data:
             href: https://ntfy.local.timmybtech.com/
             namespace: ntfy
             app: ntfy
+        - n8n:
+            icon: n8n.png
+            href: https://n8n.local.timmybtech.com/
+            namespace: n8n
+            app: n8n
         - Planka:
             icon: planka.png
             href: https://planka.local.timmybtech.com/
