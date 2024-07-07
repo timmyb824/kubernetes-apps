@@ -1,0 +1,89 @@
+---
+# create namespace
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: olivetin
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: olivetin-config
+data:
+  config.yaml: |
+    actions:
+      - title: "Hello world!"
+        shell: echo 'Hello World!'
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: olivetin
+    namespace: olivetin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: olivetin
+  template:
+    metadata:
+      labels:
+        app: olivetin
+        app.kubernetes.io/name: olivetin
+    spec:
+      containers:
+        - name: olivetin
+          image: docker.io/jamesread/olivetin:latest
+          ports:
+            - containerPort: 1337
+          volumeMounts:
+            - name: olivetin-config
+              mountPath: "/config"
+              readOnly: true
+
+          livenessProbe:
+            exec:
+              command:
+                - curl
+                - localhost:1337
+            initialDelaySeconds: 5
+            periodSeconds: 30
+
+      volumes:
+        - name: olivetin-config
+          configMap:
+            name: olivetin-config
+---
+# create service
+apiVersion: v1
+kind: Service
+metadata:
+  name: olivetin
+  namespace: olivetin
+spec:
+  selector:
+    app: olivetin
+  ports:
+    - protocol: TCP
+      port: 1337
+      targetPort: 1337
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: olivetin-ingress
+  namespace: olivetin
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`olivetin.local.timmybtech.com`)
+      kind: Rule
+      services:
+        - name: olivetin
+          port: 1337
+  tls:
+    secretName: local-timmybtech-com-tls
