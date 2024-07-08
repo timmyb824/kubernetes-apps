@@ -344,6 +344,11 @@ data:
             href: https://n8n.local.timmybtech.com/
             namespace: n8n
             app: n8n
+        - olivetin:
+            icon: olivetin.png
+            href: https://olivetin.local.timmybtech.com/
+            namespace: olivetin
+            app: olivetin
         - Planka:
             icon: planka.png
             href: https://planka.local.timmybtech.com/

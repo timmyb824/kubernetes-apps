@@ -11,6 +11,12 @@ metadata:
   name: olivetin-config
 data:
   config.yaml: |
+    logLevel: INFO
+
+    prometheus:
+        enabled: true
+        defaultGoMetrics: false
+
     actions:
       - title: "Hello world!"
         shell: echo 'Hello World!'
