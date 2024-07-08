@@ -364,6 +364,11 @@ data:
             href: https://vault.local.timmybtech.com/
             namespace: vault
             app: vault
+        - Wallos:
+            icon: wallos.png
+            href: https://wallos.local.timmybtech.com/
+            namespace: wallos
+            app: wallos
         - Whoogle:
             icon: whooglesearch.png
             href: https://whoogle.local.timmybtech.com/
