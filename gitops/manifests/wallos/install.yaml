@@ -1,0 +1,114 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: wallos
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    io.kompose.service: wallos-data
+  name: wallos-data
+  namespace: wallos
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 4Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    io.kompose.service: wallos-logos
+  name: wallos-logos
+  namespace: wallos
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 4Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations: {}
+  labels:
+    io.kompose.service: wallos
+  name: wallos
+  namespace: wallos
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: wallos
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations: {}
+      labels:
+        io.kompose.service: wallos
+        app.kubernetes.io/name: wallos
+    spec:
+      containers:
+        - env:
+            - name: TZ
+              value: America/New_York
+          image: bellamy/wallos:latest
+          name: wallos
+          ports:
+            - containerPort: 80
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /var/www/html/db
+              name: wallos-data
+            - mountPath: /var/www/html/images/uploads/logos
+              name: wallos-logos
+      restartPolicy: Always
+      volumes:
+        - name: wallos-data
+          persistentVolumeClaim:
+            claimName: wallos-data
+        - name: wallos-logos
+          persistentVolumeClaim:
+            claimName: wallos-logos
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations: {}
+  labels:
+    io.kompose.service: wallos
+  name: wallos
+  namespace: wallos
+spec:
+  ports:
+    - name: "8282"
+      port: 8282
+      targetPort: 80
+  selector:
+    io.kompose.service: wallos
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: wallos-ingress
+  namespace: wallos
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`wallos.local.timmybtech.com`)
+      kind: Rule
+      services:
+        - name: wallos
+          port: 8282
+  tls:
+    secretName: local-timmybtech-com-tls
