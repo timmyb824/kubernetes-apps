@@ -18,8 +18,10 @@ data:
         defaultGoMetrics: false
 
     actions:
-      - title: "Hello world!"
-        shell: echo 'Hello World!'
+      - title: ping the internet
+        shell: ping 1.1.1.1 -c 1
+        icon: ping
+        timeout: 3
 ---
 apiVersion: apps/v1
 kind: Deployment
