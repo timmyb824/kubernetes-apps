@@ -452,6 +452,10 @@ data:
             icon: actual.png
             href: https://budget.local.timmybtech.com/
             ping: http://192.168.86.203:5006
+        - Dozzle:
+            icon: dozzle.png
+            href: https://dozzle.local.timmybtech.com/
+            ping: http://192.168.86.174:9999
         - Healthchecks:
             icon: healthchecks.png
             href: https://healthchecks.local.timmybtech.com/
