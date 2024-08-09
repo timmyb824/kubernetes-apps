@@ -29,7 +29,7 @@ spec:
             - name: MEMOS_DRIVER
               value: postgres
             - name: MEMOS_DSN
-              value: user=<path:secret/data/postgres_db#USER> password=<path:secret/data/postgres_db#PASSWORD> dbname=memos host=<path:secret/data/postgres_db#HOST_NAME> port=<path:secret/data/postgres_db#PORT> sslmode=disable
+              value: user=<path:secret/data/postgres_db#USER> password=<path:secret/data/postgres_db#PASSWORD> dbname=memos host=<path:secret/data/postgres_db#HOST_NAME> sslmode=disable
           image: neosmemo/memos:stable
           name: memos
           ports:
