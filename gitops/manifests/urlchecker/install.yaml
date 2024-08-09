@@ -35,8 +35,8 @@ data:
       status_accepted:
         - 200
 
-    - name: grafana
-      url: https://grafana.local.timmybtech.com
+    - name: dozzle
+      url: https://dozzle.local.timmybtech.com
       retries: 3
       status_accepted:
         - 200

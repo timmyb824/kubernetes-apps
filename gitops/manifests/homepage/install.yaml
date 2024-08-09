@@ -334,6 +334,11 @@ data:
             href: https://minio.local.timmybtech.com/
             namespace: minio
             app: minio
+        - memos:
+            icon: memos.png
+            href: https://memos.local.timmybtech.com/
+            namespace: memos
+            app: memos
         - ntfy:
             icon: ntfy.png
             href: https://ntfy.local.timmybtech.com/
