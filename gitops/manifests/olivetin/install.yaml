@@ -26,8 +26,8 @@ data:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-    name: olivetin
-    namespace: olivetin
+  name: olivetin
+  namespace: olivetin
 spec:
   replicas: 1
   selector:
@@ -41,7 +41,7 @@ spec:
     spec:
       containers:
         - name: olivetin
-          image: docker.io/jamesread/olivetin:latest
+          image: docker.io/jamesread/olivetin:2024.07.153
           ports:
             - containerPort: 1337
           volumeMounts:
