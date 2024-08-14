@@ -7,14 +7,14 @@ kind: Role
 metadata:
   name: tailscale
 rules:
-- apiGroups: [""] # "" indicates the core API group
-  resources: ["secrets"]
-  # Create can not be restricted to a resource name.
-  verbs: ["create"]
-- apiGroups: [""] # "" indicates the core API group
-  resourceNames: ["tailscale-auth"]
-  resources: ["secrets"]
-  verbs: ["get", "update", "patch"]
+  - apiGroups: [""] # "" indicates the core API group
+    resources: ["secrets"]
+    # Create can not be restricted to a resource name.
+    verbs: ["create"]
+  - apiGroups: [""] # "" indicates the core API group
+    resourceNames: ["tailscale-auth"]
+    resources: ["secrets"]
+    verbs: ["get", "update", "patch"]
 ---
 # Copyright (c) 2021 Tailscale Inc & AUTHORS All rights reserved.
 # Use of this source code is governed by a BSD-style
@@ -24,8 +24,8 @@ kind: RoleBinding
 metadata:
   name: tailscale
 subjects:
-- kind: ServiceAccount
-  name: "tailscale"
+  - kind: ServiceAccount
+    name: "tailscale"
 roleRef:
   kind: Role
   name: tailscale
@@ -50,23 +50,23 @@ metadata:
 spec:
   serviceAccountName: "tailscale"
   containers:
-  - name: tailscale
-    imagePullPolicy: Always
-    image: "ghcr.io/tailscale/tailscale:latest"
-    env:
-    # Store the state in a k8s secret
-    - name: TS_KUBE_SECRET
-      value: "tailscale-auth"
-    - name: TS_USERSPACE
-      value: "true"
-    - name: TS_AUTH_KEY
-      valueFrom:
-        secretKeyRef:
-          name: tailscale-auth
-          key: TS_AUTH_KEY
-          optional: true
-    - name: TS_ROUTES
-      value: "10.43.0.0/16,10.42.0.0/16"
-    securityContext:
-      runAsUser: 1000
-      runAsGroup: 1000
+    - name: tailscale
+      imagePullPolicy: Always
+      image: "ghcr.io/tailscale/tailscale:v1.70.0"
+      env:
+        # Store the state in a k8s secret
+        - name: TS_KUBE_SECRET
+          value: "tailscale-auth"
+        - name: TS_USERSPACE
+          value: "true"
+        - name: TS_AUTH_KEY
+          valueFrom:
+            secretKeyRef:
+              name: tailscale-auth
+              key: TS_AUTH_KEY
+              optional: true
+        - name: TS_ROUTES
+          value: "10.43.0.0/16,10.42.0.0/16"
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
