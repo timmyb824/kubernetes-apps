@@ -22,36 +22,36 @@ spec:
         app.kubernetes.io/name: minio
     spec:
       containers:
-      - name: minio
-        image: docker.io/minio/minio:latest
-        imagePullPolicy: Always
-        resources: {}
-        args:
-        - server
-        - /storage
-        - --console-address
-        - ":9001"
-        env:
-        - name: MINIO_ROOT_PASSWORD
-          value: minioadmin
-        - name: MINIO_ROOT_USER
-          value: "minioadmin"
-        - name: MINIO_PROMETHEUS_URL
-          value: "https://prometheus.local.timmybtech.com"
-        - name: MINIO_PROMETHEUS_JOB_ID
-          value: "minio-job"
-        ports:
-        - containerPort: 9000
-          hostPort: 9000
-        - containerPort: 9001
-          hostPort: 9001
-        volumeMounts:
-        - name: storage
-          mountPath: "/storage"
+        - name: minio
+          image: docker.io/minio/minio:latest
+          imagePullPolicy: Always
+          resources: {}
+          args:
+            - server
+            - /storage
+            - --console-address
+            - ":9001"
+          env:
+            - name: MINIO_ROOT_PASSWORD
+              value: minioadmin
+            - name: MINIO_ROOT_USER
+              value: "minioadmin"
+            - name: MINIO_PROMETHEUS_URL
+              value: "https://prometheus.local.timmybtech.com"
+            - name: MINIO_PROMETHEUS_JOB_ID
+              value: "minio-job"
+          ports:
+            - containerPort: 9000
+              hostPort: 9000
+            - containerPort: 9001
+              hostPort: 9001
+          volumeMounts:
+            - name: storage
+              mountPath: "/storage"
       volumes:
-      - name: storage
-        persistentVolumeClaim:
-          claimName: minio
+        - name: storage
+          persistentVolumeClaim:
+            claimName: minio
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
