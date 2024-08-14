@@ -3,21 +3,21 @@ kind: ClusterRole
 metadata:
   name: prometheus
 rules:
-- apiGroups: [""]
-  resources:
-  - nodes
-  - nodes/proxy
-  - services
-  - endpoints
-  - pods
-  verbs: ["get", "list", "watch"]
-- apiGroups:
-  - extensions
-  resources:
-  - ingresses
-  verbs: ["get", "list", "watch"]
-- nonResourceURLs: ["/metrics"]
-  verbs: ["get"]
+  - apiGroups: [""]
+    resources:
+      - nodes
+      - nodes/proxy
+      - services
+      - endpoints
+      - pods
+    verbs: ["get", "list", "watch"]
+  - apiGroups:
+      - extensions
+    resources:
+      - ingresses
+    verbs: ["get", "list", "watch"]
+  - nonResourceURLs: ["/metrics"]
+    verbs: ["get"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -28,9 +28,9 @@ roleRef:
   kind: ClusterRole
   name: prometheus
 subjects:
-- kind: ServiceAccount
-  name: default
-  namespace: monitoring
+  - kind: ServiceAccount
+    name: default
+    namespace: monitoring
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -218,7 +218,7 @@ spec:
     spec:
       containers:
         - name: prometheus
-          image: prom/prometheus
+          image: prom/prometheus:v2.53.2
           args:
             - "--storage.tsdb.retention.time=12h"
             - "--config.file=/etc/prometheus/prometheus.yml"
@@ -245,7 +245,7 @@ spec:
 
         - name: prometheus-storage-volume
           persistentVolumeClaim:
-              claimName: prometheus-pvc
+            claimName: prometheus-pvc
 ---
 apiVersion: v1
 kind: Service
@@ -253,8 +253,8 @@ metadata:
   name: prometheus-service
   namespace: monitoring
   annotations:
-      prometheus.io/scrape: 'true'
-      prometheus.io/port:   '9090'
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "9090"
 spec:
   selector:
     app: prometheus-server

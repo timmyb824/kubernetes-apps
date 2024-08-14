@@ -11,26 +11,26 @@ metadata:
 rules:
   - apiGroups: [""]
     resources:
-    - nodes
-    - services
-    - pods
+      - nodes
+      - services
+      - pods
     verbs:
-    - get
-    - watch
-    - list
+      - get
+      - watch
+      - list
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: promtail-clusterrolebinding
 subjects:
-    - kind: ServiceAccount
-      name: promtail-serviceaccount
-      namespace: logging
+  - kind: ServiceAccount
+    name: promtail-serviceaccount
+    namespace: logging
 roleRef:
-    kind: ClusterRole
-    name: promtail-clusterrole
-    apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: promtail-clusterrole
+  apiGroup: rbac.authorization.k8s.io
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -110,30 +110,30 @@ spec:
     spec:
       serviceAccount: promtail-serviceaccount
       containers:
-      - name: promtail-container
-        image: grafana/promtail
-        args:
-        - -config.file=/etc/promtail/promtail.yaml
-        env:
-        - name: 'HOSTNAME' # needed when using kubernetes_sd_configs
-          valueFrom:
-            fieldRef:
-              fieldPath: 'spec.nodeName'
-        volumeMounts:
-        - name: logs
-          mountPath: /var/log
-        - name: promtail-config
-          mountPath: /etc/promtail
-        - mountPath: /var/lib/docker/containers
-          name: varlibdockercontainers
-          readOnly: true
+        - name: promtail-container
+          image: grafana/promtail:main-70c6d06
+          args:
+            - -config.file=/etc/promtail/promtail.yaml
+          env:
+            - name: "HOSTNAME" # needed when using kubernetes_sd_configs
+              valueFrom:
+                fieldRef:
+                  fieldPath: "spec.nodeName"
+          volumeMounts:
+            - name: logs
+              mountPath: /var/log
+            - name: promtail-config
+              mountPath: /etc/promtail
+            - mountPath: /var/lib/docker/containers
+              name: varlibdockercontainers
+              readOnly: true
       volumes:
-      - name: logs
-        hostPath:
-          path: /var/log
-      - name: varlibdockercontainers
-        hostPath:
-          path: /var/lib/docker/containers
-      - name: promtail-config
-        configMap:
-          name: promtail-config
+        - name: logs
+          hostPath:
+            path: /var/log
+        - name: varlibdockercontainers
+          hostPath:
+            path: /var/lib/docker/containers
+        - name: promtail-config
+          configMap:
+            name: promtail-config
