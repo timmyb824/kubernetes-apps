@@ -27,4 +27,4 @@ spec:
             - name: HEALTHCHECK_URL
               value: <path:secret/data/scripts#HEALTHCHECK_URL_MORTGAGERATESCAPER>
             - name: APPRISE_NTFY
-              value: <path:secret/data/scripts#APPRISE_NTFY>
+              value: <path:secret/data/scripts#APPRISE_NTFY_MORTGAGERATESCRAPER>
