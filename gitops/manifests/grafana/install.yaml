@@ -230,6 +230,19 @@ data:
     # This rule matches any traffic which didn't match a previous rule, and responds with HTTP 404.
     - service: http_status:404
 ---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cloudflared
+  namespace: grafana
+spec:
+  selector:
+    app: cloudflared
+  ports:
+    - port: 2000
+      protocol: TCP
+      targetPort: 2000
+---
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
