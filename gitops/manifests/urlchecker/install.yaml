@@ -160,6 +160,8 @@ spec:
         - name: urlchecker
           image: timmyb824/python-urlchecker:latest
           imagePullPolicy: Always
+          ports:
+            - containerPort: 8000
           env:
             - name: HEALTHCHECKS_URL_PYTHON_URLCHECKER
               value: <path:secret/data/urlchecker#HEALTHCHECKS_URL>
@@ -179,3 +181,36 @@ spec:
         - name: checks
           configMap:
             name: checks
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: urlchecker
+  namespace: urlchecker
+spec:
+  selector:
+    app: urlchecker
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 8000
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: urlchecker-ingress
+  namespace: urlchecker
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`urlchecker.local.timmybtech.com`)
+      kind: Rule
+      services:
+        - name: urlchecker
+          port: 8000
+  tls:
+    secretName: local-timmybtech-com-tls
