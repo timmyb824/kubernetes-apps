@@ -89,6 +89,7 @@ spec:
     metadata:
       labels:
         app: glance
+        app.kubernetes.io/name: homepage
     spec:
       containers:
       - name: glance

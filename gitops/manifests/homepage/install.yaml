@@ -314,6 +314,11 @@ data:
             href: "https://gitea.local.timmybtech.com/"
             namespace: gitea
             app: gitea
+        - Glance:
+            icon: glance.png
+            href: "https://glance.local.timmybtech.com/"
+            namespace: glance
+            app: glance
         - Homebox:
             icon: homebox.png
             href: https://homebox.local.timmybtech.com/

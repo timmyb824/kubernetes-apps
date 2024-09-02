@@ -41,6 +41,12 @@ data:
       status_accepted:
         - 200
 
+    - name: glance
+      url: https://glance.local.timmybtech.com
+      retries: 3
+      status_accepted:
+        - 200
+
     - name: healthchecks
       url: https://healthchecks.local.timmybtech.com
       retries: 3
