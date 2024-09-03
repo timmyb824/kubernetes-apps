@@ -315,7 +315,7 @@ data:
             namespace: gitea
             app: gitea
         - Glance:
-            icon: glance.png
+            icon: kubernetes.png
             href: "https://glance.local.timmybtech.com/"
             namespace: glance
             app: glance
@@ -369,6 +369,11 @@ data:
             href: https://portainer.local.timmybtech.com/
             namespace: portainer
             app: portainer
+        - Silverbullet:
+            icon: silverbullet.png
+            href: https://silverbullet.local.timmybtech.com/
+            namespace: silverbullet
+            app: silverbullet
         - Vault:
             icon: vault.png
             href: https://vault.local.timmybtech.com/

@@ -1,0 +1,80 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: silverbullet
+  namespace: silverbullet
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: silverbullet-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 32Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: silverbullet-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: silverbullet
+  template:
+    metadata:
+      labels:
+        app: silverbullet
+        app.kubernetes.io/name: silverbullet
+    spec:
+      containers:
+      - name: silverbullet
+        image: zefhemel/silverbullet:0.9.2
+        ports:
+        - containerPort: 3000
+        env:
+        - name: SB_USER
+          value: "<path:secret/data/silverbullet#USERNAME>:<path:secret/data/silverbullet#PASSWORD>"
+        volumeMounts:
+        - name: space-storage
+          mountPath: /notes
+      volumes:
+      - name: space-storage
+        persistentVolumeClaim:
+          claimName: silverbullet-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: silverbullet-service
+spec:
+  selector:
+    app: silverbullet
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: silverbullet-ingress
+  namespace: silverbullet
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`silverbullet.local.timmybtech.com`)
+      kind: Rule
+      services:
+        - name: silverbullet-service
+          port: 3000
+  tls:
+    secretName: local-timmybtech-com-tls
