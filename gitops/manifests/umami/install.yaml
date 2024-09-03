@@ -33,7 +33,7 @@ spec:
               value: postgresql
             - name: DATABASE_URL
               value: <path:secret/data/umami#PG_URL>
-          image: ghcr.io/umami-software/umami:postgresql-v2.12.1
+          image: ghcr.io/umami-software/umami:postgresql-v2.13.2
           name: umami
           imagePullPolicy: Always
           ports:
