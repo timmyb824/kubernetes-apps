@@ -41,7 +41,7 @@ spec:
     spec:
       containers:
         - name: olivetin
-          image: docker.io/jamesread/olivetin:2024.08.31
+          image: docker.io/jamesread/olivetin:2024.09.02
           ports:
             - containerPort: 1337
           volumeMounts:
