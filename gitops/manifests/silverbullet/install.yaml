@@ -41,7 +41,7 @@ spec:
           value: "<path:secret/data/silverbullet#USERNAME>:<path:secret/data/silverbullet#PASSWORD>"
         volumeMounts:
         - name: space-storage
-          mountPath: /notes
+          mountPath: /space
       volumes:
       - name: space-storage
         persistentVolumeClaim:
