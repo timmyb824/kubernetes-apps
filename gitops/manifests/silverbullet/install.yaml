@@ -181,7 +181,7 @@ data:
     # E.g. `cloudflared tunnel route dns example-tunnel tunnel.example.com`.
     ingress:
     - hostname: silverbullet.timmybtech.com
-      service: http://silverbullet.silverbullet.svc.cluster.local:3000
+      service: http://silverbullet-service.silverbullet.svc.cluster.local:3000
     # This rule matches any traffic which didn't match a previous rule, and responds with HTTP 404.
     - service: http_status:404
 ---
