@@ -29,9 +29,9 @@ data:
         icon: ping
         timeout: 5
 
-  id_master_key_nopass: |
+  id_master_key_nopass_base64: |
     <path:secret/data/olivetin#ID_MASTER_KEY_NOPASS_PRIVATE>
-  id_master_key_nopass.pub: |
+  id_master_key_nopass_pub_base64: |
     <path:secret/data/olivetin#ID_MASTER_KEY_NOPASS_PUBLIC>
 
 ---
