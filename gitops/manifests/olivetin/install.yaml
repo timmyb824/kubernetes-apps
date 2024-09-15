@@ -71,7 +71,7 @@ spec:
               ls -la /home/olivetin
 
               # start olivetin
-              exec /usr/bin/olivetin
+              exec /usr/local/bin/olivetin
           ports:
             - containerPort: 1337
           volumeMounts:
