@@ -61,9 +61,14 @@ spec:
           command: ["/bin/sh", "-c"]
           args:
             - |
-              # Copy SSH keys
-              cp /config/id_master_key_nopass /keys/id_master_key_nopass
-              cp /config/id_master_key_nopass.pub /keys/id_master_key_nopass.pub
+              # # Copy SSH keys
+              # cp /config/id_master_key_nopass /keys/id_master_key_nopass
+              # cp /config/id_master_key_nopass.pub /keys/id_master_key_nopass.pub
+
+              # Decode and save private key
+              base64 -d /config/id_master_key_nopass_base64 > /keys/id_master_key_nopass
+              # Decode and save public key
+              base64 -d /config/id_master_key_nopass_pub_base64 > /keys/id_master_key_nopass.pub
 
               # Set permissions
               chmod 600 /keys/id_master_key_nopass
