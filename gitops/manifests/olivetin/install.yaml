@@ -86,7 +86,7 @@ spec:
               ls -la /home/olivetin/.ssh
 
               # Start OliveTin as olivetin user
-              exec gosu olivetin /usr/local/bin/olivetin
+              exec su -s /bin/sh olivetin -c "/usr/local/bin/olivetin"
           ports:
             - containerPort: 1337
           volumeMounts:
