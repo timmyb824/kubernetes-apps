@@ -25,7 +25,7 @@ data:
         timeout: 3
 
       - title: whoami on hp-laptop-ubuntu
-        shell: ssh -i /home/olivetin/id_master_key_nopass tbryant@192.168.86.53 'whoami'
+        shell: ssh -i /home/olivetin/.ssh/id_master_key_nopass tbryant@192.168.86.53 'whoami'
         icon: ping
         timeout: 5
 
@@ -52,31 +52,31 @@ spec:
         app.kubernetes.io/name: olivetin
     spec:
       securityContext:
-        fsGroup: 1000  # Assuming 1000 is the GID of the olivetin user
+        fsGroup: 1000
       initContainers:
         - name: init-ssh-keys
           image: busybox
           securityContext:
-            runAsUser: 1000  # Assuming 1000 is the UID of the olivetin user
+            runAsUser: 1000
           command: ["/bin/sh", "-c"]
           args:
             - |
-              # # Copy SSH keys
-              # cp /config/id_master_key_nopass /keys/id_master_key_nopass
-              # cp /config/id_master_key_nopass.pub /keys/id_master_key_nopass.pub
+              # Create .ssh directory
+              mkdir -p /home/olivetin/.ssh
 
               # Decode and save private key
-              base64 -d /config/id_master_key_nopass_base64 > /keys/id_master_key_nopass
+              base64 -d /config/id_master_key_nopass_base64 > /home/olivetin/.ssh/id_master_key_nopass
               # Decode and save public key
-              base64 -d /config/id_master_key_nopass_pub_base64 > /keys/id_master_key_nopass.pub
+              base64 -d /config/id_master_key_nopass_pub_base64 > /home/olivetin/.ssh/id_master_key_nopass.pub
 
               # Set permissions
-              chmod 600 /keys/id_master_key_nopass
-              chmod 644 /keys/id_master_key_nopass.pub
+              chmod 700 /home/olivetin/.ssh
+              chmod 600 /home/olivetin/.ssh/id_master_key_nopass
+              chmod 644 /home/olivetin/.ssh/id_master_key_nopass.pub
 
               # Debug: List contents after changes
-              echo "Contents of /keys after changes:"
-              ls -la /keys
+              echo "Contents of /home/olivetin/.ssh after changes:"
+              ls -la /home/olivetin/.ssh
           volumeMounts:
             - name: olivetin-config
               mountPath: "/config"
