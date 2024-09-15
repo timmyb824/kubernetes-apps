@@ -61,43 +61,44 @@ spec:
           command: ["/bin/sh", "-c"]
           args:
             - |
-              # Debug: List contents of /ssh-keys
-              echo "Contents of /ssh-keys:"
-              ls -la /ssh-keys
+              # Debug: List contents of /home/olivetin
+              echo "Contents of /home/olivetin:"
+              ls -la /home/olivetin
 
-              # Create .ssh directory
-              mkdir -p /home/olivetin/.ssh
-
-              # Copy SSH keys
-              cp /ssh-keys/* /home/olivetin/.ssh/ || echo "Failed to copy SSH keys"
+              # Debug: List contents of /home/olivetin/.ssh
+              echo "Contents of /home/olivetin/.ssh:"
+              ls -la /home/olivetin/.ssh
 
               # Set permissions
-              chown -R olivetin:olivetin /home/olivetin/.ssh
               chmod 700 /home/olivetin/.ssh
               chmod 600 /home/olivetin/.ssh/*
+              chown -R olivetin:olivetin /home/olivetin/.ssh
 
               # Move and set permissions for the private key
               mv /home/olivetin/.ssh/id_master_key_nopass /home/olivetin/id_master_key_nopass
               chown olivetin:olivetin /home/olivetin/id_master_key_nopass
               chmod 600 /home/olivetin/id_master_key_nopass
 
-              # Debug: List contents of /home/olivetin
-              echo "Contents of /home/olivetin:"
+              # Debug: List contents after changes
+              echo "Contents of /home/olivetin after changes:"
               ls -la /home/olivetin
-              echo "Contents of /home/olivetin/.ssh:"
+              echo "Contents of /home/olivetin/.ssh after changes:"
               ls -la /home/olivetin/.ssh
 
               # Start OliveTin as olivetin user
-              exec su -c "/usr/local/bin/olivetin" olivetin
+              exec gosu olivetin /usr/local/bin/olivetin
           ports:
             - containerPort: 1337
           volumeMounts:
             - name: olivetin-config
               mountPath: "/config"
               readOnly: true
-            - name: ssh-keys
-              mountPath: "/ssh-keys"
-              readOnly: true
+            - name: ssh-key-private
+              mountPath: "/home/olivetin/.ssh/id_master_key_nopass"
+              subPath: id_master_key_nopass
+            - name: ssh-key-public
+              mountPath: "/home/olivetin/.ssh/id_master_key_nopass.pub"
+              subPath: id_master_key_nopass.pub
           livenessProbe:
             exec:
               command:
@@ -109,10 +110,20 @@ spec:
         - name: olivetin-config
           configMap:
             name: olivetin-config
-        - name: ssh-keys
+        - name: ssh-key-private
           secret:
             secretName: olivetin-ssh-key
-            defaultMode: 0400
+            items:
+              - key: id_master_key_nopass
+                path: id_master_key_nopass
+            defaultMode: 0600
+        - name: ssh-key-public
+          secret:
+            secretName: olivetin-ssh-key
+            items:
+              - key: id_master_key_nopass.pub
+                path: id_master_key_nopass.pub
+            defaultMode: 0644
 ---
 apiVersion: v1
 kind: Service
