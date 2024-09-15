@@ -61,9 +61,6 @@ spec:
           command: ["/bin/sh", "-c"]
           args:
             - |
-              # Create .ssh directory
-              mkdir -p /home/olivetin/.ssh
-
               # Decode and save private key
               base64 -d /config/id_master_key_nopass_base64 > /home/olivetin/.ssh/id_master_key_nopass
               # Decode and save public key
