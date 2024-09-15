@@ -34,7 +34,7 @@ data:
         timeout: 3
 
       - title: whoami on hp-laptop-ubuntu
-        shell: ssh -i /home/olivetin/id_master_key_nopass tbryant@192.168.86.53 'whoami'
+        shell: ssh -i /home/olivetin/.ssh/id_master_key_nopass tbryant@192.168.86.53 'whoami'
         icon: ping
         timeout: 5
 
@@ -58,16 +58,27 @@ spec:
       containers:
         - name: olivetin
           image: docker.io/jamesread/olivetin:2024.09.11
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              mkdir -p /home/olivetin/.ssh
+              cp /ssh-keys/* /home/olivetin/.ssh/
+              chown -R olivetin:olivetin /home/olivetin/.ssh
+              chmod 700 /home/olivetin/.ssh
+              chmod 600 /home/olivetin/.ssh/*
+              mv /home/olivetin/.ssh/id_master_key_nopass /home/olivetin/id_master_key_nopass
+              chown olivetin:olivetin /home/olivetin/id_master_key_nopass
+              chmod 600 /home/olivetin/id_master_key_nopass
+              su olivetin -c "/usr/local/bin/olivetin"
           ports:
             - containerPort: 1337
           volumeMounts:
             - name: olivetin-config
               mountPath: "/config"
               readOnly: true
-            - name: ssh-key
-              mountPath: "/home/olivetin/.ssh"
+            - name: ssh-keys
+              mountPath: "/ssh-keys"
               readOnly: true
-
           livenessProbe:
             exec:
               command:
@@ -75,12 +86,11 @@ spec:
                 - localhost:1337
             initialDelaySeconds: 5
             periodSeconds: 30
-
       volumes:
         - name: olivetin-config
           configMap:
             name: olivetin-config
-        - name: ssh-key
+        - name: ssh-keys
           secret:
             secretName: olivetin-ssh-key
             defaultMode: 0600
