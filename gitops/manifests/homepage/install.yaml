@@ -369,11 +369,6 @@ data:
             href: https://portainer.local.timmybtech.com/
             namespace: portainer
             app: portainer
-        - Silverbullet:
-            icon: silverbullet.png
-            href: https://silverbullet.local.timmybtech.com/
-            namespace: silverbullet
-            app: silverbullet
         - Vault:
             icon: vault.png
             href: https://vault.local.timmybtech.com/
