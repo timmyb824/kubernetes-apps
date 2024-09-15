@@ -51,44 +51,53 @@ spec:
         app: olivetin
         app.kubernetes.io/name: olivetin
     spec:
-      containers:
-        - name: olivetin
-          image: docker.io/jamesread/olivetin:2024.09.11
+      initContainers:
+        - name: init-ssh-keys
+          image: busybox
           command: ["/bin/sh", "-c"]
           args:
             - |
               # Copy SSH keys
-              cp /config/id_master_key_nopass /home/olivetin/id_master_key_nopass
-              cp /config/id_master_key_nopass.pub /home/olivetin/id_master_key_nopass.pub
+              cp /config/id_master_key_nopass /keys/id_master_key_nopass
+              cp /config/id_master_key_nopass.pub /keys/id_master_key_nopass.pub
 
               # Set permissions
-              chown olivetin:olivetin /home/olivetin/id_master_key_nopass /home/olivetin/id_master_key_nopass.pub
-              chmod 600 /home/olivetin/id_master_key_nopass
-              chmod 644 /home/olivetin/id_master_key_nopass.pub
+              chmod 600 /keys/id_master_key_nopass
+              chmod 644 /keys/id_master_key_nopass.pub
 
               # Debug: List contents after changes
-              echo "Contents of /home/olivetin after changes:"
-              ls -la /home/olivetin
-
-              # start olivetin
-              exec /usr/local/bin/olivetin
+              echo "Contents of /keys after changes:"
+              ls -la /keys
+          volumeMounts:
+            - name: olivetin-config
+              mountPath: "/config"
+              readOnly: true
+            - name: ssh-keys
+              mountPath: "/keys"
+      containers:
+        - name: olivetin
+          image: docker.io/jamesread/olivetin:2024.09.11
           ports:
             - containerPort: 1337
           volumeMounts:
             - name: olivetin-config
               mountPath: "/config"
               readOnly: true
+            - name: ssh-keys
+              mountPath: "/home/olivetin"
+              readOnly: true
           livenessProbe:
-            exec:
-              command:
-                - curl
-                - localhost:1337
-            initialDelaySeconds: 5
+            httpGet:
+              path: /
+              port: 1337
+            initialDelaySeconds: 10
             periodSeconds: 30
       volumes:
         - name: olivetin-config
           configMap:
             name: olivetin-config
+        - name: ssh-keys
+          emptyDir: {}
 ---
 apiVersion: v1
 kind: Service
