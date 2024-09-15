@@ -33,6 +33,11 @@ data:
         icon: ping
         timeout: 3
 
+      - title: whoami on hp-laptop-ubuntu
+        shell: ssh -i /home/olivetin/id_master_key_nopass tbryant@192.168.86.53 'whoami'
+        icon: ping
+        timeout: 5
+
 ---
 apiVersion: apps/v1
 kind: Deployment
