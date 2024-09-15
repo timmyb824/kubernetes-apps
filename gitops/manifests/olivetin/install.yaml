@@ -52,12 +52,12 @@ spec:
         app.kubernetes.io/name: olivetin
     spec:
       securityContext:
-        fsGroup: 1000
+        fsGroup: 1000  # Assuming 1000 is the GID of the olivetin user
       initContainers:
         - name: init-ssh-keys
           image: busybox
           securityContext:
-            runAsUser: 1000
+            runAsUser: 1000  # Assuming 1000 is the UID of the olivetin user
           command: ["/bin/sh", "-c"]
           args:
             - |
@@ -79,7 +79,7 @@ spec:
               mountPath: "/config"
               readOnly: true
             - name: ssh-keys
-              mountPath: "/keys"
+              mountPath: "/home/olivetin"
       containers:
         - name: olivetin
           image: docker.io/jamesread/olivetin:2024.09.11
@@ -102,6 +102,8 @@ spec:
           configMap:
             name: olivetin-config
         - name: ssh-keys
+          emptyDir: {}
+        - name: ssh-dir
           emptyDir: {}
 ---
 apiVersion: v1
