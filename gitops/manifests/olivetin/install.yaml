@@ -6,6 +6,16 @@ metadata:
   name: olivetin
 ---
 apiVersion: v1
+kind: Secret
+metadata:
+  name: olivetin-ssh-key
+  namespace: olivetin
+type: Opaque
+data:
+  id_master_key_nopass: <path:secret/data/olivetin#ID_MASTER_KEY_NOPASS_PRIVATE>
+  id_master_key_nopass.pub: <path:secret/data/olivetin#ID_MASTER_KEY_NOPASS_PUBLIC>
+---
+apiVersion: v1
 kind: ConfigMap
 metadata:
   name: olivetin-config
@@ -22,6 +32,7 @@ data:
         shell: ping 1.1.1.1 -c 1
         icon: ping
         timeout: 3
+
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -48,6 +59,9 @@ spec:
             - name: olivetin-config
               mountPath: "/config"
               readOnly: true
+            - name: ssh-key
+              mountPath: "/home/olivetin/.ssh"
+              readOnly: true
 
           livenessProbe:
             exec:
@@ -61,8 +75,11 @@ spec:
         - name: olivetin-config
           configMap:
             name: olivetin-config
+        - name: ssh-key
+          secret:
+            secretName: olivetin-ssh-key
+            defaultMode: 0600
 ---
-# create service
 apiVersion: v1
 kind: Service
 metadata:
