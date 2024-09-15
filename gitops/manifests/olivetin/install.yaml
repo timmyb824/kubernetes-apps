@@ -61,15 +61,34 @@ spec:
           command: ["/bin/sh", "-c"]
           args:
             - |
+              # Debug: List contents of /ssh-keys
+              echo "Contents of /ssh-keys:"
+              ls -la /ssh-keys
+
+              # Create .ssh directory
               mkdir -p /home/olivetin/.ssh
-              cp /ssh-keys/* /home/olivetin/.ssh/
+
+              # Copy SSH keys
+              cp /ssh-keys/* /home/olivetin/.ssh/ || echo "Failed to copy SSH keys"
+
+              # Set permissions
               chown -R olivetin:olivetin /home/olivetin/.ssh
               chmod 700 /home/olivetin/.ssh
               chmod 600 /home/olivetin/.ssh/*
+
+              # Move and set permissions for the private key
               mv /home/olivetin/.ssh/id_master_key_nopass /home/olivetin/id_master_key_nopass
               chown olivetin:olivetin /home/olivetin/id_master_key_nopass
               chmod 600 /home/olivetin/id_master_key_nopass
-              su olivetin -c "/usr/local/bin/olivetin"
+
+              # Debug: List contents of /home/olivetin
+              echo "Contents of /home/olivetin:"
+              ls -la /home/olivetin
+              echo "Contents of /home/olivetin/.ssh:"
+              ls -la /home/olivetin/.ssh
+
+              # Start OliveTin as olivetin user
+              exec su -c "/usr/local/bin/olivetin" olivetin
           ports:
             - containerPort: 1337
           volumeMounts:
@@ -93,7 +112,7 @@ spec:
         - name: ssh-keys
           secret:
             secretName: olivetin-ssh-key
-            defaultMode: 0600
+            defaultMode: 0400
 ---
 apiVersion: v1
 kind: Service
