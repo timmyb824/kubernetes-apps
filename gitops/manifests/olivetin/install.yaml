@@ -24,7 +24,7 @@ data:
         icon: ping
         timeout: 3
 
-      - title: whoami on hp-laptop-ubuntu
+      - title: update packages on hp-laptop-ubuntu
         shell: ssh -i /home/olivetin/.ssh/id_master_key_nopass tbryant@hp-laptop-ubuntu.homelab.lan 'update_packages.sh'
         icon: ping
         timeout: 300
