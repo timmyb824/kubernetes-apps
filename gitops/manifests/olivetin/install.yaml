@@ -25,9 +25,9 @@ data:
         timeout: 3
 
       - title: whoami on hp-laptop-ubuntu
-        shell: ssh -i /home/olivetin/.ssh/id_master_key_nopass tbryant@192.168.86.53 'whoami'
+        shell: ssh -i /home/olivetin/.ssh/id_master_key_nopass tbryant@hp-laptop-ubuntu.homelab.lan 'update_packages.sh'
         icon: ping
-        timeout: 5
+        timeout: 300
 
   id_master_key_nopass_base64: |
     <path:secret/data/olivetin#ID_MASTER_KEY_NOPASS_PRIVATE>
