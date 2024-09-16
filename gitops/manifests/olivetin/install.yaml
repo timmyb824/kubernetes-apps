@@ -30,6 +30,9 @@ data:
           - name: user
             default: tbryant
             type: ascii
+          - name: host
+            default: localhost
+            type: ascii
         icon: ping
         timeout: 300
 
