@@ -25,7 +25,7 @@ data:
         timeout: 3
 
       - title: uptime for hp-laptop-ubuntu
-        shell: ssh -i /home/olivetin/.ssh/id_master_key_nopass tbryant@hp-laptop-ubuntu.homelab.lan 'uptime'
+        shell: ssh -i /home/olivetin/.ssh/id_master_key_nopass tbryant@192.168.86.53 'uptime'
         icon: ping
         timeout: 5
 
