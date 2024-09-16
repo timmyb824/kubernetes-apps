@@ -32,7 +32,7 @@ data:
             type: ascii
           - name: host
             default: localhost
-            type: ascii
+            type: ascii_identifier
         icon: ping
         timeout: 300
 
