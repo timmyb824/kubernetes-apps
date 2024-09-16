@@ -30,7 +30,7 @@ data:
         timeout: 5
 
       - title: update packages on hp-laptop-ubuntu
-        shell: ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i /home/olivetin/.ssh/id_master_key_nopass tbryant@hp-laptop-ubuntu.homelab.lan 'update_packages.sh'
+        shell: ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i /home/olivetin/.ssh/id_master_key_nopass tbryant@hp-laptop-ubuntu.homelab.lan 'bash /home/tbryant/.config/bin/utilities/update_packages.sh'
         icon: ping
         timeout: 300
 
@@ -57,12 +57,12 @@ spec:
         app.kubernetes.io/name: olivetin
     spec:
       securityContext:
-        fsGroup: 1000  # Assuming 1000 is the GID of the olivetin user
+        fsGroup: 1000 # Assuming 1000 is the GID of the olivetin user
       initContainers:
         - name: init-ssh-keys
           image: busybox
           securityContext:
-            runAsUser: 1000  # Assuming 1000 is the UID of the olivetin user
+            runAsUser: 1000 # Assuming 1000 is the UID of the olivetin user
           command: ["/bin/sh", "-c"]
           args:
             - |
