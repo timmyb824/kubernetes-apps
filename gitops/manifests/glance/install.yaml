@@ -55,26 +55,82 @@ data:
           - size: small
             widgets:
               - type: weather
-                location: London, United Kingdom
+                location: Middleboro, MA, United States
+
+              - type: dns-stats
+                service: adguard
+                url: https://adguard.local.timmybtech.com/
+                username: <path:secret/data/homepage#ADGUARD_USER>
+                password: <path:secret/data/homepage#ADGUARD_PASSWORD>
 
               - type: markets
                 markets:
                   - symbol: SPY
-                    name: S&P 500
-                  - symbol: BTC-USD
-                    name: Bitcoin
-                  - symbol: NVDA
-                    name: NVIDIA
-                  - symbol: AAPL
-                    name: Apple
-                  - symbol: MSFT
-                    name: Microsoft
-                  - symbol: GOOGL
-                    name: Google
-                  - symbol: AMD
-                    name: AMD
-                  - symbol: RDDT
-                    name: Reddit
+                    name: SPDR S&P 500
+                  - symbol: SOXX
+                    name: iShares PHLX Semiconductor ETF
+                  - symbol: VOO
+                    name: Vanguard S&P 500 ETF
+                  - symbol: QQQ
+                    name: Invesco QQQ ETF
+                  - symbol: AMZN
+                    name: Amazon
+                  - symbol: TSM
+                    name: Taiwan Semiconductor Manufacturing Company Ltd.
+                  - symbol: SFY
+                    name: SoFi Select 500 ETF
+                  - symbol: SOFI
+                    name: SoFi Bank
+                  - symbol: FDEEX
+                    name: Fidelity Freedom 2055 Fund
+                  - symbol: FFRHX
+                    name: Fidelity Floating Rate High Income Fund
+                  - symbol: FPURX
+                    name: Fidelity Puritan Fund
+                  - symbol: PRRJX
+                    name: Putnam Sustainable Retirement 2050 Fund
+                  - symbol: VIG
+                    name: Vanguard Dividend Appreciation ETF
+
+    - name: Gaming
+      columns:
+        - size: small
+          widgets:
+            - type: twitch-top-games
+              limit: 20
+              collapse-after: 13
+              exclude:
+                - just-chatting
+                - pools-hot-tubs-and-beaches
+                - music
+                - art
+                - asmr
+
+        - size: full
+          widgets:
+            - type: group
+              widgets:
+                - type: reddit
+                  show-thumbnails: true
+                  subreddit: pcgaming
+                - type: reddit
+                  subreddit: games
+
+            - type: videos
+              style: grid-cards
+              collapse-after-rows: 3
+              channels:
+                - UCNvzD7Z-g64bPXxGzaQaa4g # gameranx
+                - UCZ7AeeVbyslLM_8-nVy2B8Q # Skill Up
+                - UCHDxYLv8iovIbhrfl16CNyg # GameLinked
+                - UC9PBzalIcEQCsiIkq36PyUA # Digital Foundry
+
+        - size: small
+          widgets:
+            - type: reddit
+              subreddit: gamingnews
+              limit: 7
+              style: vertical-cards
 ---
 apiVersion: apps/v1
 kind: Deployment
