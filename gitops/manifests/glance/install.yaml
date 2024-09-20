@@ -55,7 +55,7 @@ data:
           - size: small
             widgets:
               - type: weather
-                location: Middleboro, MA, United States
+                location: Middleborough, Massachusetts, United States
 
               - type: dns-stats
                 service: adguard
