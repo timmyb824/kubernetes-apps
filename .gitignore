@@ -1,4 +1,5 @@
 Archive/
+AArchive/
 .env
 .monokle
 
@@ -10,7 +11,7 @@ helm/kube-prometheus-stack/secrets/
 helm/kube-prometheus-stack/configMaps/*
 !helm/kube-prometheus-stack/configMaps/k8s*
 *.secrets.yaml
-helm/vault/cluster-keys.json
+helm/Active/vault/cluster-keys.json
 helm/caretta/values.live.yaml
 !gitops/manifests/Archive/
 gitops/app-configs/Archive/
