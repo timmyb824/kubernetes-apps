@@ -369,6 +369,11 @@ data:
             href: https://portainer.local.timmybtech.com/
             namespace: portainer
             app: portainer
+        - Umami:
+            icon: umami.png
+            href: https://umami.timmybtech.com/
+            namespace: umami
+            app: umami
         - Vault:
             icon: vault.png
             href: https://vault.local.timmybtech.com/
