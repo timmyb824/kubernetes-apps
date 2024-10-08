@@ -5,8 +5,7 @@ metadata:
   namespace: argocd
   finalizers:
   - resources-finalizer.argocd.argoproj.io
-  annotations:
-    avp.kubernetes.io/path: "secret/data/botkube"
+  annotations: {}
 spec:
   destination:
     namespace: kubeops
