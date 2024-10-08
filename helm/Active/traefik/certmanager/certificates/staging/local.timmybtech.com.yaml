@@ -2,14 +2,14 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: local-example-com
+  name: local-timmybtech-com
   namespace: default # This is the namespace where the ingress and service are to be located
 spec:
-  secretName: local-example-com-staging-tls
+  secretName: local-timmybtech-com-staging-tls
   issuerRef:
     name: letsencrypt-staging
     kind: ClusterIssuer
-  commonName: "*.local.example.com"
+  commonName: "*.local.timmybtech.com"
   dnsNames:
-  - "local.example.com"
-  - "*.local.example.com"
+  - "local.timmybtech.com"
+  - "*.local.timmybtech.com"
