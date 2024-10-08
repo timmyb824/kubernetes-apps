@@ -3,7 +3,7 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: local-timmybtech-com
-  namespace: traefik
+  namespace: traefik # This is the namespace where the ingress and service are to be located (might need to use `default` namespace)
 spec:
   secretName: local-timmybtech-com-tls
   issuerRef:
