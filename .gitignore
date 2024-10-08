@@ -6,12 +6,12 @@ AArchive/
 manifests/metallb/ansible-k3s/
 manifests/gitea/templates/
 # manifests/metallb/ansible-k3s/
-helm/kube-prometheus-stack/secrets/
-!helm/kube-prometheus-stack/configMaps
-helm/kube-prometheus-stack/configMaps/*
-!helm/kube-prometheus-stack/configMaps/k8s*
+helm/Inactive/kube-prometheus-stack/secrets/
+!helm/Inactive/kube-prometheus-stack/configMaps
+helm/Inactive/kube-prometheus-stack/configMaps/*
+!helm/Inactive/kube-prometheus-stack/configMaps/k8s*
 *.secrets.yaml
 helm/Active/vault/cluster-keys.json
-helm/caretta/values.live.yaml
+helm/Inactive/caretta/values.live.yaml
 !gitops/manifests/Archive/
 gitops/app-configs/Archive/
