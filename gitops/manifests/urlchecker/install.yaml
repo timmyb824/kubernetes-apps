@@ -77,12 +77,6 @@ data:
       status_accepted:
         - 200
 
-    - name: kube-state-metrics
-      url: https://kube-state-metrics.local.timmybtech.com
-      retries: 3
-      status_accepted:
-        - 200
-
     - name: loki
       url: https://loki.local.timmybtech.com/loki/api/v1/status/buildinfo
       retries: 3
@@ -94,6 +88,7 @@ data:
       retries: 3
       status_accepted:
         - 200
+        - 403
 
     - name: nas
       url: https://nas.local.timmybtech.com
