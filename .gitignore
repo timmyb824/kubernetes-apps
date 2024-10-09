@@ -15,3 +15,4 @@ helm/Active/vault/cluster-keys.json
 helm/Inactive/caretta/values.live.yaml
 !gitops/manifests/Archive/
 gitops/app-configs/Archive/
+helm/Active/traefik/certmanager/backup.yaml
