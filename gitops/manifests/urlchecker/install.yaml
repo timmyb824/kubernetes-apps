@@ -119,12 +119,6 @@ data:
       status_accepted:
         - 200
 
-    - name: planka
-      url: https://planka.local.timmybtech.com
-      retries: 3
-      status_accepted:
-        - 200
-
     - name: portainer
       url: https://portainer.local.timmybtech.com
       retries: 3
