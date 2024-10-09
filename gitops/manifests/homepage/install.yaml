@@ -309,11 +309,6 @@ data:
             href: https://argocd.local.timmybtech.com/
             namespace: argocd
             app: argocd-server
-        - Gitea:
-            icon: gitea.png
-            href: "https://gitea.local.timmybtech.com/"
-            namespace: gitea
-            app: gitea
         - Glance:
             icon: kubernetes.png
             href: "https://glance.local.timmybtech.com/"
