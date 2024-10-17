@@ -194,6 +194,13 @@ providers:
                   - websecure
               tls:
                   certResolver: default
+          semaphore:
+              rule: Host(`semaphore.local.timmybtech.com`)
+              service: semaphore
+              entrypoints:
+                  - websecure
+              tls:
+                  certResolver: default
         services:
           watchyourlan:
             loadBalancer:
@@ -279,6 +286,10 @@ providers:
               loadBalancer:
                   servers:
                   - url: http://192.168.86.174:9999
+          semaphore:
+              loadBalancer:
+                  servers:
+                  - url: http://192.168.86.143:3005
 volumes:
   - name: local-timmybtech-com-tls
     mountPath: /certs
