@@ -132,6 +132,12 @@ data:
       status_accepted:
         - 200
 
+    - name: semaphore
+      url: https://semaphore.local.timmybtech.com
+      retries: 3
+      status_accepted:
+        - 200
+
     - name: uptime-kuma
       url: https://uptime-kuma.local.timmybtech.com
       retries: 3
