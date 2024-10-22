@@ -50,7 +50,7 @@ spec:
           - 0
       containers:
         - name: grafana
-          image: grafana/grafana:11.2.1
+          image: grafana/grafana:11.2.2
           imagePullPolicy: Always
           envFrom:
             - configMapRef:
