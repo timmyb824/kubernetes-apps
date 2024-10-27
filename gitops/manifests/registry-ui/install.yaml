@@ -1,0 +1,88 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: registry-ui
+  namespace: registry
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: registry-ui
+  template:
+    metadata:
+      labels:
+        app: registry-ui
+    spec:
+      containers:
+      - name: registry-ui
+        image: joxit/docker-registry-ui:main
+        ports:
+        - containerPort: 80
+          name: http
+        env:
+        - name: SINGLE_REGISTRY
+          value: "true"
+        - name: REGISTRY_TITLE
+          value: "Docker Registry UI"
+        - name: DELETE_IMAGES
+          value: "true"
+        - name: SHOW_CONTENT_DIGEST
+          value: "true"
+        - name: NGINX_PROXY_PASS_URL
+          value: "https://registry.local.timmybtech.com"
+        - name: SHOW_CATALOG_NB_TAGS
+          value: "true"
+        - name: CATALOG_MIN_BRANCHES
+          value: "1"
+        - name: CATALOG_MAX_BRANCHES
+          value: "1"
+        - name: TAGLIST_PAGE_SIZE
+          value: "100"
+        - name: REGISTRY_SECURED
+          value: "false"
+        - name: CATALOG_ELEMENTS_LIMIT
+          value: "1000"
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 200m
+            memory: 256Mi
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: registry-ui
+  namespace: registry
+spec:
+  selector:
+    app: registry-ui
+  ports:
+  - port: 80
+    targetPort: 80
+    name: http
+  type: ClusterIP
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: registry-ui-ingress
+  namespace: registry
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`registry-ui.local.timmybtech.com`)
+      kind: Rule
+      services:
+        - name: registry-ui
+          port: 80
+  tls:
+    secretName: local-timmybtech-com-tls
