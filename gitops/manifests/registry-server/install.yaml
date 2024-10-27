@@ -106,20 +106,20 @@ spec:
   tls:
     secretName: local-timmybtech-com-tls
 
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: registry-server
-  namespace: registry
-  annotations: {}
-spec:
-  ingressClassName: tailscale
-  defaultBackend:
-    service:
-      name: registry-server
-      port:
-        number: 5000
-  tls:
-    - hosts:
-        - registry-server
+# ---
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: registry-server
+#   namespace: registry
+#   annotations: {}
+# spec:
+#   ingressClassName: tailscale
+#   defaultBackend:
+#     service:
+#       name: registry-server
+#       port:
+#         number: 5000
+#   tls:
+#     - hosts:
+#         - registry-server
