@@ -80,8 +80,9 @@ spec:
     app: registry-server
   ports:
     - port: 5000
-      targetPort: 5000
-      name: registry
+      targetPort: http
+      protocol: TCP
+      name: http
   type: ClusterIP
 
 ---
@@ -109,7 +110,7 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: registry-ts-ingress
+  name: registry-server
   namespace: registry
   annotations: {}
 spec:
