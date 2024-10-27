@@ -30,7 +30,7 @@ spec:
         - name: SHOW_CONTENT_DIGEST
           value: "true"
         - name: NGINX_PROXY_PASS_URL
-          value: "https://registry.local.timmybtech.com"
+          value: "http://registry-server:5000"
         - name: SHOW_CATALOG_NB_TAGS
           value: "true"
         - name: CATALOG_MIN_BRANCHES
