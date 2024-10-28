@@ -42,15 +42,19 @@ spec:
             - name: REGISTRY_HTTP_HEADERS_Access-Control-Allow-Origin
               value: "[http://registry.local.timmybtech.com, https://registry.timmybtech.com, https://registry.local.timmybtech.com]"
             - name: REGISTRY_HTTP_HEADERS_Access-Control-Allow-Methods
-              value: "[HEAD,GET,OPTIONS,DELETE]"
+              value: "[HEAD,GET,OPTIONS,DELETE,PUT,POST]"
             - name: REGISTRY_HTTP_HEADERS_Access-Control-Allow-Credentials
               value: "[true]"
             - name: REGISTRY_HTTP_HEADERS_Access-Control-Allow-Headers
-              value: "[Authorization,Accept,Cache-Control]"
+              value: "[Authorization,Accept,Cache-Control,Content-Type,X-Requested-With]"
             - name: REGISTRY_HTTP_HEADERS_Access-Control-Expose-Headers
               value: "[Docker-Content-Digest]"
             - name: REGISTRY_STORAGE_DELETE_ENABLED
               value: "true"
+            - name: REGISTRY_HTTP_SECRET
+              value: <path:secret/data/argocd#REGISTRY_HTTP_SECRET>
+            - name: REGISTRY_LOG_LEVEL
+              value: "debug"
           volumeMounts:
             - name: registry-storage
               mountPath: /var/lib/registry
