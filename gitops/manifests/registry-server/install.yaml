@@ -40,7 +40,7 @@ spec:
           imagePullPolicy: IfNotPresent
           env:
             - name: REGISTRY_HTTP_HEADERS_Access-Control-Allow-Origin
-              value: "[http://registry.local.timmybtech.com, https://registry.timmybtech.com, https://registry.local.timmybtech.com]"
+              value: "[http://registry.local.timmybtech.com]"
             - name: REGISTRY_HTTP_HEADERS_Access-Control-Allow-Methods
               value: "[HEAD,GET,OPTIONS,DELETE,PUT,POST]"
             - name: REGISTRY_HTTP_HEADERS_Access-Control-Allow-Credentials
