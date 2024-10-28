@@ -42,19 +42,15 @@ spec:
             - name: REGISTRY_HTTP_HEADERS_Access-Control-Allow-Origin
               value: "[http://registry.local.timmybtech.com]"
             - name: REGISTRY_HTTP_HEADERS_Access-Control-Allow-Methods
-              value: "[HEAD,GET,OPTIONS,DELETE,PUT,POST]"
+              value: "[HEAD,GET,OPTIONS,DELETE]"
             - name: REGISTRY_HTTP_HEADERS_Access-Control-Allow-Credentials
               value: "[true]"
             - name: REGISTRY_HTTP_HEADERS_Access-Control-Allow-Headers
-              value: "[Authorization,Accept,Cache-Control,Content-Type,X-Requested-With]"
+              value: "[Authorization,Accept,Cache-Control]"
             - name: REGISTRY_HTTP_HEADERS_Access-Control-Expose-Headers
               value: "[Docker-Content-Digest]"
             - name: REGISTRY_STORAGE_DELETE_ENABLED
               value: "true"
-            - name: REGISTRY_HTTP_SECRET
-              value: <path:secret/data/argocd#REGISTRY_HTTP_SECRET>
-            - name: REGISTRY_LOG_LEVEL
-              value: "debug"
           volumeMounts:
             - name: registry-storage
               mountPath: /var/lib/registry
@@ -109,6 +105,8 @@ spec:
           port: 5000
   tls:
     secretName: local-timmybtech-com-tls
+
+###### TAILSCALE ######
 
 # ---
 # apiVersion: networking.k8s.io/v1
