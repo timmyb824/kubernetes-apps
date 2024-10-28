@@ -51,6 +51,8 @@ spec:
               value: "[Docker-Content-Digest]"
             - name: REGISTRY_STORAGE_DELETE_ENABLED
               value: "true"
+            - name: REGISTRY_LOG_LEVEL
+              value: "debug"
           volumeMounts:
             - name: registry-storage
               mountPath: /var/lib/registry
