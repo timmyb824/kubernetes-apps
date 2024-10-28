@@ -98,7 +98,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`registry.local.timmybtech.com`)
+    - match: Host(`registry.local.timmybtech.com`) && PathPrefix(`/v2`)
       kind: Rule
       services:
         - name: registry-server
