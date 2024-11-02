@@ -201,6 +201,13 @@ providers:
                   - websecure
               tls:
                   certResolver: default
+          your-spotify:
+              rule: Host(`your-spotify.local.timmybtech.com`)
+              service: your-spotify
+              entrypoints:
+                  - websecure
+              tls:
+                  certResolver: default
         services:
           watchyourlan:
             loadBalancer:
@@ -290,6 +297,10 @@ providers:
               loadBalancer:
                   servers:
                   - url: http://192.168.86.143:3005
+          your-spotify:
+              loadBalancer:
+                  servers:
+                  - url: http://192.168.86.53:3000
 volumes:
   - name: local-timmybtech-com-tls
     mountPath: /certs
