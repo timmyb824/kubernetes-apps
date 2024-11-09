@@ -109,6 +109,10 @@ spec:
               value: redis://broker.paperless-ngx:6379
             - name: PAPERLESS_URL
               value: https://paperless.local.timmybtech.com
+            - name: PAPERLESS_ADMIN_USER
+              value: <path:secret/data/argocd#PAPERLESS_ADMIN_USER>
+            - name: PAPERLESS_ADMIN_PASSWORD
+              value: <path:secret/data/argocd#PAPERLESS_ADMIN_PASSWORD>
           image: ghcr.io/paperless-ngx/paperless-ngx:latest
           name: webserver
           ports:
