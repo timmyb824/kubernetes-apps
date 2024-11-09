@@ -243,7 +243,7 @@ providers:
           uptime-kuma:
             loadBalancer:
               servers:
-                - url: http://192.168.86.143:3001
+                - url: http://homelab-oci03.tailebee.ts.net:3001
           gotify:
               loadBalancer:
                   servers:
