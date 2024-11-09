@@ -106,7 +106,7 @@ spec:
             - name: PAPERLESS_DBUSER
               value: <path:secret/data/postgres_db#USER>
             - name: PAPERLESS_REDIS
-              value: redis://broker:6379
+              value: redis://broker.paperless-ngx:6379
           image: ghcr.io/paperless-ngx/paperless-ngx:latest
           name: webserver
           ports:
@@ -171,6 +171,20 @@ spec:
         - name: redisdata
           persistentVolumeClaim:
             claimName: redisdata
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    io.kompose.service: broker
+  name: broker
+spec:
+  ports:
+    - name: "6379"
+      port: 6379
+      targetPort: 6379
+  selector:
+    io.kompose.service: broker
 ---
 apiVersion: v1
 kind: Service
