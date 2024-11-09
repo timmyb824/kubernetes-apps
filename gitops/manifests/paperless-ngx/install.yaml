@@ -107,6 +107,8 @@ spec:
               value: <path:secret/data/postgres_db#USER>
             - name: PAPERLESS_REDIS
               value: redis://broker.paperless-ngx:6379
+            - name: PAPERLESS_URL
+              value: https://paperless.local.timmybtech.com
           image: ghcr.io/paperless-ngx/paperless-ngx:latest
           name: webserver
           ports:
