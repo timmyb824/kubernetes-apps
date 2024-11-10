@@ -93,7 +93,7 @@ spec:
               mountPath: "/home/olivetin"
       containers:
         - name: olivetin
-          image: docker.io/jamesread/olivetin:2024.10.26
+          image: docker.io/jamesread/olivetin:2024.11.09
           ports:
             - containerPort: 1337
           volumeMounts:
