@@ -1,3 +1,7 @@
+###########################################################
+# Add annotation synator/sync=yes to Secret or ConfigMap. #
+###########################################################
+---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
