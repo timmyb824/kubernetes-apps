@@ -354,6 +354,11 @@ data:
             href: https://olivetin.local.timmybtech.com/
             namespace: olivetin
             app: olivetin
+        - Paperless-ngx:
+            icon: paperless.png
+            href: https://paperless.local.timmybtech.com/
+            namespace: paperless-ngx
+            app: paperless-ngx
         - Planka:
             icon: planka.png
             href: https://planka.local.timmybtech.com/

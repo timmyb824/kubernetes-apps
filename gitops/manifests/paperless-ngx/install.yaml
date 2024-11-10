@@ -92,6 +92,7 @@ spec:
         kompose.version: 1.34.0 (HEAD)
       labels:
         io.kompose.service: webserver
+        app.kubernetes.io/name: paperless-ngx
     spec:
       containers:
         - env:
