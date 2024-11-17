@@ -319,6 +319,11 @@ data:
             href: https://homebox.local.timmybtech.com/
             namespace: homebox
             app: homebox
+        - Immich:
+            icon: immich.png
+            href: https://immich.local.timmybtech.com/
+            namespace: immich
+            app: immich
         - InfluxDB:
             icon: influxdb.png
             href: https://influxdb.local.timmybtech.com/
@@ -503,6 +508,10 @@ data:
             icon: ansible.png
             href: https://semaphore.local.timmybtech.com/
             ping: http://192.168.86.143:3005
+        - Your-Spotify:
+            icon: spotify.png
+            href: http://192.168.86.53:3000/
+            ping: http://192.168.86.53:3000
         - WatchYourLAN:
             icon: homepage.png
             href: https://watchyourlan.local.timmybtech.com/
