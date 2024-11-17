@@ -198,6 +198,21 @@ data:
         - source_labels: [__meta_kubernetes_service_name]
           action: replace
           target_label: kubernetes_name
+
+      - job_name: "immich"
+        scheme: https
+        metrics_path: /metrics
+        static_configs:
+          - targets:
+            - "immich-microservices-metrics.local.timmybtech.com"
+            - "immich-api-metrics.local.timmybtech.com"
+        tls_config:
+          insecure_skip_verify: true
+        relabel_configs:
+          - source_labels: [__address__]
+            regex: (immich-microservices-metrics.local.timmybtech.com|immich-api-metrics.local.timmybtech.com)
+            target_label: instance
+
 ---
 apiVersion: apps/v1
 kind: Deployment
