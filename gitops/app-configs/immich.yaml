@@ -26,11 +26,11 @@ spec:
 
         env:
           REDIS_HOSTNAME: '{{ printf "%s-redis-master" .Release.Name }}'
-          DB_HOSTNAME: "<path:secret/data/postgres_db#HOST_NAME>"
-          DB_USERNAME: "<path:secret/data/postgres_db#USER>"
+          DB_HOSTNAME: <path:secret/data/postgres_db#HOST_NAME>
+          DB_USERNAME: <path:secret/data/postgres_db#USER>
           DB_DATABASE_NAME: "immich"
           # -- You should provide your own secret outside of this helm-chart and use `postgresql.global.postgresql.auth.existingSecret` to provide credentials to the postgresql instance
-          DB_PASSWORD: "<path:secret/data/postgres_db#PASSWORD>"
+          DB_PASSWORD: <path:secret/data/postgres_db#PASSWORD>
           IMMICH_MACHINE_LEARNING_URL: '{{ printf "http://%s-machine-learning:3003" .Release.Name }}'
 
         image:
@@ -67,9 +67,9 @@ spec:
           global:
             postgresql:
               auth:
-                username: immich
+                username: <path:secret/data/postgres_db#USER>
                 database: immich
-                password: immich
+                password: "<path:secret/data/postgres_db#PASSWORD>"
           primary:
             containerSecurityContext:
               readOnlyRootFilesystem: false
