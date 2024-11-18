@@ -296,7 +296,7 @@ data:
             icon: immich.png
             href: https://immich.local.timmybtech.com/
             namespace: immich
-            app: immich
+            app: server
             widget:
               type: immich
               url: https://immich.local.timmybtech.com
