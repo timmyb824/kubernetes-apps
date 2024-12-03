@@ -212,7 +212,7 @@ data:
       Kubernetes:
         icon: mdi-sail-boat
         style: row
-        columns: 3
+        columns: 4
       Kubernetes hidden:
         header: false
         style: row
@@ -312,13 +312,17 @@ data:
               url: https://traefik.local.timmybtech.com
               username: <TRAEFIK_USER>
               password: <TRAEFIK_PASSWORD>
-
-    - Kubernetes hidden:
         - ArgoCD:
             icon: argocd.png
             href: https://argocd.local.timmybtech.com/
             namespace: argocd
             app: argocd-server
+            widget:
+              type: argocd
+              url: https://argocd.local.timmybtech.com
+              key: <ARGOCD_KEY>
+
+    - Kubernetes hidden:
         - Glance:
             icon: kubernetes.png
             href: "https://glance.local.timmybtech.com/"
