@@ -120,7 +120,7 @@ spec:
       enableServiceLinks: true
       containers:
         - name: homepage
-          image: "ghcr.io/gethomepage/homepage:v0.9.12"
+          image: "ghcr.io/gethomepage/homepage:v0.9.13"
           imagePullPolicy: Always
           ports:
             - name: http
@@ -212,7 +212,7 @@ data:
       Kubernetes:
         icon: mdi-sail-boat
         style: row
-        columns: 4
+        columns: 2
       Kubernetes hidden:
         header: false
         style: row
