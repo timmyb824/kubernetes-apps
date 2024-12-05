@@ -124,8 +124,7 @@ data:
         "FeatureExplain": "What is the {FeatureName} feature in k8s? How to turn it on? How to adjust? Please explain in detail.  Please respond in `{language}`.\r "
       },
       "OpenAI": {
-        "Token": <path:secret/data/argocd#OPENAI_API_KEY>,
-
+        "Token": "<path:secret/data/argocd#OPENAI_API_KEY>",
         "Model": "gpt-3.5-turbo",
         "BaseUrl": "https://api.openai.com/v1"
       },
