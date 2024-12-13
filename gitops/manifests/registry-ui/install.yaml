@@ -13,43 +13,44 @@ spec:
     metadata:
       labels:
         app: registry-ui
+        app.kubernetes.io/name: registry-ui
     spec:
       containers:
-      - name: registry-ui
-        image: joxit/docker-registry-ui:main
-        ports:
-        - containerPort: 80
-          name: http
-        env:
-        - name: SINGLE_REGISTRY
-          value: "true"
-        - name: REGISTRY_TITLE
-          value: "Docker Registry UI"
-        - name: DELETE_IMAGES
-          value: "true"
-        - name: SHOW_CONTENT_DIGEST
-          value: "true"
-        - name: NGINX_PROXY_PASS_URL
-          value: "http://registry-server:5000"
-        - name: SHOW_CATALOG_NB_TAGS
-          value: "true"
-        - name: CATALOG_MIN_BRANCHES
-          value: "1"
-        - name: CATALOG_MAX_BRANCHES
-          value: "1"
-        - name: TAGLIST_PAGE_SIZE
-          value: "100"
-        - name: REGISTRY_SECURED
-          value: "false"
-        - name: CATALOG_ELEMENTS_LIMIT
-          value: "1000"
-        resources:
-          requests:
-            cpu: 100m
-            memory: 128Mi
-          limits:
-            cpu: 200m
-            memory: 256Mi
+        - name: registry-ui
+          image: joxit/docker-registry-ui:main
+          ports:
+            - containerPort: 80
+              name: http
+          env:
+            - name: SINGLE_REGISTRY
+              value: "true"
+            - name: REGISTRY_TITLE
+              value: "Docker Registry UI"
+            - name: DELETE_IMAGES
+              value: "true"
+            - name: SHOW_CONTENT_DIGEST
+              value: "true"
+            - name: NGINX_PROXY_PASS_URL
+              value: "http://registry-server:5000"
+            - name: SHOW_CATALOG_NB_TAGS
+              value: "true"
+            - name: CATALOG_MIN_BRANCHES
+              value: "1"
+            - name: CATALOG_MAX_BRANCHES
+              value: "1"
+            - name: TAGLIST_PAGE_SIZE
+              value: "100"
+            - name: REGISTRY_SECURED
+              value: "false"
+            - name: CATALOG_ELEMENTS_LIMIT
+              value: "1000"
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 200m
+              memory: 256Mi
 
 ---
 apiVersion: v1
@@ -61,9 +62,9 @@ spec:
   selector:
     app: registry-ui
   ports:
-  - port: 80
-    targetPort: 80
-    name: http
+    - port: 80
+      targetPort: 80
+      name: http
   type: ClusterIP
 
 ---
