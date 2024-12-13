@@ -55,3 +55,4 @@ spec:
       containers:
         - name: synator
           image: registry.local.timmybtech.com/synator-custom:v1
+          imagePullPolicy: Always
