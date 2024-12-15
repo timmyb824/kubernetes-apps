@@ -324,7 +324,7 @@ data:
 
     - Kubernetes hidden:
         - blinko:
-            icon: blinko.png
+            icon: kubernetes.png
             href: https://blinko.local.timmybtech.com/
             namespace: blinko
             app: blinko-website
