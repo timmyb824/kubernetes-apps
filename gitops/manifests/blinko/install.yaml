@@ -1,0 +1,106 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: blinko
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    io.kompose.service: blinko-website-claim0
+  name: blinko-website-claim0
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 32Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations: {}
+  labels:
+    io.kompose.service: blinko-website
+  name: blinko-website
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: blinko-website
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations: {}
+      labels:
+        io.kompose.service: blinko-website
+        app.kubernetes.io/name: blinko-website
+    spec:
+      containers:
+        - env:
+            - name: DATABASE_URL
+              value: postgresql://<path:secret/data/postgres_db#USER>:<path:secret/data/postgres_db#PASSWORD>@<path:secret/data/postgres_db#HOST_IP>:5432/blinko
+            - name: NEXTAUTH_SECRET
+              value: <path:secret/data/argocd#BLINO_NEXTAUTH_SECRET>
+            - name: NODE_ENV
+              value: production
+          image: blinkospace/blinko:latest
+          livenessProbe:
+            exec:
+              command:
+                - curl
+                - -f
+                - http://blinko-website:1111/
+            failureThreshold: 5
+            initialDelaySeconds: 30
+            periodSeconds: 30
+            timeoutSeconds: 10
+          name: blinko-website
+          ports:
+            - containerPort: 1111
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /app/.blinko
+              name: blinko-website-claim0
+      restartPolicy: Always
+      volumes:
+        - name: blinko-website-claim0
+          persistentVolumeClaim:
+            claimName: blinko-website-claim0
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations: {}
+  labels:
+    io.kompose.service: blinko-website
+  name: blinko-website
+spec:
+  ports:
+    - name: "1111"
+      port: 1111
+      targetPort: 1111
+  selector:
+    io.kompose.service: blinko-website
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: blinko-ingress
+  namespace: blinko
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`blinko.local.timmybtech.com`)
+      kind: Rule
+      services:
+        - name: blinko-website
+          port: 1111
+  tls:
+    secretName: local-timmybtech-com-tls
