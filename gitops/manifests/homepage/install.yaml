@@ -323,9 +323,14 @@ data:
               key: <ARGOCD_KEY>
 
     - Kubernetes hidden:
+        - blinko:
+            icon: blinko.png
+            href: https://blinko.local.timmybtech.com/
+            namespace: blinko
+            app: blinko-website
         - Glance:
             icon: kubernetes.png
-            href: "https://glance.local.timmybtech.com/"
+            href: https://glance.local.timmybtech.com/
             namespace: glance
             app: glance
         - Homebox:
@@ -348,11 +353,6 @@ data:
             href: https://minio.local.timmybtech.com/
             namespace: minio
             app: minio
-        - memos:
-            icon: memos.png
-            href: https://memos.local.timmybtech.com/
-            namespace: memos
-            app: memos
         - ntfy:
             icon: ntfy.png
             href: https://ntfy.local.timmybtech.com/
