@@ -187,6 +187,13 @@ providers:
                   - websecure
               tls:
                   certResolver: default
+          maybe:
+              rule: Host(`maybe.local.timmybtech.com`)
+              service: maybe
+              entrypoints:
+                  - websecure
+              tls:
+                  certResolver: default
           dozzle:
               rule: Host(`dozzle.local.timmybtech.com`)
               service: dozzle
@@ -296,6 +303,10 @@ providers:
               loadBalancer:
                   servers:
                   - url: http://192.168.86.174:80
+          maybe:
+              loadBalancer:
+                  servers:
+                  - url: http://192.168.86.174:3003
           dozzle:
               loadBalancer:
                   servers:
