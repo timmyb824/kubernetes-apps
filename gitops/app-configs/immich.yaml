@@ -210,7 +210,7 @@ metadata:
   namespace: immich
   name: tunnel-credentials
   annotations:
-    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-wave: "-2"
 type: Opaque
 stringData:
   credentials.json: >-
@@ -222,7 +222,7 @@ metadata:
   name: cloudflared
   namespace: immich
   annotations:
-    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-wave: "0"
 spec:
   selector:
     matchLabels:
@@ -287,7 +287,7 @@ metadata:
   name: cloudflared
   namespace: immich
   annotations:
-    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-wave: "-2"
 data:
   config.yaml: |
     # Name of the tunnel you want to run
@@ -318,7 +318,7 @@ metadata:
   name: cloudflared
   namespace: immich
   annotations:
-    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-wave: "-1"
 spec:
   selector:
     app: cloudflared
@@ -335,7 +335,7 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: traefik-external
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
-    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-wave: "0"
 spec:
   entryPoints:
     - websecure
