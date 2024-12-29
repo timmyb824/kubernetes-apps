@@ -33,7 +33,7 @@ spec:
     spec:
       containers:
       - name: silverbullet
-        image: zefhemel/silverbullet:0.9.4
+        image: zefhemel/silverbullet:0.10.1
         ports:
         - containerPort: 3000
         env:
