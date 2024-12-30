@@ -51,7 +51,7 @@ spec:
               value: https://changedetection.local.timmybtech.com/
             - name: PLAYWRIGHT_DRIVER_URL
               value: wss://playwright.local.timmybtech.com/?stealth=1&--disable-web-security=true
-          image: ghcr.io/dgtlmoon/changedetection.io:0.47.06
+          image: ghcr.io/dgtlmoon/changedetection.io:0.48.05
           name: changedetection
           ports:
             - containerPort: 5000
