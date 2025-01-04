@@ -26,6 +26,19 @@ data:
   GF_INSTALL_PLUGINS: grafana-clock-panel,grafana-piechart-panel,alexanderzobnin-zabbix-app,https://github.com/performancecopilot/grafana-pcp/releases/download/v5.1.1/performancecopilot-pcp-app-5.1.1.zip;performancecopilot-pcp-app,https://storage.googleapis.com/integration-artifacts/grafana-lokiexplore-app/grafana-lokiexplore-app-latest.zip;grafana-lokiexplore-app
   GF_METRICS_BASIC_AUTH_USERNAME: <path:secret/data/grafana#GF_METRICS_BASIC_AUTH_USERNAME>
   GF_METRICS_BASIC_AUTH_PASSWORD: <path:secret/data/grafana#GF_METRICS_BASIC_AUTH_PASSWORD>
+  GF_AUTH_GENERIC_OAUTH_ENABLED: "true"
+  GF_AUTH_GENERIC_OAUTH_NAME: "authentik"
+  GF_AUTH_GENERIC_OAUTH_CLIENT_ID: "<path:secret/data/grafana#GF_AUTHENTIK_CLIENT_ID>"
+  GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET: "<path:secret/data/grafana#GF_AUTHENTIK_SECRET_ID>"
+  GF_AUTH_GENERIC_OAUTH_SCOPES: "openid profile email"
+  GF_AUTH_GENERIC_OAUTH_AUTH_URL: "https://authentik.local.timmybtech.com/application/o/authorize/"
+  GF_AUTH_GENERIC_OAUTH_TOKEN_URL: "https://authentik.local.timmybtech.com/application/o/token/"
+  GF_AUTH_GENERIC_OAUTH_API_URL: "https://authentik.local.timmybtech.com/application/o/userinfo/"
+  GF_AUTH_SIGNOUT_REDIRECT_URL: "https://authentik.local.timmybtech.com/application/o/grafana/end-session/"
+  # Optionally enable auto-login (bypasses Grafana login screen)
+  GF_AUTH_OAUTH_AUTO_LOGIN: "true"
+  # Optionally map user groups to Grafana roles
+  GF_AUTH_GENERIC_OAUTH_ROLE_ATTRIBUTE_PATH: "contains(groups, 'Grafana Admins') && 'Admin' || contains(groups, 'Grafana Editors') && 'Editor' || 'Viewer'"
 ---
 apiVersion: apps/v1
 kind: Deployment
