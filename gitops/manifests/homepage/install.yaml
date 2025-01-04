@@ -232,7 +232,7 @@ data:
       VM/LXC:
         icon: mdi-server
         style: row
-        columns: 3
+        columns: 2
       VM/LXC hidden:
         header: false
         style: row
@@ -480,6 +480,13 @@ data:
                 type: uptimekuma
                 url: http://homelab-oci03.tailebee.ts.net:3001
                 slug: bryant-homelab
+        - Netalertx:
+            icon: netalertx.png
+            href: https://netalertx.local.timmybtech.com/
+            ping: http://192.168.86.44:20211
+            widget:
+                type: netalertx
+                url: http://192.168.86.44:20211
 
     - VM/LXC hidden:
         - SNMP Exporter:
@@ -522,10 +529,6 @@ data:
             icon: docker.png
             href: https://maybe.local.timmybtech.com/
             ping: http://192.168.86.174:3003
-        - Netalertx:
-            icon: netalertx.png
-            href: https://netalertx.local.timmybtech.com/
-            ping: http://192.168.86.44:20211
         - PGweb :
             icon: postgres.png
             href: https://pgweb.local.timmybtech.com/
