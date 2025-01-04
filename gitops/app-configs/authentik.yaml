@@ -1,0 +1,71 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: authentik
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  annotations:
+    avp.kubernetes.io/path: "secret/data/authentik"
+spec:
+  destination:
+    namespace: authentik
+    server: "https://kubernetes.default.svc"
+  project: default
+  source:
+    repoURL: https://charts.goauthentik.io
+    targetRevision: 2024.12.1
+    chart: authentik
+    helm:
+      releaseName: authentik
+      values: |
+        authentik:
+            secret_key: <SECRET_KEY>
+            # This sends anonymous usage-data, stack traces on errors and
+            # performance data to sentry.io, and is fully opt-in
+            error_reporting:
+                enabled: false
+            postgresql:
+              host: <PG_HOST>
+              name: "authentik"
+              user: <PG_USER>
+              password: <PG_PASSWORD>
+              port: 5432
+            email:
+              host: "smtp.gmail.com"
+              port: 587
+              username: "<SMTP_USER>"
+              password: "<SMTP_PASSWORD>"
+              use_tls: false
+              use_ssl: false
+              timeout: 30
+              from: "authentik <authentik@local.timmybtech.com>"
+
+        server:
+            ingress:
+              # Specify kubernetes ingress controller class name
+              ingressClassName: "traefik-external"
+              enabled: true
+              hosts:
+                  - authentik.local.timmybtech.com
+              tls:
+                  - secretName: local-timmybtech-com-tls
+                    hosts:
+                      - authentik.local.timmybtech.com
+
+        postgresql:
+          enabled: false
+
+        redis:
+            enabled: true
+
+        metrics:
+          enabled: true
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ApplyOutOfSync=true
