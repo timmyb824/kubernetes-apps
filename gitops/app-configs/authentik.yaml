@@ -124,7 +124,7 @@ spec:
     - match: Host(`authentik-metrics.local.timmybtech.com`)
       kind: Rule
       services:
-        - name: authentik-server
+        - name: authentik-metrics
           port: 9300
   tls:
     secretName: local-timmybtech-com-tls
