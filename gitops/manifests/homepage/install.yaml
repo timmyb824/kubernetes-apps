@@ -212,7 +212,7 @@ data:
       Kubernetes:
         icon: mdi-sail-boat
         style: row
-        columns: 2
+        columns: 3
       Kubernetes hidden:
         header: false
         style: row
@@ -321,7 +321,15 @@ data:
               type: argocd
               url: https://argocd.local.timmybtech.com
               key: <ARGOCD_KEY>
-
+        - Authentik:
+            icon: authentik.png
+            href: https://authentik.local.timmybtech.com/
+            namespace: authentik
+            app: authentik
+            widget:
+              type: authentik
+              url: https://authentik.local.timmybtech.com
+              key: <AUTHENTIK_TOKEN>
     - Kubernetes hidden:
         - blinko:
             icon: kubernetes.png
