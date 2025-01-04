@@ -81,3 +81,23 @@ spec:
           port: 80
   tls:
     secretName: local-timmybtech-com-tls
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: authentik-metrics-ingress
+  namespace: authentik
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`authentik-metrics.local.timmybtech.com`)
+      kind: Rule
+      services:
+        - name: authentik-server
+          port: 9300
+  tls:
+    secretName: local-timmybtech-com-tls
