@@ -53,10 +53,9 @@ spec:
 
         metrics:
           enabled: true
-          service
-              service:
-                type: ClusterIP
-                servicePort: 9300
+          service:
+            type: ClusterIP
+            servicePort: 9300
 
   syncPolicy:
     automated:
