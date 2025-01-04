@@ -53,6 +53,10 @@ spec:
 
         metrics:
           enabled: true
+          service
+              service:
+                type: ClusterIP
+                servicePort: 9300
 
   syncPolicy:
     automated:
@@ -97,7 +101,7 @@ spec:
     - match: Host(`authentik-metrics.local.timmybtech.com`)
       kind: Rule
       services:
-        - name: authentik-server
+        - name: authentik-server-metrics
           port: 9300
   tls:
     secretName: local-timmybtech-com-tls
