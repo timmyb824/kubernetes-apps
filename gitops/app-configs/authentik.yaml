@@ -39,7 +39,7 @@ spec:
               use_tls: false
               use_ssl: false
               timeout: 30
-              from: "authentik <authentik@local.timmybtech.com>"
+              from: "authentik@local.timmybtech.com"
 
         server:
             ingress:
