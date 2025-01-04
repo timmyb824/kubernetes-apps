@@ -78,6 +78,6 @@ spec:
       kind: Rule
       services:
         - name: authentik-server
-          port: 9000
+          port: 9443
   tls:
     secretName: local-timmybtech-com-tls
