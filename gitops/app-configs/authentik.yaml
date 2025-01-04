@@ -56,6 +56,8 @@ spec:
           service:
             type: ClusterIP
             servicePort: 9300
+          serviceMonitor:
+            enabled: true
 
   syncPolicy:
     automated:
