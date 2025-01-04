@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-cm
+  namespace: argocd
+  labels:
+    app.kubernetes.io/name: argocd-cm
+    app.kubernetes.io/part-of: argocd
+data:
+  # add an additional local user with apiKey and login capabilities
+  #   apiKey - allows generating API keys
+  #   login - allows to login using UI
+  accounts.readonlyuser: apiKey
+  accounts.readonlyuser.enabled: "true"
+  accounts.tbryant: apiKey, login
+  accounts.tbryant.enabled: "true"
+  admin.enabled: "true"
+  configManagementPlugins: |-
+    - name: argocd-vault-plugin
+      generate:
+        command: ["argocd-vault-plugin"]
+        args: ["generate", "./"]
+  url: https://argocd.local.timmybtech.com
+  dex.config: ENC[AES256_GCM,data:seIFlxsV8PF7k3GCsH3f+ntpt4kts8NBUPTcGxI0tUIJhAwHwPuKFY5xa6vaUM2plgiihHay7h5eXtpBY8/czKgTuJ/M8Pfm2goMUNBMa8nssojzzKXG6YKQtuG263AadnRk5eaRvQ9aUCMAjpRWSc1huhl+UBnkEYiwvwFtzUEb39jjxuVDAjsV0eYGoYLilUVHoQmt7NHPkLtYTSQ5mA2QOzYGl9pyvWkCthx1To4LljwhVDFHqCTSM4i5gr1U4O4aNWKuV9w1EeZecH9Y3ia1Ea9ivuZi8h6TSxgfqbfVp6wcJo+NXVWhqsKDVDmKbfDtJciUsxjkfH+22BXuOqhNqXjdpxC8PNgzXheLQ3EWMMmK+PgBOqKF41c7HGPMimtJnG9Zyi47iwp3NJyJT4XOUgggp2QEVHjUhEPyA7vxJiUyLqIJW9BjjA==,iv:j0/Wqq8ohHCCl9zrP80ohzpugbPGV9MhCk2m9vo/p0M=,tag:m+ORx8afuyI4fdU6wATUAw==,type:str]
+sops:
+  kms: []
+  gcp_kms: []
+  azure_kv: []
+  hc_vault: []
+  age:
+    - recipient: age1hhnjylnwfh0w6sxzlvc905ma8wa5pkspv9k2kj8a0d993m8h734se3jh7u
+      enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBIMzR4SE9ERm1NNDFpemZi
+        aU5PQTVFNEpiVU16TmVpY1ZEdm93eHF2RmlnCjJUVnlBSCtsb1BIVmk3T3kxZmFq
+        ZzZhZzJCOHdpajJ3djU4N1VHMytYMDQKLS0tIE1NQmhUREY2S0VrRVRPNFZnbzRW
+        K3V4bEhEMi9hMmFtRXY3K3lSVHUwaU0KbO92AFYG9Am9bcG4VSL6H6Vu/J7XTHk2
+        OFpxV7RESfkRugH3hiybaPofc0R+CwT6iybu/JlJrKOOpqVwgW+uOw==
+        -----END AGE ENCRYPTED FILE-----
+  lastmodified: "2025-01-04T18:54:07Z"
+  mac: ENC[AES256_GCM,data:OyazubL90JTXmMN58keOy8I/HRBJ/fSN1+ATXHVW9JynZljrurR28b/fkXIF52u2Ayw+jw9UQxt3y6UN3GjBSvAeNADNuJcMmMR6oS88gSuCnqn4wepmE3rEWpXRHxVyzs9ZjQZHEgdT70j+vAIQ59Rpwa1PYV3jEWA6YgO2Nd4=,iv:aTJjBw/MT/zZPUouoj05E8ZLU0IxWVMo1bwb7LC2s9Y=,tag:gc/qa09yjnADnRJarr6aWw==,type:str]
+  pgp: []
+  encrypted_regex: ^(dex.config)$
+  version: 3.9.3
