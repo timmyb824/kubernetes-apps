@@ -87,6 +87,28 @@ spec:
   tls:
     secretName: local-timmybtech-com-tls
 ---
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: authentik-metrics
+  namespace: authentik
+  labels:
+    app.kubernetes.io/name: authentik
+    app.kubernetes.io/component: metrics
+spec:
+  type: ClusterIP
+  ports:
+    - port: 9300
+      targetPort: 9300
+      protocol: TCP
+      name: metrics
+  selector:
+    app.kubernetes.io/component: server
+    app.kubernetes.io/instance: authentik
+    app.kubernetes.io/name: authentik
+---
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
