@@ -21,6 +21,7 @@ data:
   policy.csv: |
     g, readonlyuser, role:readonly
     g, tbryant, role:admin
+    g, homelab Admins, role:admin
 
   # it is possible to provide additional entries in this configmap to compose the final policy csv.
   # In this case the key must follow the pattern 'policy.<any string>.csv'. Argo CD will concatenate
