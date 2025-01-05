@@ -27,6 +27,7 @@ data:
   GF_METRICS_BASIC_AUTH_USERNAME: <path:secret/data/grafana#GF_METRICS_BASIC_AUTH_USERNAME>
   GF_METRICS_BASIC_AUTH_PASSWORD: <path:secret/data/grafana#GF_METRICS_BASIC_AUTH_PASSWORD>
   GF_AUTH_GENERIC_OAUTH_ENABLED: "true"
+  GF_SERVER_ROOT_URL: "https://grafana.local.timmybtech.com"
   GF_AUTH_GENERIC_OAUTH_NAME: "authentik"
   GF_AUTH_GENERIC_OAUTH_CLIENT_ID: "<path:secret/data/grafana#GF_AUTHENTIK_CLIENT_ID>"
   GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET: "<path:secret/data/grafana#GF_AUTHENTIK_SECRET_ID>"
