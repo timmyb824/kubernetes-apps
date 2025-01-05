@@ -114,6 +114,26 @@ spec:
               value: <path:secret/data/argocd#PAPERLESS_ADMIN_USER>
             - name: PAPERLESS_ADMIN_PASSWORD
               value: <path:secret/data/argocd#PAPERLESS_ADMIN_PASSWORD>
+            - name: PAPERLESS_APPS
+              value: "allauth.socialaccount.providers.openid_connect"
+            - name: PAPERLESS_SOCIALACCOUNT_PROVIDERS
+              value: |
+                {
+                  "openid_connect": {
+                    "APPS": [
+                      {
+                        "provider_id": "authentik",
+                        "name": "Authentik",
+                        "client_id": "<path:secret/data/argocd#AUTHENTIK_PAPERLESS_CLIENT_ID>",
+                        "secret": "<path:secret/data/argocd#AUTHENTIK_PAPERLESS_SECRET_ID>",
+                        "settings": {
+                          "server_url": "https://authentik.local.timmybtech.com/application/o/paperless/.well-known/openid-configuration"
+                        }
+                      }
+                    ],
+                    "OAUTH_PKCE_ENABLED": "True"
+                  }
+                }
           image: ghcr.io/paperless-ngx/paperless-ngx:latest
           name: webserver
           ports:
