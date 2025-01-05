@@ -242,7 +242,8 @@ providers:
           nas:
             loadBalancer:
               servers:
-                - url: http://192.168.86.44:5000
+                - url: https://192.168.86.44:5001
+              serversTransport: nas-transport
           healthchecks:
             loadBalancer:
               servers:
@@ -323,6 +324,10 @@ providers:
               loadBalancer:
                   servers:
                   - url: http://192.168.86.53:8080
+
+        serversTransports:
+          nas-transport:
+            insecureSkipVerify: true
 volumes:
   - name: local-timmybtech-com-tls
     mountPath: /certs

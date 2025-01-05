@@ -1,0 +1,1 @@
+Currently, no resources have been deployed to my cluster using manifests. While some resources are managed in this manner, the applications themselves are deployed through ArgoCD. The only applications deployed outside of ArgoCD are Traefik and Vault.
