@@ -82,8 +82,6 @@ spec:
   tls:
     secretName: local-timmybtech-com-tls
 ---
-
----
 apiVersion: v1
 kind: Service
 metadata:
@@ -123,3 +121,20 @@ spec:
           port: 9300
   tls:
     secretName: local-timmybtech-com-tls
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: authentik
+  namespace: authentik
+  annotations: {}
+spec:
+  ingressClassName: tailscale
+  defaultBackend:
+    service:
+      name: authentik-server
+      port:
+        number: 80
+  tls:
+    - hosts:
+        - authentik
