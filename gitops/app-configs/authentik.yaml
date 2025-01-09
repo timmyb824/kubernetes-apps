@@ -14,7 +14,7 @@ spec:
   project: default
   source:
     repoURL: https://charts.goauthentik.io
-    targetRevision: 2024.12.1
+    targetRevision: 2024.12.0
     chart: authentik
     helm:
       releaseName: authentik
@@ -40,8 +40,6 @@ spec:
               use_ssl: false
               timeout: 30
               from: "authentik@local.timmybtech.com"
-            outposts:
-              container_image_base: ghcr.io/goauthentik/proxy:2024.12.0
 
         server:
           ingress:
