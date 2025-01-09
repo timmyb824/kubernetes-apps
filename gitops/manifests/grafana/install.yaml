@@ -32,10 +32,10 @@ data:
   GF_AUTH_GENERIC_OAUTH_CLIENT_ID: "<path:secret/data/grafana#GF_AUTHENTIK_CLIENT_ID>"
   GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET: "<path:secret/data/grafana#GF_AUTHENTIK_SECRET_ID>"
   GF_AUTH_GENERIC_OAUTH_SCOPES: "openid profile email"
-  GF_AUTH_GENERIC_OAUTH_AUTH_URL: "https://authentik.local.timmybtech.com/application/o/authorize/"
-  GF_AUTH_GENERIC_OAUTH_TOKEN_URL: "https://authentik.local.timmybtech.com/application/o/token/"
-  GF_AUTH_GENERIC_OAUTH_API_URL: "https://authentik.local.timmybtech.com/application/o/userinfo/"
-  GF_AUTH_SIGNOUT_REDIRECT_URL: "https://authentik.local.timmybtech.com/application/o/grafana/end-session/"
+  GF_AUTH_GENERIC_OAUTH_AUTH_URL: "https://authentik.timmybtech.com/application/o/authorize/"
+  GF_AUTH_GENERIC_OAUTH_TOKEN_URL: "https://authentik.timmybtech.com/application/o/token/"
+  GF_AUTH_GENERIC_OAUTH_API_URL: "https://authentik.timmybtech.com/application/o/userinfo/"
+  GF_AUTH_SIGNOUT_REDIRECT_URL: "https://authentik.timmybtech.com/application/o/grafana/end-session/"
   # Optionally enable auto-login (bypasses Grafana login screen)
   GF_AUTH_OAUTH_AUTO_LOGIN: "true"
   # Optionally map user groups to Grafana roles
