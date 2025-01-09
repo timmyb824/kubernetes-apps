@@ -148,3 +148,24 @@ vault kv put engine/path @data.json
 echo -n "value" | vault kv put engine/path key=-
 vault kv put engine/path key=@data.txt
 ```
+
+## OIDC Configuration
+
+Authentik OIDC Configuration
+
+```bash
+# enable OIDC method
+kubectl exec vault-0 -n vault -- vault auth enable oidc
+
+# configure OIDC
+kubectl exec vault-0 -n vault -- vault write auth/oidc/config oidc_discovery_url="https://authentik.local.timmybtech.com/application/o/vault/" oidc_client_id="<client_id>" oidc_client_secret="<client_secret>" default_role="reader"
+
+# create reader role
+kubectl exec vault-0 -n vault -- vault write auth/oidc/role/reader bound_audiences="<client_id>" allowed_redirect_uris="https://vault.local.timmybtech.com/ui/vault/auth/oidc/oidc/callback" allowed_redirect_uris="https://vault.local.timmybtech.com/ui/vault/auth/oidc/callback" allowed_redirect_uris="http://localhost:8250/oidc/callback" user_claim="sub" policies="reader"
+
+# create super-admin role
+kubectl exec vault-0 -n vault -- vault write auth/userpass/users/tbryant policies=super-admin
+
+# add super-admin to reader (allows oicd user to edit everything)
+kubectl exec vault-0 -n vault -- vault write auth/oidc/role/reader policies="reader, super-admin"
+```
