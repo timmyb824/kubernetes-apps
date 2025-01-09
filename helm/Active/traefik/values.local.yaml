@@ -47,6 +47,30 @@ providers:
 
       http:
         routers:
+          # uptime-kuma:
+          #   rule: Host(`uptime-kuma.local.timmybtech.com`)
+          #   service: uptime-kuma
+          #   entrypoints:
+          #     - websecure
+          #   tls:
+          #     certResolver: default
+          uptime-kuma:
+            rule: Host(`uptime-kuma.local.timmybtech.com`)
+            service: uptime-kuma
+            entrypoints:
+              - websecure
+            middlewares:
+              - authentik
+            tls:
+              certResolver: default
+          uptime-kuma-auth:
+            rule: "Host(`uptime-kuma.local.timmybtech.com`) && PathPrefix(`/outpost.goauthentik.io/`)"
+            priority: 15
+            service: authentik
+            entrypoints:
+              - websecure
+            tls:
+              certResolver: default
           watchyourlan:
             rule: Host(`watchyourlan.local.timmybtech.com`)
             service: watchyourlan
@@ -85,13 +109,6 @@ providers:
           healthchecks:
             rule: Host(`healthchecks.local.timmybtech.com`)
             service: healthchecks
-            entrypoints:
-              - websecure
-            tls:
-              certResolver: default
-          uptime-kuma:
-            rule: Host(`uptime-kuma.local.timmybtech.com`)
-            service: uptime-kuma
             entrypoints:
               - websecure
             tls:
@@ -223,6 +240,14 @@ providers:
               tls:
                   certResolver: default
         services:
+          authentik:
+            loadBalancer:
+              servers:
+                - url: http://authentik-server.authentik.svc.cluster.local:9000/outpost.goauthentik.io/auth/traefik
+          uptime-kuma:
+            loadBalancer:
+              servers:
+                - url: http://homelab-oci03.tailebee.ts.net:3001
           watchyourlan:
             loadBalancer:
               servers:
@@ -248,10 +273,6 @@ providers:
             loadBalancer:
               servers:
                 - url: http://192.168.86.143:8000
-          uptime-kuma:
-            loadBalancer:
-              servers:
-                - url: http://homelab-oci03.tailebee.ts.net:3001
           gotify:
               loadBalancer:
                   servers:
