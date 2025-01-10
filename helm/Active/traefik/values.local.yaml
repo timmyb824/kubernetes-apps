@@ -49,7 +49,7 @@ providers:
         middlewares:
           authentik:
             forwardAuth:
-              address: http://authentik-server.authentik.svc.cluster.local:9000/outpost.goauthentik.io/auth/traefik
+              address: https://authentik.timmybtech.com/outpost.goauthentik.io/auth/traefik
               trustForwardHeader: true
               authResponseHeaders:
                 - X-authentik-username
@@ -252,14 +252,14 @@ providers:
               tls:
                   certResolver: default
         services:
-          authentik:
-            loadBalancer:
-              servers:
-                - url: http://authentik-server.authentik.svc.cluster.local:9000/outpost.goauthentik.io/auth/traefik
           uptime-kuma:
             loadBalancer:
               servers:
                 - url: http://homelab-oci03.tailebee.ts.net:3001
+          authentik:
+            loadBalancer:
+              servers:
+                - url: https://authentik.timmybtech.com/outpost.goauthentik.io
           watchyourlan:
             loadBalancer:
               servers:

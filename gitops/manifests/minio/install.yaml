@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
         - name: minio
-          image: docker.io/minio/minio:RELEASE.2024-08-03T04-33-23Z
+          image: docker.io/minio/minio:RELEASE.2024-12-18T13-15-44Z
           imagePullPolicy: Always
           resources: {}
           args:
