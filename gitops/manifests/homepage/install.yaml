@@ -358,7 +358,7 @@ data:
             app: kube-state-metrics
         - MinIO:
             icon: minio.png
-            href: https://minio.local.timmybtech.com/
+            href: https://minio-ui.local.timmybtech.com/
             namespace: minio
             app: minio
         - ntfy:
