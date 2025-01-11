@@ -292,16 +292,15 @@ data:
                 url: https://grafana.local.timmybtech.com
                 username: <GRAFANA_USER>
                 password: <GRAFANA_PASSWORD>
-        - Immich:
-            icon: immich.png
-            href: https://immich.local.timmybtech.com/
-            namespace: immich
-            app: server
+        - Authentik:
+            icon: authentik.png
+            href: https://authentik.local.timmybtech.com/
+            namespace: authentik
+            app: authentik
             widget:
-              type: immich
-              url: https://immich.local.timmybtech.com
-              key: <IMMICH_KEY>
-              version: 2
+              type: authentik
+              url: https://authentik.local.timmybtech.com
+              key: <AUTHENTIK_TOKEN>
         - Traefik-k8s:
             icon: traefik.png
             href: https://traefik.local.timmybtech.com/
@@ -321,15 +320,16 @@ data:
               type: argocd
               url: https://argocd.local.timmybtech.com
               key: <ARGOCD_KEY>
-        - Authentik:
-            icon: authentik.png
-            href: https://authentik.local.timmybtech.com/
-            namespace: authentik
-            app: authentik
+        - Immich:
+            icon: immich.png
+            href: https://immich.local.timmybtech.com/
+            namespace: immich
+            app: server
             widget:
-              type: authentik
-              url: https://authentik.local.timmybtech.com
-              key: <AUTHENTIK_TOKEN>
+              type: immich
+              url: https://immich.local.timmybtech.com
+              key: <IMMICH_KEY>
+              version: 2
         - Homebox:
             icon: homebox.png
             href: https://homebox.local.timmybtech.com/
