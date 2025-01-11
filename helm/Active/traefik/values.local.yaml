@@ -27,6 +27,7 @@ providers:
     enabled: true
     # can name this anything
     ingressClass: traefik-external
+    allowCrossNamespace: true # added for authentik
   kubernetesIngress:
     enabled: true
     publishedService:
