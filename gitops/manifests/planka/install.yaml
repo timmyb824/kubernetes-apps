@@ -10,8 +10,7 @@ status: {}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  annotations:
-    avp.kubernetes.io/path: "secret/data/postgres_db"
+  annotations: {}
   labels:
     io.kompose.service: planka
   name: planka
@@ -45,11 +44,21 @@ spec:
             - name: BASE_URL
               value: https://planka.local.timmybtech.com
             - name: DATABASE_URL
-              value: postgresql://<USER>:<PASSWORD>@<HOST_IP>:5432/planka
+              value: postgresql://<path:secret/data/postgres_db#USER>:<path:secret/data/postgres_db#PASSWORD>@<path:secret/data/postgres_db#HOST_IP>:5432/planka
             - name: SECRET_KEY
-              value: <SECRET_KEY>
+              value: <path:secret/data/planka#SECRET_KEY>
             - name: TRUST_PROXY
               value: "0"
+            - name: OIDC_ISSUER
+              value: https://authentik.timmybtech.com/application/o/planka/
+            - name: OIDC_CLIENT_ID
+              value: <path:secret/data/argocd#AUTHENTIK_PLANKA_CLIENT_ID>
+            - name: OIDC_CLIENT_SECRET
+              value: <path:secret/data/argocd#AUTHENTIK_PLANKA_SECRET_ID>
+            - name: OIDC_SCOPES
+              value: "openid profile email"
+            - name: OIDC_IGNORE_ROLES
+              value: "true"
           image: ghcr.io/plankanban/planka:1.24.3
           name: planka
           ports:
