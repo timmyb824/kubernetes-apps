@@ -99,25 +99,6 @@ spec:
 status:
   loadBalancer: {}
 ---
-# apiVersion: traefik.containo.us/v1alpha1
-# kind: IngressRoute
-# metadata:
-#   name: planka-ingress
-#   namespace: planka
-#   annotations:
-#     kubernetes.io/ingress.class: traefik-external
-#     traefik.ingress.kubernetes.io/router.entrypoints: websecure
-# spec:
-#   entryPoints:
-#     - websecure
-#   routes:
-#     - match: Host(`planka.local.timmybtech.com`)
-#       kind: Rule
-#       services:
-#         - name: planka
-#           port: 3001
-#   tls:
-#     secretName: local-timmybtech-com-tls
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
@@ -131,19 +112,10 @@ spec:
     - websecure
   routes:
     - match: Host(`planka.local.timmybtech.com`)
-      middlewares:
-        - name: authentik@file
-      priority: 10
       kind: Rule
       services:
         - name: planka
           port: 3001
-    - match: "Host(`planka.local.timmybtech.com`) && PathPrefix(`/outpost.goauthentik.io/`)"
-      kind: Rule
-      priority: 15
-      services:
-        - name: ak-outpost-authentik-embedded-outpost
-          url: https://authentik.timmybtech.com/outpost.goauthentik.io
   tls:
     secretName: local-timmybtech-com-tls
 ---
