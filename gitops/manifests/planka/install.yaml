@@ -46,7 +46,7 @@ spec:
             - name: DATABASE_URL
               value: postgresql://<path:secret/data/postgres_db#USER>:<path:secret/data/postgres_db#PASSWORD>@<path:secret/data/postgres_db#HOST_IP>:5432/planka
             - name: SECRET_KEY
-              value: <path:secret/data/planka#SECRET_KEY>
+              value: <path:secret/data/postgres_db#SECRET_KEY>
             - name: TRUST_PROXY
               value: "0"
             - name: OIDC_ISSUER
