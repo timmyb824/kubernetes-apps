@@ -115,31 +115,31 @@ spec:
 #     secretName: local-timmybtech-com-tls
 
 # WITH AUTHENTIK
-# apiVersion: traefik.containo.us/v1alpha1
-# kind: IngressRoute
-# metadata:
-#   name: wallos-ingress
-#   namespace: wallos
-#   annotations:
-#     kubernetes.io/ingress.class: traefik-external
-#     traefik.ingress.kubernetes.io/router.entrypoints: websecure
-# spec:
-#   entryPoints:
-#     - websecure
-#   routes:
-#     - match: Host(`wallos.local.timmybtech.com`)
-#       middlewares:
-#         - name: authentik@file
-#       priority: 10
-#       kind: Rule
-#       services:
-#         - name: wallos
-#           port: 8282
-#     - match: "Host(`wallos.local.timmybtech.com`) && PathPrefix(`/outpost.goauthentik.io/`)"
-#       kind: Rule
-#       priority: 15
-#       services:
-#         - name: ak-outpost-authentik-embedded-outpost
-#           url: https://authentik.timmybtech.com/outpost.goauthentik.io
-#   tls:
-#     secretName: local-timmybtech-com-tls
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: wallos-ingress
+  namespace: wallos
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`wallos.local.timmybtech.com`)
+      middlewares:
+        - name: authentik@file
+      priority: 10
+      kind: Rule
+      services:
+        - name: wallos
+          port: 8282
+    - match: "Host(`wallos.local.timmybtech.com`) && PathPrefix(`/outpost.goauthentik.io/`)"
+      kind: Rule
+      priority: 15
+      services:
+        - name: ak-outpost-authentik-embedded-outpost
+          url: https://authentik.timmybtech.com/outpost.goauthentik.io
+  tls:
+    secretName: local-timmybtech-com-tls
