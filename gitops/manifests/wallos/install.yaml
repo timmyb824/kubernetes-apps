@@ -93,6 +93,7 @@ spec:
   selector:
     io.kompose.service: wallos
 ---
+# WITHOUT AUTHENTIK
 # apiVersion: traefik.containo.us/v1alpha1
 # kind: IngressRoute
 # metadata:
@@ -112,6 +113,8 @@ spec:
 #           port: 8282
 #   tls:
 #     secretName: local-timmybtech-com-tls
+
+# WITH AUTHENTIK
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
