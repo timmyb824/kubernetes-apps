@@ -57,8 +57,16 @@ spec:
               value: <path:secret/data/argocd#AUTHENTIK_PLANKA_SECRET_ID>
             - name: OIDC_SCOPES
               value: "openid profile email"
+            - name: OIDC_EMAIL_ATTRIBUTE
+              value: "email"
+            - name: OIDC_USERNAME_ATTRIBUTE
+              value: "preferred_username"
+            - name: OIDC_IGNORE_USERNAME
+              value: "false"
             - name: OIDC_IGNORE_ROLES
               value: "true"
+            - name: OIDC_ENFORCED
+              value: "false"
           image: ghcr.io/plankanban/planka:1.24.3
           name: planka
           ports:
