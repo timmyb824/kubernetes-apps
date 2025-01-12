@@ -62,7 +62,7 @@ spec:
             - name: OIDC_USERNAME_ATTRIBUTE
               value: "preferred_username"
             - name: OIDC_IGNORE_USERNAME
-              value: "false"
+              value: "true"
             - name: OIDC_IGNORE_ROLES
               value: "true"
             - name: OIDC_ENFORCED
