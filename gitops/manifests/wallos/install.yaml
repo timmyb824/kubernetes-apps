@@ -139,7 +139,7 @@ spec:
       kind: Rule
       priority: 15
       services:
-        - name: ak-outpost-authentik-embedded-outpost
-          url: https://authentik.timmybtech.com/outpost.goauthentik.io
+        - name: ak-outpost-authentik-embedded-outpost.authentik.svc.cluster.local
+          port: 80
   tls:
     secretName: local-timmybtech-com-tls
