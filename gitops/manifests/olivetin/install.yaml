@@ -36,7 +36,6 @@ data:
         icon: ping
         timeout: 300
 
-
   id_master_key_nopass_base64: |
     <path:secret/data/olivetin#ID_MASTER_KEY_NOPASS_PRIVATE>
   id_master_key_nopass_pub_base64: |
@@ -128,7 +127,7 @@ spec:
       port: 1337
       targetPort: 1337
 ---
-apiVersion: traefik.containo.us/v1alpha1
+apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
   name: olivetin-ingress

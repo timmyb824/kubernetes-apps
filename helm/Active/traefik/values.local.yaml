@@ -13,9 +13,15 @@ deployment:
   additionalContainers: []
   initContainers: []
 ports:
-  web:
-    redirectTo:
-      port: websecure
+  # web:
+  #   redirectTo:
+  #     port: websecure
+  web: # for v3
+    redirections:
+      entryPoint:
+        to: websecure
+        scheme: https
+        permanent: true
   websecure:
     tls:
       enabled: true
@@ -25,7 +31,6 @@ ingressRoute:
 providers:
   kubernetesCRD:
     enabled: true
-    # can name this anything
     ingressClass: traefik-external
     allowCrossNamespace: true # added for authentik
   kubernetesIngress:
@@ -382,3 +387,5 @@ service:
     loadBalancerIP: 192.168.86.224
   loadBalancerSourceRanges: []
   externalIPs: []
+core: # for v3
+  defaultRuleSyntax: v2
