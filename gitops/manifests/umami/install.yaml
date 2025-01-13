@@ -58,7 +58,7 @@ spec:
   selector:
     io.kompose.service: umami
 ---
-apiVersion: traefik.containo.us/v1alpha1
+apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
   name: umami-ingress
@@ -197,7 +197,7 @@ spec:
       protocol: TCP
       targetPort: 2000
 ---
-apiVersion: traefik.containo.us/v1alpha1
+apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
   name: cloudflared-ingress

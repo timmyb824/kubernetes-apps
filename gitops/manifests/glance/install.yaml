@@ -148,33 +148,33 @@ spec:
         app.kubernetes.io/name: glance
     spec:
       containers:
-      - name: glance
-        image: glanceapp/glance:v0.6.4
-        imagePullPolicy: Always
-        ports:
-        - containerPort: 8080
-        volumeMounts:
-        - name: config
-          mountPath: /app/glance.yml
-          subPath: glance.yml
-        - name: timezone
-          mountPath: /etc/timezone
-          readOnly: true
-        - name: localtime
-          mountPath: /etc/localtime
-          readOnly: true
+        - name: glance
+          image: glanceapp/glance:v0.6.4
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: config
+              mountPath: /app/glance.yml
+              subPath: glance.yml
+            - name: timezone
+              mountPath: /etc/timezone
+              readOnly: true
+            - name: localtime
+              mountPath: /etc/localtime
+              readOnly: true
       volumes:
-      - name: config
-        configMap:
-          name: glance-config
-      - name: timezone
-        hostPath:
-          path: /etc/timezone
-          type: File
-      - name: localtime
-        hostPath:
-          path: /etc/localtime
-          type: File
+        - name: config
+          configMap:
+            name: glance-config
+        - name: timezone
+          hostPath:
+            path: /etc/timezone
+            type: File
+        - name: localtime
+          hostPath:
+            path: /etc/localtime
+            type: File
 ---
 apiVersion: v1
 kind: Service
@@ -188,7 +188,7 @@ spec:
       port: 8080
       targetPort: 8080
 ---
-apiVersion: traefik.containo.us/v1alpha1
+apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
   name: glance-ingress
