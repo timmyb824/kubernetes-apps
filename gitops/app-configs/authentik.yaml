@@ -62,7 +62,7 @@ spec:
       - CreateNamespace=true
       - ApplyOutOfSync=true
 ---
-apiVersion: traefik.containo.us/v1alpha1
+apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
   name: authentik-ingress
@@ -102,7 +102,7 @@ spec:
     app.kubernetes.io/instance: authentik
     app.kubernetes.io/name: authentik
 ---
-apiVersion: traefik.containo.us/v1alpha1
+apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
   name: authentik-metrics-ingress
@@ -256,7 +256,7 @@ spec:
       protocol: TCP
       targetPort: 2000
 ---
-apiVersion: traefik.containo.us/v1alpha1
+apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
   name: cloudflared-ingress-authentik
