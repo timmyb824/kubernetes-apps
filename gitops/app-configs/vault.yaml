@@ -287,8 +287,8 @@ spec:
               }
 
               telemetry {
-              prometheus_retention_time = "60s",
-              disable_hostname = true
+                prometheus_retention_time = "60s",
+                disable_hostname = true
               }
 
           ha:
