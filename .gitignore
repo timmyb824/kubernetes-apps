@@ -11,7 +11,7 @@ helm/Inactive/kube-prometheus-stack/secrets/
 helm/Inactive/kube-prometheus-stack/configMaps/*
 !helm/Inactive/kube-prometheus-stack/configMaps/k8s*
 *.secrets.yaml
-helm/Active/vault/cluster-keys.json
+helm/Inactive/vault/cluster-keys.json
 helm/Inactive/caretta/values.live.yaml
 !gitops/manifests/Archive/
 gitops/app-configs/Archive/
