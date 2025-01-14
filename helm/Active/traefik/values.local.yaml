@@ -80,7 +80,7 @@ providers:
             middlewares:
               - authentik
             tls:
-              certResolver: default
+              certResolver: {}
           uptime-kuma-auth:
             rule: "Host(`uptime-kuma.local.timmybtech.com`) && PathPrefix(`/outpost.goauthentik.io/`)"
             priority: 15
@@ -88,175 +88,127 @@ providers:
             entrypoints:
               - websecure
             tls:
-              certResolver: default
+              certResolver: {}
           watchyourlan:
             rule: Host(`watchyourlan.local.timmybtech.com`)
             service: watchyourlan
             entrypoints:
               - websecure
             tls:
-              certResolver: default
-          linkace:
-            rule: Host(`linkace.local.timmybtech.com`)
-            service: linkace
-            entrypoints:
-              - websecure
-            tls:
-              certResolver: default
-          technitium:
-            rule: Host(`technitium.local.timmybtech.com`)
-            service: technitium
-            entrypoints:
-              - websecure
-            tls:
-              certResolver: default
+              certResolver: {}
           speedtest:
             rule: Host(`speedtest.local.timmybtech.com`)
             service: speedtest
             entrypoints:
               - websecure
             tls:
-              certResolver: default
+              certResolver: {}
           nas:
             rule: Host(`nas.local.timmybtech.com`)
             service: nas
             entrypoints:
               - websecure
             tls:
-              certResolver: default
-          healthchecks:
-            rule: Host(`healthchecks.local.timmybtech.com`)
-            service: healthchecks
-            entrypoints:
-              - websecure
-            tls:
-              certResolver: default
-          gotify:
-            rule: Host(`gotify.local.timmybtech.com`)
-            service: gotify
-            entrypoints:
-              - websecure
-            tls:
-              certResolver: default
+              certResolver: {}
           it-tools:
             rule: Host(`it-tools.local.timmybtech.com`)
             service: it-tools
             entrypoints:
               - websecure
             tls:
-              certResolver: default
+              certResolver: {}
           pgweb:
-              rule: Host(`pgweb.local.timmybtech.com`)
-              service: pgweb
-              entrypoints:
-                  - websecure
-              tls:
-                  certResolver: default
+            rule: Host(`pgweb.local.timmybtech.com`)
+            service: pgweb
+            entrypoints:
+              - websecure
+            tls:
+              certResolver: {}
           netalertx:
-              rule: Host(`netalertx.local.timmybtech.com`)
-              service: netalertx
-              entrypoints:
-                  - websecure
-              tls:
-                  certResolver: default
+            rule: Host(`netalertx.local.timmybtech.com`)
+            service: netalertx
+            entrypoints:
+              - websecure
+            tls:
+              certResolver: {}
           pve:
-              rule: Host(`pve.local.timmybtech.com`)
-              service: pve
-              entrypoints:
-                  - websecure
-              tls:
-                  certResolver: default
-          focal-board:
-              rule: Host(`focal-board.local.timmybtech.com`)
-              service: focal-board
-              entrypoints:
-                  - websecure
-              tls:
-                  certResolver: default
+            rule: Host(`pve.local.timmybtech.com`)
+            service: pve
+            entrypoints:
+              - websecure
+            tls:
+              certResolver: {}
           zipline:
-              rule: Host(`zipline.local.timmybtech.com`)
-              service: zipline
-              entrypoints:
-                  - websecure
-              tls:
-                  certResolver: default
+            rule: Host(`zipline.local.timmybtech.com`)
+            service: zipline
+            entrypoints:
+              - websecure
+            tls:
+              certResolver: {}
           homeassistant:
-              rule: Host(`homeassistant.local.timmybtech.com`)
-              service: homeassistant
-              entrypoints:
-                  - websecure
-              tls:
-                  certResolver: default
+            rule: Host(`homeassistant.local.timmybtech.com`)
+            service: homeassistant
+            entrypoints:
+              - websecure
+            tls:
+              certResolver: {}
           loki:
-              rule: Host(`loki.local.timmybtech.com`)
-              service: loki
-              entrypoints:
-                  - websecure
-              tls:
-                  certResolver: default
+            rule: Host(`loki.local.timmybtech.com`)
+            service: loki
+            entrypoints:
+              - websecure
+            tls:
+              certResolver: {}
           prometheus:
-              rule: Host(`prometheus.local.timmybtech.com`)
-              service: prometheus
-              entrypoints:
-                  - websecure
-              tls:
-                  certResolver: default
+            rule: Host(`prometheus.local.timmybtech.com`)
+            service: prometheus
+            entrypoints:
+              - websecure
+            tls:
+              certResolver: {}
           actualbudget:
-              rule: Host(`budget.local.timmybtech.com`)
-              service: actualbudget
-              entrypoints:
-                  - websecure
-              tls:
-                  certResolver: default
+            rule: Host(`budget.local.timmybtech.com`)
+            service: actualbudget
+            entrypoints:
+              - websecure
+            tls:
+              certResolver: {}
           adguard:
-              rule: Host(`adguard.local.timmybtech.com`)
-              service: adguard
-              entrypoints:
-                  - websecure
-              tls:
-                  certResolver: default
+            rule: Host(`adguard.local.timmybtech.com`)
+            service: adguard
+            entrypoints:
+              - websecure
+            tls:
+              certResolver: {}
           adguard-secondary:
-              rule: Host(`adguard-secondary.local.timmybtech.com`)
-              service: adguard-secondary
-              entrypoints:
-                  - websecure
-              tls:
-                  certResolver: default
+            rule: Host(`adguard-secondary.local.timmybtech.com`)
+            service: adguard-secondary
+            entrypoints:
+              - websecure
+            tls:
+              certResolver: {}
           maybe:
-              rule: Host(`maybe.local.timmybtech.com`)
-              service: maybe
-              entrypoints:
-                  - websecure
-              tls:
-                  certResolver: default
+            rule: Host(`maybe.local.timmybtech.com`)
+            service: maybe
+            entrypoints:
+              - websecure
+            tls:
+              certResolver: {}
           dozzle:
-              rule: Host(`dozzle.local.timmybtech.com`)
-              service: dozzle
-              entrypoints:
-                  - websecure
-              tls:
-                  certResolver: default
+            rule: Host(`dozzle.local.timmybtech.com`)
+            service: dozzle
+            entrypoints:
+              - websecure
+            tls:
+              certResolver: {}
           semaphore:
-              rule: Host(`semaphore.local.timmybtech.com`)
-              service: semaphore
-              entrypoints:
-                  - websecure
-              tls:
-                  certResolver: default
-          spotify-web:
-              rule: Host(`spotify-web.local.timmybtech.com`)
-              service: spotify-web
-              entrypoints:
-                  - websecure
-              tls:
-                  certResolver: default
-          spotify-server:
-              rule: Host(`spotify-server.local.timmybtech.com`)
-              service: spotify-server
-              entrypoints:
-                  - websecure
-              tls:
-                  certResolver: default
+            rule: Host(`semaphore.local.timmybtech.com`)
+            service: semaphore
+            entrypoints:
+              - websecure
+            tls:
+              certResolver: {}
+
         services:
           uptime-kuma:
             loadBalancer:
@@ -270,14 +222,6 @@ providers:
             loadBalancer:
               servers:
                 - url: http://192.168.86.217:8840
-          linkace:
-            loadBalancer:
-              servers:
-                - url: http://192.168.86.143:718
-          technitium:
-            loadBalancer:
-              servers:
-                - url: http://192.168.86.213:5380
           speedtest:
             loadBalancer:
               servers:
@@ -287,86 +231,67 @@ providers:
               servers:
                 - url: https://192.168.86.44:5001
               serversTransport: nas-transport
-          healthchecks:
+          it-tools:
             loadBalancer:
               servers:
-                - url: http://192.168.86.143:8000
-          gotify:
-              loadBalancer:
-                  servers:
-                  - url: http://homelab-oci03.tailebee.ts.net:8080
-          it-tools:
-              loadBalancer:
-                  servers:
-                  - url: http://192.168.86.143:5884
+                - url: http://192.168.86.143:5884
           pgweb:
-              loadBalancer:
-                  servers:
-                  - url: http://192.168.86.143:8084
+            loadBalancer:
+              servers:
+                - url: http://192.168.86.143:8084
           netalertx:
-              loadBalancer:
-                  servers:
-                  - url: http://192.168.86.44:20211
-          focal-board:
-              loadBalancer:
-                  servers:
-                  - url: http://192.168.86.143:8001
+            loadBalancer:
+              servers:
+                - url: http://192.168.86.44:20211
           zipline:
-              loadBalancer:
-                  servers:
-                  - url: http://192.168.86.143:3000
+            loadBalancer:
+              servers:
+                - url: http://192.168.86.143:3000
           pve:
-              loadBalancer:
-                  servers:
-                  - url: https://192.168.86.160:8006
+            loadBalancer:
+              servers:
+                - url: https://192.168.86.160:8006
           homeassistant:
-              loadBalancer:
-                  servers:
-                  - url: http://192.168.86.147:8123
+            loadBalancer:
+              servers:
+                - url: http://192.168.86.147:8123
           loki:
-              loadBalancer:
-                  servers:
-                  - url: http://192.168.86.146:3100
+            loadBalancer:
+              servers:
+                - url: http://192.168.86.146:3100
           prometheus:
-              loadBalancer:
-                  servers:
-                  - url: http://192.168.86.198:9090
+            loadBalancer:
+              servers:
+                - url: http://192.168.86.198:9090
           actualbudget:
-              loadBalancer:
-                  servers:
-                  - url: http://192.168.86.203:5006
+            loadBalancer:
+              servers:
+                - url: http://192.168.86.203:5006
           adguard:
-              loadBalancer:
-                  servers:
-                  - url: http://192.168.86.214:80
+            loadBalancer:
+              servers:
+                - url: http://192.168.86.214:80
           adguard-secondary:
-              loadBalancer:
-                  servers:
-                  - url: http://192.168.86.174:80
+            loadBalancer:
+              servers:
+                - url: http://192.168.86.174:80
           maybe:
-              loadBalancer:
-                  servers:
-                  - url: http://192.168.86.174:3003
+            loadBalancer:
+              servers:
+                - url: http://192.168.86.174:3003
           dozzle:
-              loadBalancer:
-                  servers:
-                  - url: http://192.168.86.174:9999
+            loadBalancer:
+              servers:
+                - url: http://192.168.86.174:9999
           semaphore:
-              loadBalancer:
-                  servers:
-                  - url: http://192.168.86.143:3005
-          spotify-web:
-              loadBalancer:
-                  servers:
-                  - url: http://192.168.86.53:3000
-          spotify-server:
-              loadBalancer:
-                  servers:
-                  - url: http://192.168.86.53:8080
+            loadBalancer:
+              servers:
+                - url: http://192.168.86.143:3005
 
         serversTransports:
           nas-transport:
             insecureSkipVerify: true
+
 volumes:
   - name: local-timmybtech-com-tls
     mountPath: /certs
