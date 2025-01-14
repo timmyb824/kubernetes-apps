@@ -1,4 +1,3 @@
-# THIS FILE IS A SECRET
 globalArguments:
   - --global.sendanonymoususage=false
   - --global.checknewversion=false
@@ -13,10 +12,7 @@ deployment:
   additionalContainers: []
   initContainers: []
 ports:
-  # web:
-  #   redirectTo:
-  #     port: websecure
-  web: # for v3
+  web:
     redirections:
       entryPoint:
         to: websecure
@@ -308,9 +304,6 @@ service:
   annotations: {}
   labels: {}
   spec:
-    # this should be an IP in the MetalLB range
-    loadBalancerIP: 192.168.86.224
+    loadBalancerIP: 192.168.86.224 # this should be an IP in the MetalLB range
   loadBalancerSourceRanges: []
   externalIPs: []
-core: # for v3
-  defaultRuleSyntax: v2
