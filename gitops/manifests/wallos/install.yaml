@@ -139,7 +139,10 @@ spec:
       kind: Rule
       priority: 15
       services:
-        - name: ak-outpost-authentik-embedded-outpost.authentik.svc.cluster.local
-          port: 80
+        # - name: ak-outpost-authentik-embedded-outpost.authentik.svc.cluster.local
+        #   port: 80
+        - name: ak-outpost-authentik-embedded-outpost
+          namespace: authentik
+          port: 9000
   tls:
     secretName: local-timmybtech-com-tls
