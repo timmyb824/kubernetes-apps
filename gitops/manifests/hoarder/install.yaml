@@ -51,7 +51,7 @@ spec:
     spec:
       containers:
         - name: web
-          image: ghcr.io/hoarder-app/hoarder:0.19.0
+          image: ghcr.io/hoarder-app/hoarder:0.20.0
           ports:
             - containerPort: 3000
           env:
@@ -120,7 +120,7 @@ spec:
     spec:
       containers:
         - name: chrome
-          image: gcr.io/zenika-hub/alpine-chrome:123
+          image: gcr.io/zenika-hub/alpine-chrome:124
           command:
             - chromium-browser
             - --headless
