@@ -21,7 +21,7 @@ data:
   # DISABLE_SIGNUPS: "true"
   MEILI_MASTER_KEY: <path:secret/data/argocd#HOARDER_MEILI_MASTER_KEY>
   NEXTAUTH_SECRET: <path:secret/data/argocd#HOARDER_NEXTAUTH_SECRET>
-  NEXTAUTH_URL: http://localhost:3000
+  NEXTAUTH_URL: https://hoarder.timmybtech.com
   # OAUTH_ALLOW_DANGEROUS_EMAIL_ACCOUNT_LINKING: "true"
   # OAUTH_CLIENT_ID: <path:secret/data/argocd#AUTHENTIK_HOARDER_CLIENT_ID>
   # OAUTH_CLIENT_SECRET: <path:secret/data/argocd#AUTHENTIK_HOARDER_SECRET_ID>
