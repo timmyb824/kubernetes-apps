@@ -9,12 +9,12 @@ metadata:
   name: data-pvc
   namespace: hoarder
 spec:
+  storageClassName: "nfs-csi-synologynas"
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
       storage: 16Gi
-      storageClassName: "nfs-csi-synologynas"
 ---
 apiVersion: v1
 data:
@@ -149,12 +149,12 @@ kind: PersistentVolumeClaim
 metadata:
   name: meilisearch-pvc
 spec:
+  storageClassName: "nfs-csi-synologynas"
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
       storage: 8Gi
-      storageClassName: "nfs-csi-synologynas"
 ---
 apiVersion: apps/v1
 kind: Deployment
