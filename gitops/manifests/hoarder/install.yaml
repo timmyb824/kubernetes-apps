@@ -1,0 +1,200 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: hoarder
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: data-pvc
+  namespace: hoarder
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 16Gi
+      storageClassName: "nfs-csi-synologynas"
+---
+apiVersion: v1
+data:
+  # DISABLE_SIGNUPS: "true"
+  MEILI_MASTER_KEY: <path:secret/data/argocd#HOARDER_MEILI_MASTER_KEY>
+  NEXTAUTH_SECRET: <path:secret/data/argocd#HOARDER_NEXTAUTH_SECRET>
+  NEXTAUTH_URL: http://localhost:3000
+  # OAUTH_ALLOW_DANGEROUS_EMAIL_ACCOUNT_LINKING: "true"
+  # OAUTH_CLIENT_ID: <path:secret/data/argocd#AUTHENTIK_HOARDER_CLIENT_ID>
+  # OAUTH_CLIENT_SECRET: <path:secret/data/argocd#AUTHENTIK_HOARDER_SECRET_ID>
+  # OAUTH_PROVIDER_NAME: authentik
+  # OAUTH_WELLKNOWN_URL: <path:secret/data/argocd#HOARDER_AUTHENTIK_WELLKNOWN_URL>
+  OPENAI_API_KEY: <path:secret/data/argocd#OPENAI_API_KEY>
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: hoarder-env
+  namespace: hoarder
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web
+  namespace: hoarder
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hoarder-web
+  template:
+    metadata:
+      labels:
+        app: hoarder-web
+    spec:
+      containers:
+        - name: web
+          image: ghcr.io/hoarder-app/hoarder:0.20.0
+          ports:
+            - containerPort: 3000
+          env:
+            - name: MEILI_ADDR
+              value: http://meilisearch:7700
+            - name: BROWSER_WEB_URL
+              value: http://chrome:9222
+            - name: DATA_DIR
+              value: /data
+          volumeMounts:
+            - mountPath: /data
+              name: data
+          envFrom:
+            - configMapRef:
+                name: hoarder-env
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: data-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: web
+spec:
+  selector:
+    app: hoarder-web
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: hoarder-ingress
+  namespace: hoarder
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`hoarder-web.local.timmybtech.com`)
+      kind: Rule
+      services:
+        - name: hoarder-web
+          port: 3000
+  tls:
+    secretName: local-timmybtech-com-tls
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chrome
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chrome
+  template:
+    metadata:
+      labels:
+        app: chrome
+    spec:
+      containers:
+        - name: chrome
+          image: gcr.io/zenika-hub/alpine-chrome:123
+          command:
+            - chromium-browser
+            - --headless
+            - --no-sandbox
+            - --disable-gpu
+            - --disable-dev-shm-usage
+            - --remote-debugging-address=0.0.0.0
+            - --remote-debugging-port=9222
+            - --hide-scrollbars
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: chrome
+spec:
+  selector:
+    app: chrome
+  ports:
+    - protocol: TCP
+      port: 9222
+      targetPort: 9222
+  type: ClusterIP
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: meilisearch-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 8Gi
+      storageClassName: "nfs-csi-synologynas"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: meilisearch
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: meilisearch
+  template:
+    metadata:
+      labels:
+        app: meilisearch
+    spec:
+      containers:
+        - name: meilisearch
+          image: getmeili/meilisearch:v1.11.2
+          env:
+            - name: MEILI_NO_ANALYTICS
+              value: "true"
+          volumeMounts:
+            - mountPath: /meili_data
+              name: meilisearch
+          envFrom:
+            - configMapRef:
+                name: hoarder-env
+      volumes:
+        - name: meilisearch
+          persistentVolumeClaim:
+            claimName: meilisearch-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: meilisearch
+spec:
+  selector:
+    app: meilisearch
+  ports:
+    - protocol: TCP
+      port: 7700
+      targetPort: 7700
