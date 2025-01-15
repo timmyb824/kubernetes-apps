@@ -18,7 +18,7 @@ spec:
 ---
 apiVersion: v1
 data:
-  DISABLE_SIGNUPS: "true"
+  DISABLE_SIGNUPS: "false"
   MEILI_MASTER_KEY: <path:secret/data/argocd#HOARDER_MEILI_MASTER_KEY>
   NEXTAUTH_SECRET: <path:secret/data/argocd#HOARDER_NEXTAUTH_SECRET>
   NEXTAUTH_URL: https://hoarder.timmybtech.com
