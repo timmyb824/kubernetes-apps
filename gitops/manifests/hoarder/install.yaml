@@ -99,7 +99,7 @@ spec:
     - match: Host(`hoarder-web.local.timmybtech.com`)
       kind: Rule
       services:
-        - name: hoarder-web
+        - name: web
           port: 3000
   tls:
     secretName: local-timmybtech-com-tls
