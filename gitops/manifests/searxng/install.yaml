@@ -82,6 +82,7 @@ spec:
     spec:
       containers:
         image: searxng/searxng
+        imagePullPolicy: Always
         name: searxng
         ports:
           - containerPort: 8080
@@ -109,6 +110,7 @@ metadata:
   labels:
     io.kompose.service: searxng
   name: searxng
+  namespace: searxng
 spec:
   ports:
     - name: "8080"
