@@ -574,7 +574,7 @@ data:
         cache: 15
     - search:
         provider: custom
-        url: https://www.searxng.local.timmybtech.com/search?q=
+        url: https://searxng.local.timmybtech.com/search?q=
         target: _blank
         showSearchSuggestions: true
     - kubernetes:
