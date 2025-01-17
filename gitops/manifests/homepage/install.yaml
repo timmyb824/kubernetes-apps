@@ -418,10 +418,10 @@ data:
             namespace: wallos
             app: wallos
         - Whoogle:
-            icon: whooglesearch.png
-            href: https://whoogle.local.timmybtech.com/
-            namespace: whoogle-search
-            app: whoogle
+            icon: searxng.png
+            href: https://searxng.local.timmybtech.com/
+            namespace: searxng
+            app: searxng
     - DNS:
         - Adguard Home:
             icon: adguard-home.png
@@ -577,15 +577,11 @@ data:
           cpu: true
           memory: true
           showLabel: true
-    - resources:
-        backend: resources
-        expanded: false
-        cpu: false
-        memory: false
-    # - search:
-    #     provider: custom
-    #     url: https://whoogle.local.timmybtech.com/
-    #     target: _blank
+    - search:
+        provider: custom
+        url: https://www.searxng.local.timmybtech.com/search?q=
+        target: _blank
+        showSearchSuggestions: true
     - weatherapi:
         latitude: 41.8978
         longitude: -70.9090
