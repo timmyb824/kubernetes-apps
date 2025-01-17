@@ -1,0 +1,108 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: searxng
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: searxng
+    server: "https://kubernetes.default.svc"
+  project: default
+  source:
+    repoURL: https://github.com/benbusby/searxng
+    targetRevision: HEAD
+    path: searxng
+    helm:
+      releaseName: searxng
+      values: |
+        image:
+          repository: searxng/searxng
+          tag: latest
+          pullPolicy: Always
+
+        env:
+          INSTANCE_NAME: "bryant-homelab"
+          BASE_URL: "http://localhost:8080/"
+          AUTOCOMPLETE: "true"
+
+        controller:
+          strategy: "RollingUpdate"
+
+        # -- Configures service settings for the chart.
+        # @default -- See values.yaml
+        service:
+          main:
+            ports:
+              http:
+                port: 8080
+
+        # -- Configure persistence settings for the chart under this key.
+        # @default -- See values.yaml
+        persistence:
+          config:
+            enabled: false
+
+        ingress:
+          # -- Enable and configure ingress settings for the chart under this key.
+          # @default -- See values.yaml
+          main:
+            enabled: false
+
+        searxng:
+          config:
+            use_default_settings: true
+            server:
+              secret_key: <<path:secret/data/argocd#SEARXNG_SECRET_KEY>
+            search:
+              autocomplete: duckduckgo
+              autocomplete_min: 4
+
+        probes:
+          readiness:
+            custom: true
+            spec:
+              httpGet:
+                path: /healthz
+                port: 8080
+          liveness:
+            custom: true
+            spec:
+              httpGet:
+                path: /healthz
+                port: 8080
+          startup:
+            custom: true
+            spec:
+              httpGet:
+                path: /healthz
+                port: 8080
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: searxng-ingress
+  namespace: searxng
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+    # argocd.argoproj.io/hook: Sync
+    helm.sh/hook: "post-install"
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`searxng.local.timmybtech.com`)
+      kind: Rule
+      services:
+        - name: searxng
+          port: 8080
+  tls:
+    secretName: local-timmybtech-com-tls
