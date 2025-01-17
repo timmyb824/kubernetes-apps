@@ -78,6 +78,7 @@ spec:
       annotations: {}
       labels:
         io.kompose.service: searxng
+        app.kubernetes.io/name: searxng
     spec:
       containers:
         - name: searxng
