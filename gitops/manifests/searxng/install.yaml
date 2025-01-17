@@ -11,6 +11,7 @@ metadata:
   namespace: searxng
 data:
   settings.yml: |
+    use_default_settings: true
     general:
       debug: false
       instance_name: "Bryant-SearXNG"
@@ -26,24 +27,22 @@ data:
       autocomplete_min: 4
       favicon_resolver: "duckduckgo"
       default_lang: "auto"
-      ban_time_on_fail: 5
-      max_ban_time_on_fail: 120
-      suspended_times:
-        SearxEngineAccessDenied: 86400
-        SearxEngineCaptcha: 86400
-        SearxEngineTooManyRequests: 3600
-        cf_SearxEngineCaptcha: 1296000
-        cf_SearxEngineAccessDenied: 86400
-        recaptcha_SearxEngineCaptcha: 604800
-
-      formats:
-        - html
 
     server:
       base_url: http://localhost:8080/
       limiter: false
+      image_proxy: true
       public_instance: false
       secret_key: "<path:secret/data/argocd#SEARXNG_SECRET_KEY>"
+
+    ui:
+      use_static_hash: true
+
+    enabled_plugins:
+      - 'Hash plugin'
+      - 'Self Information'
+      - 'Tracker URL remover'
+      - 'Ahmia blacklist'
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
