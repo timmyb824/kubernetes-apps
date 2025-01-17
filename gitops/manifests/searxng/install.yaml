@@ -1,0 +1,137 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: searxng
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: searxng-config
+  namespace: searxng
+data:
+  settings.yml: |
+    general:
+      debug: false
+      instance_name: "Bryant-SearXNG"
+      privacypolicy_url: false
+      donation_url: false
+      contact_url: false
+      enable_metrics: true
+      open_metrics: ''
+
+    search:
+      safe_search: 0
+      autocomplete: "duckduckgo"
+      autocomplete_min: 4
+      favicon_resolver: "duckduckgo"
+      default_lang: "auto"
+      ban_time_on_fail: 5
+      max_ban_time_on_fail: 120
+      suspended_times:
+        SearxEngineAccessDenied: 86400
+        SearxEngineCaptcha: 86400
+        SearxEngineTooManyRequests: 3600
+        cf_SearxEngineCaptcha: 1296000
+        cf_SearxEngineAccessDenied: 86400
+        recaptcha_SearxEngineCaptcha: 604800
+
+      formats:
+        - html
+
+    server:
+      base_url: http://localhost:8080/
+      limiter: false
+      public_instance: false
+      secret_key: "<path:secret/data/argocd#SEARXNG_SECRET_KEY>"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    io.kompose.service: searxng-claim0
+  name: searxng-claim0
+spec:
+  storageClassName: nfs-csi-synologynas
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 8Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations: {}
+  labels:
+    io.kompose.service: searxng
+  name: searxng
+  namespace: searxng
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: searxng
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations: {}
+      labels:
+        io.kompose.service: searxng
+    spec:
+      containers:
+        image: searxng/searxng
+        name: searxng
+        ports:
+          - containerPort: 8080
+            protocol: TCP
+        volumeMounts:
+          - mountPath: /etc/searxng/settings.yml
+            subPath: settings.yml
+            name: searxng-config
+          - mountPath: /data
+            name: searxng-claim0
+      volumes:
+        - name: searxng-config
+          configMap:
+            name: searxng-config
+        - name: searxng-claim0
+          persistentVolumeClaim:
+            claimName: searxng-claim0
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.35.0 (HEAD)
+  labels:
+    io.kompose.service: searxng
+  name: searxng
+spec:
+  ports:
+    - name: "8080"
+      port: 8080
+      targetPort: 8080
+  selector:
+    io.kompose.service: searxng
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: searxng-ingress
+  namespace: searxng
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`searxng.local.timmybtech.com`)
+      kind: Rule
+      services:
+        - name: searxng
+          port: 8080
+  tls:
+    secretName: local-timmybtech-com-tls
