@@ -9,10 +9,10 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`traefik-metrics.local.timmybtech.com`) # create A record in pihole
+    - match: Host(`traefik-metrics.local.timmybtech.com`)
       kind: Rule
       services:
         - name: prometheus@internal
           kind: TraefikService
   tls:
-    secretName: local-timmybtech-com-tls # or local-example-com-staging-tls
+    secretName: local-timmybtech-com-tls
