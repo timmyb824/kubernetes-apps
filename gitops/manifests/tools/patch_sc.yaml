@@ -1,0 +1,91 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: tools
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: storageclass-patcher-role
+rules:
+  - apiGroups: [""]
+    resources:
+      ["nodes", "persistentvolumes", "persistentvolumeclaims", "namespaces"]
+    verbs: ["list", "watch"]
+  - apiGroups: ["storage.k8s.io"]
+    resources: ["storageclasses"]
+    verbs: ["get", "patch", "list", "watch"]
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: storageclass-patcher-sa
+  namespace: tools
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: storageclass-patcher-rolebinding
+subjects:
+  - kind: ServiceAccount
+    name: storageclass-patcher-sa
+    namespace: tools
+roleRef:
+  kind: ClusterRole
+  name: storageclass-patcher-role
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: patch-sc-script
+  namespace: tools
+data:
+  patch-storageclass.sh: |
+    #!/bin/sh
+    while true; do
+      kubectl patch storageclass local-path -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"false"}}}'
+      sleep 10
+    done
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cronjob-patch-sc
+  namespace: tools
+  labels:
+    app: cronjob
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cronjob
+  template:
+    metadata:
+      labels:
+        app: cronjob
+    spec:
+      serviceAccountName: storageclass-patcher-sa
+      containers:
+        - name: cronjob
+          # this image includes but /bin/sh and kubectl
+          image: portainer/kubectl-shell:latest
+          args:
+            - /bin/sh
+            - -c
+            - sh /config/patch-storageclass.sh
+          resources:
+            limits:
+              cpu: 100m
+              memory: 100Mi
+            requests:
+              cpu: 100m
+              memory: 100Mi
+          volumeMounts:
+            - mountPath: /config
+              name: patch-script-config
+      volumes:
+        - name: patch-script-config
+          configMap:
+            name: patch-sc-script
