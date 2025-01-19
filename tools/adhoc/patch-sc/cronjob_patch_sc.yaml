@@ -1,31 +1,31 @@
-
+# Not currently used, but left here for reference
 apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: patch-storageclass
   namespace: tools
 spec:
-  schedule: "*/1 * * * *"  # Run every minute
+  schedule: "*/1 * * * *" # Run every minute
   jobTemplate:
     spec:
       template:
         spec:
           serviceAccountName: storageclass-patcher-sa
           containers:
-          - name: kubectl-patch
-            image: bitnami/kubectl:latest  # Using a kubectl image
-            command:
-            - /bin/sh
-            - -c
-            - |
-              # for i in 1 2 3 4; do
-              #   echo "Patching storage class..."
-              #   kubectl patch storageclass local-path -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"false"}}}'
-              #   sleep 15
-              # done
-              while true; do
-                kubectl patch storageclass local-path -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"false"}}}'
+            - name: kubectl-patch
+              image: bitnami/kubectl:latest # Using a kubectl image
+              command:
+                - /bin/sh
+                - -c
+                - |
+                  # for i in 1 2 3 4; do
+                  #   echo "Patching storage class..."
+                  #   kubectl patch storageclass local-path -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"false"}}}'
+                  #   sleep 15
+                  # done
+                  while true; do
+                    kubectl patch storageclass local-path -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"false"}}}'
 
-                sleep 10
-              done
+                    sleep 10
+                  done
           restartPolicy: OnFailure
