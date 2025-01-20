@@ -344,12 +344,12 @@ data:
               fields: ["items", "locations", "totalValue"]
     - Kubernetes hidden:
         - blinko:
-            icon: kubernetes.png
+            icon: sh-blinko.png
             href: https://blinko.local.timmybtech.com/
             namespace: blinko
             app: blinko-website
         - Glance:
-            icon: kubernetes.png
+            icon: glance.png
             href: https://glance.local.timmybtech.com/
             namespace: glance
             app: glance
@@ -514,7 +514,7 @@ data:
             href: http://pihole2.homelab.lan:8080/
             ping: http://pihole2.homelab.lan:8080
         - ActualBudget:
-            icon: actual.png
+            icon: actual-budget.png
             href: https://budget.local.timmybtech.com/
             ping: http://192.168.86.203:5006
         - Dozzle:
@@ -542,7 +542,7 @@ data:
             href: https://loki.local.timmybtech.com/
             ping: http://192.168.86.146:3100/loki/api/v1/status/buildinfo
         - Maybe:
-            icon: docker.png
+            icon: maybe.png
             href: https://maybe.local.timmybtech.com/
             ping: http://192.168.86.174:3003
         - PGweb :
