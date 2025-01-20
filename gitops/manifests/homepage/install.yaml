@@ -313,7 +313,7 @@ data:
               username: <TRAEFIK_USER>
               password: <TRAEFIK_PASSWORD>
         - ArgoCD:
-            icon: argocd.png
+            icon: argo-cd.png
             href: https://argocd.local.timmybtech.com/
             namespace: argocd
             app: argocd-server
