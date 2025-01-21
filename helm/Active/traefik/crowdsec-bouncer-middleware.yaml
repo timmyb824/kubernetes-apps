@@ -7,9 +7,23 @@ spec:
   plugin:
     crowdsec-bouncer:
       enabled: true
-      crowdsecMode: appsec
-      crowdsecAppsecEnabled: true
-      crowdsecAppsecHost: crowdsec-appsec-service:7422
+      crowdsecMode: stream
       crowdsecLapiScheme: http
-      crowdsecLapiHost: crowdsec-service:8080
-      crowdsecLapiKey: "<YOUR_BOUNCER_KEY>"
+      crowdsecLapiHost: crowdsec-service.crowdsec:8080
+      crowdsecLapiKey: "${LAPI_BOUNCER_KEY}"
+---
+# apiVersion: traefik.io/v1alpha1
+# kind: Middleware
+# metadata:
+#   name: crowdsec-bouncer
+#   namespace: default
+# spec:
+#   plugin:
+#     crowdsec-bouncer:
+#       enabled: true
+#       crowdsecMode: appsec
+#       crowdsecAppsecEnabled: true
+#       crowdsecAppsecHost: crowdsec-appsec-service:7422
+#       crowdsecLapiScheme: http
+#       crowdsecLapiHost: crowdsec-service:8080
+#       crowdsecLapiKey: "${LAPI_BOUNCER_KEY}"
