@@ -281,6 +281,9 @@ data:
         - Web Check:
             - abbr: WCK
               href: https://web-check.xyz/
+        - Crowdsec:
+            - abbr: CS
+              href: https://app.crowdsec.net/
   services.yaml: |
     - Kubernetes:
         - Grafana:
