@@ -4,8 +4,6 @@ globalArguments:
 additionalArguments:
   - --serversTransport.insecureSkipVerify=true
   - --log.level=INFO
-  # - --entrypoints.web.http.middlewares=default-crowdsec-bouncer@kubernetescrd # FOR CROWDSEC
-  # - --entrypoints.websecure.http.middlewares=default-crowdsec-bouncer@kubernetescrd # FOR CROWDSEC
 experimental: # FOR CROWDSEC
   plugins:
     crowdsec-bouncer:
@@ -36,6 +34,10 @@ providers:
     enabled: true
     ingressClass: traefik-external
     allowCrossNamespace: true # FOR AUTHENTIK
+    ingressRoute: # FOR CROWDSEC
+      defaultMiddleware:
+        namespace: kube-system
+        name: crowdsec-bouncer
   kubernetesIngress:
     enabled: true
     publishedService:
