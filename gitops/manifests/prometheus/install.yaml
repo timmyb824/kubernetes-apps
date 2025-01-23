@@ -226,6 +226,19 @@ data:
             regex: (authentik-metrics.local.timmybtech.com)
             target_label: instance
 
+      - job_name: "registry"
+        scheme: https
+        metrics_path: /metrics
+        static_configs:
+          - targets:
+            - "registry.local.timmybtech.com"
+        tls_config:
+          insecure_skip_verify: true
+        relabel_configs:
+          - source_labels: [__address__]
+            regex: (registry.local.timmybtech.com)
+            target_label: instance
+
 ---
 apiVersion: apps/v1
 kind: Deployment
