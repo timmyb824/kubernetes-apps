@@ -19,7 +19,7 @@ When attempting to upgrade to a new version of K3s, the [Kubernetes version skew
 
 The system-upgrade-controller can be installed as a deployment into your cluster. The deployment requires a service-account, clusterRoleBinding, and a configmap. To install these components, run the following command:
 
-```
+```bash
 kubectl apply -f https://github.com/rancher/system-upgrade-controller/releases/latest/download/system-upgrade-controller.yaml
 ```
 
@@ -31,7 +31,7 @@ It is recommended you create at least two plans: a plan for upgrading server (co
 
 The following two example plans will upgrade your cluster to K3s v1.24.6+k3s1:
 
-```
+```yaml
 # Server plan
 apiVersion: upgrade.cattle.io/v1
 kind: Plan
@@ -43,10 +43,10 @@ spec:
   cordon: true
   nodeSelector:
     matchExpressions:
-    - key: node-role.kubernetes.io/control-plane
-      operator: In
-      values:
-      - "true"
+      - key: node-role.kubernetes.io/control-plane
+        operator: In
+        values:
+          - "true"
   serviceAccountName: system-upgrade
   upgrade:
     image: rancher/k3s-upgrade
@@ -63,12 +63,12 @@ spec:
   cordon: true
   nodeSelector:
     matchExpressions:
-    - key: node-role.kubernetes.io/control-plane
-      operator: DoesNotExist
+      - key: node-role.kubernetes.io/control-plane
+        operator: DoesNotExist
   prepare:
     args:
-    - prepare
-    - server-plan
+      - prepare
+      - server-plan
     image: rancher/k3s-upgrade
   serviceAccountName: system-upgrade
   upgrade:
@@ -78,17 +78,17 @@ spec:
 
 There are a few important things to call out regarding these plans:
 
-1) The plans must be created in the same namespace where the controller was deployed.
+1. The plans must be created in the same namespace where the controller was deployed.
 
-2) The `concurrency` field indicates how many nodes can be upgraded at the same time.
+2. The `concurrency` field indicates how many nodes can be upgraded at the same time.
 
-3) The server-plan targets server nodes by specifying a label selector that selects nodes with the `node-role.kubernetes.io/control-plane` label. The agent-plan targets agent nodes by specifying a label selector that select nodes without that label.
+3. The server-plan targets server nodes by specifying a label selector that selects nodes with the `node-role.kubernetes.io/control-plane` label. The agent-plan targets agent nodes by specifying a label selector that select nodes without that label.
 
-4) The `prepare` step in the agent-plan will cause upgrade jobs for that plan to wait for the server-plan to complete before they execute.
+4. The `prepare` step in the agent-plan will cause upgrade jobs for that plan to wait for the server-plan to complete before they execute.
 
-5) Both plans have the `version` field set to v1.24.6+k3s1. Alternatively, you can omit the `version` field and set the `channel` field to a URL that resolves to a release of K3s. This will cause the controller to monitor that URL and upgrade the cluster any time it resolves to a new release. This works well with the [release channels](https://docs.k3s.io/upgrades/manual#release-channels). Thus, you can configure your plans with the following channel to ensure your cluster is always automatically upgraded to the newest stable release of K3s:
+5. Both plans have the `version` field set to v1.24.6+k3s1. Alternatively, you can omit the `version` field and set the `channel` field to a URL that resolves to a release of K3s. This will cause the controller to monitor that URL and upgrade the cluster any time it resolves to a new release. This works well with the [release channels](https://docs.k3s.io/upgrades/manual#release-channels). Thus, you can configure your plans with the following channel to ensure your cluster is always automatically upgraded to the newest stable release of K3s:
 
-```
+```bash
 apiVersion: upgrade.cattle.io/v1kind: Plan...spec:  ...  channel: https://update.k3s.io/v1-release/channels/stable
 ```
 
@@ -96,6 +96,6 @@ As stated, the upgrade will begin as soon as the controller detects that a plan 
 
 You can monitor the progress of an upgrade by viewing the plan and jobs via kubectl:
 
-```
+```bash
 kubectl -n system-upgrade get plans -o yamlkubectl -n system-upgrade get jobs -o yaml
 ```

@@ -4,7 +4,7 @@ Real-time Kubernetes protocol-level visibility, capturing and monitoring all tra
 
 ## Homelab
 
-I currently have [Kubeshark](https://www.kubeshark.co/) installed locally using pkgx. It can also be installed using homebrew, a shell script, or helm. Additionally, there are integrations with tools like Lens and Grafana.
+I currently have [Kubeshark](https://www.kubeshark.co/) installed locally. It can also be installed using homebrew, a shell script, or helm. Additionally, there are integrations with tools like Lens and Grafana.
 
 ## Commands
 
