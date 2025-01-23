@@ -53,11 +53,11 @@ spec:
               value: "<path:secret/data/argocd#REGISTRY_HTTP_SECRET>"
             - name: REGISTRY_LOG_LEVEL
               value: "info"
-            - name: REGISTRY_http_debug_addr
+            - name: REGISTRY_HTTP_DEBUG_ADDR
               value: "0.0.0.0:5001"
-            - name: REGISTRY_http_debug_prometheus_enabled
+            - name: REGISTRY_HTTP_DEBUG_PROMETHEUS_ENABLED
               value: "true"
-            - name: REGISTRY_http_debug_prometheus_path
+            - name: REGISTRY_HTTP_DEBUG_PROMETHEUS_PATH
               value: "/metrics"
           volumeMounts:
             - name: registry-storage
