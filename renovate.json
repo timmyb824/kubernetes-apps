@@ -1,8 +1,15 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:base"],
-  "includePaths": ["gitops/**", "helm/Active/**"],
+  "extends": [
+    "config:base"
+  ],
+  "includePaths": [
+    "gitops/**",
+    "non-gitops/**"
+  ],
   "kubernetes": {
-    "fileMatch": ["\\.yaml$"]
+    "fileMatch": [
+      "\\.yaml$"
+    ]
   }
 }
