@@ -54,7 +54,7 @@ spec:
             - name: REGISTRY_LOG_LEVEL
               value: "info"
             - name: REGISTRY_HTTP_DEBUG_ADDR
-              value: "0.0.0.0:5001"
+              value: "0.0.0.0:5000"
             - name: REGISTRY_HTTP_DEBUG_PROMETHEUS_ENABLED
               value: "true"
             - name: REGISTRY_HTTP_DEBUG_PROMETHEUS_PATH
@@ -90,6 +90,10 @@ spec:
       targetPort: http
       protocol: TCP
       name: http
+    - port: 5001
+      targetPort: 5001
+      protocol: TCP
+      name: metrics
   type: ClusterIP
 ---
 apiVersion: traefik.io/v1alpha1
@@ -111,40 +115,24 @@ spec:
           port: 5000
   tls:
     secretName: local-timmybtech-com-tls
----
-# Create service to access the metrics
-apiVersion: v1
-kind: Service
-metadata:
-  name: registry-metrics
-  namespace: registry
-spec:
-  selector:
-    app: registry-server
-  ports:
-    - port: 5001
-      targetPort: 5001
-      protocol: TCP
-      name: http
-  type: ClusterIP
----
-apiVersion: traefik.io/v1alpha1
-kind: IngressRoute
-metadata:
-  name: registry-metrics-ingress
-  namespace: registry
-  annotations:
-    kubernetes.io/ingress.class: traefik-external
-    traefik.ingress.kubernetes.io/router.entrypoints: websecure
-spec:
-  entryPoints:
-    - websecure
-  routes:
-    - match: Host(`registry-metrics.local.timmybtech.com`)
-      kind: Rule
-      services:
-        - name: registry-metrics
-          port: 5001
+# ---
+# apiVersion: traefik.io/v1alpha1
+# kind: IngressRoute
+# metadata:
+#   name: registry-metrics-ingress
+#   namespace: registry
+#   annotations:
+#     kubernetes.io/ingress.class: traefik-external
+#     traefik.ingress.kubernetes.io/router.entrypoints: websecure
+# spec:
+#   entryPoints:
+#     - websecure
+#   routes:
+#     - match: Host(`registry-metrics.local.timmybtech.com`)
+#       kind: Rule
+#       services:
+#         - name: registry-server
+#           port: 5000
 ###### TAILSCALE ######
 # ---
 # apiVersion: networking.k8s.io/v1
