@@ -23,3 +23,7 @@ spec:
       selfHeal: true
     syncOptions:
       - ApplyOutOfSyncOnly=true
+  sources:
+    - repoURL: "https://github.com/timmyb824/kubernetes-apps.git"
+      path: "gitops/manifests/metallb"
+      targetRevision: HEAD
