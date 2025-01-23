@@ -2,7 +2,7 @@
 
 [Helm Dashboard](https://github.com/komodorio/helm-dashboard) - Provides a simplified way of working with Helm
 
-# Installing
+## Installing
 
 ```shell
 #Install
@@ -14,9 +14,9 @@ helm plugin update dashboard
 helm plugin uninstall dashboard
 ```
 
-# Running
+## Running
 
-```shell
+````shell
 helm dashboard
 ``
 
@@ -34,4 +34,4 @@ Additional command line options
 
 # increase loggin
 --verbose
-```
+````
