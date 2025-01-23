@@ -120,24 +120,6 @@ spec:
           port: 5001
   tls:
     secretName: local-timmybtech-com-tls
-# ---
-# apiVersion: traefik.io/v1alpha1
-# kind: IngressRoute
-# metadata:
-#   name: registry-metrics-ingress
-#   namespace: registry
-#   annotations:
-#     kubernetes.io/ingress.class: traefik-external
-#     traefik.ingress.kubernetes.io/router.entrypoints: websecure
-# spec:
-#   entryPoints:
-#     - websecure
-#   routes:
-#     - match: Host(`registry-metrics.local.timmybtech.com`)
-#       kind: Rule
-#       services:
-#         - name: registry-server
-#           port: 5000
 ###### TAILSCALE ######
 # ---
 # apiVersion: networking.k8s.io/v1
