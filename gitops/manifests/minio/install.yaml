@@ -99,14 +99,14 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`minio-ui.local.timmybtech.com`) # create A record in pihole
+    - match: Host(`minio-ui.local.timmybtech.com`)
       kind: Rule
       services:
         - name: minio
           port: 9001
 
   tls:
-    secretName: local-timmybtech-com-tls # or local-timmybtech-com-staging-tls
+    secretName: local-timmybtech-com-tls
 ---
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
@@ -120,11 +120,11 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`minio.local.timmybtech.com`) # create A record in pihole
+    - match: Host(`minio.local.timmybtech.com`)
       kind: Rule
       services:
         - name: minio
           port: 9000
 
   tls:
-    secretName: local-timmybtech-com-tls # or local-timmybtech-com-staging-tls
+    secretName: local-timmybtech-com-tls
