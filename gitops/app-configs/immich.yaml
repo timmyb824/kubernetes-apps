@@ -5,122 +5,128 @@ metadata:
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
-  annotations: {}
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+    argocd.argoproj.io/compare-options: IgnoreExtraneous=true
 spec:
   destination:
     namespace: immich
     server: "https://kubernetes.default.svc"
   project: default
-  source:
-    repoURL: https://immich-app.github.io/immich-charts
-    targetRevision: 0.9.0
-    chart: immich
-    helm:
-      releaseName: immich
-      values: |
-        ## This chart relies on the common library chart from bjw-s
-        ## You can find it at https://github.com/bjw-s/helm-charts/tree/main/charts/library/common
-        ## Refer there for more detail about the supported values
+  sources:
+    - repoURL: https://immich-app.github.io/immich-charts
+      targetRevision: 0.9.0
+      chart: immich
+      helm:
+        releaseName: immich
+        values: |
+          ## This chart relies on the common library chart from bjw-s
+          ## You can find it at https://github.com/bjw-s/helm-charts/tree/main/charts/library/common
+          ## Refer there for more detail about the supported values
 
-        # These entries are shared between all the Immich components
+          # These entries are shared between all the Immich components
 
-        env:
-          REDIS_HOSTNAME: '{{ printf "%s-redis-master" .Release.Name }}'
-          DB_HOSTNAME: <path:secret/data/postgres_db#HOST_NAME>
-          DB_USERNAME: <path:secret/data/postgres_db#USER>
-          DB_DATABASE_NAME: "immich"
-          # -- You should provide your own secret outside of this helm-chart and use `postgresql.global.postgresql.auth.existingSecret` to provide credentials to the postgresql instance
-          DB_PASSWORD: <path:secret/data/postgres_db#PASSWORD>
-          DB_VECTOR_EXTENSION: "pgvector"
-          IMMICH_MACHINE_LEARNING_URL: '{{ printf "http://%s-machine-learning:3003" .Release.Name }}'
-
-        image:
-          tag: v1.124.0
-
-        immich:
-          metrics:
-            # Enabling this will create the service monitors needed to monitor immich with the prometheus operator
-            enabled: true
-          persistence:
-            # Main data store for all photos shared between different components.
-            library:
-              # Automatically creating the library volume is not supported by this chart
-              # You have to specify an existing PVC to use
-              existingClaim: immich-library-pvc
-          # configuration is immich-config.json converted to yaml
-          # ref: https://immich.app/docs/install/config-file/
-          #
-          configuration: {}
-            # trash:
-            #   enabled: false
-            #   days: 30
-            # storageTemplate:
-            #   enabled: true
-            #   template: "{{y}}/{{y}}-{{MM}}-{{dd}}/{{filename}}"
-
-        # Dependencies
-
-        postgresql:
-          enabled: false  # Disable the included PostgreSQL since we're using external
-          image:
-            repository: tensorchord/pgvecto-rs
-            tag: pg14-v0.2.0
-          global:
-            postgresql:
-              auth:
-                username: <path:secret/data/postgres_db#USER>
-                database: immich
-                password: <path:secret/data/postgres_db#PASSWORD>
-          primary:
-            containerSecurityContext:
-              readOnlyRootFilesystem: false
-            initdb:
-              scripts:
-                create-extensions.sql: |
-                  CREATE EXTENSION cube;
-                  CREATE EXTENSION earthdistance;
-                  CREATE EXTENSION vectors;
-
-        redis:
-          enabled: true
-          architecture: standalone
-          auth:
-            enabled: false
-
-        # Immich components
-
-        server:
-          enabled: true
-          image:
-            repository: ghcr.io/immich-app/immich-server
-            pullPolicy: IfNotPresent
-          ingress:
-            main:
-              enabled: false
-              annotations:
-                # proxy-body-size is set to 0 to remove the body limit on file uploads
-                nginx.ingress.kubernetes.io/proxy-body-size: "0"
-              hosts:
-                - host: immich.local
-                  paths:
-                    - path: "/"
-              tls: []
-
-        machine-learning:
-          enabled: true
-          image:
-            repository: ghcr.io/immich-app/immich-machine-learning
-            pullPolicy: IfNotPresent
           env:
-            TRANSFORMERS_CACHE: /cache
-          persistence:
-            cache:
+            REDIS_HOSTNAME: '{{ printf "%s-redis-master" .Release.Name }}'
+            DB_HOSTNAME: <path:secret/data/postgres_db#HOST_NAME>
+            DB_USERNAME: <path:secret/data/postgres_db#USER>
+            DB_DATABASE_NAME: "immich"
+            # -- You should provide your own secret outside of this helm-chart and use `postgresql.global.postgresql.auth.existingSecret` to provide credentials to the postgresql instance
+            DB_PASSWORD: <path:secret/data/postgres_db#PASSWORD>
+            DB_VECTOR_EXTENSION: "pgvector"
+            IMMICH_MACHINE_LEARNING_URL: '{{ printf "http://%s-machine-learning:3003" .Release.Name }}'
+
+          image:
+            tag: v1.124.0
+
+          immich:
+            metrics:
+              # Enabling this will create the service monitors needed to monitor immich with the prometheus operator
               enabled: true
-              size: 10Gi
-              # Optional: Set this to pvc to avoid downloading the ML models every start.
-              type: pvc
-              accessMode: ReadWriteMany
-              storageClass: nfs-csi-synologynas
+            persistence:
+              # Main data store for all photos shared between different components.
+              library:
+                # Automatically creating the library volume is not supported by this chart
+                # You have to specify an existing PVC to use
+                existingClaim: immich-library-pvc
+            # configuration is immich-config.json converted to yaml
+            # ref: https://immich.app/docs/install/config-file/
+            #
+            configuration: {}
+              # trash:
+              #   enabled: false
+              #   days: 30
+              # storageTemplate:
+              #   enabled: true
+              #   template: "{{y}}/{{y}}-{{MM}}-{{dd}}/{{filename}}"
+
+          # Dependencies
+
+          postgresql:
+            enabled: false  # Disable the included PostgreSQL since we're using external
+            image:
+              repository: tensorchord/pgvecto-rs
+              tag: pg14-v0.2.0
+            global:
+              postgresql:
+                auth:
+                  username: <path:secret/data/postgres_db#USER>
+                  database: immich
+                  password: <path:secret/data/postgres_db#PASSWORD>
+            primary:
+              containerSecurityContext:
+                readOnlyRootFilesystem: false
+              initdb:
+                scripts:
+                  create-extensions.sql: |
+                    CREATE EXTENSION cube;
+                    CREATE EXTENSION earthdistance;
+                    CREATE EXTENSION vectors;
+
+          redis:
+            enabled: true
+            architecture: standalone
+            auth:
+              enabled: false
+
+          # Immich components
+
+          server:
+            enabled: true
+            image:
+              repository: ghcr.io/immich-app/immich-server
+              pullPolicy: IfNotPresent
+            ingress:
+              main:
+                enabled: false
+                annotations:
+                  # proxy-body-size is set to 0 to remove the body limit on file uploads
+                  nginx.ingress.kubernetes.io/proxy-body-size: "0"
+                hosts:
+                  - host: immich.local
+                    paths:
+                      - path: "/"
+                tls: []
+
+          machine-learning:
+            enabled: true
+            image:
+              repository: ghcr.io/immich-app/immich-machine-learning
+              pullPolicy: IfNotPresent
+            env:
+              TRANSFORMERS_CACHE: /cache
+            persistence:
+              cache:
+                enabled: true
+                size: 10Gi
+                # Optional: Set this to pvc to avoid downloading the ML models every start.
+                type: pvc
+                accessMode: ReadWriteMany
+                storageClass: nfs-csi-synologynas
+
+    - repoURL: "https://github.com/timmyb824/kubernetes-apps.git"
+      path: "gitops/manifests/immich"
+      targetRevision: HEAD
 
   syncPolicy:
     automated:
@@ -143,200 +149,3 @@ spec:
     requests:
       storage: 512Gi
   storageClassName: nfs-csi-synologynas
----
-apiVersion: traefik.io/v1alpha1
-kind: IngressRoute
-metadata:
-  name: immich-ingress
-  namespace: immich
-  annotations:
-    kubernetes.io/ingress.class: traefik-external
-    traefik.ingress.kubernetes.io/router.entrypoints: websecure
-spec:
-  entryPoints:
-    - websecure
-  routes:
-    - match: Host(`immich.local.timmybtech.com`)
-      kind: Rule
-      services:
-        - name: immich-server
-          port: 2283
-  tls:
-    secretName: local-timmybtech-com-tls
----
-apiVersion: traefik.io/v1alpha1
-kind: IngressRoute
-metadata:
-  name: immich-api-metrics-ingress
-  namespace: immich
-  annotations:
-    kubernetes.io/ingress.class: traefik-external
-    traefik.ingress.kubernetes.io/router.entrypoints: websecure
-spec:
-  entryPoints:
-    - websecure
-  routes:
-    - match: Host(`immich-api-metrics.local.timmybtech.com`)
-      kind: Rule
-      services:
-        - name: immich-server
-          port: 8081
-  tls:
-    secretName: local-timmybtech-com-tls
----
-apiVersion: traefik.io/v1alpha1
-kind: IngressRoute
-metadata:
-  name: immich-microservices-metrics-ingress
-  namespace: immich
-  annotations:
-    kubernetes.io/ingress.class: traefik-external
-    traefik.ingress.kubernetes.io/router.entrypoints: websecure
-spec:
-  entryPoints:
-    - websecure
-  routes:
-    - match: Host(`immich-microservices-metrics.local.timmybtech.com`)
-      kind: Rule
-      services:
-        - name: immich-server
-          port: 8082
-  tls:
-    secretName: local-timmybtech-com-tls
----
-apiVersion: v1
-kind: Secret
-metadata:
-  namespace: immich
-  name: tunnel-credentials
-type: Opaque
-stringData:
-  credentials.json: >-
-    <path:secret/data/cloudflared#IMMICH_CREDENTIALS>
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: cloudflared
-  namespace: immich
-spec:
-  selector:
-    matchLabels:
-      app: cloudflared
-  replicas: 2 # You could also consider elastic scaling for this deployment
-  template:
-    metadata:
-      labels:
-        app: cloudflared
-    spec:
-      containers:
-        - name: cloudflared
-          image: cloudflare/cloudflared:2024.12.2
-          args:
-            - tunnel
-            # Points cloudflared to the config file, which configures what
-            # cloudflared will actually do. This file is created by a ConfigMap
-            # below.
-            - --config
-            - /etc/cloudflared/config/config.yaml
-            - run
-          livenessProbe:
-            httpGet:
-              # Cloudflared has a /ready endpoint which returns 200 if and only if
-              # it has an active connection to the edge.
-              path: /ready
-              port: 2000
-            failureThreshold: 1
-            initialDelaySeconds: 10
-            periodSeconds: 10
-          volumeMounts:
-            - name: config
-              mountPath: /etc/cloudflared/config
-              readOnly: true
-            # Each tunnel has an associated "credentials file" which authorizes machines
-            # to run the tunnel. cloudflared will read this file from its local filesystem,
-            # and it'll be stored in a k8s secret.
-            - name: creds
-              mountPath: /etc/cloudflared/creds
-              readOnly: true
-      volumes:
-        - name: creds
-          secret:
-            # By default, the credentials file will be created under ~/.cloudflared/<tunnel ID>.json
-            # when you run `cloudflared tunnel create`. You can move it into a secret by using:
-            # ```sh
-            # kubectl create secret generic tunnel-credentials \
-            # --from-file=credentials.json=/Users/yourusername/.cloudflared/<tunnel ID>.json
-            # ```
-            secretName: tunnel-credentials
-        # Create a config.yaml file from the ConfigMap below.
-        - name: config
-          configMap:
-            name: cloudflared
-            items:
-              - key: config.yaml
-                path: config.yaml
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: cloudflared
-  namespace: immich
-data:
-  config.yaml: |
-    # Name of the tunnel you want to run
-    tunnel: immich
-    credentials-file: /etc/cloudflared/creds/credentials.json
-    # Serves the metrics server under /metrics and the readiness server under /ready
-    metrics: 0.0.0.0:2000
-    # Autoupdates applied in a k8s pod will be lost when the pod is removed or restarted, so
-    # autoupdate doesn't make sense in Kubernetes. However, outside of Kubernetes, we strongly
-    # recommend using autoupdate.
-    no-autoupdate: true
-    # The `ingress` block tells cloudflared which local service to route incoming
-    # requests to. For more about ingress rules, see
-    # https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/configuration/ingress
-    #
-    # Remember, these rules route traffic from cloudflared to a local service. To route traffic
-    # from the internet to cloudflared, run `cloudflared tunnel route dns [tunnel] [hostname]`.
-    # E.g. `cloudflared tunnel route dns example-tunnel tunnel.example.com`.
-    ingress:
-    - hostname: immich.timmybtech.com
-      service: http://immich-server.immich.svc.cluster.local:2283
-    # This rule matches any traffic which didn't match a previous rule, and responds with HTTP 404.
-    - service: http_status:404
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: cloudflared
-  namespace: immich
-  annotations:
-    argocd.argoproj.io/sync-wave: "-1"
-spec:
-  selector:
-    app: cloudflared
-  ports:
-    - port: 2000
-      protocol: TCP
-      targetPort: 2000
----
-apiVersion: traefik.io/v1alpha1
-kind: IngressRoute
-metadata:
-  name: cloudflared-ingress-immich
-  namespace: immich
-  annotations:
-    kubernetes.io/ingress.class: traefik-external
-    traefik.ingress.kubernetes.io/router.entrypoints: websecure
-spec:
-  entryPoints:
-    - websecure
-  routes:
-    - match: Host(`cf-immich.local.timmybtech.com`)
-      kind: Rule
-      services:
-        - name: cloudflared
-          port: 2000
-  tls:
-    secretName: local-timmybtech-com-tls
