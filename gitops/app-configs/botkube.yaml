@@ -4,7 +4,7 @@ metadata:
   name: botkube
   namespace: argocd
   finalizers:
-  - resources-finalizer.argocd.argoproj.io
+    - resources-finalizer.argocd.argoproj.io
   annotations:
     avp.kubernetes.io/path: "secret/data/botkube"
 spec:
@@ -14,78 +14,78 @@ spec:
   project: default
   source:
     repoURL: https://charts.botkube.io
-    targetRevision: 1.2.0
+    targetRevision: 1.14.0
     chart: botkube
     helm:
       releaseName: botkube
       parameters:
-      - name: "settings.clusterName"
-        value: "default"
+        - name: "settings.clusterName"
+          value: "default"
 
-      - name: "communications.default-group.discord.enabled"
-        value: "true"
+        - name: "communications.default-group.discord.enabled"
+          value: "true"
 
-      - name: "communications.default-group.discord.botID"
-        value: "<DISCORD_BOT_ID>"
+        - name: "communications.default-group.discord.botID"
+          value: "<DISCORD_BOT_ID>"
 
-      - name: "communications.default-group.discord.token"
-        value: "<DISCORD_TOKEN>"
+        - name: "communications.default-group.discord.token"
+          value: "<DISCORD_TOKEN>"
 
-      - name: "communications.default-group.discord.channels.default.id"
-        value: "<DISCORD_CHANNEL_ID>"
+        - name: "communications.default-group.discord.channels.default.id"
+          value: "<DISCORD_CHANNEL_ID>"
 
-      - name: "communications.default-group.discord.channels.default.bindings.sources[0]"
-        value: "k8s-recommendation-events"
+        - name: "communications.default-group.discord.channels.default.bindings.sources[0]"
+          value: "k8s-recommendation-events"
 
-      - name: "communications.default-group.discord.channels.default.bindings.sources[1]"
-        value: "k8s-err-events"
+        - name: "communications.default-group.discord.channels.default.bindings.sources[1]"
+          value: "k8s-err-events"
 
-      - name: "communications.default-group.discord.channels.default.bindings.sources[2]"
-        value: "prometheus"
+        - name: "communications.default-group.discord.channels.default.bindings.sources[2]"
+          value: "prometheus"
 
-      - name: "sources.prometheus.botkube/prometheus.enabled"
-        value: "true"
+        - name: "sources.prometheus.botkube/prometheus.enabled"
+          value: "true"
 
-      - name: "sources.prometheus.botkube/prometheus.config.url"
-        value: "https://prometheus.local.timmybtech.com"
+        - name: "sources.prometheus.botkube/prometheus.config.url"
+          value: "https://prometheus.local.timmybtech.com"
 
-      - name: "sources.prometheus.botkube/prometheus.config.ignoreOldAlerts"
-        value: "true"
+        - name: "sources.prometheus.botkube/prometheus.config.ignoreOldAlerts"
+          value: "true"
 
-      - name: "sources.prometheus.botkube/prometheus.config.alertStates[0]"
-        value: "firing"
+        - name: "sources.prometheus.botkube/prometheus.config.alertStates[0]"
+          value: "firing"
 
-      - name: "plugins.repositories.botkube.url"
-        value: "https://github.com/kubeshop/botkube/releases/download/v1.2.0/plugins-index.yaml"
+        - name: "plugins.repositories.botkube.url"
+          value: "https://github.com/kubeshop/botkube/releases/download/v1.2.0/plugins-index.yaml"
 
-      - name: "executors.k8s-default-tools.botkube/kubectl.enabled"
-        value: "true"
+        - name: "executors.k8s-default-tools.botkube/kubectl.enabled"
+          value: "true"
 
-      - name: "executors.k8s-default-tools.botkube/helm.enabled"
-        value: "true"
+        - name: "executors.k8s-default-tools.botkube/helm.enabled"
+          value: "true"
 
-      - name: "executors.ai.botkube/doctor.enabled"
-        value: "true"
+        - name: "executors.ai.botkube/doctor.enabled"
+          value: "true"
 
-      - name: "executors.ai.botkube/doctor.config.apiKey"
-        value: "<OPENAI_API_KEY>"
+        - name: "executors.ai.botkube/doctor.config.apiKey"
+          value: "<OPENAI_API_KEY>"
 
-      - name: "executors.bins-management.botkube/exec.enabled"
-        value: "true"
+        - name: "executors.bins-management.botkube/exec.enabled"
+          value: "true"
 
-      - name: "aliases.k.displayName"
-        value: "Kubectl alias"
+        - name: "aliases.k.displayName"
+          value: "Kubectl alias"
 
-      - name: "aliases.kk.command"
-        value: "kubectl"
+        - name: "aliases.kk.command"
+          value: "kubectl"
 
-      - name: "analytics.disable"
-        value: "true"
+        - name: "analytics.disable"
+          value: "true"
 
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
     syncOptions:
-    - CreateNamespace=true
-    - ApplyOutOfSyncOnly=true
+      - CreateNamespace=true
+      - ApplyOutOfSyncOnly=true
