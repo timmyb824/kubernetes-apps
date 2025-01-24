@@ -53,7 +53,7 @@ spec:
                       values: ["botkube-plugins-default"]
               config:
                 openAIAssistantID: "<path:secret/data/botkube#OPENAI_ASSISTANT_ID>"
-                openAIAPIToken: "<path:secret/data/botkube#OPENAI_API_TOKEN>"
+                openAIAPIToken: "<path:secret/data/botkube#OPENAI_API_KEY>"
           'k8s-err-events':
             displayName: "Kubernetes Errors"
             botkube/kubernetes:
