@@ -35,3 +35,22 @@ spec:
     app.kubernetes.io/component: controller
     app.kubernetes.io/instance: metallb
     app.kubernetes.io/name: metallb
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: metallb-ingress
+  namespace: metallb-system
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`metallb-metrics.local.timmybtech.com`)
+      kind: Rule
+      services:
+        - name: metallb-metrics
+          port: 7472
+  tls:
+    secretName: local-timmybtech-com-tls
