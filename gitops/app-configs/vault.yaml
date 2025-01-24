@@ -13,7 +13,7 @@ spec:
     namespace: vault
     server: "https://kubernetes.default.svc"
   project: default
-  source:
+  sources:
     - repoURL: https://helm.releases.hashicorp.com
       targetRevision: 0.28.0 # can upgrade to 0.29.1
       chart: vault
