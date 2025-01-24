@@ -19,6 +19,12 @@ spec:
     helm:
       releaseName: botkube
       values: |
+        default-plugin-context: &default-plugin-context
+          rbac:
+            group:
+              type: Static
+              static:
+                values: ["botkube-plugins-default"]
         sources:
           "argocd":
             botkubeExtra/argocd:
@@ -52,8 +58,8 @@ spec:
                     static:
                       values: ["botkube-plugins-default"]
               config:
-                openAIAssistantID: "<path:secret/data/botkube#OPENAI_ASSISTANT_ID>"
-                openAIAPIToken: "<path:secret/data/botkube#OPENAI_API_KEY>"
+                openAIAssistantID: <path:secret/data/botkube#OPENAI_ASSISTANT_ID>
+                openAIAPIToken: <path:secret/data/botkube#OPENAI_API_KEY>
           'k8s-err-events':
             displayName: "Kubernetes Errors"
             botkube/kubernetes:
@@ -139,16 +145,13 @@ spec:
             disableColors: false
             formatter: json # or text
 
-        deployment:
         resources:
           limits:
-          cpu: 100m
-          memory: 128Mi
+            cpu: 100m
+            memory: 128Mi
           requests:
-          cpu: 100m
-          memory: 128Mi
-
-        nodeSelector: worker
+            cpu: 100m
+            memory: 128Mi
 
         analytics:
           disable: true
