@@ -14,3 +14,22 @@ kind: L2Advertisement
 metadata:
   name: default
   namespace: metallb-system
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: metallb-metrics
+  namespace: metallb-system
+  labels:
+    app: metallb
+    component: controller
+spec:
+  type: ClusterIP
+  ports:
+    - port: 7472
+      targetPort: 7472
+      protocol: TCP
+      name: metrics
+  selector:
+    app: metallb
+    component: controller
