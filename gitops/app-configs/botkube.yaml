@@ -18,69 +18,147 @@ spec:
     chart: botkube
     helm:
       releaseName: botkube
-      parameters:
-        - name: "settings.clusterName"
-          value: "default"
+      values: |
+        sources:
+          "argocd":
+            botkubeExtra/argocd:
+              enabled: false # There is lots of cleanup if you disable the plugin so not sure if its worth it
+              context:
+                rbac:
+                  group:
+                    type: Static
+                    static:
+                      values: ["argocd"]
+              config:
+                defaultSubscriptions:
+                  applications:
+                    - name: authentik
+                      namespace: argocd
+                    - name: hoarder
+                      namespace: argocd
+                argoCD:
+                  uiBaseUrl: https://argocd.local.timmybtech.com
+                  notificationsConfigMap:
+                    name: argocd-notifications-cm
+                    namespace: argocd
+          'ai-brain':
+            botkubeExtra/ai-brain:
+              displayName: "AI Brain"
+              enabled: true
+              context:
+                rbac:
+                  group:
+                    type: Static
+                    static:
+                      values: ["botkube-plugins-default"]
+              config:
+                openAIAssistantID: "<path:secret/data/botkube#OPENAI_ASSISTANT_ID>"
+                openAIAPIToken: "<path:secret/data/botkube#OPENAI_API_TOKEN>"
+          'k8s-err-events':
+            displayName: "Kubernetes Errors"
+            botkube/kubernetes:
+              context: *default-plugin-context
+              enabled: true
+              config:
+                extraButtons:
+                  - button:
+                      commandTpl: ai why the {{ .Kind | lower }} '{{ .Name }}'  in the {{ .Namespace }} namespace is failing with {{ .Reason }}. If possible, check the application logs.
+                      displayName: Ask AI
+                    enabled: true
+                    trigger:
+                      type:
+                        - error
 
-        - name: "communications.default-group.discord.enabled"
-          value: "true"
+        executors:
+          k8s-default-tools:
+            botkube/kubectl:
+              displayName: "Kubectl"
+              enabled: true
+              config:
+                defaultNamespace: "default"
+              context: *default-plugin-context
+            botkubeExtra/helm:
+              displayName: "Helm"
+              enabled: true
+              context: *default-plugin-context
+          ai:
+            botkubeExtra/ai:
+              displayName: "AI"
+              enabled: true
+              context:
+                rbac:
+                  group:
+                    type: Static
+                    static:
+                      values: ["botkube-plugins-default"]
+              config:
+                aiBrainSourceName: ai-brain
 
-        - name: "communications.default-group.discord.botID"
-          value: "<DISCORD_BOT_ID>"
+        aliases:
+          kk:
+            command: kubectl
+            displayName: "Kubectl alias"
+          kgp:
+            command: kubectl get pods
+            displayName: "Get pods"
 
-        - name: "communications.default-group.discord.token"
-          value: "<DISCORD_TOKEN>"
+        communications:
+          'default-group':
+            discord:
+              enabled: true
+              token: '<path:secret/data/botkube#DISCORD_TOKEN>'
+              botID: '<path:secret/data/botkube#DISCORD_BOT_ID>'
+              channels:
+                'default':
+                  id: '<path:secret/data/botkube#DISCORD_CHANNEL_ID>'
+                  notification:
+                    disabled: false
+                  bindings:
+                    executors:
+                      - k8s-default-tools
+                      - ai
+                    sources:
+                      - k8s-err-events
+                      - k8s-recommendation-events
+                      - ai-brain
 
-        - name: "communications.default-group.discord.channels.default.id"
-          value: "<DISCORD_CHANNEL_ID>"
+            webhook:
+              enabled: false
+              url: 'WEBHOOK_URL'
+              bindings:
+                sources:
+                  - k8s-err-events
+                  - k8s-recommendation-events
 
-        - name: "communications.default-group.discord.channels.default.bindings.sources[0]"
-          value: "k8s-recommendation-events"
+        settings:
+          clusterName: default
+          healthPort: 2114
+          upgradeNotifier: true
+          log:
+            level: info
+            disableColors: false
+            formatter: json # or text
 
-        - name: "communications.default-group.discord.channels.default.bindings.sources[1]"
-          value: "k8s-err-events"
+        deployment:
+        resources:
+          limits:
+          cpu: 100m
+          memory: 128Mi
+          requests:
+          cpu: 100m
+          memory: 128Mi
 
-        - name: "communications.default-group.discord.channels.default.bindings.sources[2]"
-          value: "prometheus"
+        nodeSelector: worker
 
-        - name: "sources.prometheus.botkube/prometheus.enabled"
-          value: "true"
+        analytics:
+          disable: true
 
-        - name: "sources.prometheus.botkube/prometheus.config.url"
-          value: "https://prometheus.local.timmybtech.com"
-
-        - name: "sources.prometheus.botkube/prometheus.config.ignoreOldAlerts"
-          value: "true"
-
-        - name: "sources.prometheus.botkube/prometheus.config.alertStates[0]"
-          value: "firing"
-
-        - name: "plugins.repositories.botkube.url"
-          value: "https://github.com/kubeshop/botkube/releases/download/v1.2.0/plugins-index.yaml"
-
-        - name: "executors.k8s-default-tools.botkube/kubectl.enabled"
-          value: "true"
-
-        - name: "executors.k8s-default-tools.botkube/helm.enabled"
-          value: "true"
-
-        - name: "executors.ai.botkube/doctor.enabled"
-          value: "true"
-
-        - name: "executors.ai.botkube/doctor.config.apiKey"
-          value: "<OPENAI_API_KEY>"
-
-        - name: "executors.bins-management.botkube/exec.enabled"
-          value: "true"
-
-        - name: "aliases.k.displayName"
-          value: "Kubectl alias"
-
-        - name: "aliases.kk.command"
-          value: "kubectl"
-
-        - name: "analytics.disable"
-          value: "true"
+        plugins:
+          repositories:
+            botkube:
+              url: https://github.com/kubeshop/botkube/releases/download/v1.14.0/plugins-index.yaml
+            botkubeExtra:
+              url: https://github.com/kubeshop/botkube-plugins/releases/download/v1.14.0/plugins-index.yaml
 
   syncPolicy:
     automated:
