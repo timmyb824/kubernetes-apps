@@ -21,8 +21,9 @@ metadata:
   name: metallb-metrics
   namespace: metallb-system
   labels:
-    app: metallb
-    component: controller
+    app.kubernetes.io/instance: metallb
+    app.kubernetes.io/name: metallb
+    app.kubernetes.io/component: controller
 spec:
   type: ClusterIP
   ports:
@@ -31,5 +32,6 @@ spec:
       protocol: TCP
       name: metrics
   selector:
-    app: metallb
-    component: controller
+    app.kubernetes.io/component: controller
+    app.kubernetes.io/instance: metallb
+    app.kubernetes.io/name: metallb
