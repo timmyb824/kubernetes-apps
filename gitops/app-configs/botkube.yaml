@@ -19,12 +19,12 @@ spec:
     helm:
       releaseName: botkube
       values: |
-        # default-plugin-context: &default-plugin-context
-        #   rbac:
-        #     group:
-        #       type: Static
-        #       static:
-        #         values: ["botkube-plugins-default"]
+        default-plugin-context: &default-plugin-context
+          rbac:
+            group:
+              type: Static
+              static:
+                values: ["botkube-plugins-default"]
         sources:
           "argocd":
             botkubeExtra/argocd:
