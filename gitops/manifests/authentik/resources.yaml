@@ -1,0 +1,214 @@
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: authentik-ingress
+  namespace: authentik
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`authentik.local.timmybtech.com`)
+      kind: Rule
+      services:
+        - name: authentik-server
+          port: 80
+  tls:
+    secretName: local-timmybtech-com-tls
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: authentik-metrics
+  namespace: authentik
+  labels:
+    app.kubernetes.io/name: authentik
+    app.kubernetes.io/component: metrics
+spec:
+  type: ClusterIP
+  ports:
+    - port: 9300
+      targetPort: 9300
+      protocol: TCP
+      name: metrics
+  selector:
+    app.kubernetes.io/component: server
+    app.kubernetes.io/instance: authentik
+    app.kubernetes.io/name: authentik
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: authentik-metrics-ingress
+  namespace: authentik
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`authentik-metrics.local.timmybtech.com`)
+      kind: Rule
+      services:
+        - name: authentik-metrics
+          port: 9300
+  tls:
+    secretName: local-timmybtech-com-tls
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: authentik
+  namespace: authentik
+  annotations: {}
+spec:
+  ingressClassName: tailscale
+  defaultBackend:
+    service:
+      name: authentik-server
+      port:
+        number: 80
+  tls:
+    - hosts:
+        - authentik
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  namespace: authentik
+  name: tunnel-credentials
+type: Opaque
+stringData:
+  credentials.json: >-
+    <path:secret/data/cloudflared#AUTHENTIK_CREDENTIALS>
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloudflared
+  namespace: authentik
+spec:
+  selector:
+    matchLabels:
+      app: cloudflared
+  replicas: 2 # You could also consider elastic scaling for this deployment
+  template:
+    metadata:
+      labels:
+        app: cloudflared
+    spec:
+      containers:
+        - name: cloudflared
+          image: cloudflare/cloudflared:2025.1.0
+          args:
+            - tunnel
+            # Points cloudflared to the config file, which configures what
+            # cloudflared will actually do. This file is created by a ConfigMap
+            # below.
+            - --config
+            - /etc/cloudflared/config/config.yaml
+            - run
+          livenessProbe:
+            httpGet:
+              # Cloudflared has a /ready endpoint which returns 200 if and only if
+              # it has an active connection to the edge.
+              path: /ready
+              port: 2000
+            failureThreshold: 1
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          volumeMounts:
+            - name: config
+              mountPath: /etc/cloudflared/config
+              readOnly: true
+            # Each tunnel has an associated "credentials file" which authorizes machines
+            # to run the tunnel. cloudflared will read this file from its local filesystem,
+            # and it'll be stored in a k8s secret.
+            - name: creds
+              mountPath: /etc/cloudflared/creds
+              readOnly: true
+      volumes:
+        - name: creds
+          secret:
+            # By default, the credentials file will be created under ~/.cloudflared/<tunnel ID>.json
+            # when you run `cloudflared tunnel create`. You can move it into a secret by using:
+            # ```sh
+            # kubectl create secret generic tunnel-credentials \
+            # --from-file=credentials.json=/Users/yourusername/.cloudflared/<tunnel ID>.json
+            # ```
+            secretName: tunnel-credentials
+        # Create a config.yaml file from the ConfigMap below.
+        - name: config
+          configMap:
+            name: cloudflared
+            items:
+              - key: config.yaml
+                path: config.yaml
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cloudflared
+  namespace: authentik
+data:
+  config.yaml: |
+    # Name of the tunnel you want to run
+    tunnel: authentik
+    credentials-file: /etc/cloudflared/creds/credentials.json
+    # Serves the metrics server under /metrics and the readiness server under /ready
+    metrics: 0.0.0.0:2000
+    # Autoupdates applied in a k8s pod will be lost when the pod is removed or restarted, so
+    # autoupdate doesn't make sense in Kubernetes. However, outside of Kubernetes, we strongly
+    # recommend using autoupdate.
+    no-autoupdate: true
+    # The `ingress` block tells cloudflared which local service to route incoming
+    # requests to. For more about ingress rules, see
+    # https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/configuration/ingress
+    #
+    # Remember, these rules route traffic from cloudflared to a local service. To route traffic
+    # from the internet to cloudflared, run `cloudflared tunnel route dns [tunnel] [hostname]`.
+    # E.g. `cloudflared tunnel route dns example-tunnel tunnel.example.com`.
+    ingress:
+    - hostname: authentik.timmybtech.com
+      service: http://authentik-server.authentik.svc.cluster.local:80
+    # This rule matches any traffic which didn't match a previous rule, and responds with HTTP 404.
+    - service: http_status:404
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cloudflared
+  namespace: authentik
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+spec:
+  selector:
+    app: cloudflared
+  ports:
+    - port: 2000
+      protocol: TCP
+      targetPort: 2000
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: cloudflared-ingress-authentik
+  namespace: authentik
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`cf-authentik.local.timmybtech.com`)
+      kind: Rule
+      services:
+        - name: cloudflared
+          port: 2000
+  tls:
+    secretName: local-timmybtech-com-tls
