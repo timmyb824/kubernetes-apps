@@ -12,14 +12,17 @@ spec:
     namespace: botkube
     server: "https://kubernetes.default.svc"
   project: default
-  source:
-    repoURL: https://charts.botkube.io
-    targetRevision: 1.14.0
-    chart: botkube
-    helm:
-      releaseName: botkube
-      valueFiles:
-        - "gitops/manifests/botkube/values.yaml"
+  sources:
+    - repoURL: https://charts.botkube.io
+      targetRevision: 1.14.0
+      chart: botkube
+      helm:
+        releaseName: botkube
+
+    - repoURL: "https://github.com/timmyb824/kubernetes-apps.git"
+      targetRevision: HEAD
+      path: "gitops/manifests/botkube"
+
   syncPolicy:
     automated:
       prune: true
