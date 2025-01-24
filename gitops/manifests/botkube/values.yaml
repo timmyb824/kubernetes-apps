@@ -1,3 +1,11 @@
+# Must define anchors to be able to use them
+default-plugin-context: &default-plugin-context
+  rbac:
+    group:
+      type: Static
+      static:
+        values: ["botkube-plugins-default"]
+
 sources:
   "argocd":
     botkubeExtra/argocd:
@@ -20,7 +28,7 @@ sources:
           notificationsConfigMap:
             name: argocd-notifications-cm
             namespace: argocd
-  'ai-brain':
+  "ai-brain":
     botkubeExtra/ai-brain:
       displayName: "AI Brain"
       enabled: true
@@ -33,7 +41,7 @@ sources:
       config:
         openAIAssistantID: "<path:secret/data/botkube#OPENAI_ASSISTANT_ID>"
         openAIAPIToken: "<path:secret/data/botkube#OPENAI_API_KEY>"
-  'k8s-err-events':
+  "k8s-err-events":
     displayName: "Kubernetes Errors"
     botkube/kubernetes:
       context: *default-plugin-context
@@ -82,14 +90,14 @@ aliases:
     displayName: "Get pods"
 
 communications:
-  'default-group':
+  "default-group":
     discord:
       enabled: true
-      token: '<path:secret/data/botkube#DISCORD_TOKEN>'
-      botID: '<path:secret/data/botkube#DISCORD_BOT_ID>'
+      token: "<path:secret/data/botkube#DISCORD_TOKEN>"
+      botID: "<path:secret/data/botkube#DISCORD_BOT_ID>"
       channels:
-        'default':
-          id: '<path:secret/data/botkube#DISCORD_CHANNEL_ID>'
+        "default":
+          id: "<path:secret/data/botkube#DISCORD_CHANNEL_ID>"
           notification:
             disabled: false
           bindings:
@@ -103,7 +111,7 @@ communications:
 
     webhook:
       enabled: false
-      url: 'WEBHOOK_URL'
+      url: "WEBHOOK_URL"
       bindings:
         sources:
           - k8s-err-events
@@ -121,11 +129,11 @@ settings:
 deployment:
 resources:
   limits:
-   cpu: 100m
-   memory: 128Mi
+    cpu: 100m
+    memory: 128Mi
   requests:
-   cpu: 100m
-   memory: 128Mi
+    cpu: 100m
+    memory: 128Mi
 
 nodeSelector: worker
 
