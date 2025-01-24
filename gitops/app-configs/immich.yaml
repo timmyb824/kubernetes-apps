@@ -134,18 +134,3 @@ spec:
       selfHeal: true
     syncOptions:
       - ApplyOutOfSyncOnly=true
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: immich-library-pvc
-  namespace: immich
-  annotations:
-    argocd.argoproj.io/sync-wave: "-1"
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 512Gi
-  storageClassName: nfs-csi-synologynas
