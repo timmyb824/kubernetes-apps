@@ -1,0 +1,140 @@
+sources:
+  "argocd":
+    botkubeExtra/argocd:
+      enabled: false # There is lots of cleanup if you disable the plugin so not sure if its worth it
+      context:
+        rbac:
+          group:
+            type: Static
+            static:
+              values: ["argocd"]
+      config:
+        defaultSubscriptions:
+          applications:
+            - name: authentik
+              namespace: argocd
+            - name: hoarder
+              namespace: argocd
+        argoCD:
+          uiBaseUrl: https://argocd.local.timmybtech.com
+          notificationsConfigMap:
+            name: argocd-notifications-cm
+            namespace: argocd
+  'ai-brain':
+    botkubeExtra/ai-brain:
+      displayName: "AI Brain"
+      enabled: true
+      context:
+        rbac:
+          group:
+            type: Static
+            static:
+              values: ["botkube-plugins-default"]
+      config:
+        openAIAssistantID: "<path:secret/data/botkube#OPENAI_ASSISTANT_ID>"
+        openAIAPIToken: "<path:secret/data/botkube#OPENAI_API_KEY>"
+  'k8s-err-events':
+    displayName: "Kubernetes Errors"
+    botkube/kubernetes:
+      context: *default-plugin-context
+      enabled: true
+      config:
+        extraButtons:
+          - button:
+              commandTpl: ai why the {{ .Kind | lower }} '{{ .Name }}'  in the {{ .Namespace }} namespace is failing with {{ .Reason }}. If possible, check the application logs.
+              displayName: Ask AI
+            enabled: true
+            trigger:
+              type:
+                - error
+
+executors:
+  k8s-default-tools:
+    botkube/kubectl:
+      displayName: "Kubectl"
+      enabled: true
+      config:
+        defaultNamespace: "default"
+      context: *default-plugin-context
+    botkubeExtra/helm:
+      displayName: "Helm"
+      enabled: true
+      context: *default-plugin-context
+  ai:
+    botkubeExtra/ai:
+      displayName: "AI"
+      enabled: true
+      context:
+        rbac:
+          group:
+            type: Static
+            static:
+              values: ["botkube-plugins-default"]
+      config:
+        aiBrainSourceName: ai-brain
+
+aliases:
+  kk:
+    command: kubectl
+    displayName: "Kubectl alias"
+  kgp:
+    command: kubectl get pods
+    displayName: "Get pods"
+
+communications:
+  'default-group':
+    discord:
+      enabled: true
+      token: '<path:secret/data/botkube#DISCORD_TOKEN>'
+      botID: '<path:secret/data/botkube#DISCORD_BOT_ID>'
+      channels:
+        'default':
+          id: '<path:secret/data/botkube#DISCORD_CHANNEL_ID>'
+          notification:
+            disabled: false
+          bindings:
+            executors:
+              - k8s-default-tools
+              - ai
+            sources:
+              - k8s-err-events
+              - k8s-recommendation-events
+              - ai-brain
+
+    webhook:
+      enabled: false
+      url: 'WEBHOOK_URL'
+      bindings:
+        sources:
+          - k8s-err-events
+          - k8s-recommendation-events
+
+settings:
+  clusterName: default
+  healthPort: 2114
+  upgradeNotifier: true
+  log:
+    level: info
+    disableColors: false
+    formatter: json # or text
+
+deployment:
+resources:
+  limits:
+   cpu: 100m
+   memory: 128Mi
+  requests:
+   cpu: 100m
+   memory: 128Mi
+
+nodeSelector: worker
+
+analytics:
+  disable: true
+
+plugins:
+  repositories:
+    botkube:
+      url: https://github.com/kubeshop/botkube/releases/download/v1.14.0/plugins-index.yaml
+    botkubeExtra:
+      url: https://github.com/kubeshop/botkube-plugins/releases/download/v1.14.0/plugins-index.yaml
