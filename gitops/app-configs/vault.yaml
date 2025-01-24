@@ -5,9 +5,7 @@ metadata:
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
-  annotations:
-    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
-    argocd.argoproj.io/compare-options: IgnoreExtraneous=true
+  annotations: {}
 spec:
   destination:
     namespace: vault
@@ -399,22 +397,3 @@ spec:
       selfHeal: true
     syncOptions:
       - ApplyOutOfSyncOnly=true
----
-apiVersion: traefik.io/v1alpha1
-kind: IngressRoute
-metadata:
-  name: vault-ingress
-  namespace: vault
-  annotations:
-    kubernetes.io/ingress.class: traefik-external
-spec:
-  entryPoints:
-    - websecure
-  routes:
-    - match: Host(`vault.local.timmybtech.com`)
-      kind: Rule
-      services:
-        - name: vault
-          port: 8200
-  tls:
-    secretName: local-timmybtech-com-tls
