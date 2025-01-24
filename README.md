@@ -4,7 +4,7 @@ This repository contains a collection of Kubernetes applications that are curren
 
 ## Applications
 
-The folders are broken out by method of deployment. The `gitops` folder contains applications that are deployed via [ArgoCD](https://argoproj.github.io/argo-cd/), the `helm` folder contains applications that are deployed via [Helm](https://helm.sh/), and the `manifests` folder contains applications that are deployed via `kubectl apply -f`. Finally, the `tools` folder contains instructions for installing tools that are used to to help manage things within the cluster.
+The folders are broken out by method of deployment. The `gitops` folder contains applications that are deployed via [ArgoCD](https://argoproj.github.io/argo-cd/), the `non-gitops` folder contains applications that are deployed via [Helm](https://helm.sh/) or `kubectl apply -f`. Finally, the `tools` folder contains instructions for installing tools that are used to to help manage things within the cluster.
 
 ## Cluster
 
