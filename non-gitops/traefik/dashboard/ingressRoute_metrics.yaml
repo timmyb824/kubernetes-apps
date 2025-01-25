@@ -14,8 +14,5 @@ spec:
       services:
         - name: prometheus@internal
           kind: TraefikService
-      middlewares:
-        - name: crowdsec-bouncer
-          namespace: kube-system
   tls:
     secretName: local-timmybtech-com-tls
