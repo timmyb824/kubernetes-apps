@@ -2,17 +2,32 @@ apiVersion: traefik.io/v1alpha1
 kind: Middleware
 metadata:
   name: crowdsec-bouncer
-  namespace: kube-system
+  namespace: traefik
 spec:
   plugin:
     crowdsec-bouncer:
       enabled: true
-      logLevel: INFO
-      updateIntervalSeconds: 30
-      crowdsecMode: stream
-      crowdsecLapiScheme: http
-      crowdsecLapiHost: crowdsec-service.crowdsec.svc.cluster.local:8080
-      crowdsecLapiKey: "${LAPI_BOUNCER_KEY}"
+      crowdsecMode: none
+      crowdsecLapiScheme: https
+      crowdsecLapiHost: crowdsec-service.crowdsec:8080
+      crowdsecLapiTLSCertificateBouncerFile: /certs/tls.crt
+      crowdsecLapiTLSCertificateBouncerKeyFile: /certs/tls.key
+---
+# apiVersion: traefik.io/v1alpha1
+# kind: Middleware
+# metadata:
+#   name: crowdsec-bouncer
+#   namespace: kube-system
+# spec:
+#   plugin:
+#     crowdsec-bouncer:
+#       enabled: true
+#       logLevel: INFO
+#       updateIntervalSeconds: 30
+#       crowdsecMode: stream
+#       crowdsecLapiScheme: http
+#       crowdsecLapiHost: crowdsec-service.crowdsec.svc.cluster.local:8080
+#       crowdsecLapiKey: "${LAPI_BOUNCER_KEY}"
 ---
 # apiVersion: traefik.io/v1alpha1
 # kind: Middleware
