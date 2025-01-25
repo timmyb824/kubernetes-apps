@@ -36,7 +36,7 @@ providers:
     allowCrossNamespace: true # FOR AUTHENTIK
     ingressRoute: # FOR CROWDSEC
       defaultMiddleware:
-        namespace: crowdsec
+        namespace: traefik
         name: crowdsec-bouncer
   kubernetesIngress:
     enabled: true
