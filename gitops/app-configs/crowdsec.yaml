@@ -85,9 +85,8 @@ spec:
           caBundle: true
           certManager:
             enabled: true
-            issuerRef:
-              name: "letsencrypt-production"  # Replace with your ClusterIssuer name
-              kind: "ClusterIssuer"
+          bouncer:
+            secret: "crowdsec-bouncer-tls"
           agent:
             tlsClientAuth: true
             secret: "crowdsec-agent-tls"
