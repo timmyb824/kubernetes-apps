@@ -93,10 +93,13 @@ spec:
           lapi:
             secret: "crowdsec-lapi-tls"
         agent:
-          tolerations:
-            - key: node-role.kubernetes.io/control-plane
-              operator: Equal
-              effect: NoSchedule
+          affinity:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                - matchExpressions:
+                  - key: node-role.kubernetes.io/control-plane
+                    operator: DoesNotExist
           # Specify each pod whose logs you want to process
           acquisition:
             - namespace: traefik
@@ -120,6 +123,13 @@ spec:
           metrics:
             enabled: true
         lapi:
+          affinity:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                - matchExpressions:
+                  - key: node-role.kubernetes.io/control-plane
+                    operator: DoesNotExist
           dashboard:
             enabled: false
           persistentVolume:
@@ -143,8 +153,6 @@ spec:
               value: "k8s-cluster"
             - name: ENROLL_TAGS
               value: "k8s linux homelab"
-          nodeSelector:
-            worker: "true"
         image:
           pullPolicy: Always
 
