@@ -320,3 +320,6 @@ service:
 logs:
   access:
     enabled: true
+    format: json
+  general:
+    format: json
