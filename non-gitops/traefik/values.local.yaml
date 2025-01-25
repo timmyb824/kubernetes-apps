@@ -5,10 +5,10 @@ additionalArguments:
   - --serversTransport.insecureSkipVerify=true
   - --log.level=INFO
 experimental: # FOR CROWDSEC
-  plugins:
-    crowdsec-bouncer:
-      moduleName: github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin
-      version: v1.3.5
+  plugins: #
+    crowdsec-bouncer: #
+      moduleName: github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin #
+      version: v1.3.5 #
 deployment:
   enabled: true
   replicas: 3
@@ -35,9 +35,9 @@ providers:
     ingressClass: traefik-external
     allowCrossNamespace: true # FOR AUTHENTIK
     ingressRoute: # FOR CROWDSEC
-      defaultMiddleware:
-        namespace: traefik
-        name: crowdsec-bouncer
+      defaultMiddleware: #
+        namespace: traefik #
+        name: crowdsec-bouncer #
   kubernetesIngress:
     enabled: true
     publishedService:
@@ -319,7 +319,7 @@ service:
   externalIPs: []
 logs:
   access:
-    enabled: false
+    enabled: true
     format: json
   general:
     format: json
