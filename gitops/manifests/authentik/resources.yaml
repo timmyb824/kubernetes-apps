@@ -16,6 +16,8 @@ spec:
       services:
         - name: authentik-server
           port: 80
+      middlewares:
+        - traefik-crowdsec-bouncer@kubernetescrd
   tls:
     secretName: local-timmybtech-com-tls
 ---
