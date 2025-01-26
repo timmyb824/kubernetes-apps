@@ -518,6 +518,9 @@ spec:
       services:
         - name: ntfy
           port: 80
+      middlewares:
+        - name: crowdsec-bouncer
+          namespace: traefik
   tls:
     secretName: local-timmybtech-com-tls
 ---

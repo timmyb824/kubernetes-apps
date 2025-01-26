@@ -125,6 +125,9 @@ spec:
       services:
         - name: n8n
           port: 5678
+      middlewares:
+        - name: crowdsec-bouncer
+          namespace: traefik
   tls:
     secretName: local-timmybtech-com-tls
 ---

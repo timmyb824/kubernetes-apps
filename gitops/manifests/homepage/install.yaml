@@ -373,7 +373,7 @@ data:
             app: minio
         - ntfy:
             icon: ntfy.png
-            href: https://ntfy.local.timmybtech.com/
+            href: https://ntfy.timmybtech.com/
             namespace: ntfy
             app: ntfy
         - n8n:
