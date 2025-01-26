@@ -66,14 +66,14 @@ spec:
               context: *default-plugin-context
               enabled: true
               config:
-                extraButtons:
-                  - button:
-                      commandTpl: ai why the {{ .Kind | lower }} '{{ .Name }}'  in the {{ .Namespace }} namespace is failing with {{ .Reason }}. If possible, check the application logs.
-                      displayName: Ask AI
-                    enabled: true
-                    trigger:
-                      type:
-                        - error
+                commands:
+                  extraButtons:
+                    - name: "Ask AI"
+                      command: "ai why the {{ .Resource.Kind | lower }} '{{ .Resource.Name }}' in the {{ .Resource.Namespace }} namespace is failing with {{ .Event.Reason }}. If possible, check the application logs."
+                      description: "Ask AI to analyze the error"
+                event:
+                  types:
+                    - error
 
         executors:
           k8s-default-tools:
