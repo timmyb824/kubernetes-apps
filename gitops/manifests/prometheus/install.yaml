@@ -251,6 +251,32 @@ data:
           - source_labels: [__address__]
             regex: (metallb-metrics.local.timmybtech.com)
             target_label: instance
+
+      - job_name: "crowdsec"
+        scheme: https
+        metrics_path: /metrics
+        static_configs:
+          - targets:
+            - "crowdsec-metrics.local.timmybtech.com"
+        tls_config:
+          insecure_skip_verify: true
+        relabel_configs:
+          - source_labels: [__address__]
+            regex: (crowdsec-metrics.local.timmybtech.com)
+            target_label: instance
+
+      - job_name: "crowdsec-agent"
+        scheme: https
+        metrics_path: /metrics
+        static_configs:
+          - targets:
+            - "crowdsec-agent-metrics.local.timmybtech.com"
+        tls_config:
+          insecure_skip_verify: true
+        relabel_configs:
+          - source_labels: [__address__]
+            regex: (crowdsec-agent-metrics.local.timmybtech.com)
+            target_label: instance
 ---
 apiVersion: apps/v1
 kind: Deployment
