@@ -101,6 +101,9 @@ spec:
       services:
         - name: web
           port: 3000
+      middlewares:
+        - name: crowdsec-bouncer
+          namespace: traefik
   tls:
     secretName: local-timmybtech-com-tls
 ---
