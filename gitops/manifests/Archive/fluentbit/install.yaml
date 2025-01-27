@@ -144,7 +144,7 @@ spec:
     spec:
       containers:
       - name: fluent-bit
-        image: fluent/fluent-bit:3.2.3 # orig 1.9
+        image: fluent/fluent-bit:3.2.5 # orig 1.9
         imagePullPolicy: Always
         ports:
           - containerPort: 2020
