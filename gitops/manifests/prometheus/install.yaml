@@ -279,13 +279,11 @@ data:
             target_label: instance
 
       - job_name: "coredns"
-        scheme: https
+        scheme: http
         metrics_path: /metrics
         static_configs:
           - targets:
             - "192.168.86.220:9153"
-        tls_config:
-          insecure_skip_verify: true
         relabel_configs:
           - source_labels: [__address__]
             regex: (192.168.86.220:9153)
