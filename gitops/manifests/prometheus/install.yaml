@@ -288,7 +288,7 @@ data:
           insecure_skip_verify: true
         relabel_configs:
           - source_labels: [__address__]
-            regex: (102.168.86.220:9153)
+            regex: (192.168.86.220:9153)
             target_label: instance
 ---
 apiVersion: apps/v1
