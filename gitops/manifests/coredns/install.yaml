@@ -116,6 +116,7 @@ metadata:
     prometheus.io/scrape: "true"
     prometheus.io/port: "9153"
     metallb.universe.tf/loadBalancerIPs: "192.168.86.220"
+    tailscale.com/expose: "true"
 spec:
   selector:
     app: adguard-coredns
