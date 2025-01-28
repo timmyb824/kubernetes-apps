@@ -278,7 +278,7 @@ data:
             regex: (crowdsec-agent-metrics.local.timmybtech.com)
             target_label: instance
 
-      - job_name: "ccoredns"
+      - job_name: "coredns"
         scheme: https
         metrics_path: /metrics
         static_configs:
