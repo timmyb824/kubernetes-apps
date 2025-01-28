@@ -58,7 +58,7 @@ spec:
       targetPort: 8086
   selector:
     app: influxdb
-  type: LoadBalancer
+  type: ClusterIP
 ---
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
