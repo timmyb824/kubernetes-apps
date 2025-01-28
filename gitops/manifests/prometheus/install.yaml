@@ -283,7 +283,7 @@ data:
         metrics_path: /metrics
         static_configs:
           - targets:
-            - "102.168.86.220:9153"
+            - "192.168.86.220:9153"
         tls_config:
           insecure_skip_verify: true
         relabel_configs:
