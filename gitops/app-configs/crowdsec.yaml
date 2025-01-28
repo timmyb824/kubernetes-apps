@@ -74,9 +74,17 @@ spec:
               enabled: false
             persistentVolume:
               data:
-                enabled: false
+                enabled: true
+                accessModes:
+                  - ReadWriteOnce
+                storageClassName: "nfs-csi-synologynas"
+                size: 5Gi
               config:
-                enabled: false
+                enabled: true
+                accessModes:
+                  - ReadWriteOnce
+                storageClassName: "nfs-csi-synologynas"
+                size: 1Gi
             metrics:
               enabled: true
 
@@ -104,7 +112,11 @@ spec:
                 memory: 250Mi
             persistentVolume:
               config:
-                enabled: false
+                enabled: true
+                accessModes:
+                  - ReadWriteOnce
+                storageClassName: "nfs-csi-synologynas"
+                size: 1Gi
             metrics:
               enabled: true
 
