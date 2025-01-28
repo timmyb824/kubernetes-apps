@@ -28,7 +28,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: adguard-coredns
-  namespace: default
+  namespace: dns-system
 spec:
   selector:
     matchLabels:
