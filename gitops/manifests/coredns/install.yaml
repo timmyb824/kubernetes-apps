@@ -10,19 +10,19 @@ metadata:
   namespace: dns-system
 data:
   Corefile: |
-    {
     .:53 {
-        forward . 192.168.86.214 192.168.86.174
-            policy sequential
-            max_fails 2
-            health_check 5s
-            force_tcp
-        }
         errors
         log
         prometheus :9153
         health :8080
         ready :8181
+
+        forward . 192.168.86.214 192.168.86.174 {
+            policy sequential
+            max_fails 2
+            health_check 5s
+            force_tcp
+        }
     }
 ---
 apiVersion: apps/v1
