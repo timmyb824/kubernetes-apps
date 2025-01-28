@@ -114,7 +114,7 @@ metadata:
   annotations:
     prometheus.io/scrape: "true"
     prometheus.io/port: "9153"
-    metallb.universe.tf/loadBalancerIPs: "192.168.1.220"
+    metallb.universe.tf/loadBalancerIPs: "192.168.86.220"
 spec:
   selector:
     app: adguard-coredns
