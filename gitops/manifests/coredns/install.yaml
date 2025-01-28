@@ -1,0 +1,137 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dns-system
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: adguard-coredns-config
+  namespace: dns-system
+data:
+  Corefile: |
+    .:53 {
+        forward . 192.168.86.214 192.168.86.174
+            policy sequential
+            max_fails 2
+            health_check 5s
+            force_tcp
+        }
+        errors
+        log
+        prometheus :9153
+        health :8080
+        ready :8181
+    }
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: adguard-coredns
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: adguard-coredns
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: adguard-coredns
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9153"
+    spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: app
+                      operator: In
+                      values:
+                        - adguard-coredns
+                topologyKey: "kubernetes.io/hostname"
+      containers:
+        - name: coredns
+          image: coredns/coredns:1.12.0
+          args: ["-conf", "/etc/coredns/Corefile"]
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 5
+            timeoutSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: 8181
+            initialDelaySeconds: 5
+            timeoutSeconds: 5
+          ports:
+            - containerPort: 53
+              name: dns
+              protocol: UDP
+            - containerPort: 53
+              name: dns-tcp
+              protocol: TCP
+            - containerPort: 9153
+              name: metrics
+              protocol: TCP
+            - containerPort: 8080
+              name: health
+              protocol: TCP
+            - containerPort: 8181
+              name: ready
+              protocol: TCP
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "256Mi"
+              cpu: "200m"
+          volumeMounts:
+            - name: config-volume
+              mountPath: /etc/coredns
+      volumes:
+        - name: config-volume
+          configMap:
+            name: adguard-coredns-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: adguard-coredns
+  namespace: dns-system
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "9153"
+    metallb.universe.tf/loadBalancerIPs: "192.168.1.220"
+spec:
+  selector:
+    app: adguard-coredns
+  type: LoadBalancer
+  ports:
+    - name: dns
+      port: 53
+      protocol: UDP
+    - name: dns-tcp
+      port: 53
+      protocol: TCP
+    - name: metrics
+      port: 9153
+      protocol: TCP
+    - name: health
+      port: 8080
+      protocol: TCP
+    - name: ready
+      port: 8181
+      protocol: TCP
