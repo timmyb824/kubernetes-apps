@@ -50,7 +50,7 @@ spec:
                   //  role = "pod"
                   // }
 
-                  discovery.kubernetes "pods" {
+                  discovery.kubernetes "pod" {
                     role = "pod"
 
                     selectors {
@@ -59,7 +59,7 @@ spec:
                     }
                   }
 
-                  discovery.relabel "pod_logs" {
+                  discovery.relabel "pod" {
                     targets = discovery.kubernetes.pod.targets
 
                     rule {
