@@ -111,12 +111,12 @@ spec:
                     }
                   }
 
-                  loki.source.kubernetes "pod_logs" {
-                    targets    = discovery.relabel.pod_logs.output
-                    forward_to = [loki.process.pod_logs.receiver]
+                  loki.source.kubernetes "pod" {
+                    targets    = discovery.relabel.pod.output
+                    forward_to = [loki.process.pod.receiver]
                   }
 
-                  loki.process "pod_logs" {
+                  loki.process "pod" {
                     stage.static_labels {
                         values = {
                           cluster = "k3s-cluster",
