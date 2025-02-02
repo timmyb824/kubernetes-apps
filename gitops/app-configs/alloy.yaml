@@ -12,14 +12,14 @@ spec:
     server: "https://kubernetes.default.svc"
   project: default
   source:
-    - repoURL: https://grafana.github.io/helm-charts
-      targetRevision: 0.11.0
-      chart: grafana/alloy
-      helm:
-        releaseName: alloy
-        values: |
-          alloy:
-            configMap:
+    repoURL: https://grafana.github.io/helm-charts
+    targetRevision: 0.11.0
+    chart: grafana/alloy
+    helm:
+      releaseName: alloy
+      values: |
+        alloy:
+          configMap:
               create: true
               content: |-
                   discovery.kubernetes "pod_logs" {
