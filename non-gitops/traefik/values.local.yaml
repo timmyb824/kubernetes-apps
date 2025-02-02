@@ -101,6 +101,13 @@ providers:
               - websecure
             tls:
               certResolver: {}
+          archivebox:
+            rule: Host(`archivebox.local.timmybtech.com`)
+            service: archivebox
+            entrypoints:
+              - websecure
+            tls:
+              certResolver: {}
           speedtest:
             rule: Host(`speedtest.local.timmybtech.com`)
             service: speedtest
@@ -231,6 +238,10 @@ providers:
             loadBalancer:
               servers:
                 - url: http://192.168.86.143:8083
+          archivebox:
+            loadBalancer:
+              servers:
+                - url: http://192.168.86.139:8000
           nas:
             loadBalancer:
               servers:
