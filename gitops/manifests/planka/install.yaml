@@ -67,7 +67,7 @@ spec:
               value: "true"
             - name: OIDC_ENFORCED
               value: "false"
-          image: ghcr.io/plankanban/planka:1.24.3
+          image: ghcr.io/plankanban/planka:1.24.4
           name: planka
           ports:
             - containerPort: 1337
