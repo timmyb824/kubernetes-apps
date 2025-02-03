@@ -53,6 +53,7 @@ spec:
                   discovery.kubernetes "pod" {
                     role = "pod"
 
+                    // Only monitor pods on this node; prevents `too many open files` errors
                     selectors {
                       role  = "pod"
                       field = "spec.nodeName=" + coalesce(env("HOSTNAME"), constants.hostname)
