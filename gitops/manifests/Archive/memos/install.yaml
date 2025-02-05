@@ -32,7 +32,7 @@ spec:
               value: postgres
             - name: MEMOS_DSN
               value: user=<path:secret/data/postgres_db#USER> password=<path:secret/data/postgres_db#PASSWORD> dbname=memos host=<path:secret/data/postgres_db#HOST_NAME> sslmode=disable
-          image: neosmemo/memos:0.23
+          image: neosmemo/memos:0.24
           name: memos
           ports:
             - containerPort: 5230
