@@ -15,7 +15,7 @@ spec:
   project: default
   sources:
     - repoURL: https://immich-app.github.io/immich-charts
-      targetRevision: 0.9.0
+      targetRevision: 0.9.1
       chart: immich
       helm:
         releaseName: immich
@@ -37,7 +37,7 @@ spec:
             IMMICH_MACHINE_LEARNING_URL: '{{ printf "http://%s-machine-learning:3003" .Release.Name }}'
 
           image:
-            tag: v1.125.1
+            tag: v1.129.0
 
           immich:
             metrics:
