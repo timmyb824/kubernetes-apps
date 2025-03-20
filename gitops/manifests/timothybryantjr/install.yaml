@@ -8,6 +8,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: timothybryantjr-data
+  namespace: timothybryantjr
 spec:
   accessModes:
     - ReadWriteOnce
@@ -20,6 +21,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: timothybryantjr
+  namespace: timothybryantjr
 spec:
   replicas: 1
   selector:
@@ -58,6 +60,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: timothybryantjr
+  namespace: timothybryantjr
 spec:
   selector:
     app: timothybryantjr
