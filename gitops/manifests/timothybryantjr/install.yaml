@@ -1,0 +1,81 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: timothybryantjr-data
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: nfs-csi-synologynas
+  resources:
+    requests:
+      storage: 4Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: timothybryantjr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: timothybryantjr
+  template:
+    metadata:
+      labels:
+        app: timothybryantjr
+    spec:
+      containers:
+        - name: grav
+          image: registry.local.timmybtech.com/timothybryantjr:latest
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: timothybryantjr-data
+              mountPath: /var/www/grav/backup
+              subPath: backup
+            - name: timothybryantjr-data
+              mountPath: /var/www/grav/logs
+              subPath: logs
+          env:
+            - name: GRAV_MULTISITE
+              value: subdirectory
+            - name: ROBOTS_DISALLOW
+              value: "false"
+            - name: GRAV_PLUGINS
+              value: devtools,precache
+      volumes:
+        - name: timothybryantjr-data
+          persistentVolumeClaim:
+            claimName: timothybryantjr-data
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: timothybryantjr
+spec:
+  selector:
+    app: timothybryantjr
+  ports:
+    - port: 80
+      targetPort: 80
+  type: ClusterIP
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: timothybryantjr-ingress
+  namespace: registry
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`timothybryantjr.local.timmybtech.com`)
+      kind: Rule
+      services:
+        - name: timothybryantjr
+          port: 80
+  tls:
+    secretName: local-timmybtech-com-tls
