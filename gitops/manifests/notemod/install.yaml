@@ -128,7 +128,7 @@ data:
     no-autoupdate: true
     ingress:
     - hostname: notemod.timmybtech.com
-      service: http://ak-outpost-authentik-embedded-outpost.authentik.svc.cluster.local:9000
+      service: http://notemod.notemod.svc.cluster.local:80
     - service: http_status:404
 ---
 apiVersion: v1
