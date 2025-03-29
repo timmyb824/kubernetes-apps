@@ -371,7 +371,7 @@ data:
             href: https://minio-ui.local.timmybtech.com/
             namespace: minio
             app: minio
-        - ntfy:
+        - Ntfy:
             icon: ntfy.png
             href: https://ntfy.timmybtech.com/
             namespace: ntfy
@@ -381,12 +381,12 @@ data:
             href: https://n8n.local.timmybtech.com/
             namespace: n8n
             app: n8n
-        - notemod:
+        - Notemod:
             icon: kubernetes.png
             href: https://notemod.timmybtech.com/
             namespace: notemod
             app: notemod
-        - olivetin:
+        - Olivetin:
             icon: olivetin.png
             href: https://olivetin.local.timmybtech.com/
             namespace: olivetin
