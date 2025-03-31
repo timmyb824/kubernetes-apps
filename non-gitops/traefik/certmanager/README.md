@@ -18,6 +18,7 @@ helm install cert-manager jetstack/cert-manager --namespace cert-manager --value
 # Upgrades
 helm upgrade cert-manager jetstack/cert-manager --namespace cert-manager --values=values.local.yaml --version v1.16.0 # last run November 4, 2024
 helm upgrade cert-manager jetstack/cert-manager --namespace cert-manager --values=values.local.yaml --version v1.16.2 # last run Jan 5, 2025
+helm upgrade cert-manager jetstack/cert-manager --namespace cert-manager --values=values.local.yaml --version v1.17.1 # last run Mar 30, 2025
 
 # Deploying the cloudflare secret, issuers, and certificates
 kubectl apply -f issuers/secret-cf-token.yaml
