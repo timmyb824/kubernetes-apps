@@ -51,6 +51,7 @@ spec:
             agentImage:
               repository: "hashicorp/vault"
               tag: "1.19.0"
+              pullPolicy: Always
             agentDefaults:
               cpuLimit: "500m"
               cpuRequest: "250m"
