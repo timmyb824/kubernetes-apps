@@ -381,16 +381,6 @@ data:
             href: https://n8n.local.timmybtech.com/
             namespace: n8n
             app: n8n
-        - Notemod:
-            icon: kubernetes.png
-            href: https://notemod.timmybtech.com/
-            namespace: notemod
-            app: notemod
-        - Olivetin:
-            icon: olivetin.png
-            href: https://olivetin.local.timmybtech.com/
-            namespace: olivetin
-            app: olivetin
         - Paperless-ngx:
             icon: paperless.png
             href: https://paperless.local.timmybtech.com/
