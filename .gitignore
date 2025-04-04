@@ -14,5 +14,5 @@ helm/Inactive/kube-prometheus-stack/configMaps/*
 helm/Inactive/vault/cluster-keys.json
 helm/Inactive/caretta/values.live.yaml
 !gitops/manifests/Archive/
-gitops/app-configs/Archive/
+!gitops/app-configs/Archive/
 helm/Active/traefik/certmanager/backup.yaml
