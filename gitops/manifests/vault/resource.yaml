@@ -16,8 +16,8 @@ spec:
       services:
         - name: vault
           port: 8200
-      middlewares:
-        - name: crowdsec-bouncer
-          namespace: traefik
+      # middlewares:
+      #   - name: crowdsec-bouncer
+      #     namespace: traefik
   tls:
     secretName: local-timmybtech-com-tls
