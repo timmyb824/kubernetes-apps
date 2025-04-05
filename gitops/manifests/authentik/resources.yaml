@@ -216,24 +216,23 @@ spec:
   tls:
     secretName: local-timmybtech-com-tls
 ---
-# Secret must be created first (wave 0)
+# Secret must be created first
 apiVersion: v1
 kind: Secret
 metadata:
   name: default-token
-  namespace: authentik
+  namespace: blinko
   annotations:
     kubernetes.io/service-account.name: default
-    argocd.argoproj.io/sync-wave: "0"
 type: kubernetes.io/service-account-token
 ---
-# ServiceAccount depends on the Secret (wave 1)
+# ServiceAccount depends on the Secret
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: default
-  namespace: authentik
+  namespace: blinko
   annotations:
-    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/depends-on: "Secret/default-token"
 secrets:
   - name: default-token
