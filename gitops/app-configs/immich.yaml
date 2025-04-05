@@ -37,7 +37,7 @@ spec:
             IMMICH_MACHINE_LEARNING_URL: '{{ printf "http://%s-machine-learning:3003" .Release.Name }}'
 
           image:
-            tag: v1.126.1
+            tag: v1.131.3
 
           immich:
             metrics:
@@ -63,7 +63,7 @@ spec:
           # Dependencies
 
           postgresql:
-            enabled: false  # Disable the included PostgreSQL since we're using external
+            enabled: false
             # image:
             #   repository: tensorchord/pgvecto-rs
             #   tag: pg14-v0.2.0
