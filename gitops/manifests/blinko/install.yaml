@@ -105,3 +105,12 @@ spec:
           port: 1111
   tls:
     secretName: local-timmybtech-com-tls
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: default-token
+  namespace: blinko
+  annotations:
+    kubernetes.io/service-account.name: default
+type: kubernetes.io/service-account-token
