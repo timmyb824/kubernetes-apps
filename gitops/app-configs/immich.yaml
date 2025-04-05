@@ -15,7 +15,7 @@ spec:
   project: default
   sources:
     - repoURL: https://immich-app.github.io/immich-charts
-      targetRevision: 0.9.1
+      targetRevision: 0.9.2
       chart: immich
       helm:
         releaseName: immich
@@ -64,24 +64,24 @@ spec:
 
           postgresql:
             enabled: false  # Disable the included PostgreSQL since we're using external
-            image:
-              repository: tensorchord/pgvecto-rs
-              tag: pg14-v0.2.0
-            global:
-              postgresql:
-                auth:
-                  username: <path:secret/data/postgres_db#USER>
-                  database: immich
-                  password: <path:secret/data/postgres_db#PASSWORD>
-            primary:
-              containerSecurityContext:
-                readOnlyRootFilesystem: false
-              initdb:
-                scripts:
-                  create-extensions.sql: |
-                    CREATE EXTENSION cube;
-                    CREATE EXTENSION earthdistance;
-                    CREATE EXTENSION vectors;
+            # image:
+            #   repository: tensorchord/pgvecto-rs
+            #   tag: pg14-v0.2.0
+            # global:
+            #   postgresql:
+            #     auth:
+            #       username: <path:secret/data/postgres_db#USER>
+            #       database: immich
+            #       password: <path:secret/data/postgres_db#PASSWORD>
+            # primary:
+            #   containerSecurityContext:
+            #     readOnlyRootFilesystem: false
+            #   initdb:
+            #     scripts:
+            #       create-extensions.sql: |
+            #         CREATE EXTENSION cube;
+            #         CREATE EXTENSION earthdistance;
+            #         CREATE EXTENSION vectors;
 
           redis:
             enabled: true
