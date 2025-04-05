@@ -30,9 +30,9 @@ spec:
       services:
         - name: immich-server
           port: 2283
-      middlewares:
-        - name: crowdsec-bouncer
-          namespace: traefik
+      # middlewares:
+      #   - name: crowdsec-bouncer
+      #     namespace: traefik
   tls:
     secretName: local-timmybtech-com-tls
 ---
