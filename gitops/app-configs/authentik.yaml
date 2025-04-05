@@ -5,8 +5,6 @@ metadata:
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
-  annotations:
-    avp.kubernetes.io/path: "secret/data/authentik"
 spec:
   destination:
     namespace: authentik
@@ -35,7 +33,7 @@ spec:
                 host: "smtp.gmail.com"
                 port: 587
                 username: "<SMTP_USER>"
-                password: "<SMTP_PASSWORD>"
+                password: "<path:secret/data/google_smtp#AUTHENTIK_SMTP_PASSWORD>"
                 use_tls: false
                 use_ssl: false
                 timeout: 30
