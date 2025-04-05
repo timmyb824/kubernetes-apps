@@ -13,6 +13,7 @@ spec:
     requests:
       storage: 512Gi
   storageClassName: nfs-csi-synologynas
+  volumeName: pvc-98c7f0e2-c1fd-482c-ba30-6e46ce79c880
 ---
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
