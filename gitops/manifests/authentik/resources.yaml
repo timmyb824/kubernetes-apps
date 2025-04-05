@@ -221,7 +221,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: default-token
-  namespace: blinko
+  namespace: authentik
   annotations:
     kubernetes.io/service-account.name: default
 type: kubernetes.io/service-account-token
@@ -231,7 +231,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: default
-  namespace: blinko
+  namespace: authentik
   annotations:
     argocd.argoproj.io/depends-on: "Secret/default-token"
 secrets:
