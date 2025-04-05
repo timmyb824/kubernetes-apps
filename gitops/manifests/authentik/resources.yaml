@@ -215,3 +215,25 @@ spec:
           port: 2000
   tls:
     secretName: local-timmybtech-com-tls
+---
+# Secret must be created first (wave 0)
+apiVersion: v1
+kind: Secret
+metadata:
+  name: default-token
+  namespace: authentik
+  annotations:
+    kubernetes.io/service-account.name: default
+    argocd.argoproj.io/sync-wave: "0"
+type: kubernetes.io/service-account-token
+---
+# ServiceAccount depends on the Secret (wave 1)
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: default
+  namespace: authentik
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+secrets:
+  - name: default-token
