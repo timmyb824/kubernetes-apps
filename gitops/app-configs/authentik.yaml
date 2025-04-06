@@ -14,6 +14,8 @@ spec:
     - repoURL: https://charts.goauthentik.io
       targetRevision: 2024.12.0
       chart: authentik
+      plugin:
+        name: argocd-vault-plugin-helm
       helm:
         releaseName: authentik
         values: |
