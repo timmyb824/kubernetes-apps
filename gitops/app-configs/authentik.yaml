@@ -16,42 +16,44 @@ spec:
       chart: authentik
       plugin:
         name: argocd-vault-plugin
-      helm:
-        values: |
-          authentik:
-            secret_key: <path:secret/data/authentik#SECRET_KEY>
-            # This sends anonymous usage-data, stack traces on errors and
-            # performance data to sentry.io, and is fully opt-in
-            error_reporting:
-              enabled: false
-            postgresql:
-              host: <path:secret/data/authentik#PG_HOST>
-              name: "authentik"
-              user: <path:secret/data/authentik#PG_USER>
-              password: <path:secret/data/authentik#PG_PASSWORD>
-              port: 5432
-            email:
-              host: "smtp.gmail.com"
-              port: 587
-              username: "<path:secret/data/authentik#SMTP_USER>"
-              password: "<path:secret/data/authentik#SMTP_PASSWORD>"
-              use_tls: false
-              use_ssl: false
-              timeout: 30
-              from: "authentik@local.timmybtech.com"
+        env:
+          - name: VALUES_FILE
+            value: |
 
-          server:
-            ingress:
-              enabled: false
+              authentik:
+                secret_key: <path:secret/data/authentik#SECRET_KEY>
+                # This sends anonymous usage-data, stack traces on errors and
+                # performance data to sentry.io, and is fully opt-in
+                error_reporting:
+                  enabled: false
+                postgresql:
+                  host: <path:secret/data/authentik#PG_HOST>
+                  name: "authentik"
+                  user: <path:secret/data/authentik#PG_USER>
+                  password: <path:secret/data/authentik#PG_PASSWORD>
+                  port: 5432
+                email:
+                  host: "smtp.gmail.com"
+                  port: 587
+                  username: "<path:secret/data/authentik#SMTP_USER>"
+                  password: "<path:secret/data/authentik#SMTP_PASSWORD>"
+                  use_tls: false
+                  use_ssl: false
+                  timeout: 30
+                  from: "authentik@local.timmybtech.com"
 
-          postgresql:
-            enabled: false
+              server:
+                ingress:
+                  enabled: false
 
-          redis:
-            enabled: true
+              postgresql:
+                enabled: false
 
-          metrics:
-            enabled: true
+              redis:
+                enabled: true
+
+              metrics:
+                enabled: true
 
     - repoURL: "https://github.com/timmyb824/kubernetes-apps.git"
       path: "gitops/manifests/authentik"
