@@ -23,7 +23,7 @@ spec:
     - repoURL: "https://github.com/timmyb824/kubernetes-apps.git"
       path: "gitops/manifests/authentik"
       targetRevision: HEAD
-      name: github-source
+      ref: github-source
 
   syncPolicy:
     automated:
