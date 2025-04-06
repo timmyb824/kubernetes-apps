@@ -28,11 +28,11 @@ spec:
 
           env:
             REDIS_HOSTNAME: '{{ printf "%s-redis-master" .Release.Name }}'
-            DB_HOSTNAME: <path:secret/data/postgres_db#HOST_NAME>
-            DB_USERNAME: <path:secret/data/postgres_db#USER>
+            DB_HOSTNAME: <path:secret/data/database#PG_HOST>
+            DB_USERNAME: <path:secret/data/database#PG_USER>
             DB_DATABASE_NAME: "immich"
             # -- You should provide your own secret outside of this helm-chart and use `postgresql.global.postgresql.auth.existingSecret` to provide credentials to the postgresql instance
-            DB_PASSWORD: <path:secret/data/postgres_db#PASSWORD>
+            DB_PASSWORD: <path:secret/data/database#PG_PASSWORD>
             DB_VECTOR_EXTENSION: "pgvector"
             IMMICH_MACHINE_LEARNING_URL: '{{ printf "http://%s-machine-learning:3003" .Release.Name }}'
 
@@ -64,24 +64,6 @@ spec:
 
           postgresql:
             enabled: false
-            # image:
-            #   repository: tensorchord/pgvecto-rs
-            #   tag: pg14-v0.2.0
-            # global:
-            #   postgresql:
-            #     auth:
-            #       username: <path:secret/data/postgres_db#USER>
-            #       database: immich
-            #       password: <path:secret/data/postgres_db#PASSWORD>
-            # primary:
-            #   containerSecurityContext:
-            #     readOnlyRootFilesystem: false
-            #   initdb:
-            #     scripts:
-            #       create-extensions.sql: |
-            #         CREATE EXTENSION cube;
-            #         CREATE EXTENSION earthdistance;
-            #         CREATE EXTENSION vectors;
 
           redis:
             enabled: true
