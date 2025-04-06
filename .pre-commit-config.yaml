@@ -1,35 +1,41 @@
 repos:
--   repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.5.0
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
     hooks:
-    -   id: check-yaml
+      - id: check-yaml
         args: [--unsafe] # prevents loading the yaml
-    -   id: end-of-file-fixer
-    -   id: trailing-whitespace
-    -   id: check-added-large-files
-    -   id: check-ast
-    -   id: check-json
-    -   id: check-merge-conflict
-    -   id: check-xml
-    -   id: debug-statements
-    -   id: requirements-txt-fixer
-    -   id: mixed-line-ending
-        args: ['--fix=auto']
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: check-added-large-files
+      - id: check-ast
+      - id: check-json
+      - id: check-merge-conflict
+      - id: check-xml
+      - id: debug-statements
+      - id: requirements-txt-fixer
+      - id: mixed-line-ending
+        args: ["--fix=auto"]
 
--   repo: https://github.com/sirwart/ripsecrets
-    rev: v0.1.7  # Use latest tag on GitHub
+  - repo: https://github.com/sirwart/ripsecrets
+    rev: v0.1.9 # Use latest tag on GitHub
     hooks:
-    -   id: ripsecrets
+      - id: ripsecrets
 
--   repo: https://github.com/trufflesecurity/trufflehog
-    rev: v3.63.0
+  - repo: https://github.com/trufflesecurity/trufflehog
+    rev: v3.88.23
     hooks:
-    -   id: trufflehog
+      - id: trufflehog
         name: TruffleHog
         description: Detect secrets in your data.
         entry: bash -c 'trufflehog git file://. --since-commit HEAD --only-verified --fail'
         language: system
         stages: ["pre-commit"]
+
+  - repo: https://github.com/timmyb824/sops-file-encryption-check
+    rev: latest
+    hooks:
+      - id: sops-encryption-check
+#
 
 # Example of local hook
 # -   repo: local
