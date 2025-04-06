@@ -16,8 +16,8 @@ spec:
       chart: authentik
       helm:
         releaseName: authentik
-        valueFiles:
-          - /authentik/values.yaml
+        values: |
+          {{- tpl (readFile "values.yaml") . | nindent 10 }}
 
     - repoURL: "https://github.com/timmyb824/kubernetes-apps.git"
       path: "gitops/manifests/authentik"
