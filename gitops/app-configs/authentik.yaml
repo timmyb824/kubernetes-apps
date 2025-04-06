@@ -17,7 +17,7 @@ spec:
       helm:
         releaseName: authentik
         valueFiles:
-          - $github-source/gitops/manifests/authentik/values.yaml
+          - $github-source/gitops/manifests/authentik/cm-values.yaml
       name: helm-chart
 
     - repoURL: "https://github.com/timmyb824/kubernetes-apps.git"
