@@ -3,6 +3,8 @@ kind: Application
 metadata:
   name: authentik
   namespace: argocd
+  annotations:
+    avp.kubernetes.io/path: "secret/data/authentik"
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
@@ -18,22 +20,22 @@ spec:
         releaseName: authentik
         values: |
           authentik:
-              secret_key: <path:secret/data/authentik#SECRET_KEY>
+              secret_key: <SECRET_KEY>
               # This sends anonymous usage-data, stack traces on errors and
               # performance data to sentry.io, and is fully opt-in
               error_reporting:
                 enabled: false
               postgresql:
-                host: <path:secret/data/authentik#PG_HOST>
+                host: <PG_HOST>
                 name: "authentik"
-                user: <path:secret/data/authentik#PG_USER>
-                password: <path:secret/data/authentik#PG_PASSWORD>
+                user: <PG_USER>
+                password: <PG_PASSWORD>
                 port: 5432
               email:
                 host: "smtp.gmail.com"
                 port: 587
-                username: "<path:secret/data/authentik#SMTP_USER>"
-                password: "<path:secret/data/authentik#SMTP_PASSWORD>"
+                username: "<SMTP_USER>"
+                password: "<SMTP_PASSWORD>"
                 use_tls: false
                 use_ssl: false
                 timeout: 30
