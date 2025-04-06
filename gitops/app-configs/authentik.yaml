@@ -18,14 +18,10 @@ spec:
         releaseName: authentik
         values: |
           authentik:
-            # Use environment variables from the secret
-            envFrom:
-              - secretRef:
-                  name: authentik-secrets
-
+            # Tell Authentik to use our external secret
+            existingSecret: authentik-secrets
             error_reporting:
               enabled: false
-
             email:
               host: "smtp.gmail.com"
               port: 587
@@ -33,6 +29,10 @@ spec:
               use_ssl: false
               timeout: 30
               from: "authentik@local.timmybtech.com"
+
+            postgresql:
+              name: "authentik"
+              port: 5432
 
           server:
             ingress:
