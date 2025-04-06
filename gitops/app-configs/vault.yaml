@@ -13,7 +13,7 @@ spec:
   project: default
   sources:
     - repoURL: https://helm.releases.hashicorp.com
-      targetRevision: 0.30.0
+      targetRevision: 0.29.1
       chart: vault
       helm:
         releaseName: vault
@@ -50,7 +50,7 @@ spec:
               pullPolicy: Always
             agentImage:
               repository: "hashicorp/vault"
-              tag: "1.19.0"
+              tag: "1.18.3"
               pullPolicy: Always
             agentDefaults:
               cpuLimit: "500m"
@@ -135,7 +135,7 @@ spec:
               secretKey: "license"
             image:
               repository: "hashicorp/vault"
-              tag: "1.19.0"
+              tag: "1.18.3"
               pullPolicy: Always
             updateStrategyType: "OnDelete" #RollingUpdate
             # Supported log levels include: trace, debug, info, warn, error
