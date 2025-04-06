@@ -18,19 +18,23 @@ spec:
         releaseName: authentik
         values: |
           authentik:
-              # Secrets will be provided via environment variables
-              error_reporting:
-                enabled: false
-              postgresql:
-                name: "authentik"
-                port: 5432
-              email:
-                host: "smtp.gmail.com"
-                port: 587
-                use_tls: false
-                use_ssl: false
-                timeout: 30
-                from: "authentik@local.timmybtech.com"
+            # Disable default secret creation
+            secret:
+              enabled: false
+              existingSecret: authentik-secrets
+
+            error_reporting:
+              enabled: false
+            postgresql:
+              name: "authentik"
+              port: 5432
+            email:
+              host: "smtp.gmail.com"
+              port: 587
+              use_tls: false
+              use_ssl: false
+              timeout: 30
+              from: "authentik@local.timmybtech.com"
 
           deployment:
             env:
