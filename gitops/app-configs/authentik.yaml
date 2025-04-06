@@ -14,8 +14,44 @@ spec:
     - repoURL: https://charts.goauthentik.io
       targetRevision: 2024.12.0
       chart: authentik
-      valueFiles:
-        - values.yaml
+      helm:
+        releaseName: authentik
+        values: |
+          authentik:
+            existingSecret: authentik-secrets
+            secret_key: ${secret_key}
+            # This sends anonymous usage-data, stack traces on errors and
+            # performance data to sentry.io, and is fully opt-in
+            error_reporting:
+              enabled: false
+            postgresql:
+              host: ${pg_host}
+              name: "authentik"
+              user: ${pg_user}
+              password: ${pg_password}
+              port: 5432
+            email:
+              host: "smtp.gmail.com"
+              port: 587
+              username: ${smtp_user}
+              password: ${smtp_password}
+              use_tls: false
+              use_ssl: false
+              timeout: 30
+              from: "authentik@local.timmybtech.com"
+
+          server:
+            ingress:
+              enabled: false
+
+          postgresql:
+            enabled: false
+
+          redis:
+              enabled: true
+
+          metrics:
+            enabled: true
 
     - repoURL: "https://github.com/timmyb824/kubernetes-apps.git"
       path: "gitops/manifests/authentik"
