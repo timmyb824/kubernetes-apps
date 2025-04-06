@@ -16,14 +16,70 @@ spec:
       chart: authentik
       helm:
         releaseName: authentik
-        valueFiles:
-          - $github-source/gitops/manifests/authentik/cm-values.yaml
-      name: helm-chart
+        values: |
+          authentik:
+              # Secrets will be provided via environment variables
+              error_reporting:
+                enabled: false
+              postgresql:
+                name: "authentik"
+                port: 5432
+              email:
+                host: "smtp.gmail.com"
+                port: 587
+                use_tls: false
+                use_ssl: false
+                timeout: 30
+                from: "authentik@local.timmybtech.com"
+
+          env:
+            - name: AUTHENTIK_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: authentik-secrets
+                  key: AUTHENTIK_SECRET_KEY
+            - name: AUTHENTIK_POSTGRESQL__HOST
+              valueFrom:
+                secretKeyRef:
+                  name: authentik-secrets
+                  key: AUTHENTIK_POSTGRESQL__HOST
+            - name: AUTHENTIK_POSTGRESQL__USER
+              valueFrom:
+                secretKeyRef:
+                  name: authentik-secrets
+                  key: AUTHENTIK_POSTGRESQL__USER
+            - name: AUTHENTIK_POSTGRESQL__PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: authentik-secrets
+                  key: AUTHENTIK_POSTGRESQL__PASSWORD
+            - name: AUTHENTIK_EMAIL__USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: authentik-secrets
+                  key: AUTHENTIK_EMAIL__USERNAME
+            - name: AUTHENTIK_EMAIL__PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: authentik-secrets
+                  key: AUTHENTIK_EMAIL__PASSWORD
+
+          server:
+            ingress:
+              enabled: false
+
+          postgresql:
+            enabled: false
+
+          redis:
+              enabled: true
+
+          metrics:
+            enabled: true
 
     - repoURL: "https://github.com/timmyb824/kubernetes-apps.git"
       path: "gitops/manifests/authentik"
       targetRevision: HEAD
-      ref: github-source
 
   syncPolicy:
     automated:
