@@ -12,6 +12,12 @@ kubectl apply -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manif
 kubectl rollout restart deployment -n argocd
 ```
 
+## If admin password doesn't work then fetch temp password:
+
+```bash
+kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
+```
+
 ## Set user password
 
 ```bash
