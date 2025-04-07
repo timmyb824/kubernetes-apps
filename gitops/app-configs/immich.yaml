@@ -30,21 +30,13 @@ spec:
             REDIS_HOSTNAME: '{{ printf "%s-redis-master" .Release.Name }}'
             DB_VECTOR_EXTENSION: "pgvector"
             IMMICH_MACHINE_LEARNING_URL: '{{ printf "http://%s-machine-learning:3003" .Release.Name }}'
-            DB_HOSTNAME: "${DB_HOSTNAME}"
-            DB_USERNAME: "${DB_USERNAME}"
-            DB_PASSWORD: "${DB_PASSWORD}"
-            DB_DATABASE_NAME: "${DB_DATABASE_NAME}"
 
-          # Configure external database
+          envFrom:
+            - secretRef:
+                name: immich-db-secret
+
           postgresql:
             enabled: false
-            auth:
-              existingSecret: immich-db-secret
-              database: "${postgresql-database}"
-              username: "${postgresql-username}"
-              password: "${postgresql-password}"
-            external:
-              host: "${postgresql-host}"
 
           image:
             tag: v1.126.1 # v1.131.3
