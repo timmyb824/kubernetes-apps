@@ -1,3 +1,2 @@
 gitops/argocd/age-key-secret.yaml
-gitops/app-configs/authentik.yaml
 gitops/argocd/custom-resources/argocd-secret.yaml
