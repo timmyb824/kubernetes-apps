@@ -14,33 +14,23 @@ spec:
     - repoURL: https://charts.goauthentik.io
       targetRevision: 2024.12.0
       chart: authentik
+      plugin:
+        name: argocd-vault-plugin
       helm:
         releaseName: authentik
         parameters:
           - name: "authentik.secret_key"
-            valueFrom:
-              configMapKeyRef:
-                name: authentik-config
-                key: secret_key
+            value: "<path:secret/data/authentik#SECRET_KEY>"
           - name: "authentik.error_reporting.enabled"
             value: "false"
           - name: "authentik.postgresql.host"
-            valueFrom:
-              configMapKeyRef:
-                name: authentik-config
-                key: pg_host
+            value: "<path:secret/data/authentik#PG_HOST>"
           - name: "authentik.postgresql.name"
             value: "authentik"
           - name: "authentik.postgresql.user"
-            valueFrom:
-              configMapKeyRef:
-                name: authentik-config
-                key: pg_user
+            value: "<path:secret/data/authentik#PG_USER>"
           - name: "authentik.postgresql.password"
-            valueFrom:
-              configMapKeyRef:
-                name: authentik-config
-                key: pg_password
+            value: "<path:secret/data/authentik#PG_PASSWORD>"
           - name: "authentik.postgresql.port"
             value: "5432"
           - name: "authentik.email.host"
@@ -48,15 +38,9 @@ spec:
           - name: "authentik.email.port"
             value: "587"
           - name: "authentik.email.username"
-            valueFrom:
-              configMapKeyRef:
-                name: authentik-config
-                key: smtp_user
+            value: "<path:secret/data/authentik#SMTP_USER>"
           - name: "authentik.email.password"
-            valueFrom:
-              configMapKeyRef:
-                name: authentik-config
-                key: smtp_password
+            value: "<path:secret/data/authentik#SMTP_PASSWORD>"
           - name: "authentik.email.use_tls"
             value: "false"
           - name: "authentik.email.use_ssl"
