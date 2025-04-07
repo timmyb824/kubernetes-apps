@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: argocd-repo-server
+  namespace: argocd
+spec:
+  template:
+    spec:
+      containers:
+        - name: sops
+          $patch: delete
+      initContainers:
+        - name: download-sops-tools
+          $patch: delete
+      volumes:
+        - name: age-key
+          $patch: delete
+        - name: sops-tools
+          $patch: delete
