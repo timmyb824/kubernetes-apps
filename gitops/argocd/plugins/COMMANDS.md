@@ -14,6 +14,12 @@ kubectl patch deployment argocd-repo-server -n argocd --patch-file plugins/avp/r
 kubectl apply -f plugins/cmp-plugin.yaml
 ```
 
+## Apply updated argocd-cm
+
+```sh
+envsubst < gitops/argocd/custom-resources/argocd-cm.yaml | kubectl apply -f -
+```
+
 ## Apply the new deployment patch that includes both SOPS and AVP
 
 ```sh
