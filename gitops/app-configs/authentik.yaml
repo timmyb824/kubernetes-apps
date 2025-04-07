@@ -18,17 +18,29 @@ spec:
         releaseName: authentik
         parameters:
           - name: "authentik.secret_key"
-            value: "<path:secret/data/authentik#SECRET_KEY>"
+            valueFrom:
+              configMapKeyRef:
+                name: authentik-config
+                key: secret_key
           - name: "authentik.error_reporting.enabled"
             value: "false"
           - name: "authentik.postgresql.host"
-            value: "<path:secret/data/authentik#PG_HOST>"
+            valueFrom:
+              configMapKeyRef:
+                name: authentik-config
+                key: pg_host
           - name: "authentik.postgresql.name"
             value: "authentik"
           - name: "authentik.postgresql.user"
-            value: "<path:secret/data/authentik#PG_USER>"
+            valueFrom:
+              configMapKeyRef:
+                name: authentik-config
+                key: pg_user
           - name: "authentik.postgresql.password"
-            value: "<path:secret/data/authentik#PG_PASSWORD>"
+            valueFrom:
+              configMapKeyRef:
+                name: authentik-config
+                key: pg_password
           - name: "authentik.postgresql.port"
             value: "5432"
           - name: "authentik.email.host"
@@ -36,9 +48,15 @@ spec:
           - name: "authentik.email.port"
             value: "587"
           - name: "authentik.email.username"
-            value: "<path:secret/data/authentik#SMTP_USER>"
+            valueFrom:
+              configMapKeyRef:
+                name: authentik-config
+                key: smtp_user
           - name: "authentik.email.password"
-            value: "<path:secret/data/authentik#SMTP_PASSWORD>"
+            valueFrom:
+              configMapKeyRef:
+                name: authentik-config
+                key: smtp_password
           - name: "authentik.email.use_tls"
             value: "false"
           - name: "authentik.email.use_ssl"
