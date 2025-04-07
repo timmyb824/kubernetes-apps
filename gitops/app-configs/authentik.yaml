@@ -5,8 +5,6 @@ metadata:
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
-  annotations:
-    avp.kubernetes.io/path: "secret/data/authentik"
 spec:
   destination:
     namespace: authentik
@@ -16,28 +14,12 @@ spec:
     - repoURL: https://charts.goauthentik.io
       targetRevision: 2024.12.0
       chart: authentik
-      helm:
-        releaseName: authentik
+      plugin:
+        name: argocd-vault-plugin-helm
         values: |
           authentik:
             error_reporting:
               enabled: false
-            secret_key: ${SECRET_KEY}
-            postgresql:
-              host: ${PG_HOST}
-              name: "authentik"
-              user: ${PG_USER}
-              password: ${PG_PASSWORD}
-              port: 5432
-            email:
-              host: "smtp.gmail.com"
-              port: 587
-              username: ${SMTP_USER}
-              password: ${SMTP_PASSWORD}
-              use_tls: false
-              use_ssl: false
-              timeout: 30
-              from: "authentik@local.timmybtech.com"
 
           server:
             ingress:
