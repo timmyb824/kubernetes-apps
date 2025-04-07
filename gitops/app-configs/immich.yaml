@@ -28,13 +28,12 @@ spec:
 
           env:
             REDIS_HOSTNAME: '{{ printf "%s-redis-master" .Release.Name }}'
-            DB_HOSTNAME: <path:secret/data/database#PG_HOST>
-            DB_USERNAME: <path:secret/data/database#PG_USER>
-            DB_DATABASE_NAME: "immich"
-            # -- You should provide your own secret outside of this helm-chart and use `postgresql.global.postgresql.auth.existingSecret` to provide credentials to the postgresql instance
-            DB_PASSWORD: <path:secret/data/database#PG_PASSWORD>
             DB_VECTOR_EXTENSION: "pgvector"
             IMMICH_MACHINE_LEARNING_URL: '{{ printf "http://%s-machine-learning:3003" .Release.Name }}'
+
+          envFrom:
+            - secretRef:
+                name: immich-db-secret
 
           image:
             tag: v1.126.1 # v1.131.3
