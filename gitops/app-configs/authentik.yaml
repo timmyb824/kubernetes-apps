@@ -22,53 +22,22 @@ spec:
           authentik:
             error_reporting:
               enabled: false
-            env:
-              - name: AUTHENTIK_SECRET_KEY
-                valueFrom:
-                  secretKeyRef:
-                    name: authentik-secret
-                    key: secret-key
-              - name: AUTHENTIK_POSTGRESQL__HOST
-                valueFrom:
-                  secretKeyRef:
-                    name: authentik-secret
-                    key: pg-host
-              - name: AUTHENTIK_POSTGRESQL__NAME
-                value: "authentik"
-              - name: AUTHENTIK_POSTGRESQL__USER
-                valueFrom:
-                  secretKeyRef:
-                    name: authentik-secret
-                    key: pg-user
-              - name: AUTHENTIK_POSTGRESQL__PASSWORD
-                valueFrom:
-                  secretKeyRef:
-                    name: authentik-secret
-                    key: pg-password
-              - name: AUTHENTIK_POSTGRESQL__PORT
-                value: "5432"
-              - name: AUTHENTIK_EMAIL__HOST
-                value: "smtp.gmail.com"
-              - name: AUTHENTIK_EMAIL__PORT
-                value: "587"
-              - name: AUTHENTIK_EMAIL__USERNAME
-                valueFrom:
-                  secretKeyRef:
-                    name: authentik-secret
-                    key: smtp-user
-              - name: AUTHENTIK_EMAIL__PASSWORD
-                valueFrom:
-                  secretKeyRef:
-                    name: authentik-secret
-                    key: smtp-password
-              - name: AUTHENTIK_EMAIL__USE_TLS
-                value: "false"
-              - name: AUTHENTIK_EMAIL__USE_SSL
-                value: "false"
-              - name: AUTHENTIK_EMAIL__TIMEOUT
-                value: "30"
-              - name: AUTHENTIK_EMAIL__FROM
-                value: "authentik@local.timmybtech.com"
+            secret_key: ${SECRET_KEY}
+            postgresql:
+              host: ${PG_HOST}
+              name: "authentik"
+              user: ${PG_USER}
+              password: ${PG_PASSWORD}
+              port: 5432
+            email:
+              host: "smtp.gmail.com"
+              port: 587
+              username: ${SMTP_USER}
+              password: ${SMTP_PASSWORD}
+              use_tls: false
+              use_ssl: false
+              timeout: 30
+              from: "authentik@local.timmybtech.com"
 
           server:
             ingress:
