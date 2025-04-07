@@ -1,0 +1,39 @@
+# envsubst < argocd-cm.yaml | kubectl apply -f -
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-cm
+  namespace: argocd
+  labels:
+    app.kubernetes.io/name: argocd-cm
+    app.kubernetes.io/part-of: argocd
+data:
+  statusbadge.enabled: "true"
+  # add an additional local user with apiKey and login capabilities
+  #   apiKey - allows generating API keys
+  #   login - allows to login using UI
+  accounts.readonlyuser: apiKey
+  accounts.readonlyuser.enabled: "true"
+  accounts.tbryant: apiKey, login
+  accounts.tbryant.enabled: "true"
+  admin.enabled: "true"
+  configManagementPlugins: |-
+    - name: argocd-vault-plugin
+      generate:
+        command: ["argocd-vault-plugin"]
+        args: ["generate", "./", "-s", "argocd-vault-plugin-credentials"]
+  url: https://argocd.local.timmybtech.com
+  dex.config: |
+    connectors:
+    - config:
+        issuer: ${AUTHENTIK_ARGOCD_ISSUER}
+        clientID: ${AUTHENTIK_ARGOCD_CLIENT_ID}
+        clientSecret: $dex.authentik.clientSecret
+        insecureEnableGroups: true
+        scopes:
+          - openid
+          - profile
+          - email
+      name: authentik
+      type: oidc
+      id: authentik
