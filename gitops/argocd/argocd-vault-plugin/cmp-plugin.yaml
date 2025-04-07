@@ -1,6 +1,7 @@
 ---
 # from: https://argocd-vault-plugin.readthedocs.io/en/stable/installation/
 # also: https://itnext.io/argocd-secret-management-with-argocd-vault-plugin-539f104aff05
+# orig command: - "find . -name '*.yaml' | xargs -I {} grep \"<path\\|avp\\.kubernetes\\.io\" {} | grep ."
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -19,10 +20,19 @@ data:
           command:
             - sh
             - "-c"
-            - "find . -name '*.yaml' | xargs -I {} grep \"<path\\|avp\\.kubernetes\\.io\" {} | grep ."
+            - |
+              find . -name '*.yaml' | while read file; do
+                if grep -q "values: |" "$file"; then
+                  echo "$file"
+                elif grep -q "<path\|avp\.kubernetes\.io" "$file"; then
+                  echo "$file"
+                fi
+              done
       generate:
         command:
           - argocd-vault-plugin
           - generate
           - "."
+          - "-s"
+          - "argocd-vault-plugin-credentials"
       lockRepo: false
