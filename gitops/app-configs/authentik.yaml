@@ -16,45 +16,8 @@ spec:
       chart: authentik
       helm:
         releaseName: authentik
-        parameters:
-          - name: "authentik.secret_key"
-            value: "<path:secret/data/authentik#SECRET_KEY>"
-          - name: "authentik.error_reporting.enabled"
-            value: "false"
-          - name: "authentik.postgresql.host"
-            value: "<path:secret/data/authentik#PG_HOST>"
-          - name: "authentik.postgresql.name"
-            value: "authentik"
-          - name: "authentik.postgresql.user"
-            value: "<path:secret/data/authentik#PG_USER>"
-          - name: "authentik.postgresql.password"
-            value: "<path:secret/data/authentik#PG_PASSWORD>"
-          - name: "authentik.postgresql.port"
-            value: "5432"
-          - name: "authentik.email.host"
-            value: "smtp.gmail.com"
-          - name: "authentik.email.port"
-            value: "587"
-          - name: "authentik.email.username"
-            value: "<path:secret/data/authentik#SMTP_USER>"
-          - name: "authentik.email.password"
-            value: "<path:secret/data/authentik#SMTP_PASSWORD>"
-          - name: "authentik.email.use_tls"
-            value: "false"
-          - name: "authentik.email.use_ssl"
-            value: "false"
-          - name: "authentik.email.timeout"
-            value: "30"
-          - name: "authentik.email.from"
-            value: "authentik@local.timmybtech.com"
-          - name: "server.ingress.enabled"
-            value: "false"
-          - name: "postgresql.enabled"
-            value: "false"
-          - name: "redis.enabled"
-            value: "true"
-          - name: "metrics.enabled"
-            value: "true"
+        valueFiles:
+          - values.yaml
     - repoURL: https://github.com/timmyb824/kubernetes-apps.git
       path: gitops/manifests/authentik
       targetRevision: HEAD
