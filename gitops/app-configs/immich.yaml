@@ -26,22 +26,33 @@ spec:
 
           # These entries are shared between all the Immich components
 
-          env: {}
-            # Remove default env vars to prevent them from overriding our secret values
-
-          envFrom:
-            - secretRef:
-                name: immich-db-secret
+          env:
+            DB_HOSTNAME:
+              valueFrom:
+                secretKeyRef:
+                  name: immich-db-secret
+                  key: DB_HOSTNAME
+            DB_USERNAME:
+              valueFrom:
+                secretKeyRef:
+                  name: immich-db-secret
+                  key: DB_USERNAME
+            DB_PASSWORD:
+              valueFrom:
+                secretKeyRef:
+                  name: immich-db-secret
+                  key: DB_PASSWORD
+            DB_DATABASE_NAME:
+              valueFrom:
+                secretKeyRef:
+                  name: immich-db-secret
+                  key: DB_DATABASE_NAME
+            DB_VECTOR_EXTENSION: "pgvector"
+            REDIS_HOSTNAME: '{{ printf "%s-redis-master" .Release.Name }}'
+            IMMICH_MACHINE_LEARNING_URL: '{{ printf "http://%s-machine-learning:3003" .Release.Name }}'
 
           postgresql:
             enabled: false
-            # Override the default values to prevent them from being used
-            global:
-              postgresql:
-                auth:
-                  username: null
-                  password: null
-                  database: null
 
           image:
             tag: v1.126.1 # v1.131.3
