@@ -28,7 +28,7 @@ data:
     - config:
         issuer: ${AUTHENTIK_ARGOCD_ISSUER}
         clientID: ${AUTHENTIK_ARGOCD_CLIENT_ID}
-        clientSecret: $dex.authentik.clientSecret
+        clientSecret: $dex.authentik.clientSecret # WARNING: using envsubst will cause $dex to dropped from the secret which will break auth with authentik
         insecureEnableGroups: true
         scopes:
           - openid
