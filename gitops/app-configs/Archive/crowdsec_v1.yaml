@@ -1,0 +1,123 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: crowdsec
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  annotations: {}
+spec:
+  destination:
+    namespace: crowdsec
+    server: "https://kubernetes.default.svc"
+  project: default
+  source:
+    repoURL: https://crowdsecurity.github.io/helm-charts
+    targetRevision: 0.16.0
+    chart: crowdsec
+    helm:
+      releaseName: crowdsec
+      values: |
+        container_runtime: docker
+
+        config:
+          config.yaml.local: |
+            db_config:
+              type:     postgresql
+              user:     <path:secret/data/postgres_db#USER>
+              password: <path:secret/data/postgres_db#PASSWORD>
+              db_name:  crowdsec
+              host:     <path:secret/data/postgres_db#HOST_NAME>
+              port:     5432
+              sslmode:  require
+
+        lapi:
+          enabled: true
+          replicas: 1
+          env:
+            - name: ENROLL_KEY
+              value: "<path:secret/data/argocd#CROWDSEC_ENROLL_KEY_K8S>"
+            - name: ENROLL_INSTANCE_NAME
+              value: "k8s-cluster"
+            - name: ENROLL_TAGS
+              value: "k8s linux"
+          resources:
+            limits:
+              memory: 500Mi
+              cpu: 500m
+            requests:
+              cpu: 500m
+              memory: 500Mi
+          dashboard:
+            enabled: false
+            resources: {}
+          persistentVolume:
+            data:
+              enabled: true
+              accessModes:
+                - ReadWriteOnce
+              storageClassName: "nfs-csi-synologynas"
+              existingClaim: ""
+              size: 2Gi
+            # -- Persistent volume for config folder. Stores e.g. online api credentials
+            config:
+              enabled: true
+              accessModes:
+                - ReadWriteOnce
+              storageClassName: "nfs-csi-synologynas"
+              existingClaim: ""
+              size: 1Gi
+          metrics:
+            enabled: true
+
+        agent:
+          enabled: true
+          replicas: 1
+          # -- To add custom acquisitions using available datasources (https://docs.crowdsec.net/docs/next/data_sources/intro)
+          additionalAcquisition: []
+          acquisition:
+            - namespace: traefik
+              podName: traefik-*
+              program: traefik
+          env:
+            - name: COLLECTIONS
+              value: "crowdsecurity/traefik"
+          lapiURL: http://crowdsec-service.crowdsec.svc.cluster.local:8080
+          resources:
+            limits:
+              memory: 250Mi
+              cpu: 500m
+            requests:
+              cpu: 500m
+              memory: 250Mi
+          persistentVolume:
+            config:
+              enabled: false
+              accessModes:
+                - ReadWriteOnce
+              storageClassName: "nfs-csi-synologynas"
+              existingClaim: ""
+              size: 1Gi
+          metrics:
+            enabled: true
+
+        # -- Enable AppSec (https://docs.crowdsec.net/docs/next/appsec/intro)
+        appsec:
+          enabled: false
+          resources:
+            limits:
+              memory: 250Mi
+              cpu: 500m
+            requests:
+              cpu: 500m
+              memory: 250Mi
+          metrics:
+            enabled: true
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - ApplyOutOfSyncOnly=true
+      - CreateNamespace=true

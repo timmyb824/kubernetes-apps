@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ngrok-ingress-controller
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+  annotations:
+    avp.kubernetes.io/path: "secret/data/ngrok"
+spec:
+  destination:
+    namespace: ngrok-ingress-controller
+    server: "https://kubernetes.default.svc"
+  project: default
+  source:
+    repoURL: https://ngrok.github.io/kubernetes-ingress-controller
+    targetRevision: 0.10.0
+    chart: kubernetes-ingress-controller
+    helm:
+      releaseName: ngrok-ingress-controller
+      parameters:
+      - name: "credentials.apiKey"
+        value: <NGROK_API_KEY_GENERAL>
+
+      - name: "credentials.authtoken"
+        value: <NGROK_AUTH_TOKEN>
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true

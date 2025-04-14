@@ -1,0 +1,105 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: authentik
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  annotations:
+    avp.kubernetes.io/path: "secret/data/authentik"
+spec:
+  destination:
+    namespace: authentik
+    server: "https://kubernetes.default.svc"
+  project: default
+  source:
+    repoURL: https://charts.goauthentik.io
+    targetRevision: 2023.10.7
+    chart: authentik
+    helm:
+      releaseName: authentik
+      values: |
+        image:
+          repository: ghcr.io/goauthentik/server
+          tag: 2023.10.7
+          digest: ""
+          pullPolicy: IfNotPresent
+          pullSecrets: []
+
+        authentik:
+            secret_key: <SECRET_KEY>
+            # This sends anonymous usage-data, stack traces on errors and
+            # performance data to sentry.io, and is fully opt-in
+            error_reporting:
+                enabled: false
+            postgresql:
+              host: <PG_HOST>
+              name: "authentik"
+              user: <PG_USER>
+              password: <PG_PASSWORD>
+              port: 5432
+
+        ingress:
+            enabled: false
+
+        postgresql:
+          enabled: false
+          postgresqlMaxConnections: 500
+          postgresqlUsername: <PG_USER>
+          postgresqlPassword: <PG_PASSWORD>
+          postgresqlDatabase: "authentik"
+        redis:
+            enabled: true
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: authentik-ingress
+  namespace: authentik
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+# spec:
+#   entryPoints:
+#     - websecure
+#   routes:
+#     - match: Host(`authentik.local.timmybtech.com`)
+#       kind: Rule
+#       services:
+#         - name: authentik
+#           port: 80
+#   tls:
+#     secretName: local-timmybtech-com-tls
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: "Host(`authentik.local.timmybtech.com`)"
+      middlewares:
+        - name: authentik
+          namespace: authentik
+      priority: 10
+      services:
+        - kind: Service
+          name: authentik
+          port: 80
+    # This part is only required for single-app setups
+    - kind: Rule
+      match: "Host(`authentic.local.timmybtech.com`) && PathPrefix(`/outpost.goauthentik.io/`)"
+      priority: 15
+      services:
+        - kind: Service
+          # Or, to use an external Outpost, create an ExternalName service and reference that here.
+          # See https://kubernetes.io/docs/concepts/services-networking/service/#externalname
+          name: authentik
+          port: 80
+
+  tls:
+    secretName: local-timmybtech-com-tls

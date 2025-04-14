@@ -1,0 +1,412 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: traefik
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: traefik
+    server: "https://kubernetes.default.svc"
+  project: default
+  source:
+    repoURL: https://traefik.github.io/charts
+    targetRevision: HEAD
+    path: traefik
+    helm:
+      releaseName: traefik
+      values: |
+        globalArguments:
+          - --global.sendanonymoususage=false
+          - --global.checknewversion=false
+        additionalArguments:
+          - --serversTransport.insecureSkipVerify=true
+          - --log.level=INFO
+        deployment:
+          enabled: true
+          replicas: 3
+          annotations: {}
+          podAnnotations: {}
+          additionalContainers: []
+          initContainers: []
+        ports:
+          web:
+            redirections:
+              entryPoint:
+                to: websecure
+                scheme: https
+                permanent: true
+          websecure:
+            tls:
+              enabled: true
+        ingressRoute:
+          dashboard:
+            enabled: false
+        providers:
+          kubernetesCRD:
+            enabled: true
+            ingressClass: traefik-external
+            allowCrossNamespace: true # added for authentik
+          kubernetesIngress:
+            enabled: true
+            publishedService:
+              enabled: false
+          file:
+            enabled: true
+            watch: true
+            content: |
+              tls:
+                certificates:
+                  - certFile: /certs/tls.crt
+                    keyFile: /certs/tls.key
+                stores:
+                  default:
+                    defaultCertificate:
+                      certFile: /certs/tls.crt
+                      keyFile: /certs/tls.key
+
+              http:
+                middlewares:
+                  authentik:
+                    forwardAuth:
+                      address: https://authentik.timmybtech.com/outpost.goauthentik.io/auth/traefik
+                      trustForwardHeader: true
+                      authResponseHeaders:
+                        - X-authentik-username
+                        - X-authentik-groups
+                        - X-authentik-entitlements
+                        - X-authentik-email
+                        - X-authentik-name
+                        - X-authentik-uid
+                        - X-authentik-jwt
+                        - X-authentik-meta-jwks
+                        - X-authentik-meta-outpost
+                        - X-authentik-meta-provider
+                        - X-authentik-meta-app
+                        - X-authentik-meta-version
+
+                routers:
+                  uptime-kuma:
+                    rule: Host(`uptime-kuma.local.timmybtech.com`)
+                    service: uptime-kuma
+                    entrypoints:
+                      - websecure
+                    middlewares:
+                      - authentik
+                    tls:
+                      certResolver: {}
+                  uptime-kuma-auth:
+                    rule: "Host(`uptime-kuma.local.timmybtech.com`) && PathPrefix(`/outpost.goauthentik.io/`)"
+                    priority: 15
+                    service: authentik
+                    entrypoints:
+                      - websecure
+                    tls:
+                      certResolver: {}
+                  watchyourlan:
+                    rule: Host(`watchyourlan.local.timmybtech.com`)
+                    service: watchyourlan
+                    entrypoints:
+                      - websecure
+                    tls:
+                      certResolver: {}
+                  speedtest:
+                    rule: Host(`speedtest.local.timmybtech.com`)
+                    service: speedtest
+                    entrypoints:
+                      - websecure
+                    tls:
+                      certResolver: {}
+                  nas:
+                    rule: Host(`nas.local.timmybtech.com`)
+                    service: nas
+                    entrypoints:
+                      - websecure
+                    tls:
+                      certResolver: {}
+                  it-tools:
+                    rule: Host(`it-tools.local.timmybtech.com`)
+                    service: it-tools
+                    entrypoints:
+                      - websecure
+                    tls:
+                      certResolver: {}
+                  pgweb:
+                    rule: Host(`pgweb.local.timmybtech.com`)
+                    service: pgweb
+                    entrypoints:
+                      - websecure
+                    tls:
+                      certResolver: {}
+                  netalertx:
+                    rule: Host(`netalertx.local.timmybtech.com`)
+                    service: netalertx
+                    entrypoints:
+                      - websecure
+                    tls:
+                      certResolver: {}
+                  pve:
+                    rule: Host(`pve.local.timmybtech.com`)
+                    service: pve
+                    entrypoints:
+                      - websecure
+                    tls:
+                      certResolver: {}
+                  zipline:
+                    rule: Host(`zipline.local.timmybtech.com`)
+                    service: zipline
+                    entrypoints:
+                      - websecure
+                    tls:
+                      certResolver: {}
+                  homeassistant:
+                    rule: Host(`homeassistant.local.timmybtech.com`)
+                    service: homeassistant
+                    entrypoints:
+                      - websecure
+                    tls:
+                      certResolver: {}
+                  loki:
+                    rule: Host(`loki.local.timmybtech.com`)
+                    service: loki
+                    entrypoints:
+                      - websecure
+                    tls:
+                      certResolver: {}
+                  prometheus:
+                    rule: Host(`prometheus.local.timmybtech.com`)
+                    service: prometheus
+                    entrypoints:
+                      - websecure
+                    tls:
+                      certResolver: {}
+                  actualbudget:
+                    rule: Host(`budget.local.timmybtech.com`)
+                    service: actualbudget
+                    entrypoints:
+                      - websecure
+                    tls:
+                      certResolver: {}
+                  adguard:
+                    rule: Host(`adguard.local.timmybtech.com`)
+                    service: adguard
+                    entrypoints:
+                      - websecure
+                    tls:
+                      certResolver: {}
+                  adguard-secondary:
+                    rule: Host(`adguard-secondary.local.timmybtech.com`)
+                    service: adguard-secondary
+                    entrypoints:
+                      - websecure
+                    tls:
+                      certResolver: {}
+                  maybe:
+                    rule: Host(`maybe.local.timmybtech.com`)
+                    service: maybe
+                    entrypoints:
+                      - websecure
+                    tls:
+                      certResolver: {}
+                  dozzle:
+                    rule: Host(`dozzle.local.timmybtech.com`)
+                    service: dozzle
+                    entrypoints:
+                      - websecure
+                    tls:
+                      certResolver: {}
+                  semaphore:
+                    rule: Host(`semaphore.local.timmybtech.com`)
+                    service: semaphore
+                    entrypoints:
+                      - websecure
+                    tls:
+                      certResolver: {}
+
+                services:
+                  uptime-kuma:
+                    loadBalancer:
+                      servers:
+                        - url: http://homelab-oci03.tailebee.ts.net:3001
+                  authentik:
+                    loadBalancer:
+                      servers:
+                        - url: https://authentik.timmybtech.com/outpost.goauthentik.io
+                  watchyourlan:
+                    loadBalancer:
+                      servers:
+                        - url: http://192.168.86.217:8840
+                  speedtest:
+                    loadBalancer:
+                      servers:
+                        - url: http://192.168.86.143:8083
+                  nas:
+                    loadBalancer:
+                      servers:
+                        - url: https://192.168.86.44:5001
+                      serversTransport: nas-transport
+                  it-tools:
+                    loadBalancer:
+                      servers:
+                        - url: http://192.168.86.143:5884
+                  pgweb:
+                    loadBalancer:
+                      servers:
+                        - url: http://192.168.86.143:8084
+                  netalertx:
+                    loadBalancer:
+                      servers:
+                        - url: http://192.168.86.44:20211
+                  zipline:
+                    loadBalancer:
+                      servers:
+                        - url: http://192.168.86.143:3000
+                  pve:
+                    loadBalancer:
+                      servers:
+                        - url: https://192.168.86.160:8006
+                  homeassistant:
+                    loadBalancer:
+                      servers:
+                        - url: http://192.168.86.147:8123
+                  loki:
+                    loadBalancer:
+                      servers:
+                        - url: http://192.168.86.146:3100
+                  prometheus:
+                    loadBalancer:
+                      servers:
+                        - url: http://192.168.86.198:9090
+                  actualbudget:
+                    loadBalancer:
+                      servers:
+                        - url: http://192.168.86.203:5006
+                  adguard:
+                    loadBalancer:
+                      servers:
+                        - url: http://192.168.86.214:80
+                  adguard-secondary:
+                    loadBalancer:
+                      servers:
+                        - url: http://192.168.86.174:80
+                  maybe:
+                    loadBalancer:
+                      servers:
+                        - url: http://192.168.86.174:3003
+                  dozzle:
+                    loadBalancer:
+                      servers:
+                        - url: http://192.168.86.174:9999
+                  semaphore:
+                    loadBalancer:
+                      servers:
+                        - url: http://192.168.86.143:3005
+
+                serversTransports:
+                  nas-transport:
+                    insecureSkipVerify: true
+
+        volumes:
+          - name: local-timmybtech-com-tls
+            mountPath: /certs
+            type: secret
+        additionalVolumeMounts:
+          - name: local-timmybtech-com-tls
+            mountPath: /certs
+            readOnly: true
+        rbac:
+          enabled: true
+        service:
+          enabled: true
+          type: LoadBalancer
+          annotations: {}
+          labels: {}
+          spec:
+            loadBalancerIP: 192.168.86.224 # this should be an IP in the MetalLB range
+          loadBalancerSourceRanges: []
+          externalIPs: []
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: default-headers
+  namespace: default
+spec:
+  headers:
+    browserXssFilter: true
+    contentTypeNosniff: true
+    forceSTSHeader: true
+    stsIncludeSubdomains: true
+    stsPreload: true
+    stsSeconds: 15552000
+    customFrameOptionsValue: SAMEORIGIN
+    customRequestHeaders:
+      X-Forwarded-Proto: https
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: traefik-dashboard
+  namespace: traefik
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+    tailscale.com/expose: "true"
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`traefik.local.timmybtech.com`)
+      kind: Rule
+      middlewares:
+        - name: traefik-dashboard-basicauth
+          namespace: traefik
+      services:
+        - name: api@internal
+          kind: TraefikService
+  tls:
+    secretName: local-timmybtech-com-tls
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: traefik-metrics
+  namespace: traefik
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`traefik-metrics.local.timmybtech.com`)
+      kind: Rule
+      services:
+        - name: prometheus@internal
+          kind: TraefikService
+  tls:
+    secretName: local-timmybtech-com-tls
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: traefik-dashboard-basicauth
+  namespace: traefik
+spec:
+  basicAuth:
+    secret: traefik-dashboard-auth
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: traefik-dashboard-auth
+  namespace: traefik
+type: Opaque
+data:
+  # creted by installing `sudo apt-get install apache2-utils`
+  # and running `htpasswd -nb username password | openssl base64`
+  users:<path:secret/data/argocd#TRAEFIK_DASHBOARD_AUTH>
