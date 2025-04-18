@@ -39,7 +39,6 @@ spec:
       bucket: mattermost
       secret: mattermost-s3-credentials
 version: 10.7.0
-licenseSecret: ""
 ---
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
