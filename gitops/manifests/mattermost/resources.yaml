@@ -1,0 +1,62 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mattermost-postgres-connection
+  namespace: mattermost
+type: Opaque
+stringData:
+  DB_CONNECTION_STRING: <path:secret/data/database#PG_CONN_STRING>/mattermost?sslmode=disable
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mattermost-s3-credentials
+  namespace: mattermost
+type: Opaque
+stringData:
+  accesskey: <path:secret/data/argocd#MINIO_ACCESS_KEY>
+  secretkey: <path:secret/data/argocd#MINIO_SECRET_KEY>
+---
+apiVersion: installation.mattermost.com/v1beta1
+kind: Mattermost
+metadata:
+  name: mattermost
+  namespace: mattermost
+spec:
+  size: 100users
+  ingress:
+    enabled: false
+    host: mattermost.local.timmybtech.com
+    annotations:
+      kubernetes.io/ingress.class: traefik-external
+      traefik.ingress.kubernetes.io/router.entrypoints: websecure
+  database:
+    external:
+      secret: mattermost-postgres-connection
+  fileStore:
+    external:
+      url: minio.local.timmybtech.com
+      bucket: mattermost
+      secret: mattermost-s3-credentials
+version: 10.7.0
+licenseSecret: ""
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: mattermost-ingress
+  namespace: mattermost
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`mattermost.local.timmybtech.com`)
+      kind: Rule
+      services:
+        - name: mattermost
+          port: 80
+  tls:
+    secretName: local-timmybtech-com-tls
