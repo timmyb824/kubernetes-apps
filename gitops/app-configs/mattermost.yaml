@@ -12,7 +12,7 @@ spec:
   project: default
   sources:
     - repoURL: https://helm.mattermost.com
-      targetRevision: HEAD
+      targetRevision: 1.0.2
       chart: mattermost-operator
       helm:
         releaseName: mattermost
