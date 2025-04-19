@@ -149,7 +149,7 @@ spec:
     spec:
       containers:
         - name: glance
-          image: glanceapp/glance:v0.7.7
+          image: glanceapp/glance:v0.7.12
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
