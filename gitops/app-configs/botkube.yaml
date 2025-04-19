@@ -112,7 +112,7 @@ spec:
           'default-group':
             mattermost:
               enabled: true
-              botName: 'Botkube'
+              botName: 'botkube'
               url: '<path:secret/data/botkube#MATTERMOST_URL>'
               token: '<path:secret/data/botkube#MATTERMOST_TOKEN>'
               team: '<path:secret/data/botkube#MATTERMOST_TEAM>'
