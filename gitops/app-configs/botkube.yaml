@@ -110,13 +110,15 @@ spec:
 
         communications:
           'default-group':
-            discord:
+            mattermost:
               enabled: true
-              token: '<path:secret/data/botkube#DISCORD_TOKEN>'
-              botID: '<path:secret/data/botkube#DISCORD_BOT_ID>'
+              botName: 'Botkube'
+              url: '<path:secret/data/botkube#MATTERMOST_URL>'
+              token: '<path:secret/data/botkube#MATTERMOST_TOKEN>'
+              team: '<path:secret/data/botkube#MATTERMOST_TEAM>'
               channels:
                 'default':
-                  id: '<path:secret/data/botkube#DISCORD_CHANNEL_ID>'
+                  name: 'k8s-cluster'
                   notification:
                     disabled: false
                   bindings:
