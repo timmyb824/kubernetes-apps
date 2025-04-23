@@ -159,27 +159,23 @@ metadata:
   namespace: authentik
 data:
   config.yaml: |
-    # Name of the tunnel you want to run
     tunnel: authentik
     credentials-file: /etc/cloudflared/creds/credentials.json
-    # Serves the metrics server under /metrics and the readiness server under /ready
     metrics: 0.0.0.0:2000
-    # Autoupdates applied in a k8s pod will be lost when the pod is removed or restarted, so
-    # autoupdate doesn't make sense in Kubernetes. However, outside of Kubernetes, we strongly
-    # recommend using autoupdate.
     no-autoupdate: true
-    # The `ingress` block tells cloudflared which local service to route incoming
-    # requests to. For more about ingress rules, see
-    # https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/configuration/ingress
-    #
-    # Remember, these rules route traffic from cloudflared to a local service. To route traffic
-    # from the internet to cloudflared, run `cloudflared tunnel route dns [tunnel] [hostname]`.
-    # E.g. `cloudflared tunnel route dns example-tunnel tunnel.example.com`.
     ingress:
-    - hostname: authentik.timmybtech.com
-      service: http://authentik-server.authentik.svc.cluster.local:80
-    # This rule matches any traffic which didn't match a previous rule, and responds with HTTP 404.
-    - service: http_status:404
+      - hostname: authentik.timmybtech.com
+        path: /application/o/gitlab/api/v4/user
+        service: http://authentik-server.authentik.svc.cluster.local:80/application/o/userinfo/
+      - hostname: authentik.timmybtech.com
+        path: /application/o/gitlab/oauth/authorize
+        service: http://authentik-server.authentik.svc.cluster.local:80/application/o/authorize/
+      - hostname: authentik.timmybtech.com
+        path: /application/o/gitlab/oauth/token
+        service: http://authentik-server.authentik.svc.cluster.local:80/application/o/token/
+      - hostname: authentik.timmybtech.com
+        service: http://authentik-server.authentik.svc.cluster.local:80
+      - service: http_status:404
 ---
 apiVersion: v1
 kind: Service
@@ -215,24 +211,9 @@ spec:
           port: 2000
   tls:
     secretName: local-timmybtech-com-tls
-# ---
-# # Secret must be created first
-# apiVersion: v1
-# kind: Secret
-# metadata:
-#   name: default-token
-#   namespace: authentik
-#   annotations:
-#     kubernetes.io/service-account.name: default
-# type: kubernetes.io/service-account-token
 ---
-# ServiceAccount depends on the Secret
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: default
   namespace: authentik
-#   annotations:
-#     argocd.argoproj.io/depends-on: "Secret/default-token"
-# secrets:
-#   - name: default-token

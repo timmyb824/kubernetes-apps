@@ -5,6 +5,8 @@ metadata:
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
+  annotations:
+    avp.kubernetes.io/path: "secret/data/authentik"
 spec:
   destination:
     namespace: authentik
@@ -18,8 +20,24 @@ spec:
         releaseName: authentik
         values: |
           authentik:
+              secret_key: <SECRET_KEY>
               error_reporting:
                 enabled: false
+              postgresql:
+                host: <PG_HOST>
+                name: "authentik"
+                user: <PG_USER>
+                password: <PG_PASSWORD>
+                port: 5432
+              email:
+                host: "smtp.gmail.com"
+                port: 587
+                username: "<SMTP_USER>"
+                password: "<SMTP_PASSWORD>"
+                use_tls: false
+                use_ssl: false
+                timeout: 30
+                from: "authentik@local.timmybtech.com"
 
           server:
             ingress:
