@@ -164,18 +164,9 @@ data:
     metrics: 0.0.0.0:2000
     no-autoupdate: true
     ingress:
-      - hostname: authentik.timmybtech.com
-        path: /application/o/gitlab/api/v4/user
-        service: http://authentik-server.authentik.svc.cluster.local:80/application/o/userinfo/
-      - hostname: authentik.timmybtech.com
-        path: /application/o/gitlab/oauth/authorize
-        service: http://authentik-server.authentik.svc.cluster.local:80/application/o/authorize/
-      - hostname: authentik.timmybtech.com
-        path: /application/o/gitlab/oauth/token
-        service: http://authentik-server.authentik.svc.cluster.local:80/application/o/token/
-      - hostname: authentik.timmybtech.com
-        service: http://authentik-server.authentik.svc.cluster.local:80
-      - service: http_status:404
+    - hostname: authentik.timmybtech.com
+      service: http://authentik-server.authentik.svc.cluster.local:80
+    - service: http_status:404
 ---
 apiVersion: v1
 kind: Service
