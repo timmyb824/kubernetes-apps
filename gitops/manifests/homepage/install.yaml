@@ -346,11 +346,6 @@ data:
               password: <HOMEBOX_PASSWORD>
               fields: ["items", "locations", "totalValue"]
     - Kubernetes hidden:
-        - blinko:
-            icon: sh-blinko.png
-            href: https://blinko.local.timmybtech.com/
-            namespace: blinko
-            app: blinko-website
         - Glance:
             icon: glance.png
             href: https://glance.local.timmybtech.com/
