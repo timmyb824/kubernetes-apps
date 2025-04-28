@@ -1,0 +1,148 @@
+---
+# create namespace
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: olivetin
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: olivetin-config
+  namespace: olivetin
+data:
+  config.yaml: |
+    logLevel: INFO
+
+    prometheus:
+        enabled: true
+        defaultGoMetrics: false
+
+    actions:
+      - title: ping the internet
+        shell: ping 1.1.1.1 -c 1
+        icon: ping
+        timeout: 3
+
+      - title: update debian packages
+        shell: ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i /home/olivetin/.ssh/id_master_key_nopass {{ user }}@{{ host }} 'sudo apt-get update && sudo apt-get upgrade -y'
+        arguments:
+          - name: user
+            default: tbryant
+            type: ascii
+          - name: host
+            default: localhost
+            type: ascii_identifier
+        icon: ping
+        timeout: 300
+
+  id_master_key_nopass_base64: |
+    <path:secret/data/olivetin#ID_MASTER_KEY_NOPASS_PRIVATE>
+  id_master_key_nopass_pub_base64: |
+    <path:secret/data/olivetin#ID_MASTER_KEY_NOPASS_PUBLIC>
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: olivetin
+  namespace: olivetin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: olivetin
+  template:
+    metadata:
+      labels:
+        app: olivetin
+        app.kubernetes.io/name: olivetin
+    spec:
+      securityContext:
+        fsGroup: 1000 # Assuming 1000 is the GID of the olivetin user
+      initContainers:
+        - name: init-ssh-keys
+          image: busybox
+          securityContext:
+            runAsUser: 1000 # Assuming 1000 is the UID of the olivetin user
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              # Create .ssh directory
+              mkdir -p /home/olivetin/.ssh
+
+              # Decode and save private key
+              base64 -d /config/id_master_key_nopass_base64 > /home/olivetin/.ssh/id_master_key_nopass
+              # Decode and save public key
+              base64 -d /config/id_master_key_nopass_pub_base64 > /home/olivetin/.ssh/id_master_key_nopass.pub
+
+              # Set permissions
+              chmod 700 /home/olivetin/.ssh
+              chmod 600 /home/olivetin/.ssh/id_master_key_nopass
+              chmod 644 /home/olivetin/.ssh/id_master_key_nopass.pub
+
+              # Debug: List contents after changes
+              echo "Contents of /home/olivetin/.ssh after changes:"
+              ls -la /home/olivetin/.ssh
+          volumeMounts:
+            - name: olivetin-config
+              mountPath: "/config"
+              readOnly: true
+            - name: ssh-keys
+              mountPath: "/home/olivetin"
+      containers:
+        - name: olivetin
+          image: docker.io/jamesread/olivetin:2025.2.21
+          ports:
+            - containerPort: 1337
+          volumeMounts:
+            - name: olivetin-config
+              mountPath: "/config"
+              readOnly: true
+            - name: ssh-keys
+              mountPath: "/home/olivetin"
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 1337
+            initialDelaySeconds: 10
+            periodSeconds: 30
+      volumes:
+        - name: olivetin-config
+          configMap:
+            name: olivetin-config
+        - name: ssh-keys
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: olivetin
+  namespace: olivetin
+spec:
+  selector:
+    app: olivetin
+  ports:
+    - protocol: TCP
+      port: 1337
+      targetPort: 1337
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: olivetin-ingress
+  namespace: olivetin
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`olivetin.local.timmybtech.com`)
+      kind: Rule
+      services:
+        - name: olivetin
+          port: 1337
+  tls:
+    secretName: local-timmybtech-com-tls

@@ -1,0 +1,107 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: babybuddy
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: babybuddy-claim0
+  namespace: babybuddy
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: nfs-csi-synologynas
+  volumeName: pvc-aecdfdb6-f1b2-4431-961f-950d55a12a64
+  resources:
+    requests:
+      storage: 8Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.26.1 (HEAD)
+  labels:
+    io.kompose.service: babybuddy
+  name: babybuddy
+  namespace: babybuddy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: babybuddy
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.26.1 (HEAD)
+
+      labels:
+        io.kompose.service: babybuddy
+    spec:
+      containers:
+        - env:
+            - name: CSRF_TRUSTED_ORIGINS
+              value: https://babybuddy.local.timmybtech.com
+            - name: SECURE_PROXY_SSL_HEADER
+              value: "TRUE"
+            - name: TZ
+              value: America/New_York
+          image: linuxserver/babybuddy:2.7.1
+          name: babybuddy
+          ports:
+            - containerPort: 8000
+          resources: {}
+          volumeMounts:
+            - mountPath: /config
+              name: babybuddy-claim0
+      restartPolicy: Always
+      volumes:
+        - name: babybuddy-claim0
+          persistentVolumeClaim:
+            claimName: babybuddy-claim0
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.26.1 (HEAD)
+  labels:
+    io.kompose.service: babybuddy
+  name: babybuddy
+  namespace: babybuddy
+spec:
+  ports:
+    - name: "720"
+      port: 720
+      targetPort: 8000
+  selector:
+    io.kompose.service: babybuddy
+status:
+  loadBalancer: {}
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: babybuddy-ingress
+  namespace: babybuddy
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`babybuddy.local.timmybtech.com`) # create A record in pihole
+      kind: Rule
+      services:
+        - name: babybuddy
+          port: 720
+  tls:
+    secretName: local-timmybtech-com-tls # or local-example-com-staging-tls

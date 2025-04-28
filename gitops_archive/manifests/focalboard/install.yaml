@@ -1,0 +1,74 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: focalboard
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: focalboard
+  namespace: focalboard
+  annotations:
+    avp.kubernetes.io/path: "secret/data/postgres_db"
+  labels:
+    io.kompose.service: focalboard
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: focalboard
+  template:
+    metadata:
+      annotations:
+        app.kubernetes.io/name: focalboard
+      labels:
+        io.kompose.network/temp-default: "true"
+        io.kompose.service: focalboard
+    spec:
+      containers:
+        - image: mattermost/focalboard
+          name: focalboard
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8000
+          env:
+          - name: FOCALBOARD_DBTYPE
+            value: postgres
+          - name: FOCALBOARD_DBCONFIG
+            value: postgres://<USER>:<PASSWORD>@<HOST_NAME>:5432/focalboard?sslmode=disable&connect_timeout=10
+---
+  apiVersion: v1
+  kind: Service
+  metadata:
+    annotations: {}
+    labels:
+      io.kompose.service: focalboard
+    name: focalboard
+  spec:
+    ports:
+      - name: "8000"
+        port: 8000
+        targetPort: 8000
+    selector:
+      io.kompose.service: focalboard
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: focalboard-ingress
+  namespace: focalboard
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`focalboard.local.timmybtech.com`) # create A record in pihole
+      kind: Rule
+      services:
+        - name: focalboard
+          port: 8000
+  tls:
+    secretName: local-timmybtech-com-tls

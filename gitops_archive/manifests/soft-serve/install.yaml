@@ -1,0 +1,206 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: null
+  namespace: soft-serve
+  labels:
+    io.kompose.service: soft-serve-claim0
+  name: soft-serve-claim0
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 8Gi
+status: {}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  annotations:
+    avp.kubernetes.io/path: "secret/data/postgres_db"
+  name: soft-serve-config
+  namespace: soft-serve
+data:
+  config.yaml: |+
+    # Soft Serve Server configurations
+
+    # The name of the server.
+    # This is the name that will be displayed in the UI.
+    name: "Bryant Homelab"
+
+    # Log format to use. Valid values are "json", "logfmt", and "text".
+    log_format: "text"
+
+    # The SSH server configuration.
+    ssh:
+      # The address on which the SSH server will listen.
+      listen_addr: ":23231"
+
+      # The public URL of the SSH server.
+      # This is the address that will be used to clone repositories.
+      public_url: "ssh://soft-serve.local.timmybtech.com"
+
+      # The path to the SSH server's private key.
+      key_path: "ssh/soft_serve_host"
+
+      # The path to the SSH server's client private key.
+      # This key will be used to authenticate the server to make git requests to
+      # ssh remotes.
+      client_key_path: "ssh/soft_serve_client"
+
+      # The maximum number of seconds a connection can take.
+      # A value of 0 means no timeout.
+      max_timeout: 0
+
+      # The number of seconds a connection can be idle before it is closed.
+      idle_timeout: 120
+
+    # The Git daemon configuration.
+    git:
+      # The address on which the Git daemon will listen.
+      listen_addr: ":9418"
+
+      # The maximum number of seconds a connection can take.
+      # A value of 0 means no timeout.
+      max_timeout: 0
+
+      # The number of seconds a connection can be idle before it is closed.
+      idle_timeout: 3
+
+      # The maximum number of concurrent connections.
+      max_connections: 32
+
+    # The HTTP server configuration.
+    http:
+      # The address on which the HTTP server will listen.
+      listen_addr: ":23232"
+
+      # The path to the TLS private key.
+      tls_key_path: ""
+
+      # The path to the TLS certificate.
+      tls_cert_path: ""
+
+      # The public URL of the HTTP server.
+      # This is the address that will be used to clone repositories.
+      # Make sure to use https:// if you are using TLS.
+      public_url: "http://localhost:23232"
+
+    # The database configuration.
+    db:
+      # The database driver to use.
+      # Valid values are "sqlite" and "postgres".
+      driver: "postgres"
+      # The database data source name.
+      # This is driver specific and can be a file path or connection string.
+      # Make sure foreign key support is enabled when using SQLite.
+      # data_source: "soft-serve.db?_pragma=busy_timeout(5000)&_pragma=foreign_keys(1)"
+      data_source: "postgres://<USER>:<PASSWORD>@<HOST_NAME>:5432/soft_serve?sslmode=disable"
+
+    # Git LFS configuration.
+    lfs:
+      # Enable Git LFS.
+      enabled: true
+      # Enable Git SSH transfer.
+      ssh_enabled: false
+
+    # Cron job configuration
+    jobs:
+      mirror_pull: "@every 10m"
+
+    # The stats server configuration.
+    stats:
+      # The address on which the stats server will listen.
+      listen_addr: ":23233"
+    # Additional admin keys.
+    initial_admin_keys:
+      - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG2iB7F01dMALwcGHFY9+140neloiAfJ1j5jlBOe+FF1"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations: {}
+  creationTimestamp: null
+  namespace: soft-serve
+  labels:
+    io.kompose.service: soft-serve
+  name: soft-serve
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: soft-serve
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations: {}
+      creationTimestamp: null
+      labels:
+        io.kompose.network/soft-serve-default: "true"
+        io.kompose.service: soft-serve
+        app.kubernetes.io/name: soft-serve
+    spec:
+      containers:
+        - image: charmcli/soft-serve:latest
+          name: soft-serve
+          ports:
+            - containerPort: 23231
+              hostPort: 23231
+              protocol: TCP
+            - containerPort: 23232
+              hostPort: 23232
+              protocol: TCP
+            - containerPort: 23233
+              hostPort: 23233
+              protocol: TCP
+            - containerPort: 9418
+              hostPort: 9418
+              protocol: TCP
+          resources: {}
+          volumeMounts:
+            - mountPath: /soft-serve
+              name: soft-serve-claim0
+            - mountPath: /soft-serve/config.yaml
+              name: soft-serve-config
+              subPath: config.yaml
+      restartPolicy: Always
+      volumes:
+        - name: soft-serve-claim0
+          persistentVolumeClaim:
+            claimName: soft-serve-claim0
+        - name: soft-serve-config
+          configMap:
+            name: soft-serve-config
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    metallb.universe.tf/allow-shared-ip: "192.168.86.220"
+  creationTimestamp: null
+  namespace: soft-serve
+  labels:
+    io.kompose.service: soft-serve
+  name: soft-serve
+spec:
+  ports:
+    - name: "ssh-server"
+      port: 23231
+      targetPort: 23231
+    - name: "http-server"
+      port: 23232
+      targetPort: 23232
+    - name: "stats-server"
+      port: 23233
+      targetPort: 23233
+    - name: "git-daemon"
+      port: 9418
+      targetPort: 9418
+  selector:
+    io.kompose.service: soft-serve
+  type: LoadBalancer
+status:
+  loadBalancer: {}

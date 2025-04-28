@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: missing-container-metrics
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: missing-container-metrics
+    server: "https://kubernetes.default.svc"
+  project: default
+  source:
+    repoURL: https://draganm.github.io/missing-container-metrics
+    targetRevision: 0.1.1
+    chart: missing-container-metrics
+    helm:
+      releaseName: missing-container-metrics
+      parameters:
+      - name: "resources.limits.cpu"
+        value: "100m"
+      - name: "resources.limits.memory"
+        value: "128Mi"
+      - name: "resources.requests.cpu"
+        value: "100m"
+      - name: "resources.requests.memory"
+        value: "128Mi"
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
