@@ -37,3 +37,9 @@ data:
       name: authentik
       type: oidc
       id: authentik
+  resource.customizations: |
+    installation.mattermost.com/Mattermost:
+      ignoreDifferences: |
+        jsonPointers:
+        - /spec/size
+        - /version
