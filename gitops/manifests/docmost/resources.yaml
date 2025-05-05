@@ -53,6 +53,37 @@ spec:
               value: <path:secret/data/database#PG_CONN_STRING>/docmost?schema=public
             - name: REDIS_URL
               value: "redis://redis:6379"
+            - name: MAIL_DRIVER
+              value: "smtp"
+            - name: SMTP_HOST
+              value: <path:secret/data/google_smtp#SMTP_HOST>
+            - name: SMTP_PORT
+              value: "587"
+            - name: SMTP_USERNAME
+              value: <path:secret/data/google_smtp#SMTP_USER>
+            - name: SMTP_PASSWORD
+              value: <path:secret/data/google_smtp#SMTP_PASSWORD>
+            - name: SMTP_SECURE
+              value: "false"
+            - name: MAIL_FROM_ADDRESS
+              value: "homelab@timmybtech.com"
+            - name: MAIL_FROM_NAME
+              value: "Docmost"
+            - name: STORAGE_DRIVER
+              value: "s3"
+            - name: AWS_S3_ACCESS_KEY_ID
+              value: <path:secret/data/argocd#MINIO_ACCESS_KEY>
+            - name: AWS_S3_SECRET_ACCESS_KEY
+              value: <path:secret/data/argocd#MINIO_SECRET_KEY>
+            - name: AWS_S3_REGION
+              value: "us-east-1"
+            - name: AWS_S3_BUCKET
+              value: "docmost"
+            - name: AWS_S3_ENDPOINT
+              value: "https://minio.local.timmybtech.com"
+            - name: AWS_S3_FORCE_PATH_STYLE
+              value: "true"
+
           volumeMounts:
             - name: docmost-storage
               mountPath: /app/data/storage
