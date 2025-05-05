@@ -1,0 +1,140 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: docmost-storage
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 24Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: redis-data
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 4Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: docmost
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: docmost
+  template:
+    metadata:
+      labels:
+        app: docmost
+        app.kubernetes.io/name: docmost
+    spec:
+      containers:
+        - name: docmost
+          image: docmost/docmost:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: APP_URL
+              value: "http://localhost:3000"
+            - name: APP_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: docmost-secrets
+                  key: app-secret
+            - name: DATABASE_URL
+              value: <path:secret/data/database#PG_CONN_STRING>/docmost?schema=public
+            - name: REDIS_URL
+              value: "redis://redis:6379"
+          volumeMounts:
+            - name: docmost-storage
+              mountPath: /app/data/storage
+      volumes:
+        - name: docmost-storage
+          persistentVolumeClaim:
+            claimName: docmost-storage
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: docmost-secrets
+stringData:
+  app-secret: <path:secret/data/argocd#DOCMOST_APP_SECRET>
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      containers:
+        - name: redis
+          image: redis:7.2-alpine
+          ports:
+            - containerPort: 6379
+          volumeMounts:
+            - name: redis-data
+              mountPath: /data
+      volumes:
+        - name: redis-data
+          persistentVolumeClaim:
+            claimName: redis-data
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: docmost
+spec:
+  selector:
+    app: docmost
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis
+spec:
+  selector:
+    app: redis
+  ports:
+    - protocol: TCP
+      port: 6379
+      targetPort: 6379
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: docmost-ingress
+  namespace: docmost
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`docmost.local.timmybtech.com`)
+      kind: Rule
+      services:
+        - name: docmost
+          port: 3000
+  tls:
+    secretName: local-timmybtech-com-tls
