@@ -99,7 +99,7 @@ spec:
             - name: PAPERLESS_DBHOST
               value: <path:secret/data/postgres_db#HOST_NAME>
             - name: PAPERLESS_DBNAME
-              value: paperless
+              value: paperless_utf8
             - name: PAPERLESS_DBPASS
               value: <path:secret/data/postgres_db#PASSWORD>
             - name: PAPERLESS_DBPORT
