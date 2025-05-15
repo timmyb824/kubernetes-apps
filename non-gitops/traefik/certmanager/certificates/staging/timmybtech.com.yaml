@@ -1,0 +1,15 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: timmybtech-com-staging
+  namespace: traefik
+spec:
+  secretName: timmybtech-com-staging-tls
+  issuerRef:
+    name: letsencrypt-staging
+    kind: ClusterIssuer
+  commonName: "*.timmybtech.com"
+  dnsNames:
+  - "timmybtech.com"
+  - "*.timmybtech.com"
