@@ -34,12 +34,14 @@ providers:
     enabled: true
     ingressClass: traefik-external
     allowCrossNamespace: true # FOR AUTHENTIK
+    allowExternalNameServices: true
     ingressRoute: # FOR CROWDSEC
       defaultMiddleware: #
         namespace: traefik #
         name: crowdsec-bouncer #
   kubernetesIngress:
     enabled: true
+    allowExternalNameServices: true
     publishedService:
       enabled: false
   file:
