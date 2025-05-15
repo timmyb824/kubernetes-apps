@@ -163,7 +163,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`homepage.local.timmybtech.com`)
+    - match: Host(`homepage.local.timmybtech.com`) || Host(`homepage.timmybtech.com`)
       kind: Rule
       services:
         - name: homepage
