@@ -74,9 +74,11 @@ data:
     no-autoupdate: true
     ingress:
     - hostname: homepage.timmybtech.com
-      service: http://traefik.traefik.svc.cluster.local:80
+      service: http://traefik.traefik.svc.cluster.local:443
       originRequest:
         noTLSVerify: true
+        headers:
+          X-Forwarded-Proto: https
     - service: http_status:404
 ---
 apiVersion: v1
