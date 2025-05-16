@@ -79,7 +79,6 @@ data:
         noTLSVerify: true
         headers:
           X-Forwarded-Proto: https
-    - service: http_status:404
     - hostname: homepage.timmybtech.com
       service: https://traefik.traefik.svc.cluster.local:443
       originRequest:
