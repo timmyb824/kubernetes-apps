@@ -39,9 +39,23 @@ spec:
       services:
         - name: authentik-server
           port: 80
+  tls:
+    secretName: timmybtech-com-tls
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: authentik-outpost
+  namespace: authentik
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  entryPoints:
+    - websecure
+  routes:
     - match: "Host(`authentik.timmybtech.com`) && PathPrefix(`/outpost.goauthentik.io/`)"
       kind: Rule
-      priority: 15
       services:
         - name: ak-outpost-authentik-embedded-outpost
           port: 9000
