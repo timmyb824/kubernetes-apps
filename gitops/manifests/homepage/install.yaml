@@ -372,11 +372,21 @@ data:
               password: <HOMEBOX_PASSWORD>
               fields: ["items", "locations", "totalValue"]
     - Kubernetes hidden:
+        - Docmost:
+            icon: docmost.png
+            href: https://docmost.timmybtech.com/
+            namespace: docmost
+            app: docmost
         - Glance:
             icon: glance.png
             href: https://glance.local.timmybtech.com/
             namespace: glance
             app: glance
+        - Hoarder:
+            icon: hoarder.png
+            href: https://hoarder.timmybtech.com/
+            namespace: hoarder
+            app: hoarder
         - InfluxDB:
             icon: influxdb.png
             href: https://influxdb.local.timmybtech.com/
@@ -548,10 +558,6 @@ data:
             icon: home-assistant.png
             href: https://homeassistant.local.timmybtech.com/
             ping: http://192.168.86.147:8123
-        - Hoarder:
-            icon: hoarder.png
-            href: https://hoarder.timmybtech.com/
-            ping: https://hoarder.timmybtech.com
         - IT-Tools:
             icon: it-tools.png
             href: https://it-tools.local.timmybtech.com/

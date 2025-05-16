@@ -48,6 +48,7 @@ spec:
     metadata:
       labels:
         app: hoarder-web
+        app.kubernetes.io/name: hoarder
     spec:
       containers:
         - name: web
@@ -87,7 +88,7 @@ spec:
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
-  name: hoarder-ingress
+  name: hoarder-internal
   namespace: hoarder
   annotations:
     kubernetes.io/ingress.class: traefik-external
@@ -101,11 +102,31 @@ spec:
       services:
         - name: web
           port: 3000
-      middlewares:
-        - name: crowdsec-bouncer
-          namespace: traefik
+      # middlewares:
+      #   - name: crowdsec-bouncer
+      #     namespace: traefik
   tls:
     secretName: local-timmybtech-com-tls
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: hoarder-public
+  namespace: hoarder
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`hoarder.timmybtech.com`)
+      kind: Rule
+      services:
+        - name: web
+          port: 3000
+  tls:
+    secretName: timmybtech-com-tls
 ---
 apiVersion: apps/v1
 kind: Deployment

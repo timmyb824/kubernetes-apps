@@ -79,6 +79,12 @@ data:
         noTLSVerify: true
         headers:
           X-Forwarded-Proto: https
+    - hostname: hoarder.timmybtech.com
+      service: https://traefik.traefik.svc.cluster.local:443
+      originRequest:
+        noTLSVerify: true
+        headers:
+          X-Forwarded-Proto: https
     - service: http_status:404
 ---
 apiVersion: v1
@@ -106,7 +112,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`cf-cloudflared.local.timmybtech.com`)
+    - match: Host(`cloudflared.local.timmybtech.com`)
       kind: Rule
       services:
         - name: cloudflared
