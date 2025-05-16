@@ -222,4 +222,3 @@ spec:
     - protocol: TCP
       port: 7700
       targetPort: 7700
----

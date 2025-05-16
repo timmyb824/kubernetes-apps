@@ -153,7 +153,7 @@ spec:
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
-  name: docmost-ingress
+  name: docmost-internal
   namespace: docmost
   annotations:
     kubernetes.io/ingress.class: traefik-external
@@ -170,99 +170,10 @@ spec:
   tls:
     secretName: local-timmybtech-com-tls
 ---
-apiVersion: v1
-kind: Secret
-metadata:
-  namespace: docmost
-  name: tunnel-credentials
-type: Opaque
-stringData:
-  credentials.json: >-
-    <path:secret/data/cloudflared#DOCMOST_CREDENTIALS>
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: cloudflared
-  namespace: docmost
-spec:
-  selector:
-    matchLabels:
-      app: cloudflared
-  replicas: 2
-  template:
-    metadata:
-      labels:
-        app: cloudflared
-    spec:
-      containers:
-        - name: cloudflared
-          image: cloudflare/cloudflared:2025.4.0
-          args:
-            - tunnel
-            - --config
-            - /etc/cloudflared/config/config.yaml
-            - run
-          livenessProbe:
-            httpGet:
-              path: /ready
-              port: 2000
-            failureThreshold: 1
-            initialDelaySeconds: 10
-            periodSeconds: 10
-          volumeMounts:
-            - name: config
-              mountPath: /etc/cloudflared/config
-              readOnly: true
-            - name: creds
-              mountPath: /etc/cloudflared/creds
-              readOnly: true
-      volumes:
-        - name: creds
-          secret:
-            secretName: tunnel-credentials
-        - name: config
-          configMap:
-            name: cloudflared
-            items:
-              - key: config.yaml
-                path: config.yaml
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: cloudflared
-  namespace: docmost
-data:
-  config.yaml: |
-    tunnel: docmost
-    credentials-file: /etc/cloudflared/creds/credentials.json
-    metrics: 0.0.0.0:2000
-    no-autoupdate: true
-    ingress:
-    - hostname: docmost.timmybtech.com
-      service: http://docmost.docmost.svc.cluster.local:3000
-    - service: http_status:404
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: cloudflared
-  namespace: docmost
-  annotations:
-    argocd.argoproj.io/sync-wave: "-1"
-spec:
-  selector:
-    app: cloudflared
-  ports:
-    - port: 2000
-      protocol: TCP
-      targetPort: 2000
----
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
-  name: cloudflared-ingress-docmost
+  name: docmost-public
   namespace: docmost
   annotations:
     kubernetes.io/ingress.class: traefik-external
@@ -271,10 +182,10 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`cf-docmost.local.timmybtech.com`)
+    - match: Host(`docmost.timmybtech.com`)
       kind: Rule
       services:
-        - name: cloudflared
-          port: 2000
+        - name: docmost
+          port: 3000
   tls:
-    secretName: local-timmybtech-com-tls
+    secretName: timmybtech-com-tls

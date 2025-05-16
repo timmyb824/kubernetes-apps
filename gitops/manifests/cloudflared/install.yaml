@@ -73,6 +73,13 @@ data:
     metrics: 0.0.0.0:2000
     no-autoupdate: true
     ingress:
+    - hostname: docmost.timmybtech.com
+      service: https://traefik.traefik.svc.cluster.local:443
+      originRequest:
+        noTLSVerify: true
+        headers:
+          X-Forwarded-Proto: https
+    - service: http_status:404
     - hostname: homepage.timmybtech.com
       service: https://traefik.traefik.svc.cluster.local:443
       originRequest:
