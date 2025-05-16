@@ -29,14 +29,12 @@ metadata:
   namespace: authentik
   annotations:
     kubernetes.io/ingress.class: traefik-external
-    traefik.ingress.kubernetes.io/router.entrypoints: websecure
 spec:
   entryPoints:
     - websecure
   routes:
-    - match: "Host(`authentik.timmybtech.com`) && PathPrefix(`/outpost.goauthentik.io/`)"
+    - match: Host(`authentik-outpost.timmybtech.com`)
       kind: Rule
-      priority: 100
       services:
         - name: ak-outpost-authentik-embedded-outpost
           port: 9000
@@ -57,7 +55,6 @@ spec:
   routes:
     - match: Host(`authentik.timmybtech.com`)
       kind: Rule
-      priority: 1
       services:
         - name: authentik-server
           port: 80
