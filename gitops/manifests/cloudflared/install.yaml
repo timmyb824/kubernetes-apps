@@ -73,7 +73,25 @@ data:
     metrics: 0.0.0.0:2000
     no-autoupdate: true
     ingress:
+    - hostname: authentik.timmybtech.com
+      service: https://traefik.traefik.svc.cluster.local:443
+      originRequest:
+        noTLSVerify: true
+        headers:
+          X-Forwarded-Proto: https
     - hostname: docmost.timmybtech.com
+      service: https://traefik.traefik.svc.cluster.local:443
+      originRequest:
+        noTLSVerify: true
+        headers:
+          X-Forwarded-Proto: https
+    - hostname: grafana.timmybtech.com
+      service: https://traefik.traefik.svc.cluster.local:443
+      originRequest:
+        noTLSVerify: true
+        headers:
+          X-Forwarded-Proto: https
+    - hostname: hoarder.timmybtech.com
       service: https://traefik.traefik.svc.cluster.local:443
       originRequest:
         noTLSVerify: true
@@ -85,7 +103,31 @@ data:
         noTLSVerify: true
         headers:
           X-Forwarded-Proto: https
-    - hostname: hoarder.timmybtech.com
+    - hostname: immich.timmybtech.com
+      service: https://traefik.traefik.svc.cluster.local:443
+      originRequest:
+        noTLSVerify: true
+        headers:
+          X-Forwarded-Proto: https
+    - hostname: mattermost.timmybtech.com
+      service: https://traefik.traefik.svc.cluster.local:443
+      originRequest:
+        noTLSVerify: true
+        headers:
+          X-Forwarded-Proto: https
+    - hostname: n8n.timmybtech.com
+      service: https://traefik.traefik.svc.cluster.local:443
+      originRequest:
+        noTLSVerify: true
+        headers:
+          X-Forwarded-Proto: https
+    - hostname: ntfy.timmybtech.com
+      service: https://traefik.traefik.svc.cluster.local:443
+      originRequest:
+        noTLSVerify: true
+        headers:
+          X-Forwarded-Proto: https
+    - hostname: umami.timmybtech.com
       service: https://traefik.traefik.svc.cluster.local:443
       originRequest:
         noTLSVerify: true
