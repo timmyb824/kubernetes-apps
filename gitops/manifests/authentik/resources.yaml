@@ -39,6 +39,12 @@ spec:
       services:
         - name: authentik-server
           port: 80
+    - match: "Host(`authentik.timmybtech.com`) && PathPrefix(`/outpost.goauthentik.io/`)"
+      kind: Rule
+      priority: 15
+      services:
+        - name: ak-outpost-authentik-embedded-outpost
+          port: 9000
   tls:
     secretName: timmybtech-com-tls
 ---
