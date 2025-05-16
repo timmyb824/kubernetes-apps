@@ -373,7 +373,7 @@ data:
               fields: ["items", "locations", "totalValue"]
     - Kubernetes hidden:
         - Docmost:
-            icon: docmost.png
+            icon: kubernetes.png
             href: https://docmost.timmybtech.com/
             namespace: docmost
             app: docmost
