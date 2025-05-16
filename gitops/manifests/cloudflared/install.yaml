@@ -79,6 +79,12 @@ data:
         noTLSVerify: true
         headers:
           X-Forwarded-Proto: https
+    - hostname: authentik-outpost.timmybtech.com
+      service: https://traefik.traefik.svc.cluster.local:443
+      originRequest:
+        noTLSVerify: true
+        headers:
+          X-Forwarded-Proto: https
     - hostname: docmost.timmybtech.com
       service: https://traefik.traefik.svc.cluster.local:443
       originRequest:
