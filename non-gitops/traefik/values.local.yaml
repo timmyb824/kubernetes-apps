@@ -62,7 +62,7 @@ providers:
         middlewares:
           authentik:
             forwardAuth:
-              address: https://authentik.timmybtech.com/outpost.goauthentik.io/auth/traefik
+              address: https://authentik-outpost.timmybtech.com/outpost.goauthentik.io/auth/traefik
               trustForwardHeader: true
               authResponseHeaders:
                 - X-authentik-username
