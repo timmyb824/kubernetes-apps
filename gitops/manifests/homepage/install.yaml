@@ -171,32 +171,6 @@ spec:
   tls:
     secretName: local-timmybtech-com-tls
 ---
-apiVersion: traefik.io/v1alpha1
-kind: IngressRoute
-metadata:
-  name: homepage-public
-  namespace: default
-  labels:
-    app.kubernetes.io/name: homepage
-  annotations:
-    kubernetes.io/ingress.class: traefik-external
-    gethomepage.dev/description: Dynamically Detected Homepage
-    gethomepage.dev/enabled: "true"
-    gethomepage.dev/group: Cluster Management
-    gethomepage.dev/icon: homepage.png
-    gethomepage.dev/name: Homepage
-spec:
-  entryPoints:
-    - websecure
-  routes:
-    - match: Host(`homepage.timmybtech.com`)
-      kind: Rule
-      services:
-        - name: homepage
-          port: 3000
-  tls:
-    secretName: timmybtech-com-tls
----
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:

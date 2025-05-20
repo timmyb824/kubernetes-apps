@@ -103,12 +103,6 @@ data:
         noTLSVerify: true
         headers:
           X-Forwarded-Proto: https
-    - hostname: homepage.timmybtech.com
-      service: https://traefik.traefik.svc.cluster.local:443
-      originRequest:
-        noTLSVerify: true
-        headers:
-          X-Forwarded-Proto: https
     - hostname: immich.timmybtech.com
       service: https://traefik.traefik.svc.cluster.local:443
       originRequest:
