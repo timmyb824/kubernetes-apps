@@ -188,7 +188,7 @@ spec:
         io.kompose.service: broker
     spec:
       containers:
-        - image: docker.io/library/redis:7
+        - image: docker.io/library/redis:8
           name: broker
           volumeMounts:
             - mountPath: /data
