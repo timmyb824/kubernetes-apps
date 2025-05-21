@@ -70,7 +70,6 @@ spec:
       protocol: TCP
   type: ClusterIP
 ---
-apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: agent
@@ -85,16 +84,6 @@ spec:
       labels:
         app: agent
     spec:
-      initContainers:
-        - name: fix-permissions
-          image: haedlessdev/corecontrol-agent:latest
-          command: ["/bin/sh", "-c"]
-          # attempt to fix permissions -> issue unble to start container process: exec ./app: permission denied: unknown
-          args:
-            - |
-              chmod +x ./app
-          securityContext:
-            runAsUser: 0
       containers:
         - name: agent
           image: haedlessdev/corecontrol-agent:latest
@@ -104,6 +93,13 @@ spec:
                 configMapKeyRef:
                   name: corecontrol-config
                   key: DATABASE_URL
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              chmod +x ./app
+              ./app
+          securityContext:
+            runAsUser: 0
 ---
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
