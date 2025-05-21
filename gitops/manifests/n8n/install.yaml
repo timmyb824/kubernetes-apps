@@ -148,10 +148,10 @@ spec:
       services:
         - name: n8n
           port: 5678
-      middlewares:
-        - name: default-headers
-          namespace: traefik
-        - name: secure-headers
-          namespace: traefik
+      # middlewares:
+      #   - name: default-headers
+      #     namespace: traefik
+      #   - name: secure-headers
+      #     namespace: traefik
   tls:
     secretName: timmybtech-com-tls
