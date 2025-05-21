@@ -1,0 +1,116 @@
+---
+# Namespace
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: corecontrol
+---
+# ConfigMap for environment variables
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: corecontrol-config
+  namespace: corecontrol
+data:
+  DATABASE_URL: "<path:secret/data/database#PG_CONN_STRING>/corecontrol?schema=public"
+---
+# Secret for sensitive data
+apiVersion: v1
+kind: Secret
+metadata:
+  name: corecontrol-secrets
+  namespace: corecontrol
+type: Opaque
+data:
+  JWT_SECRET: <path:secret/data/argocd#CORECONTROL_JWT>
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web
+  namespace: corecontrol
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+        - name: web
+          image: haedlessdev/corecontrol:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: corecontrol-secrets
+                  key: JWT_SECRET
+            - name: DATABASE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: corecontrol-config
+                  key: DATABASE_URL
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: web
+  namespace: corecontrol
+spec:
+  selector:
+    app: web
+  ports:
+    - port: 3000
+      targetPort: 3000
+      protocol: TCP
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: agent
+  namespace: corecontrol
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: agent
+  template:
+    metadata:
+      labels:
+        app: agent
+    spec:
+      containers:
+        - name: agent
+          image: haedlessdev/corecontrol-agent:latest
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: corecontrol-config
+                  key: DATABASE_URL
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: corecontrol-internal
+  namespace: corecontrol
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`corecontrol.local.timmybtech.com`)
+      kind: Rule
+      services:
+        - name: web
+          port: 3000
+  tls:
+    secretName: local-timmybtech-com-tls
