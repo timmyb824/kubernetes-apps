@@ -50,15 +50,13 @@ providers:
     content: |
       tls:
         certificates:
-          - certFile: /certs/local/tls.crt
-            keyFile: /certs/local/tls.key
-          - certFile: /certs/public/tls.crt
-            keyFile: /certs/public/tls.key
+          - certFile: /certs/tls.crt
+            keyFile: /certs/tls.key
         stores:
           default:
             defaultCertificate:
-              certFile: /certs/public/tls.crt
-              keyFile: /certs/public/tls.key
+              certFile: /certs/tls.crt
+              keyFile: /certs/tls.key
 
       http:
         middlewares:
@@ -314,17 +312,11 @@ providers:
 
 volumes:
   - name: local-timmybtech-com-tls
-    mountPath: /certs/local
-    type: secret
-  - name: timmybtech-com-tls
-    mountPath: /certs/public
+    mountPath: /certs
     type: secret
 additionalVolumeMounts:
   - name: local-timmybtech-com-tls
-    mountPath: /certs/local
-    readOnly: true
-  - name: timmybtech-com-tls
-    mountPath: /certs/public
+    mountPath: /certs
     readOnly: true
 rbac:
   enabled: true

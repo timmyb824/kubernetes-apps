@@ -117,19 +117,12 @@ data:
         noTLSVerify: true
         headers:
           X-Forwarded-Proto: https
-    # - hostname: n8n.timmybtech.com
-    #   service: https://traefik.traefik.svc.cluster.local:443
-    #   originRequest:
-    #     noTLSVerify: true
-    #     headers:
-    #       X-Forwarded-Proto: https
     - hostname: n8n.timmybtech.com
       service: https://traefik.traefik.svc.cluster.local:443
       originRequest:
-        trustForwardHeader: true
+        noTLSVerify: true
         headers:
           X-Forwarded-Proto: https
-      X-Forwarded-Host: n8n.timmybtech.com
     - hostname: ntfy.timmybtech.com
       service: https://traefik.traefik.svc.cluster.local:443
       originRequest:
