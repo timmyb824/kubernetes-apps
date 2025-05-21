@@ -89,6 +89,7 @@ spec:
         - name: fix-permissions
           image: haedlessdev/corecontrol-agent:latest
           command: ["/bin/sh", "-c"]
+          # attempt to fix permissions -> issue unble to start container process: exec ./app: permission denied: unknown
           args:
             - |
               chmod +x ./app
