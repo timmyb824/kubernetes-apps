@@ -366,7 +366,7 @@ data:
             widget:
               type: paperlessngx
               url: https://paperless.local.timmybtech.com
-              key: <path:secret/data/paperlessngx#PAPERLESS_API_AUTH_TOKEN>
+              key: <path:secret/data/homepage#PAPERLESS_API_AUTH_TOKEN>
         - Portainer (k8s):
             icon: portainer.png
             href: https://portainer.local.timmybtech.com/
