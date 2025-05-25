@@ -355,9 +355,9 @@ data:
             app: cloudflare
             widget:
               type: cloudflared
-              accountid: <path:secret/data/cloudflared#HOMELAB_ACCOUNT_ID>
-              tunnelid: <path:secret/data/cloudflared#HOMELAB_TUNNEL_ID>
-              key: <path:secret/data/cloudflared#MASTER_API_TOKEN>
+              accountid: <path:secret/data/homepage#HOMELAB_ACCOUNT_ID>
+              tunnelid: <path:secret/data/homepage#HOMELAB_TUNNEL_ID>
+              key: <path:secret/data/homepage#CF_MASTER_API_TOKEN>
         - Paperless-ngx:
             icon: paperless.png
             href: https://paperless.local.timmybtech.com/
@@ -367,6 +367,16 @@ data:
               type: paperlessngx
               url: https://paperless.local.timmybtech.com
               key: <path:secret/data/paperlessngx#PAPERLESS_API_AUTH_TOKEN>
+        - Portainer (k8s):
+            icon: portainer.png
+            href: https://portainer.local.timmybtech.com/
+            namespace: portainer
+            app: portainer
+            widget:
+              type: portainer
+              url: https://portainer.local.timmybtech.com
+              env: 1
+              key: <path:secret/data/homepage#PORTAINER_ACCESS_TOKEN>
     - Kubernetes hidden:
         - Docmost:
             icon: kubernetes.png
@@ -413,11 +423,6 @@ data:
             href: https://planka.local.timmybtech.com/
             namespace: planka
             app: planka
-        - Portainer (k8s):
-            icon: portainer.png
-            href: https://portainer.local.timmybtech.com/
-            namespace: portainer
-            app: portainer
         - Registry:
             icon: docker.png
             href: https://registry-ui.local.timmybtech.com/
