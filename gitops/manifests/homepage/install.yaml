@@ -348,6 +348,16 @@ data:
               username: <HOMEBOX_USER>
               password: <HOMEBOX_PASSWORD>
               fields: ["items", "locations", "totalValue"]
+        - Cloudflare Tunnel:
+            icon: cloudflare.png
+            href: https://cloudflare.local.timmybtech.com/
+            namespace: cloudflare
+            app: cloudflare
+            widget:
+              type: cloudflared
+              accountid: <path:secret/data/cloudflared#HOMELAB_ACCOUNT_ID>
+              tunnelid: <path:secret/data/cloudflared#HOMELAB_TUNNEL_ID>
+              key: <path:secret/data/cloudflared#MASTER_API_TOKEN>
     - Kubernetes hidden:
         - Docmost:
             icon: kubernetes.png
