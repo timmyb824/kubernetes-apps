@@ -27,6 +27,7 @@ spec:
     metadata:
       labels:
         app: cloudflared
+        app.kubernetes.io/name: cloudflared
     spec:
       containers:
         - name: cloudflared
