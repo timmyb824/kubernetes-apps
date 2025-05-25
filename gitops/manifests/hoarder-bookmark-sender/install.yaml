@@ -1,0 +1,66 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hoarder-bookmark-sender-config
+  namespace: hoarder
+data:
+  NODE_ENV: "production"
+  PORT: "8080"
+  NOTIFICATION_METHOD: "mattermost"
+  NOTIFICATION_FREQUENCY: "daily"
+  BOOKMARKS_COUNT: "3"
+  TIMEZONE: "UTC"
+  TIME_TO_SEND: "09:00"
+  HOARDER_API_KEY: <path:secret/data/argocd#HOARDER_API_KEY_HOARDER_BOOKMARK_SENDER>
+  HOARDER_SERVER_URL: <path:secret/data/argocd#HOARDER_SERVER_URL>
+  MATTERMOST_WEBHOOK_URL: <path:secret/data/argocd#MATTERMOST_WEBHOOK_URL>
+  MATTERMOST_CHANNEL: "random"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hoarder-bookmark-sender
+  namespace: hoarder
+  labels:
+    app: hoarder-bookmark-sender
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hoarder-bookmark-sender
+  template:
+    metadata:
+      labels:
+        app: hoarder-bookmark-sender
+    spec:
+      containers:
+        - name: hoarder-bookmark-sender
+          image: registry.local.timmybtech.com/hoarder-bookmark-sender:latest
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: hoarder-bookmark-sender-config
+            - secretRef:
+                name: hoarder-bookmark-sender-secrets
+          resources:
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hoarder-bookmark-sender
+  namespace: hoarder
+spec:
+  selector:
+    app: hoarder-bookmark-sender
+  ports:
+    - port: 8080
+      targetPort: 8080
+  type: ClusterIP
