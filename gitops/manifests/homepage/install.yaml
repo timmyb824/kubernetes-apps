@@ -358,6 +358,15 @@ data:
               accountid: <path:secret/data/cloudflared#HOMELAB_ACCOUNT_ID>
               tunnelid: <path:secret/data/cloudflared#HOMELAB_TUNNEL_ID>
               key: <path:secret/data/cloudflared#MASTER_API_TOKEN>
+        - Paperless-ngx:
+            icon: paperless.png
+            href: https://paperless.local.timmybtech.com/
+            namespace: paperless-ngx
+            app: paperless-ngx
+            widget:
+              type: paperlessngx
+              url: https://paperless.local.timmybtech.com
+              key: <path:secret/data/paperlessngx#PAPERLESS_API_AUTH_TOKEN>
     - Kubernetes hidden:
         - Docmost:
             icon: kubernetes.png
@@ -399,11 +408,6 @@ data:
             href: https://n8n.local.timmybtech.com/
             namespace: n8n
             app: n8n
-        - Paperless-ngx:
-            icon: paperless.png
-            href: https://paperless.local.timmybtech.com/
-            namespace: paperless-ngx
-            app: paperless-ngx
         - Planka:
             icon: planka.png
             href: https://planka.local.timmybtech.com/
