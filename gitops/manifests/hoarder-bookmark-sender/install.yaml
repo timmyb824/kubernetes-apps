@@ -42,8 +42,6 @@ spec:
           envFrom:
             - configMapRef:
                 name: hoarder-bookmark-sender-config
-            - secretRef:
-                name: hoarder-bookmark-sender-secrets
           resources:
             limits:
               cpu: "500m"
