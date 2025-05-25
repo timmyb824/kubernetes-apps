@@ -367,16 +367,6 @@ data:
               type: paperlessngx
               url: https://paperless.local.timmybtech.com
               key: <path:secret/data/homepage#PAPERLESS_API_AUTH_TOKEN>
-        - Portainer (k8s):
-            icon: portainer.png
-            href: https://portainer.local.timmybtech.com/
-            namespace: portainer
-            app: portainer
-            widget:
-              type: portainer
-              url: https://portainer.local.timmybtech.com
-              env: 1
-              key: <path:secret/data/homepage#PORTAINER_ACCESS_TOKEN>
     - Kubernetes hidden:
         - Docmost:
             icon: kubernetes.png
@@ -423,6 +413,16 @@ data:
             href: https://planka.local.timmybtech.com/
             namespace: planka
             app: planka
+        - Portainer (k8s):
+            icon: portainer.png
+            href: https://portainer.local.timmybtech.com/
+            namespace: portainer
+            app: portainer
+            # widget:
+            #   type: portainer
+            #   url: https://portainer.local.timmybtech.com
+            #   env: 1
+            #   key: <path:secret/data/homepage#PORTAINER_ACCESS_TOKEN>
         - Registry:
             icon: docker.png
             href: https://registry-ui.local.timmybtech.com/
