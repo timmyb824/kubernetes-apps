@@ -351,8 +351,8 @@ data:
         - Cloudflare Tunnel:
             icon: cloudflare.png
             href: https://cloudflare.local.timmybtech.com/
-            namespace: cloudflare
-            app: cloudflare
+            namespace: cloudflared
+            app: cloudflared
             widget:
               type: cloudflared
               accountid: <path:secret/data/homepage#HOMELAB_ACCOUNT_ID>
