@@ -34,7 +34,7 @@ spec:
             - name: MINIO_ROOT_PASSWORD
               value: <path:secret/data/argocd#MINIO_ADMIN_PASSWORD>
             - name: MINIO_ROOT_USER
-              value: <path:secret/data/argocd#MINIO_ADMIN_PASSWORD>
+              value: <path:secret/data/argocd#MINIO_ADMIN_USER>
             - name: MINIO_PROMETHEUS_URL
               value: "https://prometheus.local.timmybtech.com"
             - name: MINIO_PROMETHEUS_JOB_ID
