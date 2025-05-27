@@ -3,10 +3,9 @@ kind: Namespace
 metadata:
   name: minio
 ---
-apiVersion: apps/v1 #  for k8s versions before 1.9.0 use apps/v1beta2  and before 1.8.0 use extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  # This name uniquely identifies the Deployment
   name: minio
   namespace: minio
 spec:
@@ -33,9 +32,9 @@ spec:
             - ":9001"
           env:
             - name: MINIO_ROOT_PASSWORD
-              value: minioadmin
+              value: <path:secret/data/argocd#MINIO_ADMIN_PASSWORD>
             - name: MINIO_ROOT_USER
-              value: "minioadmin"
+              value: <path:secret/data/argocd#MINIO_ADMIN_PASSWORD>
             - name: MINIO_PROMETHEUS_URL
               value: "https://prometheus.local.timmybtech.com"
             - name: MINIO_PROMETHEUS_JOB_ID
@@ -111,7 +110,7 @@ spec:
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
-  name: minio-ingress
+  name: minio-internal
   namespace: minio
   annotations:
     kubernetes.io/ingress.class: traefik-external
@@ -128,3 +127,23 @@ spec:
 
   tls:
     secretName: local-timmybtech-com-tls
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: minio-public
+  namespace: minio
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`minio.timmybtech.com`)
+      kind: Rule
+      services:
+        - name: minio
+          port: 9000
+  tls:
+    secretName: timmybtech-com-tls
