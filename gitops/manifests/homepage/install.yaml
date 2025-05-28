@@ -382,7 +382,7 @@ data:
             icon: joplin.png
             href: http://joplin.timmybtech.com/joplin
             namespace: joplin
-            app: joplin-server
+            app: joplin
         - InfluxDB:
             icon: influxdb.png
             href: https://influxdb.local.timmybtech.com/
@@ -530,6 +530,10 @@ data:
                 url: http://192.168.86.44:20211
 
     - VM/LXC hidden:
+        - ArchiveBox:
+            icon: archivebox.png
+            href: http://archivebox.local.timmybtech.com/
+            ping: http://192.168.86.139:8000/
         - SNMP Exporter:
             icon: prometheus.png
             href: http://192.168.86.174:9116/
