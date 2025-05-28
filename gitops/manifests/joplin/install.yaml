@@ -4,7 +4,7 @@ metadata:
   name: joplin-config
 data:
   APP_PORT: "22300"
-  APP_BASE_URL: "https://joplin.timmybtech.com/joplin"
+  APP_BASE_URL: "http://joplin.timmybtech.com"
   DB_CLIENT: "pg"
 ---
 apiVersion: v1
