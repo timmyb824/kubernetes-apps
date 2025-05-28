@@ -368,11 +368,6 @@ data:
               url: https://paperless.local.timmybtech.com
               key: <path:secret/data/homepage#PAPERLESS_API_AUTH_TOKEN>
     - Kubernetes hidden:
-        - Docmost:
-            icon: kubernetes.png
-            href: https://docmost.timmybtech.com/
-            namespace: docmost
-            app: docmost
         - Glance:
             icon: glance.png
             href: https://glance.local.timmybtech.com/
@@ -383,6 +378,11 @@ data:
             href: https://hoarder.timmybtech.com/
             namespace: hoarder
             app: hoarder
+        - Joplin:
+            icon: joplin.png
+            href: http://joplin.timmybtech.com/joplin
+            namespace: joplin
+            app: joplin-server
         - InfluxDB:
             icon: influxdb.png
             href: https://influxdb.local.timmybtech.com/

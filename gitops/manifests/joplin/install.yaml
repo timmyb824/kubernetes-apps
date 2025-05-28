@@ -28,6 +28,7 @@ spec:
     metadata:
       labels:
         app: joplin-server
+        app.kubernetes.io/name: joplin-server
     spec:
       containers:
         - name: joplin-server
