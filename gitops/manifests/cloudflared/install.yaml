@@ -114,6 +114,12 @@ data:
         noTLSVerify: true
         headers:
           X-Forwarded-Proto: https
+    - hostname: joplin.timmybtech.com
+      service: https://traefik.traefik.svc.cluster.local:443
+      originRequest:
+        noTLSVerify: true
+        headers:
+          X-Forwarded-Proto: https
     - hostname: mattermost.timmybtech.com
       service: https://traefik.traefik.svc.cluster.local:443
       originRequest:

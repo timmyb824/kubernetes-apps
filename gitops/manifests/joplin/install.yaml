@@ -1,0 +1,93 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: joplin-config
+data:
+  APP_PORT: "22300"
+  APP_BASE_URL: "https://joplin.timmybtech.com/joplin"
+  DB_CLIENT: "pg"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: joplin-secrets
+type: Opaque
+stringData:
+  POSTGRES_CONNECTION_STRING: "<path:secret/data/database#PG_CONN_STRING>/joplin?schema=public"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: joplin-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: joplin-server
+  template:
+    metadata:
+      labels:
+        app: joplin-server
+    spec:
+      containers:
+        - name: joplin-server
+          image: joplin/server:latest
+          ports:
+            - containerPort: 22300
+          envFrom:
+            - configMapRef:
+                name: joplin-config
+            - secretRef:
+                name: joplin-secrets
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: joplin-server
+spec:
+  selector:
+    app: joplin-server
+  ports:
+    - port: 22300
+      targetPort: 22300
+  type: ClusterIP
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: joplin-internal
+  namespace: joplin
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`joplin.local.timmybtech.com`)
+      kind: Rule
+      services:
+        - name: joplin-server
+          port: 22300
+  tls:
+    secretName: local-timmybtech-com-tls
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: joplin-public
+  namespace: joplin
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`joplin.timmybtech.com`)
+      kind: Rule
+      services:
+        - name: joplin-server
+          port: 22300
+  tls:
+    secretName: timmybtech-com-tls
