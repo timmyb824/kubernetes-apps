@@ -222,7 +222,13 @@ providers:
               - websecure
             tls:
               certResolver: {}
-
+          pulse:
+            rule: Host(`pulse.local.timmybtech.com`)
+            service: pulse
+            entrypoints:
+              - websecure
+            tls:
+              certResolver: {}
         services:
           uptime-kuma:
             loadBalancer:
@@ -305,6 +311,10 @@ providers:
             loadBalancer:
               servers:
                 - url: http://192.168.86.143:3005
+          pulse:
+            loadBalancer:
+              servers:
+                - url: http://192.168.86.174:7655
 
         serversTransports:
           nas-transport:
