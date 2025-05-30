@@ -85,7 +85,7 @@ spec:
                   optional: true
             - name: AVP_VERSION
               value: 1.18.1
-          image: quay.io/argoproj/argocd:v2.14.13
+          image: quay.io/argoproj/argocd:v3.0.5
           imagePullPolicy: IfNotPresent
           livenessProbe:
             failureThreshold: 3
@@ -153,7 +153,7 @@ spec:
             - -n
             - /usr/local/bin/argocd
             - /var/run/argocd/argocd-cmp-server
-          image: quay.io/argoproj/argocd:v2.14.13
+          image: quay.io/argoproj/argocd:v3.0.5
           name: copyutil
           volumeMounts:
             - mountPath: /var/run/argocd
