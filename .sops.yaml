@@ -1,5 +1,0 @@
-# .sops.yaml
-creation_rules:
-  - path_regex: .*\.enc\.yaml$
-    encrypted_regex: '^(data|stringData|tls\.crt|tls\.key|ssh-privatekey|token|password|secret|clientSecret|dex\.authentik\.clientSecret)$'
-    age: age1hhnjylnwfh0w6sxzlvc905ma8wa5pkspv9k2kj8a0d993m8h734se3jh7u
