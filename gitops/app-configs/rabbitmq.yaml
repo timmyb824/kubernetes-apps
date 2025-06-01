@@ -17,18 +17,18 @@ spec:
       chart: rabbitmq
       helm:
         releaseName: rabbitmq
-      values: |
-        persistence:
-          enabled: true
-          storageClass: nfs-csi-synologynas
-          accessModes:
-            - ReadWriteOnce
-          size: 8Gi
-        metrics:
-          enabled: true
-        auth:
-          username: <path:secret/data/argocd#RABBITMQ_USERNAME>
-          password: <path:secret/data/argocd#RABBITMQ_PASSWORD>
+        values: |
+          persistence:
+            enabled: true
+            storageClass: nfs-csi-synologynas
+            accessModes:
+              - ReadWriteOnce
+            size: 8Gi
+          metrics:
+            enabled: true
+          auth:
+            username: <path:secret/data/argocd#RABBITMQ_USERNAME>
+            password: <path:secret/data/argocd#RABBITMQ_PASSWORD>
 
     - repoURL: "https://github.com/timmyb824/kubernetes-apps.git"
       path: "gitops/manifests/rabbitmq"
