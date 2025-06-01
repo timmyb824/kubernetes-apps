@@ -31,7 +31,7 @@ spec:
           password: <path:secret/data/argocd#RABBITMQ_PASSWORD>
 
     - repoURL: "https://github.com/timmyb824/kubernetes-apps.git"
-      path: "gitops/manifests/rabbitmq/resources.yaml"
+      path: "gitops/manifests/rabbitmq"
       targetRevision: HEAD
 
   syncPolicy:
