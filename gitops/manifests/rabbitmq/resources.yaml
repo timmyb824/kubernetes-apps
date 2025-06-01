@@ -15,10 +15,5 @@ spec:
       services:
         - name: rabbitmq
           port: 15672
-    - match: Host(`rabbitmq-metrics.local.timmybtech.com`)
-      kind: Rule
-      services:
-        - name: rabbitmq
-          port: 9419
   tls:
     secretName: local-timmybtech-com-tls
