@@ -12,9 +12,9 @@ spec:
     server: "https://kubernetes.default.svc"
   project: default
   source:
-    repoURL: https://charts.bitnami.com/bitnami
+    repoURL: registry-1.docker.io/bitnamicharts
     targetRevision: 16.0.4
-    chart: bitnami/rabbitmq
+    chart: rabbitmq
     helm:
       releaseName: rabbitmq
       values: |
