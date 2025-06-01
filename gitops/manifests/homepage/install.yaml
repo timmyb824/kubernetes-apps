@@ -382,7 +382,7 @@ data:
             icon: joplin.png
             href: http://joplin.timmybtech.com/joplin
             namespace: joplin
-            app: joplin
+            app: joplin-server
         - InfluxDB:
             icon: influxdb.png
             href: https://influxdb.local.timmybtech.com/

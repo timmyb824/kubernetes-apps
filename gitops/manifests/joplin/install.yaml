@@ -2,6 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: joplin-config
+  namespace: joplin
 data:
   APP_PORT: "22300"
   APP_BASE_URL: "http://joplin.timmybtech.com"
@@ -11,6 +12,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: joplin-secrets
+  namespace: joplin
 type: Opaque
 stringData:
   POSTGRES_CONNECTION_STRING: "<path:secret/data/database#PG_CONN_STRING>/joplin?schema=public"
@@ -19,6 +21,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: joplin-server
+  namespace: joplin
 spec:
   replicas: 1
   selector:
@@ -45,6 +48,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: joplin-server
+  namespace: joplin
 spec:
   selector:
     app: joplin-server
