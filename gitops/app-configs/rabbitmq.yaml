@@ -1,0 +1,38 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: rabbitmq
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  annotations: {}
+spec:
+  destination:
+    namespace: rabbitmq
+    server: "https://kubernetes.default.svc"
+  project: default
+  source:
+    repoURL: https://charts.bitnami.com/bitnami
+    targetRevision: 16.0.4
+    chart: rabbitmq
+    helm:
+      releaseName: rabbitmq
+      values: |
+        persistence:
+          enabled: true
+          storageClass: nfs-csi-synologynas
+          accessModes:
+            - ReadWriteOnce
+          size: 8Gi
+        metrics:
+          enabled: true
+        auth:
+          username: <path:secret/data/argocd#RABBITMQ_USERNAME>
+          password: <path:secret/data/argocd#RABBITMQ_PASSWORD>
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ApplyOutOfSyncOnly=true

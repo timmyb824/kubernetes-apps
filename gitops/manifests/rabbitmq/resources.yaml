@@ -1,0 +1,19 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: rabbitmq-internal
+  namespace: rabbitmq
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`rabbitmq.local.timmybtech.com`)
+      kind: Rule
+      services:
+        - name: rabbitmq
+          port: 15672
+  tls:
+    secretName: local-timmybtech-com-tls
