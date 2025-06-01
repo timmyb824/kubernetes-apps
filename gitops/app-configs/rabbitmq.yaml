@@ -11,12 +11,12 @@ spec:
     namespace: rabbitmq
     server: "https://kubernetes.default.svc"
   project: default
-  source:
-    repoURL: registry-1.docker.io/bitnamicharts
-    targetRevision: 16.0.4
-    chart: rabbitmq
-    helm:
-      releaseName: rabbitmq
+  sources:
+    - repoURL: registry-1.docker.io/bitnamicharts
+      targetRevision: 16.0.4
+      chart: rabbitmq
+      helm:
+        releaseName: rabbitmq
       values: |
         persistence:
           enabled: true
@@ -29,6 +29,11 @@ spec:
         auth:
           username: <path:secret/data/argocd#RABBITMQ_USERNAME>
           password: <path:secret/data/argocd#RABBITMQ_PASSWORD>
+
+    - repoURL: "https://github.com/timmyb824/kubernetes-apps.git"
+      path: "gitops/manifests/rabbitmq/resources.yaml"
+      targetRevision: HEAD
+
   syncPolicy:
     automated:
       prune: true
