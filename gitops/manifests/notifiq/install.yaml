@@ -43,11 +43,11 @@ spec:
                 name: notifiq-config
           livenessProbe:
             httpGet:
-              path: /
+              path: /healthz
               port: 8080
           readinessProbe:
             httpGet:
-              path: /
+              path: /readyz
               port: 8080
 ---
 apiVersion: v1
