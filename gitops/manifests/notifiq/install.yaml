@@ -1,0 +1,63 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: notifiq
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: notifiq-config
+data:
+  RABBITMQ_HOST: "rabbitmq.rabbitmq.svc.cluster.local"
+  RABBITMQ_PORT: "5672"
+  RABBITMQ_USER: "<path:secret/data/argocd#RABBITMQ_USERNAME>"
+  RABBITMQ_PASS: "<path:secret/data/argocd#RABBITMQ_PASSWORD>"
+  RABBITMQ_QUEUE: "homelab.alerts"
+  APPRISE_NTFY_URL: "<path:secret/data/argocd#APPRISE_NTFY_URL>"
+  APPRISE_DISCORD_URL: "<path:secret/data/argocd#APPRISE_DISCORD_URL>?channel=alerts"
+  APPRISE_EMAIL_URL: "<path:secret/data/argocd#APPRISE_EMAIL_URL>"
+  APPRISE_MATTERMOST_URL: "<path:secret/data/argocd#APPRISE_MATTERMOST_URL>"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notifiq
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: notifiq
+  template:
+    metadata:
+      labels:
+        app: notifiq
+    spec:
+      containers:
+        - name: notifiq
+          image: registry.local.timmybtech.com/notifiq:latest
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: notifiq-config
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8080
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: notifiq
+spec:
+  type: ClusterIP
+  selector:
+    app: notifiq
+  ports:
+    - port: 8080
+      targetPort: 8080

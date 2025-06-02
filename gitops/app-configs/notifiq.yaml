@@ -1,16 +1,16 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: influxdb
+  name: notifiq
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    namespace: influxdb
+    namespace: notifiq
     server: "https://kubernetes.default.svc"
   source:
-    path: gitops/manifests/influxdb
+    path: gitops/manifests/notifiq
     repoURL: "https://github.com/timmyb824/kubernetes-apps.git"
     targetRevision: HEAD
   project: default
