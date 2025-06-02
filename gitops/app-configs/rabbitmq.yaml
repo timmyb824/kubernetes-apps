@@ -29,6 +29,11 @@ spec:
           auth:
             username: <path:secret/data/argocd#RABBITMQ_USERNAME>
             password: <path:secret/data/argocd#RABBITMQ_PASSWORD>
+          service:
+            type: LoadBalancer
+            annotations:
+              metallb.universe.tf/allow-shared-ip: "192.168.86.221"
+            loadBalancerIP: "192.168.86.221"
 
     - repoURL: "https://github.com/timmyb824/kubernetes-apps.git"
       path: "gitops/manifests/rabbitmq"
