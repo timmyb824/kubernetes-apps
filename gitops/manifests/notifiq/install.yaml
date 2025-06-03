@@ -14,10 +14,10 @@ data:
   RABBITMQ_USER: "<path:secret/data/argocd#RABBITMQ_USERNAME>"
   RABBITMQ_PASS: "<path:secret/data/argocd#RABBITMQ_PASSWORD>"
   RABBITMQ_QUEUE: "homelab.alerts"
-  NOTIFIQ_APPRISE_NTFY_URL: "<path:secret/data/argocd#APPRISE_NTFY_URL>"
-  NOTIFIQ_APPRISE_DISCORD_URL: "<path:secret/data/argocd#APPRISE_DISCORD_URL>?channel=alerts"
-  NOTIFIQ_APPRISE_EMAIL_URL: "<path:secret/data/argocd#APPRISE_EMAIL_URL>"
-  NOTIFIQ_APPRISE_MATTERMOST_URL: "<path:secret/data/argocd#APPRISE_MATTERMOST_URL>"
+  APPRISE_NTFY_URL: "<path:secret/data/argocd#NOTIFIQ_APPRISE_NTFY_URL>"
+  APPRISE_DISCORD_URL: "<path:secret/data/argocd#NOTIFIQ_APPRISE_DISCORD_URL>?channel=alerts"
+  APPRISE_EMAIL_URL: "<path:secret/data/argocd#NOTIFIQ_APPRISE_EMAIL_URL>"
+  APPRISE_MATTERMOST_URL: "<path:secret/data/argocd#NOTIFIQ_APPRISE_MATTERMOST_URL>"
 ---
 apiVersion: apps/v1
 kind: Deployment
