@@ -72,6 +72,16 @@ spec:
               value: "5678"
             - name: WEBHOOK_URL
               value: https://n8n.timmybtech.com
+            - name: N8N_METRICS
+              value: "true"
+            - name: N8N_TEMPLATES_ENABLED
+              value: "true"
+            - name: N8N_HOST
+              value: n8n.timmybtech.com
+            - name: N8N_PROTOCOL
+              value: https
+            - name: N8N_EDITOR_BASE_URL
+              value: https://n8n.timmybtech.com
           image: n8nio/n8n:1.94.0
           name: n8n
           ports:
