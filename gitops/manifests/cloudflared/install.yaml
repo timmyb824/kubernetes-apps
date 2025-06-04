@@ -88,12 +88,6 @@ data:
         noTLSVerify: true
         headers:
           X-Forwarded-Proto: https
-    - hostname: docmost.timmybtech.com
-      service: https://traefik.traefik.svc.cluster.local:443
-      originRequest:
-        noTLSVerify: true
-        headers:
-          X-Forwarded-Proto: https
     - hostname: grafana.timmybtech.com
       service: https://traefik.traefik.svc.cluster.local:443
       originRequest:
@@ -132,6 +126,7 @@ data:
         noTLSVerify: true
         headers:
           X-Forwarded-Proto: https
+          X-Forwarded-Host: n8n.timmybtech.com
     - hostname: ntfy.timmybtech.com
       service: https://traefik.traefik.svc.cluster.local:443
       originRequest:
