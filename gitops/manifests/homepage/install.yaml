@@ -523,11 +523,11 @@ data:
                 slug: bryant-homelab
         - Netalertx:
             icon: netalertx.png
-            href: https://netalertx.local.timmybtech.com/
-            ping: http://192.168.86.44:20211
+            href: http://192.168.86.147:20211
+            ping: http://192.168.86.147:20211
             widget:
                 type: netalertx
-                url: http://192.168.86.44:20211
+                url: http://192.168.86.147:20211
 
     - VM/LXC hidden:
         - ArchiveBox:
