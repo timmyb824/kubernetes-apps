@@ -10,7 +10,7 @@ metadata:
   name: mortgageratescraper
   namespace: mortgageratescraper
 spec:
-  schedule: "0 13 * * *"
+  schedule: "0 9 * * *"
   jobTemplate:
     spec:
       template:
