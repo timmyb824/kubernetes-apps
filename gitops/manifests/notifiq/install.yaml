@@ -78,7 +78,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`notifiq.timmybtech.com`)
+    - match: Host(`notifiq.local.timmybtech.com`)
       kind: Rule
       services:
         - name: notifiq
