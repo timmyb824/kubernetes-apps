@@ -231,7 +231,7 @@ providers:
               certResolver: {}
           zabbix:
             rule: Host(`zabbix.local.timmybtech.com`)
-            service: pulse
+            service: zabbix
             entrypoints:
               - websecure
             tls:
