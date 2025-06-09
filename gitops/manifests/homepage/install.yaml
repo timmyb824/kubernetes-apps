@@ -528,6 +528,20 @@ data:
             widget:
                 type: netalertx
                 url: http://192.168.86.147:20211
+        - Pulse:
+            icon: proxmox.png
+            href: https://pulse.local.timmybtech.com/
+            ping: http://192.168.86.174:7655
+            widget:
+                type: pulse
+                url: http://192.168.86.174:7655
+        - Zabbix:
+            icon: zabbix.png
+            href: https://zabbix.local.timmybtech.com/
+            ping: http://homelab-oci03.tailebee.ts.net:8080
+            widget:
+                type: zabbix
+                url: http://homelab-oci03.tailebee.ts.net:8080
 
     - VM/LXC hidden:
         - ArchiveBox:
