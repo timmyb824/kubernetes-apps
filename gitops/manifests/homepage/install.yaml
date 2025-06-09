@@ -519,7 +519,7 @@ data:
             ping: http://homelab-oci03.tailebee.ts.net:3001
             widget:
                 type: uptimekuma
-                url: http://homelab-oci03.tailebee.ts.net:3001
+                url: http://<UPTIME_KUMA_IP>:3001
                 slug: bryant-homelab
         - Netalertx:
             icon: netalertx.png

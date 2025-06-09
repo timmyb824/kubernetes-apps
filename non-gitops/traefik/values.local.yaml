@@ -266,7 +266,7 @@ providers:
           netalertx:
             loadBalancer:
               servers:
-                - url: http://192.168.86.44:20211
+                - url: http://192.168.86.147:20211
           zipline:
             loadBalancer:
               servers:
