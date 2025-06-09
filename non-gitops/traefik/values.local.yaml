@@ -229,6 +229,13 @@ providers:
               - websecure
             tls:
               certResolver: {}
+          zabbix:
+            rule: Host(`zabbix.local.timmybtech.com`)
+            service: pulse
+            entrypoints:
+              - websecure
+            tls:
+              certResolver: {}
         services:
           uptime-kuma:
             loadBalancer:
@@ -315,6 +322,10 @@ providers:
             loadBalancer:
               servers:
                 - url: http://192.168.86.174:7655
+          zabbix:
+            loadBalancer:
+              servers:
+                - url: http://homelab-oci03.tailebee.ts.net:8080
 
         serversTransports:
           nas-transport:
