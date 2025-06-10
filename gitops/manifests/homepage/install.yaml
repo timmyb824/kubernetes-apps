@@ -593,7 +593,7 @@ data:
         - Zabbix:
             icon: zabbix.png
             href: https://zabbix.local.timmybtech.com/
-            ping: http://homelab-oci03.tailebee.ts.net:8080
+            ping: http://homelab-oci02.tailebee.ts.net:8080
   widgets.yaml: |
     - weatherapi:
         latitude: 41.8978
