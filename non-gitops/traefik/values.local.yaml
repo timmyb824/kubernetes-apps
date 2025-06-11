@@ -325,12 +325,11 @@ providers:
           zabbix:
             loadBalancer:
               servers:
-                - url: http://homelab-oci03.tailebee.ts.net:8080
+                - url: http://homelab-oci02.tailebee.ts.net:8080
 
         serversTransports:
           nas-transport:
             insecureSkipVerify: true
-
 volumes:
   - name: local-timmybtech-com-tls
     mountPath: /certs
