@@ -22,7 +22,7 @@ metadata:
   name: oci-usage-cost
   namespace: scripts
 spec:
-  schedule: "0 */2 * * *"
+  schedule: "0 10 * * *"
   jobTemplate:
     spec:
       template:
