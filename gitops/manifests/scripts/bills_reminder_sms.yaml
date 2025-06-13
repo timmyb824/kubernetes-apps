@@ -12,7 +12,7 @@ spec:
         spec:
           containers:
             - name: bills-reminder-sms
-              image: timmyb824/bills-reminder-sms:latest
+              image: registry.local.timmybtech.com/bills-reminder-sms:latest
               imagePullPolicy: Always
               env:
                 - name: EMAIL
