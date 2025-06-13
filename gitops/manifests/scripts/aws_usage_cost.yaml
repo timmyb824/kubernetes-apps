@@ -18,6 +18,10 @@ spec:
                   value: <path:secret/data/scripts#N8N_WEBHOOK_URL>
                 - name: N8N_CREDENTIALS
                   value: <path:secret/data/scripts#N8N_CREDENTIALS>
+                - name: AWS_ACCESS_KEY_ID
+                  value: <path:secret/data/scripts#AWS_ACCESS_KEY_ID>
+                - name: AWS_SECRET_ACCESS_KEY
+                  value: <path:secret/data/scripts#AWS_SECRET_ACCESS_KEY>
                 - name: HEALTHCHECKS_URL_AWS_USAGE_COST
                   value: <path:secret/data/scripts#HEALTHCHECKS_URL_AWS_USAGE_COST>
                 - name: DISCORD_WEBHOOK_URL
