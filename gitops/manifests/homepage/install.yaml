@@ -539,7 +539,7 @@ data:
             ping: http://homelab-oci02.tailebee.ts.net:8080
             widget:
                 type: zabbix
-                url: http://homelab-oci02.tailebee.ts.net:8080
+                url: http://homelab-oci02.tailebee.ts.net:80
                 key: <ZABBIX_API_KEY>
     - VM/LXC hidden:
         - ArchiveBox:
