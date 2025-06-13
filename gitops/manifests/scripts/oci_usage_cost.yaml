@@ -29,7 +29,7 @@ spec:
         spec:
           containers:
             - name: oci-usage-cost
-              image: timmyb824/oci-usage-cost:latest
+              image: registry.local.timmybtech.com/oci-usage-cost:latest
               env:
                 - name: N8N_WEBHOOK_URL
                   value: <path:secret/data/scripts#N8N_WEBHOOK_URL>
