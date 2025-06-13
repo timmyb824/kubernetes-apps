@@ -423,6 +423,11 @@ data:
             #   url: https://portainer.local.timmybtech.com
             #   env: 1
             #   key: <path:secret/data/homepage#PORTAINER_ACCESS_TOKEN>
+        - RabbitMQ:
+            icon: rabbitmq.png
+            href: https://rabbitmq.local.timmybtech.com/
+            namespace: rabbitmq
+            app: rabbitmq
         - Registry:
             icon: docker.png
             href: https://registry-ui.local.timmybtech.com/
@@ -528,7 +533,14 @@ data:
             widget:
                 type: netalertx
                 url: http://192.168.86.147:20211
-
+        - Zabbix:
+            icon: zabbix.png
+            href: https://zabbix.local.timmybtech.com/
+            ping: http://homelab-oci02.tailebee.ts.net:8080
+            widget:
+                type: zabbix
+                url: http://homelab-oci02.tailebee.ts.net:8080
+                key: <ZABBIX_API_KEY>
     - VM/LXC hidden:
         - ArchiveBox:
             icon: archivebox.png
@@ -590,10 +602,6 @@ data:
             icon: homepage.png
             href: https://watchyourlan.local.timmybtech.com/
             ping: http://192.168.86.217:8840
-        - Zabbix:
-            icon: zabbix.png
-            href: https://zabbix.local.timmybtech.com/
-            ping: http://homelab-oci02.tailebee.ts.net:8080
   widgets.yaml: |
     - weatherapi:
         latitude: 41.8978
