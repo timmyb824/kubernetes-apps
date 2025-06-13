@@ -5,7 +5,7 @@ metadata:
   name: bills-reminder-sms
   namespace: scripts
 spec:
-  schedule: "0 19 * * *"
+  schedule: "0 18 * * *"
   jobTemplate:
     spec:
       template:
