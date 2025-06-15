@@ -325,7 +325,7 @@ providers:
           zabbix:
             loadBalancer:
               servers:
-                - url: http://homelab-oci02.tailebee.ts.net:8080
+                - url: http://homelab-oci02.tailebee.ts.net:80
 
         serversTransports:
           nas-transport:
