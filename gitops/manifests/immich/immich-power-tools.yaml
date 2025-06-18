@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: immich-power-tools
+  namespace: immich
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: immich-power-tools
+  template:
+    metadata:
+      labels:
+        app: immich-power-tools
+        app.kubernetes.io/name: immich-power-tools
+    spec:
+      containers:
+        - name: immich-power-tools
+          image: ghcr.io/varun-raj/immich-power-tools:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: IMMICH_API_KEY
+              value: "<path:secret/data/argocd#IMMICH_API_KEY>"
+            - name: IMMICH_URL
+              value: "http://immich-server:2283"
+            - name: EXTERNAL_IMMICH_URL
+              value: "<path:secret/data/argocd#IMMICH_EXTERNAL_URL>"
+            # Optional keys
+            - name: GOOGLE_MAPS_API_KEY
+              value: "<path:secret/data/argocd#IMMICH_GOOGLE_MAPS_API_KEY>"
+            - name: GEMINI_API_KEY
+              value: "<<path:secret/data/argocd#IMMICH_GEMINI_API_KEY>"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: immich-power-tools
+  namespace: immich
+spec:
+  selector:
+    app: immich-power-tools
+  ports:
+    - protocol: TCP
+      port: 8001
+      targetPort: 3000
+  type: ClusterIP
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: immich-power-tools-internal
+  namespace: immich
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`immich-power-tools.local.timmybtech.com`)
+      kind: Rule
+      services:
+        - name: immich-power-tools
+          port: 8001
+  tls:
+    secretName: local-timmybtech-com-tls
