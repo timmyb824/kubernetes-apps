@@ -15,7 +15,7 @@ spec:
   project: default
   sources:
     - repoURL: https://immich-app.github.io/immich-charts
-      targetRevision: 0.9.2
+      targetRevision: 0.9.3
       chart: immich
       helm:
         releaseName: immich
@@ -55,7 +55,7 @@ spec:
             enabled: false
 
           image:
-            tag: v1.131.3 # v1.126.1
+            tag: v1.134.0 # v1.126.1, v1.131.3
 
           immich:
             metrics:

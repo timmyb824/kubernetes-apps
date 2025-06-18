@@ -19,18 +19,9 @@ spec:
           image: ghcr.io/varun-raj/immich-power-tools:latest
           ports:
             - containerPort: 3000
-          env:
-            - name: IMMICH_API_KEY
-              value: "<path:secret/data/argocd#IMMICH_API_KEY>"
-            - name: IMMICH_URL
-              value: "http://immich-server:2283"
-            - name: EXTERNAL_IMMICH_URL
-              value: "<path:secret/data/argocd#IMMICH_EXTERNAL_URL>"
-            # Optional keys
-            - name: GOOGLE_MAPS_API_KEY
-              value: "<path:secret/data/argocd#IMMICH_GOOGLE_MAPS_API_KEY>"
-            - name: GEMINI_API_KEY
-              value: "<<path:secret/data/argocd#IMMICH_GEMINI_API_KEY>"
+          envFrom:
+            - secretRef:
+                name: immich-db-secret
 ---
 apiVersion: v1
 kind: Service
