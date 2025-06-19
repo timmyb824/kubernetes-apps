@@ -55,7 +55,7 @@ spec:
             enabled: false
 
           image:
-            tag: v1.131.3 # v1.126.1, v1.131.3
+            tag: v1.133.1 # v1.126.1, v1.131.3
 
           immich:
             metrics:
