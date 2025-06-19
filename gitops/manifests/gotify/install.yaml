@@ -200,21 +200,3 @@ spec:
       targetPort: 8080
   selector:
     app: igotify
----
-apiVersion: traefik.io/v1alpha1
-kind: IngressRoute
-metadata:
-  name: igotify-internal
-  namespace: gotify
-  annotations:
-    kubernetes.io/ingress.class: traefik-external
-    traefik.ingress.kubernetes.io/router.entrypoints: websecure
-spec:
-  entryPoints:
-    - websecure
-  routes:
-    - match: Host(`igotify.local.timmybtech.com`)
-      kind: Rule
-      services:
-        - name: igotify
-          port: 8080
