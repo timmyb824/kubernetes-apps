@@ -33,7 +33,7 @@ data:
         allowedorigins:
     database:
       dialect:  postgres
-    connection:  host=<path:secret/data/database#PG_HOST> port=5432 user=<path:secret/data/database#PG_USER> dbname=gotify password=<path:secret/data/database#PG_PASSWORD> sslmode=disable
+    connection:  host='<path:secret/data/database#PG_HOST>' port=5432 user='<path:secret/data/database#PG_USER>' dbname=gotify password='<path:secret/data/database#PG_PASSWORD>' sslmode=disable
     defaultuser:
       name: <path:secret/data/argocd#GOTIFY_USER>
       pass: <path:secret/data/argocd#GOTIFY_PASSWORD>
