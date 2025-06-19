@@ -157,6 +157,7 @@ spec:
     spec:
       securityContext:
         runAsNonRoot: true
+        fsGroup: 1000
       containers:
         - name: igotify
           image: ghcr.io/androidseb25/igotify-notification-assist:latest
@@ -167,6 +168,9 @@ spec:
             - name: igotify-data
               mountPath: /app/data
           securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            runAsNonRoot: true
             allowPrivilegeEscalation: false
           env:
             - name: GOTIFY_URLS
