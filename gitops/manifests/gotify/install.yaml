@@ -1,0 +1,198 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gotify-config
+  namespace: gotify
+data:
+  config.yml: |
+    server:
+      keepaliveperiodseconds: 0
+      listenaddr: ''
+      port: 80
+      ssl:
+        enabled: false
+        redirecttohttps: true
+        listenaddr: ''
+        port: 443
+        certfile:
+        certkey:
+        letsencrypt:
+          enabled: false
+          accepttos: false
+          cache: data/certs
+          hosts:
+      responseheaders:
+      trustedproxies:
+      cors:
+        alloworigins:
+        allowmethods:
+        allowheaders:
+      stream:
+        pingperiodseconds: 45
+        allowedorigins:
+    database:
+      dialect:  postgres
+    connection:  host=<path:secret/data/database#PG_HOST> port=5432 user=<path:secret/data/database#PG_USER> dbname=gotify password=<path:secret/data/database#PG_PASSWORD> sslmode=disable
+    defaultuser:
+      name: <path:secret/data/argocd#GOTIFY_USER>
+      pass: <path:secret/data/argocd#GOTIFY_PASSWORD>
+    passstrength: 10
+    uploadedimagesdir: data/images
+    pluginsdir: data/plugins
+    registration: false
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: gotify-data
+  namespace: gotify
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: nfs-csi-synologynas
+  resources:
+    requests:
+      storage: 2Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gotify
+  namespace: gotify
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gotify
+  template:
+    metadata:
+      labels:
+        app: gotify
+        app.kubernetes.io/name: gotify
+    spec:
+      containers:
+        - name: gotify
+          image: gotify/server:2.6.3
+          ports:
+            - containerPort: 80
+          env:
+            - name: TZ
+              value: "America/New_York"
+          volumeMounts:
+            - name: gotify-data
+              mountPath: /app/data
+            - name: config
+              mountPath: /etc/gotify/config.yml
+              subPath: config.yml
+      volumes:
+        - name: gotify-data
+          persistentVolumeClaim:
+            claimName: gotify-data
+        - name: config
+          configMap:
+            name: gotify-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gotify
+  namespace: gotify
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: 80
+  selector:
+    app: gotify
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: gotify-internal
+  namespace: gotify
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`gotify.local.timmybtech.com`)
+      kind: Rule
+      services:
+        - name: gotify
+          port: 80
+  tls:
+    secretName: local-timmybtech-com-tls
+# ---
+# apiVersion: v1
+# kind: PersistentVolumeClaim
+# metadata:
+#   name: igotify-data
+#   namespace: gotify
+# spec:
+#   accessModes:
+#     - ReadWriteMany
+#   storageClassName: nfs-csi-synologynas
+#   resources:
+#     requests:
+#       storage: 1Gi
+# ---
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: igotify
+#   namespace: gotify
+# spec:
+#   replicas: 1
+#   selector:
+#     matchLabels:
+#       app: igotify
+#   template:
+#     metadata:
+#       labels:
+#         app: igotify
+#         app.kubernetes.io/name: igotify
+#     spec:
+#       securityContext:
+#         runAsNonRoot: true
+#       containers:
+#         - name: igotify
+#           image: ghcr.io/androidseb25/igotify-notification-assist:latest
+#           imagePullPolicy: Always
+#           ports:
+#             - containerPort: 8080
+#           volumeMounts:
+#             - name: igotify-data
+#               mountPath: /app/data
+#           securityContext:
+#             allowPrivilegeEscalation: false
+#           env:
+#             - name: GOTIFY_URLS
+#               value: "http://gotify.gotify.svc.cluster.local"
+#             - name: GOTIFY_CLIENT_TOKENS
+#               value: "<path:secret/data/argocd#GOTIFY_CLIENT_TOKEN>"
+#             - name: SECNTFY_TOKENS
+#               value: "<path:secret/data/argocd#SECNTFY_TOKEN>"
+#             - name: ENABLE_SCALAR_UI
+#               value: "true"
+#             - name: ENABLE_CONSOLE_LOG
+#               value: "true"
+#       volumes:
+#         - name: igotify-data
+#           persistentVolumeClaim:
+#             claimName: igotify-data
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: igotify
+#   namespace: gotify
+# spec:
+#   type: ClusterIP
+#   ports:
+#     - port: 8080
+#       targetPort: 8080
+#   selector:
+#     app: igotify
