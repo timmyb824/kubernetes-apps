@@ -19,6 +19,7 @@ data:
   APPRISE_DISCORD_URL: "<path:secret/data/argocd#NOTIFIQ_APPRISE_DISCORD_URL>?channel=alerts"
   APPRISE_EMAIL_URL: "<path:secret/data/argocd#NOTIFIQ_APPRISE_EMAIL_URL>"
   APPRISE_MATTERMOST_URL: "<path:secret/data/argocd#NOTIFIQ_APPRISE_MATTERMOST_URL>"
+  APPRISE_GOTIFY_URL: "<path:secret/data/argocd#NOTIFIQ_APPRISE_GOTIFY_URL>"
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -38,7 +39,7 @@ spec:
     spec:
       containers:
         - name: notifiq
-          image: registry.local.timmybtech.com/notifiq:latest
+          image: registry.local.timmybtech.com/notifiq:v1.5.3
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
