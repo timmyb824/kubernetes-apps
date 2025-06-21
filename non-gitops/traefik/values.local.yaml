@@ -145,6 +145,13 @@ providers:
               - websecure
             tls:
               certResolver: {}
+          nutalert:
+            rule: Host(`nutalert.local.timmybtech.com`)
+            service: nutalert
+            entrypoints:
+              - websecure
+            tls:
+              certResolver: {}
           pve:
             rule: Host(`pve.local.timmybtech.com`)
             service: pve
@@ -274,6 +281,10 @@ providers:
             loadBalancer:
               servers:
                 - url: http://192.168.86.147:20211
+          nutalert:
+            loadBalancer:
+              servers:
+                - url: http://192.168.86.53:8087
           zipline:
             loadBalancer:
               servers:

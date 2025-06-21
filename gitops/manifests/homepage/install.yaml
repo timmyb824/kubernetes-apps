@@ -327,6 +327,16 @@ data:
               type: argocd
               url: https://argocd.local.timmybtech.com
               key: <ARGOCD_KEY>
+        - Gotify:
+            icon: gotify.png
+            href: https://gotify.local.timmybtech.com/
+            namespace: gotify
+            app: gotify
+            widget:
+              type: gotify
+              url: https://gotify.local.timmybtech.com
+              key: <GOTIFY_CLIENT_TOKEN>
+              version: 2
         - Immich:
             icon: immich.png
             href: https://immich.local.timmybtech.com/
@@ -582,6 +592,10 @@ data:
             icon: maybe.png
             href: https://maybe.local.timmybtech.com/
             ping: http://192.168.86.174:3003
+        - Nutalert:
+            icon: nutalert.png
+            href: https://nutalert.local.timmybtech.com/
+            ping: http://192.168.86.53:8087
         - PGweb :
             icon: postgres.png
             href: https://pgweb.local.timmybtech.com/
