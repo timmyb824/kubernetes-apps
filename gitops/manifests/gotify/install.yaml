@@ -31,6 +31,8 @@ data:
       stream:
         pingperiodseconds: 45
         allowedorigins:
+        - https://gotify.timmybtech.com
+        - https://gotify.local.timmybtech.com
     database:
       dialect:  postgres
       connection:  host=<path:secret/data/database#PG_HOST> port=5432 user=<path:secret/data/database#PG_USER> dbname=gotify password=<path:secret/data/database#PG_PASSWORD> sslmode=disable
