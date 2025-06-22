@@ -39,7 +39,7 @@ spec:
     spec:
       containers:
         - name: notifiq
-          image: registry.local.timmybtech.com/notifiq:v1.6.0
+          image: registry.local.timmybtech.com/notifiq:v1.6.2
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
