@@ -19,7 +19,7 @@ data:
       donation_url: false
       contact_url: false
       enable_metrics: true
-      open_metrics: ''
+      open_metrics: "<path:secret/data/argocd#SEARXNG_OPEN_METRICS_PASSWORD>"
 
     search:
       safe_search: 0
