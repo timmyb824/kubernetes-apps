@@ -137,3 +137,22 @@ spec:
           port: 8080
   tls:
     secretName: local-timmybtech-com-tls
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: searxng-public
+  namespace: searxng
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`searxng.timmybtech.com`)
+      kind: Rule
+      services:
+        - name: searxng
+          port: 8080
+  tls:
+    secretName: timmybtech-com-tls

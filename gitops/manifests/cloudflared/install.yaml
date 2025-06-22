@@ -141,6 +141,12 @@ data:
         noTLSVerify: true
         headers:
           X-Forwarded-Proto: https
+    - hostname: searxng.timmybtech.com
+      service: https://traefik.traefik.svc.cluster.local:443
+      originRequest:
+        noTLSVerify: true
+        headers:
+          X-Forwarded-Proto: https
     - hostname: umami.timmybtech.com
       service: https://traefik.traefik.svc.cluster.local:443
       originRequest:
