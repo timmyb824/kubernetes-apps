@@ -612,10 +612,6 @@ data:
             icon: spotify.png
             href: http://192.168.86.53:3000/
             ping: http://192.168.86.53:3000
-        - WatchYourLAN:
-            icon: homepage.png
-            href: https://watchyourlan.local.timmybtech.com/
-            ping: http://192.168.86.217:8840
   widgets.yaml: |
     - weatherapi:
         latitude: 41.8978
