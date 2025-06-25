@@ -1,0 +1,48 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: windmill
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  annotations: {}
+spec:
+  destination:
+    namespace: windmill
+    server: "https://kubernetes.default.svc"
+  project: default
+  sources:
+    - repoURL: https://windmill-labs.github.io/windmill-helm-charts
+      targetRevision: 2.0.431
+      chart: windmill
+      helm:
+        releaseName: windmill
+        values: |
+          postgres:
+            enabled: false
+
+          windmill:
+            baseUrl: http://localhost
+            frontendReplicas: 2
+            workerReplicas: 2
+            lspReplicas: 2
+            databaseUrl: <path:secret/data/database#PG_CONN_STRING>/windmill?sslmode=disable
+            # -- Oauth configuration for logins and connections. e.g of values
+            #   "github": {
+            #     "id": "clientid",
+            #     "secret": "clientsecret",
+            #    }
+            oauthConfig: |
+                {}
+
+    - repoURL: "https://github.com/timmyb824/kubernetes-apps.git"
+      path: "gitops/manifests/windmill"
+      targetRevision: HEAD
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ApplyOutOfSync=true
