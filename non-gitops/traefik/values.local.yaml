@@ -308,7 +308,7 @@ providers:
           actualbudget:
             loadBalancer:
               servers:
-                - url: http://192.168.86.203:5006
+                - url: http://192.168.86.174:5006
           adguard:
             loadBalancer:
               servers:
