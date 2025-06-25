@@ -24,7 +24,7 @@ spec:
           windmill:
             baseUrl: http://localhost
             frontendReplicas: 2
-            workerReplicas: 4
+            workerReplicas: 2
             lspReplicas: 2
             databaseUrl: <path:secret/data/database#PG_CONN_STRING>/windmill?sslmode=disable
             # -- Oauth configuration for logins and connections. e.g of values
