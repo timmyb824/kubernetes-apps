@@ -1,0 +1,40 @@
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: scraperr-internal
+  namespace: scraperr
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`scraperr.local.timmybtech.com`)
+      kind: Rule
+      services:
+        - name: scraperr-api
+          port: 8000
+  tls:
+    secretName: local-timmybtech-com-tls
+# ---
+# apiVersion: traefik.io/v1alpha1
+# kind: IngressRoute
+# metadata:
+#   name: scraperr-public
+#   namespace: scraperr
+#   annotations:
+#     kubernetes.io/ingress.class: traefik-external
+#     traefik.ingress.kubernetes.io/router.entrypoints: websecure
+# spec:
+#   entryPoints:
+#     - websecure
+#   routes:
+#     - match: Host(`scraperr.timmybtech.com`)
+#       kind: Rule
+#       services:
+#         - name: scraperr-api
+#           port: 8000
+#   tls:
+#     secretName: timmybtech-com-tls
