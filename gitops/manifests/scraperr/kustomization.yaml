@@ -1,0 +1,2 @@
+resources:
+  - patch-resource-limits.yaml
