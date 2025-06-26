@@ -70,6 +70,36 @@ spec:
       path: "gitops/manifests/scraperr"
       targetRevision: HEAD
 
+  patches:
+    - target:
+        kind: Deployment
+        name: scraperr
+        namespace: scraperr
+      patch: |-
+        - op: add
+          path: /spec/template/spec/containers/0/resources
+          value:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 300m
+              memory: 256Mi
+    - target:
+        kind: Deployment
+        name: scraperr-api
+        namespace: scraperr
+      patch: |-
+        - op: add
+          path: /spec/template/spec/containers/0/resources
+          value:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 256Mi
+
   syncPolicy:
     automated:
       prune: true
