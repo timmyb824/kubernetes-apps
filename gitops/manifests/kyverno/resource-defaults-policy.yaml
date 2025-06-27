@@ -4,9 +4,9 @@ metadata:
   name: add-default-resource-requests-limits
 spec:
   mutateExistingOnPolicyUpdate: true
-  skipBackgroundRequests: true
   rules:
     - name: set-default-resources
+      skipBackgroundRequests: true
       match:
         resources:
           kinds:
