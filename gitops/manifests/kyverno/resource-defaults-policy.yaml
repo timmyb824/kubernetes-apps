@@ -4,9 +4,9 @@ metadata:
   name: add-default-resource-requests-limits
 spec:
   mutateExistingOnPolicyUpdate: true
-  skipBackgroundRequests: true
   rules:
     - name: set-default-resources
+      skipBackgroundRequests: true
       match:
         any:
           - resources:
@@ -17,21 +17,22 @@ spec:
                 - Job
                 - CronJob
       mutate:
+        targets:
+          - apiVersion: v1
+            kind: Pod
         foreach:
           - list: "spec.template.spec.containers"
             patchStrategicMerge:
               spec:
-                template:
-                  spec:
-                    containers:
-                      - (name): "{{element.name}}"
-                        resources:
-                          requests:
-                            cpu: "100m"
-                            memory: "128Mi"
-                          limits:
-                            cpu: "500m"
-                            memory: "256Mi"
+                containers:
+                  - (name): "{{element.name}}"
+                    resources:
+                      requests:
+                        cpu: "100m"
+                        memory: "128Mi"
+                      limits:
+                        cpu: "500m"
+                        memory: "256Mi"
             preconditions:
               all:
                 - key: "{{element.resources.requests.cpu}}"
