@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kyverno
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  annotations: {}
+spec:
+  destination:
+    namespace: kyverno
+    server: "https://kubernetes.default.svc"
+  project: default
+  sources:
+    - repoURL: https://kyverno.github.io/kyverno/
+      targetRevision: 3.2.8 # DO NOT UPDATE; highest version supported for k8s 1.26
+      chart: kyverno
+      helm:
+        releaseName: kyverno
+        values: |
+          global:
+            resyncPeriod: 15m
+
+    - repoURL: "https://github.com/timmyb824/kubernetes-apps.git"
+      path: "gitops/manifests/kyverno"
+      targetRevision: HEAD
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: false
+    syncOptions:
+      - CreateNamespace=true
