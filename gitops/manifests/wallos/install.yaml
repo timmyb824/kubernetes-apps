@@ -49,8 +49,7 @@ spec:
     type: Recreate
   template:
     metadata:
-      annotations:
-        kyverno.io/force-mutate: "2025-06-27T20:38:29-04:00"
+      annotations: {}
       labels:
         io.kompose.service: wallos
         app.kubernetes.io/name: wallos
