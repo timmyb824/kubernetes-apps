@@ -1,0 +1,45 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nfs-synologynas
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+spec:
+  project: default
+  destination:
+    namespace: default
+    server: "https://kubernetes.default.svc"
+  source:
+    repoURL: https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner
+    targetRevision: 4.0.17
+    chart: nfs-subdir-external-provisioner
+    helm:
+      releaseName: nfs-synologynas
+      values: |
+        nfs:
+          server: 192.168.86.44
+          path: /volume1/kubernetes
+
+        storageClass:
+          name: nfs-csi-synologynas
+          defaultClass: true
+          reclaimPolicy: Delete
+          accessModes: ["ReadWriteMany"]
+          volumeBindingMode: Immediate
+          archiveOnDelete: true
+          allowVolumeExpansion: true
+
+        resources:
+          requests:
+            cpu: 50m
+            memory: 64Mi
+          limits:
+            cpu: 200m
+            memory: 128Mi
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: false
