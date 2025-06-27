@@ -1,0 +1,40 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: add-default-resource-requests-limits
+spec:
+  mutateExistingOnPolicyUpdate: true
+  rules:
+    - name: set-default-resources
+      match:
+        resources:
+          kinds:
+            - Pod
+      mutate:
+        foreach:
+          - list: "spec.containers"
+            patchStrategicMerge:
+              spec:
+                containers:
+                  - (name): "{{element.name}}"
+                    resources:
+                      requests:
+                        cpu: "100m"
+                        memory: "128Mi"
+                      limits:
+                        cpu: "500m"
+                        memory: "256Mi"
+            preconditions:
+              all:
+                - key: "{{element.resources.requests.cpu}}"
+                  operator: Equals
+                  value: null
+                - key: "{{element.resources.requests.memory}}"
+                  operator: Equals
+                  value: null
+                - key: "{{element.resources.limits.cpu}}"
+                  operator: Equals
+                  value: null
+                - key: "{{element.resources.limits.memory}}"
+                  operator: Equals
+                  value: null
