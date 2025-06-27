@@ -47,6 +47,10 @@ data:
       ignoreDifferences: |
         jsonPointers:
         - /rules
+    kyverno.io/ClusterPolicy:
+      ignoreDifferences: |
+        jsonPointers:
+        - /spec/skipBackgroundRequests
   resource.exclusions: |
     - apiGroups:
         - apiextensions.k8s.io
