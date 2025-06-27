@@ -1,3 +1,4 @@
+# THIS APP IS NOW MANAGED VIA ARGOCD AND SHOULD NOT BE MANAGED MANUALLY
 ---
 apiVersion: storage.k8s.io/v1
 kind: StorageClass

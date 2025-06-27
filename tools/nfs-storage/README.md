@@ -1,5 +1,9 @@
 # Setting up nfs storage on k3s
 
+> **Disclaimer:**
+> This application is now managed via ArgoCD and should not be installed or configured manually.
+> Please refer to the `gitops/` directory for current manifests and deployment instructions.
+
 ## Install nfs-subdir-external-provisioner for nfs storage on k3s
 
 <https://github.com/kubernetes-sigs/nfs-subdir-external-provisioner>
