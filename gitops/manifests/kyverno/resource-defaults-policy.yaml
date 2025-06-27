@@ -14,8 +14,8 @@ spec:
                 - Deployment
                 - StatefulSet
                 - DaemonSet
-                - Job
-                - CronJob
+                # - Job
+                # - CronJob
       mutate:
         targets:
           - apiVersion: v1
