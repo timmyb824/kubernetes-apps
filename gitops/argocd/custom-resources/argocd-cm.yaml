@@ -43,3 +43,7 @@ data:
         jsonPointers:
         - /spec/size
         - /version
+    rbac.authorization.k8s.io/ClusterRole:
+      ignoreDifferences: |
+        jsonPointers:
+        - /rules
