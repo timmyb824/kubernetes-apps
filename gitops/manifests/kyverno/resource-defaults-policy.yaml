@@ -14,8 +14,8 @@ spec:
                 - Deployment
                 - StatefulSet
                 - DaemonSet
-                # - Job
-                # - CronJob
+                # - Job # spec.containers not valid for this type
+                # - CronJob # spec.containers not valid for this type
       mutate:
         targets:
           - apiVersion: v1
