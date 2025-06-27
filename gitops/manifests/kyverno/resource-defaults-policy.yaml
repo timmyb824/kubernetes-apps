@@ -11,6 +11,9 @@ spec:
           kinds:
             - Pod
       mutate:
+        targets:
+          - apiVersion: v1
+            kind: Pod
         foreach:
           - list: "spec.containers"
             patchStrategicMerge:

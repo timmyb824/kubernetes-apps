@@ -32,3 +32,5 @@ spec:
       selfHeal: false
     syncOptions:
       - CreateNamespace=true
+      # Now that helm created the CRDs, we can skip them
+      - SkipCRDs=true
