@@ -50,7 +50,7 @@ spec:
   template:
     metadata:
       annotations:
-        kyverno.defaultResources: "true"
+        kyverno.io/force-mutate: "2025-06-27T20:07:05-04:00"
       labels:
         io.kompose.service: wallos
         app.kubernetes.io/name: wallos
