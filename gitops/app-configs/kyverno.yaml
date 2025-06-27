@@ -5,7 +5,8 @@ metadata:
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
-  annotations: {}
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
 spec:
   destination:
     namespace: kyverno
