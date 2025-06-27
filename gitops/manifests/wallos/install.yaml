@@ -49,7 +49,8 @@ spec:
     type: Recreate
   template:
     metadata:
-      annotations: {}
+      annotations:
+        kyverno.test: "trigger"
       labels:
         io.kompose.service: wallos
         app.kubernetes.io/name: wallos
