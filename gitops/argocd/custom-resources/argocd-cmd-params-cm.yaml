@@ -8,3 +8,5 @@ metadata:
     app.kubernetes.io/part-of: argocd
 data:
   controller.appResyncParallelism: "5"
+  server.side.apply: "true"
+  server.side.diff: "true"

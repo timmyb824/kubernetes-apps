@@ -7,7 +7,6 @@ metadata:
     - resources-finalizer.argocd.argoproj.io
   annotations:
     argocd.argoproj.io/sync-wave: "0"
-    argocd.argoproj.io/compare-options: ServerSideDiff=true,IncludeMutationWebhook=true
 spec:
   destination:
     namespace: kyverno
@@ -33,4 +32,3 @@ spec:
       selfHeal: false
     syncOptions:
       - CreateNamespace=true
-      - ServerSideApply=true
