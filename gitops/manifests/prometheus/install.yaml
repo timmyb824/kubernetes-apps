@@ -115,7 +115,7 @@ data:
           target_label: __address__
           regex: ([^:]+)(?::\d+)?;(\d+)
           replacement: $1:$2
-        # ⚠️ Overwrite the `instance` label with the node name
+        # Overwrite the `instance` label with the node name
         - source_labels: [__meta_kubernetes_pod_node_name]
           target_label: instance
           action: replace
@@ -202,10 +202,10 @@ data:
         - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_scrape]
           action: keep
           regex: true
-        # Drop node-exporter to avoid double scraping
-        - source_labels: [__meta_kubernetes_service_name]
-          regex: node-exporter
-          action: drop
+        # For Service Discovery
+        # - source_labels: [__meta_kubernetes_service_name]
+        #   regex: node-exporter
+        #   action: drop
         - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_scheme]
           action: replace
           target_label: __scheme__
