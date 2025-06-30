@@ -101,19 +101,24 @@ data:
         kubernetes_sd_configs:
           - role: pod
         relabel_configs:
-        # Only keep pods with scrape enabled
+        - target_label: job
+          replacement: node-exporter
         - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
           action: keep
-          regex: true
-        # Set the address to pod IP and port
+          regex: "true"
+        - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_path]
+          action: replace
+          target_label: __metrics_path__
+          regex: (.+)
         - source_labels: [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]
           action: replace
+          target_label: __address__
           regex: ([^:]+)(?::\d+)?;(\d+)
           replacement: $1:$2
-          target_label: __address__
-        # Set instance to the node name the pod is on
+        # ⚠️ Overwrite the `instance` label with the node name
         - source_labels: [__meta_kubernetes_pod_node_name]
           target_label: instance
+          action: replace
 
       - job_name: 'kubernetes-apiservers'
         kubernetes_sd_configs:
