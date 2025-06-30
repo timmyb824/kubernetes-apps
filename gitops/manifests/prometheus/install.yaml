@@ -119,6 +119,8 @@ data:
         - source_labels: [__meta_kubernetes_pod_node_name]
           target_label: instance
           action: replace
+        - target_label: origin_prometheus
+          replacement: k3s-cluster
 
       - job_name: 'kubernetes-apiservers'
         kubernetes_sd_configs:
