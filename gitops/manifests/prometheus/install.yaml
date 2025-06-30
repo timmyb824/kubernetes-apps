@@ -94,6 +94,9 @@ data:
         - source_labels: [__meta_kubernetes_endpoints_name]
           regex: 'node-exporter'
           action: keep
+    # Overwrite the instance label with the node name
+    - source_labels: [__meta_kubernetes_node_name]
+      target_label: instance
 
       - job_name: 'kubernetes-apiservers'
         kubernetes_sd_configs:
