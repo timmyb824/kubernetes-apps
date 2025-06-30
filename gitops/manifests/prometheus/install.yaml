@@ -87,15 +87,32 @@ data:
     #       - "alertmanager.monitoring.svc:9093"
 
     scrape_configs:
+      # For Service discovery
+      # - job_name: 'node-exporter'
+      #   kubernetes_sd_configs:
+      #     - role: endpoints
+      #   relabel_configs:
+      #   - source_labels: [__meta_kubernetes_endpoints_name]
+      #     regex: 'node-exporter'
+      #     action: keep
+
+      # For Pod discovery
       - job_name: 'node-exporter'
         kubernetes_sd_configs:
-          - role: endpoints
+          - role: pod
         relabel_configs:
-        - source_labels: [__meta_kubernetes_endpoints_name]
-          regex: 'node-exporter'
+        # Only keep pods with scrape enabled
+        - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
           action: keep
-        # Overwrite the instance label with the node name
-        - source_labels: [__meta_kubernetes_node_name]
+          regex: true
+        # Set the address to pod IP and port
+        - source_labels: [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]
+          action: replace
+          regex: ([^:]+)(?::\d+)?;(\d+)
+          replacement: $1:$2
+          target_label: __address__
+        # Set instance to the node name the pod is on
+        - source_labels: [__meta_kubernetes_pod_node_name]
           target_label: instance
 
       - job_name: 'kubernetes-apiservers'
