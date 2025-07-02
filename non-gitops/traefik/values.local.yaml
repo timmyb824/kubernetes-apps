@@ -252,15 +252,15 @@ providers:
               - websecure
             tls:
               certResolver: {}
-          # grafana2:
-          #   rule: Host(`grafana2.local.timmybtech.com`)
-          #   service: grafana2
-          #   entrypoints:
-          #     - websecure
-          #   tls:
-          #     certResolver: {}
-          grafana2-local:
-            rule: Host(`grafana2.local.timmybtech.com`)
+         # grafana2-local:
+         #    rule: Host(`grafana2.local.timmybtech.com`)
+         #    service: grafana2
+         #    entrypoints:
+         #      - websecure
+         #    tls: {}
+          grafana2:
+            rule: |
+            Host(`grafana2.timmybtech.com`) || Host(`grafana2.local.timmybtech.com`)
             service: grafana2
             entrypoints:
               - websecure
@@ -389,7 +389,7 @@ service:
   externalIPs: []
 logs:
   access:
-    enabled: true
+    enabled: false
     format: json
   general:
     format: json
