@@ -95,163 +95,140 @@ providers:
               - websecure
             middlewares:
               - authentik
-            tls:
-              certResolver: {}
+            tls: {}
           uptime-kuma-auth:
             rule: "Host(`uptime-kuma.local.timmybtech.com`) && PathPrefix(`/outpost.goauthentik.io/`)"
             priority: 15
             service: authentik
             entrypoints:
               - websecure
-            tls:
-              certResolver: {}
+            tls: {}
           watchyourlan:
             rule: Host(`watchyourlan.local.timmybtech.com`)
             service: watchyourlan
             entrypoints:
               - websecure
-            tls:
-              certResolver: {}
+            tls: {}
           archivebox:
             rule: Host(`archivebox.local.timmybtech.com`)
             service: archivebox
             entrypoints:
               - websecure
-            tls:
-              certResolver: {}
+            tls: {}
           speedtest:
             rule: Host(`speedtest.local.timmybtech.com`)
             service: speedtest
             entrypoints:
               - websecure
-            tls:
-              certResolver: {}
+            tls: {}
           nas:
             rule: Host(`nas.local.timmybtech.com`)
             service: nas
             entrypoints:
               - websecure
-            tls:
-              certResolver: {}
+            tls: {}
           it-tools:
             rule: Host(`it-tools.local.timmybtech.com`)
             service: it-tools
             entrypoints:
               - websecure
-            tls:
-              certResolver: {}
+            tls: {}
           pgweb:
             rule: Host(`pgweb.local.timmybtech.com`)
             service: pgweb
             entrypoints:
               - websecure
-            tls:
-              certResolver: {}
+            tls: {}
           netalertx:
             rule: Host(`netalertx.local.timmybtech.com`)
             service: netalertx
             entrypoints:
               - websecure
-            tls:
-              certResolver: {}
+            tls: {}
           nutalert:
             rule: Host(`nutalert.local.timmybtech.com`)
             service: nutalert
             entrypoints:
               - websecure
-            tls:
-              certResolver: {}
+            tls: {}
           pve:
             rule: Host(`pve.local.timmybtech.com`)
             service: pve
             entrypoints:
               - websecure
-            tls:
-              certResolver: {}
+            tls: {}
           zipline:
             rule: Host(`zipline.local.timmybtech.com`)
             service: zipline
             entrypoints:
               - websecure
-            tls:
-              certResolver: {}
+            tls: {}
           homeassistant:
             rule: Host(`homeassistant.local.timmybtech.com`)
             service: homeassistant
             entrypoints:
               - websecure
-            tls:
-              certResolver: {}
+            tls: {}
           loki:
             rule: Host(`loki.local.timmybtech.com`)
             service: loki
             entrypoints:
               - websecure
-            tls:
-              certResolver: {}
+            tls: {}
           prometheus:
             rule: Host(`prometheus.local.timmybtech.com`)
             service: prometheus
             entrypoints:
               - websecure
-            tls:
-              certResolver: {}
+            tls: {}
           actualbudget:
             rule: Host(`budget.local.timmybtech.com`)
             service: actualbudget
             entrypoints:
               - websecure
-            tls:
-              certResolver: {}
+            tls: {}
           adguard:
             rule: Host(`adguard.local.timmybtech.com`)
             service: adguard
             entrypoints:
               - websecure
-            tls:
-              certResolver: {}
+            tls: {}
           adguard-secondary:
             rule: Host(`adguard-secondary.local.timmybtech.com`)
             service: adguard-secondary
             entrypoints:
               - websecure
-            tls:
-              certResolver: {}
+            tls: {}
           maybe:
             rule: Host(`maybe.local.timmybtech.com`)
             service: maybe
             entrypoints:
               - websecure
-            tls:
-              certResolver: {}
+            tls: {}
           dozzle:
             rule: Host(`dozzle.local.timmybtech.com`)
             service: dozzle
             entrypoints:
               - websecure
-            tls:
-              certResolver: {}
+            tls: {}
           semaphore:
             rule: Host(`semaphore.local.timmybtech.com`)
             service: semaphore
             entrypoints:
               - websecure
-            tls:
-              certResolver: {}
+            tls: {}
           pulse:
             rule: Host(`pulse.local.timmybtech.com`)
             service: pulse
             entrypoints:
               - websecure
-            tls:
-              certResolver: {}
+            tls: {}
           zabbix:
             rule: Host(`zabbix.local.timmybtech.com`)
             service: zabbix
             entrypoints:
               - websecure
-            tls:
-              certResolver: {}
+            tls: {}
           grafana2-public:
             rule: Host(`grafana2.timmybtech.com`)
             service: grafana2
