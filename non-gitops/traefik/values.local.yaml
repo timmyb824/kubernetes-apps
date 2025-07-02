@@ -16,6 +16,13 @@ deployment:
   podAnnotations: {}
   additionalContainers: []
   initContainers: []
+  additionalVolumes:
+    - name: local-timmybtech-com-tls
+      secret:
+        secretName: local-timmybtech-com-tls
+    - name: timmybtech-com-tls
+      secret:
+        secretName: timmybtech-com-tls
 ports:
   web:
     redirections:
@@ -50,13 +57,15 @@ providers:
     content: |
       tls:
         certificates:
-          - certFile: /certs/tls.crt
-            keyFile: /certs/tls.key
+          - certFile: /certs/local/tls.crt
+            keyFile: /certs/local/tls.key
+          - certFile: /certs/global/tls.crt
+            keyFile: /certs/global/tls.key
         stores:
           default:
             defaultCertificate:
-              certFile: /certs/tls.crt
-              keyFile: /certs/tls.key
+              certFile: /certs/local/tls.crt
+              keyFile: /certs/local/tls.key
 
       http:
         middlewares:
@@ -243,6 +252,19 @@ providers:
               - websecure
             tls:
               certResolver: {}
+          # grafana2:
+          #   rule: Host(`grafana2.local.timmybtech.com`)
+          #   service: grafana2
+          #   entrypoints:
+          #     - websecure
+          #   tls:
+          #     certResolver: {}
+          grafana2-local:
+            rule: Host(`grafana2.local.timmybtech.com`)
+            service: grafana2
+            entrypoints:
+              - websecure
+            tls: {}
         services:
           uptime-kuma:
             loadBalancer:
@@ -337,17 +359,21 @@ providers:
             loadBalancer:
               servers:
                 - url: http://homelab-oci02.tailebee.ts.net:80
+          grafana2:
+            loadBalancer:
+              servers:
+                - url: http://192.168.86.106:3000
 
         serversTransports:
           nas-transport:
             insecureSkipVerify: true
-volumes:
-  - name: local-timmybtech-com-tls
-    mountPath: /certs
-    type: secret
+
 additionalVolumeMounts:
   - name: local-timmybtech-com-tls
-    mountPath: /certs
+    mountPath: /certs/local
+    readOnly: true
+  - name: timmybtech-com-tls
+    mountPath: /certs/global
     readOnly: true
 rbac:
   enabled: true
