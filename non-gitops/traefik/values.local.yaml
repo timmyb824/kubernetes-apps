@@ -103,12 +103,6 @@ providers:
             entrypoints:
               - websecure
             tls: {}
-          watchyourlan:
-            rule: Host(`watchyourlan.local.timmybtech.com`)
-            service: watchyourlan
-            entrypoints:
-              - websecure
-            tls: {}
           archivebox:
             rule: Host(`archivebox.local.timmybtech.com`)
             service: archivebox
@@ -157,12 +151,6 @@ providers:
             entrypoints:
               - websecure
             tls: {}
-          zipline:
-            rule: Host(`zipline.local.timmybtech.com`)
-            service: zipline
-            entrypoints:
-              - websecure
-            tls: {}
           homeassistant:
             rule: Host(`homeassistant.local.timmybtech.com`)
             service: homeassistant
@@ -196,12 +184,6 @@ providers:
           adguard-secondary:
             rule: Host(`adguard-secondary.local.timmybtech.com`)
             service: adguard-secondary
-            entrypoints:
-              - websecure
-            tls: {}
-          maybe:
-            rule: Host(`maybe.local.timmybtech.com`)
-            service: maybe
             entrypoints:
               - websecure
             tls: {}
@@ -244,10 +226,6 @@ providers:
             loadBalancer:
               servers:
                 - url: https://authentik.timmybtech.com/outpost.goauthentik.io
-          watchyourlan:
-            loadBalancer:
-              servers:
-                - url: http://192.168.86.217:8840
           speedtest:
             loadBalancer:
               servers:
@@ -277,10 +255,6 @@ providers:
             loadBalancer:
               servers:
                 - url: http://192.168.86.53:8087
-          zipline:
-            loadBalancer:
-              servers:
-                - url: http://192.168.86.143:3000
           pve:
             loadBalancer:
               servers:
@@ -309,10 +283,6 @@ providers:
             loadBalancer:
               servers:
                 - url: http://192.168.86.174:80
-          maybe:
-            loadBalancer:
-              servers:
-                - url: http://192.168.86.174:3003
           dozzle:
             loadBalancer:
               servers:
