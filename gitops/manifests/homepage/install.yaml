@@ -291,22 +291,22 @@ data:
     - Kubernetes:
         - Grafana:
             icon: grafana.png
-            href: https://grafana.timmybtech.com/
+            href: https://grafana2.timmybtech.com/
             namespace: grafana
             app: grafana
             widget:
                 type: grafana
-                url: https://grafana.local.timmybtech.com
+                url: https://grafana2.timmybtech.com
                 username: <GRAFANA_USER>
                 password: <GRAFANA_PASSWORD>
         - Authentik:
             icon: authentik.png
-            href: https://authentik.local.timmybtech.com/
+            href: https://authentik.timmybtech.com/
             namespace: authentik
             app: authentik
             widget:
               type: authentik
-              url: https://authentik.local.timmybtech.com
+              url: https://authentik.timmybtech.com
               key: <AUTHENTIK_TOKEN>
         - Traefik-k8s:
             icon: traefik.png
@@ -329,22 +329,22 @@ data:
               key: <ARGOCD_KEY>
         - Gotify:
             icon: gotify.png
-            href: https://gotify.local.timmybtech.com/
+            href: https://gotify.timmybtech.com/
             namespace: gotify
             app: gotify
             widget:
               type: gotify
-              url: https://gotify.local.timmybtech.com
+              url: https://gotify.timmybtech.com
               key: <GOTIFY_CLIENT_TOKEN>
               version: 2
         - Immich:
             icon: immich.png
-            href: https://immich.local.timmybtech.com/
+            href: https://immich.timmybtech.com/
             namespace: immich
             app: server
             widget:
               type: immich
-              url: https://immich.local.timmybtech.com
+              url: https://immich.timmybtech.com
               key: <IMMICH_KEY>
               version: 2
         - Homebox:
@@ -415,7 +415,7 @@ data:
             app: ntfy
         - n8n:
             icon: n8n.png
-            href: https://n8n.local.timmybtech.com/
+            href: https://n8n.timmybtech.com/
             namespace: n8n
             app: n8n
         - Planka:
@@ -460,7 +460,7 @@ data:
             app: wallos
         - SearXNG:
             icon: searxng.png
-            href: https://searxng.local.timmybtech.com/
+            href: https://searxng.timmybtech.com/
             namespace: searxng
             app: searxng
     - DNS:
@@ -588,10 +588,6 @@ data:
             icon: loki.png
             href: https://loki.local.timmybtech.com/
             ping: http://192.168.86.146:3100/loki/api/v1/status/buildinfo
-        - Maybe:
-            icon: maybe.png
-            href: https://maybe.local.timmybtech.com/
-            ping: http://192.168.86.174:3003
         - Nutalert:
             icon: sh-nutalert.png
             href: https://nutalert.local.timmybtech.com/
