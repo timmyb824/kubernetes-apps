@@ -259,8 +259,7 @@ providers:
          #      - websecure
          #    tls: {}
           grafana2:
-            rule: |
-            Host(`grafana2.timmybtech.com`) || Host(`grafana2.local.timmybtech.com`)
+            rule: Host(`grafana2.timmybtech.com`) || Host(`grafana2.local.timmybtech.com`)
             service: grafana2
             entrypoints:
               - websecure
