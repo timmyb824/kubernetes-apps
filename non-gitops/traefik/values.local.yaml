@@ -205,6 +205,12 @@ providers:
             entrypoints:
               - websecure
             tls: {}
+          # your-spotify:
+          #   rule: Host(`your-spotify.local.timmybtech.com`)
+          #   service: your-spotify
+          #   entrypoints:
+          #     - websecure
+            tls: {}
           zabbix:
             rule: Host(`zabbix.local.timmybtech.com`)
             service: zabbix
@@ -260,7 +266,7 @@ providers:
           nutalert:
             loadBalancer:
               servers:
-                - url: http://192.168.86.53:8087
+                - url: http://192.168.86.174:8087
           pve:
             loadBalancer:
               servers:
@@ -301,6 +307,10 @@ providers:
             loadBalancer:
               servers:
                 - url: http://192.168.86.174:7655
+          # your-spotify:
+          #   loadBalancer:
+          #     servers:
+          #       - url: http://192.168.86.174:3003
           zabbix:
             loadBalancer:
               servers:

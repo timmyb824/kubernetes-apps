@@ -606,8 +606,8 @@ data:
             ping: http://192.168.86.174:7655
         - Your-Spotify:
             icon: spotify.png
-            href: http://192.168.86.53:3000/
-            ping: http://192.168.86.53:3000
+            href: http://192.168.86.174:3003/
+            ping: http://192.168.86.174:3003/
   widgets.yaml: |
     - weatherapi:
         latitude: 41.8978
