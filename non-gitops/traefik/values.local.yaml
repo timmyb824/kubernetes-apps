@@ -252,7 +252,7 @@ providers:
           pgweb:
             loadBalancer:
               servers:
-                - url: http://192.168.86.143:8084
+                - url: http://192.168.86.174:8084
           netalertx:
             loadBalancer:
               servers:
@@ -296,7 +296,7 @@ providers:
           semaphore:
             loadBalancer:
               servers:
-                - url: http://192.168.86.143:3005
+                - url: http://192.168.86.174:3005
           pulse:
             loadBalancer:
               servers:
