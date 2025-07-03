@@ -217,6 +217,12 @@ providers:
             entrypoints:
               - websecure
             tls: {}
+          healthchecks:
+            rule: Host(`healthchecks.timmybtech.com`)
+            service: healthchecks
+            entrypoints:
+              - websecure
+            tls: {}
         services:
           uptime-kuma:
             loadBalancer:
@@ -229,7 +235,7 @@ providers:
           speedtest:
             loadBalancer:
               servers:
-                - url: http://192.168.86.143:8083
+                - url: http://192.168.86.174:8083
           archivebox:
             loadBalancer:
               servers:
@@ -242,7 +248,7 @@ providers:
           it-tools:
             loadBalancer:
               servers:
-                - url: http://192.168.86.143:5884
+                - url: http://192.168.86.174:5884
           pgweb:
             loadBalancer:
               servers:
@@ -303,6 +309,10 @@ providers:
             loadBalancer:
               servers:
                 - url: http://192.168.86.106:3000
+          healthchecks:
+            loadBalancer:
+              servers:
+                - url: http://192.168.86.174:8000
 
         serversTransports:
           nas-transport:

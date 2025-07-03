@@ -124,6 +124,12 @@ data:
         headers:
           X-Forwarded-Proto: https
           X-Forwarded-Host: grafana2.timmybtech.com
+    - hostname: healthchecks.timmybtech.com
+      service: https://traefik.traefik.svc.cluster.local:443
+      originRequest:
+        noTLSVerify: true
+        headers:
+          X-Forwarded-Proto: https
     - hostname: hoarder.timmybtech.com
       service: https://traefik.traefik.svc.cluster.local:443
       originRequest:
