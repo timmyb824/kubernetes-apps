@@ -232,7 +232,7 @@ data:
       Storage:
         icon: mdi-database-check
         style: row
-        columns: 2
+        columns: 1
       VM/LXC:
         icon: mdi-server
         style: row
@@ -488,20 +488,20 @@ data:
             icon: synology.png
             href: https://nas.local.timmybtech.com/
             ping: http://192.168.86.44:5000/
-            widget:
-                type: diskstation
-                url: http://192.168.86.44:5000/
-                username: <SYNOLOGY_USER>
-                password: <SYNOLOGY_PASSWORD>
-        - Synology Download:
-            icon: synology.png
-            href: https://nas.local.timmybtech.com/
-            ping: http://192.168.86.44:5000/
-            widget:
-                type: downloadstation
-                url: http://192.168.86.44:5000/
-                username: <SYNOLOGY_USER>
-                password: <SYNOLOGY_PASSWORD>
+            # widget:
+            #     type: diskstation
+            #     url: http://192.168.86.44:5000/
+            #     username: <SYNOLOGY_USER>
+            #     password: <SYNOLOGY_PASSWORD>
+        # - Synology Download:
+        #     icon: synology.png
+        #     href: https://nas.local.timmybtech.com/
+        #     ping: http://192.168.86.44:5000/
+        #     widget:
+        #         type: downloadstation
+        #         url: http://192.168.86.44:5000/
+        #         username: <SYNOLOGY_USER>
+        #         password: <SYNOLOGY_PASSWORD>
 
     - Proxmox:
         - Proxmox2:
