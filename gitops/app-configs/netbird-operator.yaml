@@ -1,0 +1,83 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: netbird-operator
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  annotations: {}
+spec:
+  destination:
+    namespace: netbird
+    server: "https://kubernetes.default.svc"
+  project: default
+  sources:
+    - repoURL: https://netbirdio.github.io/helms
+      targetRevision: 0.1.10
+      chart: kubernetes-operator
+      helm:
+        releaseName: netbird-operator
+        values: |
+          management:
+            enabled: false
+          ingress:
+            enabled: false
+            router:
+              enabled: true
+          ingressGrpc:
+            enabled: false
+
+          netbirdAPI:
+            keyFromSecret: "netbird-mgmt-api-key"
+
+          signal:
+            enabled: true
+            logLevel: info
+            replicaCount: 1
+            metrics:
+              enabled: true
+              port: 9090
+            ingress:
+              enabled: false
+            resources:
+              limits:
+                cpu: 100m
+                memory: 128Mi
+              requests:
+                cpu: 100m
+              memory: 128Mi
+
+          relay:
+            enabled: true
+            replicaCount: 1
+            logLevel: info
+            metrics:
+              enabled: true
+              port: 9090
+            ingress:
+              enabled: false
+            resources:
+              limits:
+                cpu: 100m
+                memory: 128Mi
+              requests:
+                cpu: 100m
+              memory: 128Mi
+
+          dashboard:
+            enabled: false
+
+          metrics:
+            serviceMonitor:
+              enabled: false
+
+    - repoURL: "https://github.com/timmyb824/kubernetes-apps.git"
+      path: "gitops/manifests/netbird"
+      targetRevision: HEAD
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: false
+    syncOptions:
+      - CreateNamespace=true
