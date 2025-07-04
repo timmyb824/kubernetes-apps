@@ -82,7 +82,7 @@ spec:
               value: https
             - name: N8N_EDITOR_BASE_URL
               value: https://n8n.timmybtech.com
-          image: n8nio/n8n:1.97.1
+          image: n8nio/n8n:1.101.1
           name: n8n
           ports:
             - containerPort: 5678
