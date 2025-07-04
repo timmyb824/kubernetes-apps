@@ -19,7 +19,7 @@ spec:
         releaseName: netbird-operator
         values: |
           management:
-            enabled: true
+            enabled: false
           envFromSecret:
             NB_API_KEY: netbird-mgmt-api-key/api-key
           ingress:
