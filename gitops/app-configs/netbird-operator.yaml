@@ -27,7 +27,9 @@ spec:
           ingressGrpc:
             enabled: false
           netbirdAPI:
-            keyFromSecret: "netbird-mgmt-api-key/api-key"
+            keyFromSecret:
+              name: netbird-mgmt-api-key
+              key: api-key
 
           signal:
             enabled: true
