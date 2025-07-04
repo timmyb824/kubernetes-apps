@@ -21,7 +21,7 @@ spec:
           management:
             enabled: false
           envFromSecret:
-            NETBIRD_API_KEY: netbird-mgmt-api-key/api-key
+            NB_API_KEY: netbird-mgmt-api-key/api-key
           ingress:
             enabled: false
             router:
