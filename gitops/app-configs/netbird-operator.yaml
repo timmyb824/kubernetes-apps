@@ -20,15 +20,14 @@ spec:
         values: |
           management:
             enabled: false
+          envFromSecret:
+            NETBIRD_API_KEY: netbird-mgmt-api-key/api-key
           ingress:
             enabled: false
             router:
               enabled: true
           ingressGrpc:
             enabled: false
-
-          netbirdAPI:
-            keyFromSecret: "netbird-mgmt-api-key"
 
           signal:
             enabled: true
