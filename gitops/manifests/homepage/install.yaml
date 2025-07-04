@@ -408,11 +408,6 @@ data:
             href: https://minio-ui.local.timmybtech.com/
             namespace: minio
             app: minio
-        - Ntfy:
-            icon: ntfy.png
-            href: https://ntfy.timmybtech.com/
-            namespace: ntfy
-            app: ntfy
         - n8n:
             icon: n8n.png
             href: https://n8n.timmybtech.com/
