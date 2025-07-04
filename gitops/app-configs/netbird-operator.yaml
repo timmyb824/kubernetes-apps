@@ -26,6 +26,8 @@ spec:
             enabled: false
             router:
               enabled: true
+            kubernetesAPI:
+              enabled: true
           ingressGrpc:
             enabled: false
 
