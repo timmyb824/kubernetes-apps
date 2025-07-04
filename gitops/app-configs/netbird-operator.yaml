@@ -20,16 +20,14 @@ spec:
         values: |
           management:
             enabled: true
-          envFromSecret:
-            NB_API_KEY: netbird-mgmt-api-key/api-key
           ingress:
             enabled: false
             router:
               enabled: true
-            kubernetesAPI:
-              enabled: true
           ingressGrpc:
             enabled: false
+          netbirdAPI:
+            keyFromSecret: "netbird-mgmt-api-key/api-key"
 
           signal:
             enabled: true
