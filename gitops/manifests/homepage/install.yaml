@@ -289,16 +289,6 @@ data:
               href: https://app.crowdsec.net/
   services.yaml: |
     - Kubernetes:
-        - Grafana:
-            icon: grafana.png
-            href: https://grafana2.timmybtech.com/
-            namespace: grafana
-            app: grafana
-            widget:
-                type: grafana
-                url: https://grafana2.timmybtech.com
-                username: <GRAFANA_USER>
-                password: <GRAFANA_PASSWORD>
         - Authentik:
             icon: authentik.png
             href: https://authentik.timmybtech.com/
@@ -509,6 +499,15 @@ data:
             ping: https://192.168.86.199:8006
 
     - VM/LXC:
+        - Grafana:
+            icon: grafana.png
+            href: https://grafana2.timmybtech.com/
+            ping: http://192.168.86.106:3000
+            widget:
+                type: grafana
+                url: https://grafana2.timmybtech.com
+                username: <GRAFANA_USER>
+                password: <GRAFANA_PASSWORD>
         - Speedtest-tracker:
             icon: speedtest-tracker.png
             href: https://speedtest.local.timmybtech.com/
