@@ -51,13 +51,13 @@ data:
       ignoreDifferences: |
         jsonPointers:
         - /spec/skipBackgroundRequests
-  resource.exclusions: |
-    - apiGroups:
-        - apiextensions.k8s.io
-      kinds:
-        - CustomResourceDefinition
-      nameGlobs:
-        - clusterpolicies.kyverno.io
-        - policies.kyverno.io
-      clusters:
-        - "*"
+  # resource.exclusions: |
+  #   - apiGroups:
+  #       - apiextensions.k8s.io
+  #     kinds:
+  #       - CustomResourceDefinition
+  #     nameGlobs:
+  #       - clusterpolicies.kyverno.io
+  #       - policies.kyverno.io
+  #     clusters:
+  #       - "*"
