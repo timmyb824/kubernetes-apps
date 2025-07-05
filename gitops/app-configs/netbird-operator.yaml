@@ -24,6 +24,8 @@ spec:
             enabled: true
             router:
               enabled: true
+            kubernetesAPI:
+              enabled: true
           netbirdAPI:
             keyFromSecret:
               name: netbird-mgmt-api-key
