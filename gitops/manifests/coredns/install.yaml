@@ -117,9 +117,6 @@ metadata:
     prometheus.io/port: "9153"
     metallb.universe.tf/loadBalancerIPs: "192.168.86.220"
     tailscale.com/expose: "true"
-    netbird.io/expose: "true"
-    netbird.io/groups: "homelab"
-    netbird.io/resource-name: "k8s-coredns"
 spec:
   selector:
     app: adguard-coredns
