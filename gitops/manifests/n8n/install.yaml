@@ -82,6 +82,8 @@ spec:
               value: https
             - name: N8N_EDITOR_BASE_URL
               value: https://n8n.timmybtech.com
+            - name: NODE_OPTIONS
+              value: --max-old-space-size=768
           image: n8nio/n8n:1.101.1
           name: n8n
           ports:
@@ -92,7 +94,7 @@ spec:
               memory: "300Mi"
             limits:
               cpu: "500m"
-              memory: "700Mi"
+              memory: "900Mi"
           volumeMounts:
             - mountPath: /home/node/.n8n
               name: n8n-claim0
