@@ -141,10 +141,31 @@ spec:
               mountPath: /app/config
             - name: logs
               mountPath: /app/config/logs
-            # Refer to https://github.com/gethomepage/homepage/issues/2172#issuecomment-1759580280 for why this is necessary
+            # Refer to https://github.com/gethomepage/homepage/issues/2172#issuecomment-1759580280 for why these are necessary
             - mountPath: /app/config/custom.css
               name: homepage-config
               subPath: custom.css
+            - mountPath: /app/config/custom.js
+              name: homepage-config
+              subPath: custom.js
+            - mountPath: /app/config/bookmarks.yaml
+              name: homepage-config
+              subPath: bookmarks.yaml
+            - mountPath: /app/config/docker.yaml
+              name: homepage-config
+              subPath: docker.yaml
+            - mountPath: /app/config/kubernetes.yaml
+              name: homepage-config
+              subPath: kubernetes.yaml
+            - mountPath: /app/config/services.yaml
+              name: homepage-config
+              subPath: services.yaml
+            - mountPath: /app/config/settings.yaml
+              name: homepage-config
+              subPath: settings.yaml
+            - mountPath: /app/config/widgets.yaml
+              name: homepage-config
+              subPath: widgets.yaml
       volumes:
         - name: homepage-config
           configMap:
@@ -417,11 +438,6 @@ data:
             href: https://portainer.local.timmybtech.com/
             namespace: portainer
             app: portainer
-            # widget:
-            #   type: portainer
-            #   url: https://portainer.local.timmybtech.com
-            #   env: 1
-            #   key: <path:secret/data/homepage#PORTAINER_ACCESS_TOKEN>
         - RabbitMQ:
             icon: rabbitmq.png
             href: https://rabbitmq.local.timmybtech.com/
@@ -477,21 +493,6 @@ data:
             icon: synology.png
             href: https://nas.local.timmybtech.com/
             ping: http://192.168.86.44:5000/
-            # widget:
-            #     type: diskstation
-            #     url: http://192.168.86.44:5000/
-            #     username: <SYNOLOGY_USER>
-            #     password: <SYNOLOGY_PASSWORD>
-        # - Synology Download:
-        #     icon: synology.png
-        #     href: https://nas.local.timmybtech.com/
-        #     ping: http://192.168.86.44:5000/
-        #     widget:
-        #         type: downloadstation
-        #         url: http://192.168.86.44:5000/
-        #         username: <SYNOLOGY_USER>
-        #         password: <SYNOLOGY_PASSWORD>
-
     - Proxmox:
         - Proxmox2:
             icon: proxmox.png
