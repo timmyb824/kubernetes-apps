@@ -141,6 +141,9 @@ spec:
               mountPath: /app/config
             - name: logs
               mountPath: /app/config/logs
+            - mountPath: /app/config/custom.css
+              name: homepage-config
+              subPath: custom.css
       volumes:
         - name: homepage-config
           configMap:
