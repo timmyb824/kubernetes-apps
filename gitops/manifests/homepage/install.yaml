@@ -141,6 +141,7 @@ spec:
               mountPath: /app/config
             - name: logs
               mountPath: /app/config/logs
+            # Refer to https://github.com/gethomepage/homepage/issues/2172#issuecomment-1759580280 for why this is necessary
             - mountPath: /app/config/custom.css
               name: homepage-config
               subPath: custom.css
