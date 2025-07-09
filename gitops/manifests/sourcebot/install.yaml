@@ -10,7 +10,7 @@ metadata:
   name: github-personal-connection
   namespace: sourcebot
 stringData:
-  token: <path:secret/data/argocd#SOURCEBOT_GITHUB_PAT>
+  GITHUB_TOKEN: <path:secret/data/argocd#SOURCEBOT_GITHUB_PAT>
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -20,18 +20,18 @@ metadata:
 data:
   config.json: |
     {
-      "schema": "https://raw.githubusercontent.com/sourcebot-dev/sourcebot/main/schemas/v3/index.json",
-      "connections": {
-        "github-personal-connection": {
-          "type": "github",
-          "repos": [
-            "timmyb824/**"
-          ],
-          "token": {
-            "env": "GITHUB_TOKEN"
-          }
+        "$schema": "https://raw.githubusercontent.com/sourcebot-dev/sourcebot/main/schemas/v3/index.json",
+        "connections": {
+            "github-personal-connection": {
+                "type": "github",
+                "repos": [
+                    "timmyb824/**"
+                ],
+                "token": {
+                    "env": "GITHUB_TOKEN"
+                }
+            }
         }
-      }
     }
 ---
 apiVersion: apps/v1
@@ -74,7 +74,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: github-personal-connection
-                  key: token
+                  key: GITHUB_TOKEN
           volumeMounts:
             - name: config
               mountPath: /data/config.json
