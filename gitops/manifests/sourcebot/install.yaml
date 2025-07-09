@@ -9,7 +9,6 @@ kind: Secret
 metadata:
   name: github-personal-connection
   namespace: sourcebot
-  type: Opaque
 stringData:
   token: <path:secret/data/argocd#SOURCEBOT_GITHUB_PAT>
 ---
@@ -23,7 +22,6 @@ data:
     {
       "schema": "https://raw.githubusercontent.com/sourcebot-dev/sourcebot/main/schemas/v3/index.json",
       "connections": {
-        // comments are supported
         "github-personal-connection": {
           "type": "github",
           "repos": [
