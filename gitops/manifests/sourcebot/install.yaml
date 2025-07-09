@@ -1,0 +1,120 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: sourcebot
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: github-personal-connection
+  namespace: sourcebot
+  type: Opaque
+stringData:
+  token: <path:secret/data/argocd#SOURCEBOT_GITHUB_PAT>
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sourcebot-config
+  namespace: sourcebot
+data:
+  config.json: |
+    {
+      "schema": "https://raw.githubusercontent.com/sourcebot-dev/sourcebot/main/schemas/v3/index.json",
+      "connections": {
+        // comments are supported
+        "github-personal-connection": {
+          "type": "github",
+          "repos": [
+            "timmyb824/**"
+          ],
+          "token": {
+            "env": "GITHUB_TOKEN"
+          }
+        }
+      }
+    }
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sourcebot
+  namespace: sourcebot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sourcebot
+  template:
+    metadata:
+      labels:
+        app: sourcebot
+    spec:
+      containers:
+        - name: sourcebot
+          image: ghcr.io/sourcebot-dev/sourcebot:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+          env:
+            - name: CONFIG_PATH
+              value: /data/config.json
+            - name: AUTH_URL
+              value: "https://sourcebot.local.timmybtech.com"
+            - name: DATABASE_URL
+              value: "<path:secret/data/database#PG_CONN_STRING>/sourcebot?schema=public"
+            - name: REDIS_URL
+              value: "redis://redis.homelab.lan:6379"
+            - name: SOURCEBOT_LOG_LEVEL
+              value: "info"
+            - name: SOURCEBOT_TELEMETRY_DISABLED
+              value: "true"
+            - name: AUTH_SECRET
+              value: "<path:secret/data/argocd#SOURCEBOTAUTH_SECRET>"
+            - name: GITHUB_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: github-personal-connection
+                  key: token
+          volumeMounts:
+            - name: config
+              mountPath: /data/config.json
+              subPath: config.json
+      volumes:
+        - name: config
+          configMap:
+            name: sourcebot-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sourcebot
+  namespace: sourcebot
+spec:
+  selector:
+    app: sourcebot
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: sourcebot-internal
+  namespace: sourcebot
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`sourcebot.local.timmybtech.com`)
+      kind: Rule
+      services:
+        - name: sourcebot
+          port: 3000
+  tls:
+    secretName: local-timmybtech-com-tls
