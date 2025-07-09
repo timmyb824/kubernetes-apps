@@ -24,8 +24,8 @@ data:
         "connections": {
             "github-personal-connection": {
                 "type": "github",
-                "repos": [
-                    "timmyb824/**"
+                "users": [
+                    "timmyb824"
                 ],
                 "token": {
                     "env": "GITHUB_TOKEN"
