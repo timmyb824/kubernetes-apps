@@ -71,7 +71,7 @@ spec:
             - name: SOURCEBOT_TELEMETRY_DISABLED
               value: "true"
             - name: AUTH_SECRET
-              value: "<path:secret/data/argocd#SOURCEBOTAUTH_SECRET>"
+              value: "<path:secret/data/argocd#SOURCEBOT_AUTH_SECRET>"
             - name: GITHUB_TOKEN
               valueFrom:
                 secretKeyRef:
