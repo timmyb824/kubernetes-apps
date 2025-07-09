@@ -65,7 +65,7 @@ spec:
             - name: DATABASE_URL
               value: "<path:secret/data/database#PG_CONN_STRING>/sourcebot?schema=public"
             - name: REDIS_URL
-              value: "redis://redis.homelab.lan:6379"
+              value: "<path:secret/data/database#REDIS_CONN_STRING>"
             - name: SOURCEBOT_LOG_LEVEL
               value: "info"
             - name: SOURCEBOT_TELEMETRY_DISABLED
