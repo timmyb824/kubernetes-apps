@@ -53,6 +53,13 @@ spec:
         - name: sourcebot
           image: ghcr.io/sourcebot-dev/sourcebot:latest
           imagePullPolicy: Always
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "300Mi"
+              cpu: "200m"
           ports:
             - containerPort: 3000
           env:

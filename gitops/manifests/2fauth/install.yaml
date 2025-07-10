@@ -1,0 +1,151 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: 2fauth
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: 2fauth-env
+  namespace: 2fauth
+data:
+  APP_NAME: "2FAuth"
+  APP_ENV: "local"
+  APP_TIMEZONE: "America/New_York"
+  APP_DEBUG: "false"
+  SITE_OWNER: "mail@example.com"
+  APP_KEY: "<path:secret/data/argocd#2FAUTH_APP_KEY>"
+  APP_URL: "https://2fauth.local.timmybtech.com"
+  IS_DEMO_APP: "false"
+  LOG_CHANNEL: "daily"
+  LOG_LEVEL: "notice"
+  DB_CONNECTION: "pgsql"
+  DB_DATABASE: "2fauth"
+  DB_HOST: "<path:secret/data/database#PG_HOST>"
+  DB_PORT: "5432"
+  DB_USERNAME: "<path:secret/data/database#PG_USER>"
+  DB_PASSWORD: "<path:secret/data/database#PG_PASSWORD>"
+  CACHE_DRIVER: "redis"
+  SESSION_DRIVER: "redis"
+  MAIL_MAILER: "log"
+  MAIL_HOST: "<path:secret/data/google_smtp#SMTP_HOST>"
+  MAIL_PORT: "587"
+  MAIL_USERNAME: "<path:secret/data/google_smtp#SMTP_USER>"
+  MAIL_PASSWORD: "<path:secret/data/google_smtp#SMTP_PASSWORD>"
+  MAIL_ENCRYPTION: "null"
+  MAIL_FROM_NAME: "2FAuth"
+  MAIL_FROM_ADDRESS: "<path:secret/data/google_smtp#SMTP_FROM>"
+  MAIL_VERIFY_SSL_PEER: "true"
+  THROTTLE_API: "60"
+  LOGIN_THROTTLE: "5"
+  AUTHENTICATION_GUARD: "web-guard"
+  AUTHENTICATION_LOG_RETENTION: "365"
+  AUTH_PROXY_HEADER_FOR_USER: "null"
+  AUTH_PROXY_HEADER_FOR_EMAIL: "null"
+  PROXY_LOGOUT_URL: "null"
+  WEBAUTHN_NAME: "2FAuth"
+  WEBAUTHN_ID: "null"
+  WEBAUTHN_USER_VERIFICATION: "preferred"
+  TRUSTED_PROXIES: "null"
+  PROXY_FOR_OUTGOING_REQUESTS: "null"
+  CONTENT_SECURITY_POLICY: "false"
+  BROADCAST_DRIVER: "log"
+  QUEUE_DRIVER: "sync"
+  SESSION_LIFETIME: "120"
+  REDIS_HOST: "<path:secret/data/database#REDIS_HOST>"
+  REDIS_PASSWORD: "<path:secret/data/database#REDIS_PASSWORD>"
+  REDIS_PORT: "6379"
+  MIX_ENV: "local"
+  OPENID_AUTHORIZE_URL: "<path:secret/data/argocd#2FAUTH_AUTHENTIK_AUTHORIZE_URL>"
+  OPENID_TOKEN_URL: "<path:secret/data/argocd#2FAUTH_AUTHENTIK_TOKEN_URL>"
+  OPENID_USERINFO_URL: "<path:secret/data/argocd#2FAUTH_AUTHENTIK_USERINFO_URL>"
+  OPENID_CLIENT_ID: "<path:secret/data/argocd#2FAUTH_AUTHENTIK_CLIENT_ID>"
+  OPENID_CLIENT_SECRET: "<path:secret/data/argocd#2FAUTH_AUTHENTIK_CLIENT_SECRET>"
+  OPENID_HTTP_VERIFY_SSL_PEER: "true"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: 2fauth-data
+  namespace: 2fauth
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: nfs-csi-synologynas
+  resources:
+    requests:
+      storage: 4Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: 2fauth
+  namespace: 2fauth
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: 2fauth
+  template:
+    metadata:
+      labels:
+        app: 2fauth
+    spec:
+      containers:
+        - name: 2fauth
+          image: 2fauth/2fauth
+          imagePullPolicy: Always
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "256Mi"
+              cpu: "200m"
+          ports:
+            - containerPort: 8000
+          envFrom:
+            - configMapRef:
+                name: 2fauth-env
+          volumeMounts:
+            - name: data
+              mountPath: /2fauth
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: 2fauth-data
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: 2fauth
+  namespace: 2fauth
+spec:
+  selector:
+    app: 2fauth
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 8000
+  type: ClusterIP
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: 2fauth-internal
+  namespace: 2fauth
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`2fa.local.timmybtech.com`)
+      kind: Rule
+      services:
+        - name: 2fauth
+          port: 8000
+  tls:
+    secretName: local-timmybtech-com-tls
