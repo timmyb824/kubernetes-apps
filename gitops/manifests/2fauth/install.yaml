@@ -16,7 +16,7 @@ data:
   APP_DEBUG: "false"
   SITE_OWNER: "mail@example.com"
   APP_KEY: "<path:secret/data/argocd#2FAUTH_APP_KEY>"
-  APP_URL: "https://2fauth.local.timmybtech.com"
+  APP_URL: "https://2fa.local.timmybtech.com"
   IS_DEMO_APP: "false"
   LOG_CHANNEL: "daily"
   LOG_LEVEL: "notice"
