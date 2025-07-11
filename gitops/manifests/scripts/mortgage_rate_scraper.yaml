@@ -1,0 +1,25 @@
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: mortgage-rate-scraper
+  namespace: scripts
+spec:
+  schedule: "0 9 * * *"
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app: mortgage-rate-scraper
+        spec:
+          containers:
+            - name: mortgage-rate-scraper
+              image: timmyb824/python-mortgageratescraper:latest
+              imagePullPolicy: Always
+              env:
+                - name: HEALTHCHECK_URL
+                  value: <path:secret/data/scripts#HEALTHCHECK_URL_MORTGAGERATESCAPER>
+                - name: APPRISE_WEBHOOK
+                  value: <path:secret/data/scripts#APPRISE_WEBHOOK_MORTGAGERATESCRAPER>
+          restartPolicy: OnFailure
