@@ -80,10 +80,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  annotations: {}
+  annotations:
+    tailscale.com/expose: "true"
   labels:
     io.kompose.service: wallos
-    tailscale.com/expose: "true"
   name: wallos
   namespace: wallos
 spec:
