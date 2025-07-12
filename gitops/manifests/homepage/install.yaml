@@ -294,6 +294,9 @@ data:
         - Pushover:
             - abbr: PO
               href: https://pushover.net/
+        - SimpleFin:
+            - abbr: SF
+              href: https://beta-bridge.simplefin.org/
   services.yaml: |
     - Kubernetes:
         - Authentik:
