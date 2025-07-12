@@ -20,6 +20,7 @@ data:
   APPRISE_EMAIL_URL: "<path:secret/data/argocd#NOTIFIQ_APPRISE_EMAIL_URL>"
   APPRISE_MATTERMOST_URL: "<path:secret/data/argocd#NOTIFIQ_APPRISE_MATTERMOST_URL>"
   APPRISE_GOTIFY_URL: "<path:secret/data/argocd#NOTIFIQ_APPRISE_GOTIFY_URL>"
+  APPRISE_PUSHOVER_URL: "<path:secret/data/argocd#NOTIFIQ_APPRISE_PUSHOVER_URL>"
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -41,6 +42,13 @@ spec:
         - name: notifiq
           image: registry.local.timmybtech.com/notifiq:latest
           imagePullPolicy: Always
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "100m"
+            requests:
+              memory: "64Mi"
+              cpu: "100m"
           ports:
             - containerPort: 8080
           envFrom:
