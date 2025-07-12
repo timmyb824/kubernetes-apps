@@ -273,27 +273,27 @@ data:
         - Yandex Metrica:
             - abbr: YM
               href: https://metrica.yandex.com/
-    - Networking:
+    - Network/Security:
         - Cloudflare:
             - abbr: CF
               href: https://dash.cloudflare.com/
         - Tailscale:
             - abbr: TS
               href: https://login.tailscale.com/
-        - Ngrok:
-            - abbr: NG
-              href: https://dashboard.ngrok.com/
+        - Crowdsec:
+            - abbr: CS
+              href: https://app.crowdsec.net/
     - Storage:
         - Synology Account:
             - abbr: SYA
               href: https://account.synology.com/en-us/overview?en-us=
-    - Tooling:
+    - Other:
         - Web Check:
             - abbr: WCK
               href: https://web-check.xyz/
-        - Crowdsec:
-            - abbr: CS
-              href: https://app.crowdsec.net/
+        - Pushover:
+            - abbr: PO
+              href: https://pushover.net/
   services.yaml: |
     - Kubernetes:
         - Authentik:
