@@ -91,6 +91,7 @@ spec:
     metadata:
       labels:
         app: twofauth
+        app.kubernetes.io/name: twofauth
     spec:
       containers:
         - name: twofauth

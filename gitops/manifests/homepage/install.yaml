@@ -324,16 +324,6 @@ data:
               type: argocd
               url: https://argocd.local.timmybtech.com
               key: <ARGOCD_KEY>
-        - Gotify:
-            icon: gotify.png
-            href: https://gotify.timmybtech.com/
-            namespace: gotify
-            app: gotify
-            widget:
-              type: gotify
-              url: https://gotify.timmybtech.com
-              key: <GOTIFY_CLIENT_TOKEN>
-              version: 2
         - Immich:
             icon: immich.png
             href: https://immich.timmybtech.com/
@@ -375,6 +365,11 @@ data:
               url: https://paperless.local.timmybtech.com
               key: <path:secret/data/homepage#PAPERLESS_API_AUTH_TOKEN>
     - Kubernetes hidden:
+        - 2FAuth:
+            icon: 2fauth.png
+            href: https://2fa.local.timmybtech.com/
+            namespace: twofauth
+            app: twofauth
         - Glance:
             icon: glance.png
             href: https://glance.local.timmybtech.com/
