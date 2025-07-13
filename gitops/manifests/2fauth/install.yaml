@@ -106,7 +106,7 @@ spec:
             - |
               mkdir -p /2fauth/storage/logs && \
               echo "233496a" > /2fauth/installed && \
-              chown -R 1000:1000 /2fauth/storage
+              chown -R 1000:1000 /2fauth/storage /2fauth/installed
           volumeMounts:
             - name: data
               mountPath: /2fauth
