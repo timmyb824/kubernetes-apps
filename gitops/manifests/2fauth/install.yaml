@@ -114,15 +114,17 @@ spec:
         - name: twofauth
           image: 2fauth/2fauth
           imagePullPolicy: Always
-          resources:
-            requests:
-              memory: "128Mi"
-              cpu: "100m"
-            limits:
-              memory: "256Mi"
-              cpu: "200m"
-          ports:
-            - containerPort: 8000
+          command: ["/bin/sh"]
+          args:
+            - -c
+            - |
+              php artisan cache:clear && \
+              php artisan config:clear && \
+              php artisan migrate --force && \
+              php artisan passport:install --no-interaction || true && \
+              php artisan storage:link --quiet && \
+              php artisan clear-compiled && \
+              supervisord
           envFrom:
             - configMapRef:
                 name: twofauth-env
@@ -133,7 +135,6 @@ spec:
         - name: data
           persistentVolumeClaim:
             claimName: twofauth-data
-
 ---
 apiVersion: v1
 kind: Service
