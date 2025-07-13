@@ -93,6 +93,8 @@ spec:
         app: twofauth
         app.kubernetes.io/name: twofauth
     spec:
+      securityContext:
+        fsGroup: 1000
       containers:
         - name: twofauth
           image: 2fauth/2fauth
