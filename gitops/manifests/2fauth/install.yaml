@@ -98,13 +98,18 @@ spec:
       initContainers:
         - name: create-installed-marker
           image: busybox
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+          env:
+            - name: COMMIT
+              value: "233496a"  # Must match your image's actual commit
           command:
             - sh
             - -c
             - |
               mkdir -p /2fauth/storage/logs && \
-              touch /2fauth/installed && \
-              echo "manual-init" > /2fauth/installed
+              echo "${COMMIT}" > /2fauth/installed
           volumeMounts:
             - name: data
               mountPath: /2fauth
