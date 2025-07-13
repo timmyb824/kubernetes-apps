@@ -96,13 +96,15 @@ spec:
       securityContext:
         fsGroup: 1000
       initContainers:
-        - name: init-installed-marker
+        - name: create-installed-marker
           image: busybox
           command:
             - sh
             - -c
             - |
-              mkdir -p /2fauth/storage && touch /2fauth/storage/installed
+              mkdir -p /2fauth && \
+              touch /2fauth/installed && \
+              echo "manual-init" > /2fauth/installed
           volumeMounts:
             - name: data
               mountPath: /2fauth
@@ -124,7 +126,7 @@ spec:
                 name: twofauth-env
           volumeMounts:
             - name: data
-              mountPath: /twofauth
+              mountPath: /2fauth
       volumes:
         - name: data
           persistentVolumeClaim:
