@@ -368,11 +368,6 @@ data:
               url: https://paperless.local.timmybtech.com
               key: <path:secret/data/homepage#PAPERLESS_API_AUTH_TOKEN>
     - Kubernetes hidden:
-        - 2FAuth:
-            icon: 2fauth.png
-            href: https://2fa.local.timmybtech.com/
-            namespace: twofauth
-            app: twofauth
         - Glance:
             icon: glance.png
             href: https://glance.local.timmybtech.com/
