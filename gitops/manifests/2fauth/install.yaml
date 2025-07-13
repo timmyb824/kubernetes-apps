@@ -95,6 +95,17 @@ spec:
     spec:
       securityContext:
         fsGroup: 1000
+      initContainers:
+        - name: init-installed-marker
+          image: busybox
+          command:
+            - sh
+            - -c
+            - |
+              mkdir -p /2fauth/storage && touch /2fauth/storage/installed
+          volumeMounts:
+            - name: data
+              mountPath: /2fauth
       containers:
         - name: twofauth
           image: 2fauth/2fauth
