@@ -102,7 +102,7 @@ spec:
             - sh
             - -c
             - |
-              mkdir -p /2fauth && \
+              mkdir -p /2fauth/storage/logs && \
               touch /2fauth/installed && \
               echo "manual-init" > /2fauth/installed
           volumeMounts:
