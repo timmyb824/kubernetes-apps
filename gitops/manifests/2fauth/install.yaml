@@ -96,20 +96,17 @@ spec:
       securityContext:
         fsGroup: 1000
       initContainers:
-        - name: create-installed-marker
+        - name: setup-twofauth-volume
           image: busybox
           securityContext:
-            runAsUser: 1000
-            runAsGroup: 1000
-          env:
-            - name: COMMIT
-              value: "233496a"  # Must match your image's actual commit
+            runAsUser: 0
           command:
             - sh
             - -c
             - |
               mkdir -p /2fauth/storage/logs && \
-              echo "${COMMIT}" > /2fauth/installed
+              echo "233496a" > /2fauth/installed && \
+              chown -R 1000:1000 /2fauth/storage
           volumeMounts:
             - name: data
               mountPath: /2fauth
@@ -136,6 +133,7 @@ spec:
         - name: data
           persistentVolumeClaim:
             claimName: twofauth-data
+
 ---
 apiVersion: v1
 kind: Service
