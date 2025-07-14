@@ -4,35 +4,35 @@ metadata:
   name: home-assistant
   namespace: kube-system
 ---
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRole
-metadata:
-  name: home-assistant-health-check
-rules:
-  - apiGroups: [""]
-    resources: ["nodes", "componentstatuses"]
-    verbs: ["get", "list"]
-  - nonResourceURLs: ["/healthz"]
-    verbs: ["get"]
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
-metadata:
-  name: home-assistant-health-check-binding
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: home-assistant-health-check
-subjects:
-  - kind: ServiceAccount
-    name: home-assistant
-    namespace: kube-system
----
 apiVersion: v1
 kind: Secret
 metadata:
-  name: home-assistant-token
+  name: home-assistant-static-token
   namespace: kube-system
   annotations:
     kubernetes.io/service-account.name: home-assistant
 type: kubernetes.io/service-account-token
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: home-assistant-read-access
+rules:
+  - nonResourceURLs: ["/healthz"]
+    verbs: ["get"]
+  - apiGroups: [""]
+    resources: ["nodes", "componentstatuses"]
+    verbs: ["get", "list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: home-assistant-read-access-binding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: home-assistant-read-access
+subjects:
+  - kind: ServiceAccount
+    name: home-assistant
+    namespace: kube-system
