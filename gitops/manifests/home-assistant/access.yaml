@@ -27,3 +27,12 @@ subjects:
   - kind: ServiceAccount
     name: home-assistant
     namespace: kube-system
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: home-assistant-token
+  namespace: kube-system
+  annotations:
+    kubernetes.io/service-account.name: home-assistant
+type: kubernetes.io/service-account-token
