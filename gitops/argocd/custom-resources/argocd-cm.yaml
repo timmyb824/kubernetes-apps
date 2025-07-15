@@ -17,18 +17,18 @@ data:
   accounts.tbryant: apiKey, login
   accounts.tbryant.enabled: "true"
   admin.enabled: "true"
-  configManagementPlugins: |-
-    - name: argocd-vault-plugin
-      generate:
-        command: ["argocd-vault-plugin"]
-        args: ["generate", "./", "-s", "argocd-vault-plugin-credentials"]
+  # configManagementPlugins: |-
+  #   - name: argocd-vault-plugin
+  #     generate:
+  #       command: ["argocd-vault-plugin"]
+  #       args: ["generate", "./", "-s", "argocd-vault-plugin-credentials"]
   url: https://argocd.local.timmybtech.com
   dex.config: |
     connectors:
     - config:
         issuer: ${AUTHENTIK_ARGOCD_ISSUER}
-        clientID: ${AUTHENTIK_ARGOCD_CLIENT_ID}
-        clientSecret: $dex.authentik.clientSecret # WARNING: using envsubst will cause $dex to dropped from the secret which will break auth with authentik
+        clientID: ${AUTHENTIK_ARGOCDCLIENT_ID}
+        clientSecret: $dex.authentik.clientSecret
         insecureEnableGroups: true
         scopes:
           - openid

@@ -1,2 +1,3 @@
 gitops/argocd/age-key-secret.yaml
-gitops/argocd/custom-resources/argocd-secret.yaml
+gitops/argocd/custom-resources/argocd-secret-latest.yaml
+gitops/argocd/custom-resources/argocd-vault-plugin-credentials.yaml
