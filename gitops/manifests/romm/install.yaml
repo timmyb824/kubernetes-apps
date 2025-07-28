@@ -1,0 +1,160 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: romm
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: romm-resources-pvc
+  namespace: romm
+spec:
+  accessModes: ["ReadWriteOnce"]
+  storageClassName: nfs-csi-synologynas
+  resources:
+    requests:
+      storage: 10Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: romm-library-pvc
+  namespace: romm
+spec:
+  accessModes: ["ReadWriteOnce"]
+  storageClassName: nfs-csi-synologynas
+  resources:
+    requests:
+      storage: 50Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: romm-assets-pvc
+  namespace: romm
+spec:
+  accessModes: ["ReadWriteOnce"]
+  storageClassName: nfs-csi-synologynas
+  resources:
+    requests:
+      storage: 20Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: romm-config-pvc
+  namespace: romm
+spec:
+  accessModes: ["ReadWriteOnce"]
+  storageClassName: nfs-csi-synologynas
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: romm-env
+  namespace: romm
+data:
+  ROMM_DB_DRIVER: "postgresql"
+  DB_HOST: "<path:secret/data/database#PG_HOST>"
+  DB_NAME: "romm"
+  DB_USER: "<path:secret/data/database#PG_USER>"
+  DB_PASSWD: "<path:secret/data/database#PG_PASSWORD>"
+  REDIS_HOST: "<path:secret/data/database#REDIS_HOST>"
+  REDIS_PASSWORD: "<path:secret/data/database#REDIS_PASSWORD>"
+  REDIS_PORT: "6379"
+  REDIS_DB: "1"
+  ROMM_AUTH_SECRET_KEY: "<path:secret/data/argocd#ROMM_AUTH_SECRET_KEY>"
+  IGDB_CLIENT_ID: "<path:secret/data/argocd#ROMM_IGDB_CLIENT_ID>"
+  IGDB_CLIENT_SECRET: "<path:secret/data/argocd#ROMM_IGDB_CLIENT_SECRET>"
+  # SCREENSCRAPER_USER: "path:secret/data/argocd#ROMM_SCREENSCRAPER_USER"
+  # SCREENSCRAPER_PASSWORD: "path:secret/data/argocd#ROMM_SCREENSCRAPER_PASSWORD"
+  # RETROACHIEVEMENTS_API_KEY: "path:secret/data/argocd#ROMM_RETROACHIEVEMENTS_API_KEY"
+  # STEAMGRIDDB_API_KEY: "path:secret/data/argocd#ROMM_STEAMGRIDDB_API_KEY"
+  HASHEOUS_API_ENABLED: "true"
+  PLAYMATCH_API_ENABLED: "false"
+  LAUNCHBOX_API_ENABLED: "false"
+  LOGLEVEL: "INFO"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: romm
+  namespace: romm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: romm
+  template:
+    metadata:
+      labels:
+        app: romm
+        app.kubernetes.io/name: romm
+    spec:
+      containers:
+        - name: romm
+          image: rommapp/romm:latest
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: romm-env
+          volumeMounts:
+            - name: resources
+              mountPath: /romm/resources
+            - name: library
+              mountPath: /romm/library
+            - name: assets
+              mountPath: /romm/assets
+            - name: config
+              mountPath: /romm/config
+      volumes:
+        - name: resources
+          persistentVolumeClaim:
+            claimName: romm-resources-pvc
+        - name: library
+          persistentVolumeClaim:
+            claimName: romm-library-pvc
+        - name: assets
+          persistentVolumeClaim:
+            claimName: romm-assets-pvc
+        - name: config
+          persistentVolumeClaim:
+            claimName: romm-config-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: romm
+  namespace: romm
+spec:
+  selector:
+    app: romm
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8080
+  type: ClusterIP
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: romm-internal
+  namespace: romm
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`romm.local.timmybtech.com`)
+      kind: Rule
+      services:
+        - name: romm
+          port: 80
+  tls:
+    secretName: local-timmybtech-com-tls
