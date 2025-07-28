@@ -58,6 +58,7 @@ metadata:
   name: romm-env
   namespace: romm
 data:
+  ROMM_PORT: "8080"
   ROMM_DB_DRIVER: "postgresql"
   DB_HOST: "<path:secret/data/database#PG_HOST>"
   DB_NAME: "romm"
