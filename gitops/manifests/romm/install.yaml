@@ -59,12 +59,12 @@ metadata:
   namespace: romm
 data:
   ROMM_PORT: "8080"
-  ROMM_DB_DRIVER: "postgresql"
-  DB_HOST: "<path:secret/data/database#PG_HOST>"
-  DB_PORT: "5432"
+  ROMM_DB_DRIVER: "mariadb"
+  DB_HOST: "<path:secret/data/database#MARIA_HOST>"
+  DB_PORT: "3306"
   DB_NAME: "romm"
-  DB_USER: "<path:secret/data/database#PG_USER>"
-  DB_PASSWD: "<path:secret/data/database#PG_PASSWORD>"
+  DB_USER: "<path:secret/data/database#MARIA_USER>"
+  DB_PASSWD: "<path:secret/data/database#MARIA_PASSWORD>"
   REDIS_HOST: "<path:secret/data/database#REDIS_HOST>"
   REDIS_PASSWORD: "<path:secret/data/database#REDIS_PASSWORD>"
   REDIS_PORT: "6379"
