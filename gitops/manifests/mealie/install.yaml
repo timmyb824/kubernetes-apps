@@ -15,23 +15,23 @@ spec:
   resources:
     requests:
       storage: 10Gi
-# ---
-# apiVersion: v1
-# kind: ConfigMap
-# metadata:
-#   name: mealie-oidc-config
-#   namespace: mealie
-# stringData:
-#   OIDC_AUTH_ENABLED: "true"
-#   OIDC_PROVIDER_NAME: "authentik"
-#   OIDC_CONFIGURATION_URL: "<path:secret/data/argocd#MEALIE_AUTHENTIK_CONFIG_URL>"
-#   OIDC_CLIENT_ID: "<path:secret/data/argocd#MEALIE_AUTHENTIK_CLIENT_ID>"
-#   OIDC_CLIENT_SECRET: "<path:secret/data/argocd#MEALIE_AUTHENTIK_CLIENT_SECRET>"
-#   OIDC_SIGNUP_ENABLED: "true"
-#   OIDC_USER_GROUP: "<path:secret/data/argocd#MEALIE_AUTHENTIK_USER_GROUP>"
-#   OIDC_ADMIN_GROUP: "<path:secret/data/argocd#MEALIE_AUTHENTIK_ADMIN_GROUP>"
-#   OIDC_AUTO_REDIRECT: "false" # Optional: The login page will be bypassed and you will be sent directly to your Identity Provider.
-#   OIDC_REMEMBER_ME: "true"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mealie-oidc-config
+  namespace: mealie
+stringData:
+  OIDC_AUTH_ENABLED: "true"
+  OIDC_PROVIDER_NAME: "authentik"
+  OIDC_CONFIGURATION_URL: "<path:secret/data/argocd#MEALIE_AUTHENTIK_CONFIG_URL>"
+  OIDC_CLIENT_ID: "<path:secret/data/argocd#MEALIE_AUTHENTIK_CLIENT_ID>"
+  OIDC_CLIENT_SECRET: "<path:secret/data/argocd#MEALIE_AUTHENTIK_CLIENT_SECRET>"
+  OIDC_SIGNUP_ENABLED: "true"
+  OIDC_USER_GROUP: "<path:secret/data/argocd#MEALIE_AUTHENTIK_USER_GROUP>"
+  OIDC_ADMIN_GROUP: "<path:secret/data/argocd#MEALIE_AUTHENTIK_ADMIN_GROUP>"
+  OIDC_AUTO_REDIRECT: "false" # Optional: The login page will be bypassed and you will be sent directly to your Identity Provider.
+  OIDC_REMEMBER_ME: "true"
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -76,9 +76,9 @@ spec:
               value: "5432"
             - name: POSTGRES_DB
               value: "mealie"
-          # envFrom:
-          #   - configMapRef:
-          #       name: mealie-oidc-config
+          envFrom:
+            - configMapRef:
+                name: mealie-oidc-config
           resources:
             limits:
               memory: "1000Mi"
