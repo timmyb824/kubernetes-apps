@@ -88,6 +88,8 @@ spec:
               value: "<path:secret/data/google_smtp#SMTP_PASSWORD>"
             - name: SMTP_FROM_EMAIL
               value: "<path:secret/data/google_smtp#SMTP_FROM>"
+            - name: SMTP_AUTH_STRATEGY
+              value: "TLS"
           envFrom:
             - configMapRef:
                 name: mealie-oidc-config
