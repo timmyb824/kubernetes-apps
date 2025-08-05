@@ -124,7 +124,6 @@ spec:
       services:
         - name: minio
           port: 9000
-
   tls:
     secretName: local-timmybtech-com-tls
 # ---
