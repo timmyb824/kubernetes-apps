@@ -76,6 +76,18 @@ spec:
               value: "5432"
             - name: POSTGRES_DB
               value: "mealie"
+            - name: OPENAI_API_KEY
+              value: "<path:secret/data/argocd#OPENAI_API_KEY>"
+            - name: SMTP_HOST
+              value: "<path:secret/data/google_smtp#SMTP_HOST>"
+            - name: SMTP_PORT
+              value: "587"
+            - name: SMTP_USERNAME
+              value: "<path:secret/data/google_smtp#SMTP_USER>"
+            - name: SMTP_PASSWORD
+              value: "<path:secret/data/google_smtp#SMTP_PASSWORD>"
+            - name: SMTP_FROM_EMAIL
+              value: "<path:secret/data/google_smtp#SMTP_FROM>"
           envFrom:
             - configMapRef:
                 name: mealie-oidc-config
