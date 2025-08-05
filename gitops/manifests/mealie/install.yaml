@@ -16,9 +16,8 @@ spec:
     requests:
       storage: 10Gi
 ---
-# create config for OIDC values
 apiVersion: v1
-kind: secret
+kind: ConfigMap
 metadata:
   name: mealie-oidc-config
   namespace: mealie
@@ -77,15 +76,15 @@ spec:
               value: "5432"
             - name: POSTGRES_DB
               value: "mealie"
+          envFrom:
+            - configMapRef:
+                name: mealie-oidc-config
           resources:
             limits:
               memory: "1000Mi"
           volumeMounts:
             - name: mealie-data
               mountPath: /app/data
-          envFrom:
-            - secretRef:
-                name: mealie-oidc-config
       volumes:
         - name: mealie-data
           persistentVolumeClaim:
