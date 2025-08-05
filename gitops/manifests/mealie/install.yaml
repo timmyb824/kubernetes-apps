@@ -21,7 +21,7 @@ kind: ConfigMap
 metadata:
   name: mealie-oidc-config
   namespace: mealie
-stringData:
+data:
   OIDC_AUTH_ENABLED: "true"
   OIDC_PROVIDER_NAME: "authentik"
   OIDC_CONFIGURATION_URL: "<path:secret/data/argocd#MEALIE_AUTHENTIK_CONFIG_URL>"
