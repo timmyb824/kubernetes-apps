@@ -82,7 +82,7 @@ spec:
               value: "<path:secret/data/google_smtp#SMTP_HOST>"
             - name: SMTP_PORT
               value: "587"
-            - name: SMTP_USERNAME
+            - name: SMTP_USER
               value: "<path:secret/data/google_smtp#SMTP_USER>"
             - name: SMTP_PASSWORD
               value: "<path:secret/data/google_smtp#SMTP_PASSWORD>"
