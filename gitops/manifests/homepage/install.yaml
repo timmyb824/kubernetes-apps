@@ -398,6 +398,11 @@ data:
             href: https://minio-ui.local.timmybtech.com/
             namespace: minio
             app: minio
+        - Mealie:
+            icon: mealie`.png
+            href: https://mealie.local.timmybtech.com/
+            namespace: minio
+            app: minio
         - n8n:
             icon: n8n.png
             href: https://n8n.timmybtech.com/
