@@ -52,7 +52,7 @@ spec:
     spec:
       containers:
         - name: web
-          image: ghcr.io/karakeep-app/karakeep:0.25.0
+          image: ghcr.io/karakeep-app/karakeep:0.26.0
           ports:
             - containerPort: 3000
           env:
