@@ -25,6 +25,12 @@ spec:
                   value: <path:secret/data/scripts#HEALTHCHECKS_URL_BILLS_REMINDER_SMS>
                 - name: HEALTHCHECKS_URL_AWS_USAGE_COST
                   value: <path:secret/data/scripts#HEALTHCHECKS_URL_AWS_USAGE_COST>
+                - name: PUSHOVER_TOKEN
+                  value: <path:secret/data/scripts#PUSHOVER_TOKEN>
+                - name: PUSHOVER_USER
+                  value: <path:secret/data/scripts#PUSHOVER_USER>
+                - name: PUSHOVER_DEVICE
+                  value: <path:secret/data/scripts#PUSHOVER_DEVICE>
           restartPolicy: OnFailure
 ---
 # apiVersion: apps/v1
