@@ -28,7 +28,7 @@ metadata:
   name: notifiq
   namespace: notifiq
 spec:
-  replicas: 0
+  replicas: 1
   selector:
     matchLabels:
       app: notifiq
