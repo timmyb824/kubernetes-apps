@@ -148,6 +148,9 @@ spec:
             - mountPath: /app/config/custom.js
               name: homepage-config
               subPath: custom.js
+            - mountPath: /app/config/proxmox.yaml
+              name: homepage-config
+              subPath: proxmox.yaml
       volumes:
         - name: homepage-config
           configMap:
@@ -399,7 +402,7 @@ data:
             namespace: minio
             app: minio
         - Mealie:
-            icon: mealie`.png
+            icon: mealie.png
             href: https://mealie.local.timmybtech.com/
             namespace: minio
             app: minio
