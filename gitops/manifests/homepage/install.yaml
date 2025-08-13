@@ -137,8 +137,8 @@ spec:
               cpu: 250m
               memory: 256Mi
           volumeMounts:
-            - name: homepage-config
-              mountPath: /app/config
+          #  - name: homepage-config
+          #    mountPath: /app/config
             - name: logs
               mountPath: /app/config/logs
             # Refer to https://github.com/gethomepage/homepage/issues/2172#issuecomment-1759580280 for why these are necessary
