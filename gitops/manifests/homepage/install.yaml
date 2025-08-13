@@ -142,15 +142,15 @@ spec:
             - name: logs
               mountPath: /app/config/logs
             # Refer to https://github.com/gethomepage/homepage/issues/2172#issuecomment-1759580280 for why these are necessary
-            - mountPath: /app/config/custom.css
-              name: homepage-config
-              subPath: custom.css
-            - mountPath: /app/config/custom.js
-              name: homepage-config
-              subPath: custom.js
-            - mountPath: /app/config/proxmox.yaml
-              name: homepage-config
-              subPath: proxmox.yaml
+          #  - mountPath: /app/config/custom.css
+          #    name: homepage-config
+          #    subPath: custom.css
+          #  - mountPath: /app/config/custom.js
+          #    name: homepage-config
+          #    subPath: custom.js
+          #  - mountPath: /app/config/proxmox.yaml
+          #    name: homepage-config
+          #    subPath: proxmox.yaml
       volumes:
         - name: homepage-config
           configMap:
