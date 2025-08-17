@@ -169,6 +169,12 @@ providers:
             entrypoints:
               - websecure
             tls: {}
+          ara-api:
+            rule: Host(`ara-api.local.timmybtech.com`)
+            service: ara-api
+            entrypoints:
+              - websecure
+            tls: {}
           actualbudget:
             rule: Host(`budget.local.timmybtech.com`)
             service: actualbudget
@@ -277,6 +283,10 @@ providers:
             loadBalancer:
               servers:
                 - url: http://192.168.86.198:9090
+          ara-api:
+            loadBalancer:
+              servers:
+                - url: http://192.168.86.174:8009
           actualbudget:
             loadBalancer:
               servers:
