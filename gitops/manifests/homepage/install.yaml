@@ -548,6 +548,10 @@ data:
                 url: http://homelab-oci02.tailebee.ts.net:80
                 key: <ZABBIX_API_KEY>
     - VM/LXC hidden:
+        - Ara:
+            icon: ara.png
+            href: https://ara-api.local.timmybtech.com/
+            ping: http://192.168.86.174:8009/
         - ArchiveBox:
             icon: archivebox.png
             href: http://archivebox.local.timmybtech.com/
