@@ -12,7 +12,7 @@ metadata:
   annotations:
     avp.kubernetes.io/path: "secret/data/grafanaBackupTool"
 data:
-  GRAFANA_URL: "<GRAFANA_URL>"
+  GRAFANA_URL: <GRAFANA_URL>
   GRAFANA_TOKEN: <GRAFANA_TOKEN>
   GRAFANA_ADMIN_ACCOUNT: <GRAFANA_ADMIN_ACCOUNT>
   GRAFANA_ADMIN_PASSWORD: <GRAFANA_ADMIN_PASSWORD>
@@ -47,7 +47,8 @@ spec:
               # The original owners of this image are ysde/docker-grafana-backup-tool
               # but there was a bug the owners never fixed. This is a fork of the original image with the bug fixed.
               # https://hub.docker.com/r/dealfa/grafana-backup-tool
-              image: "dealfa/grafana-backup-tool:v1.4.4"
+              # Update 2025-08-18: Updated to use the forked image from my local registry.
+              image: "registry.local.timmybtech.com/grafana-backup-tool-fork:latest"
               imagePullPolicy: Always
               envFrom:
                 - configMapRef:
