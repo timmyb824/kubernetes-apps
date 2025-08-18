@@ -549,7 +549,7 @@ data:
                 key: <ZABBIX_API_KEY>
     - VM/LXC hidden:
         - Ara:
-            icon: ara.png
+            icon: ara-records-ansible.png
             href: https://ara-api.local.timmybtech.com/
             ping: http://192.168.86.174:8009/
         - ArchiveBox:
