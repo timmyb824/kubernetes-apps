@@ -332,7 +332,7 @@ providers:
           netbox:
             loadBalancer:
               servers:
-                - url: http://192.168.86.110:443
+                - url: http://192.168.86.110:80
         serversTransports:
           nas-transport:
             insecureSkipVerify: true
