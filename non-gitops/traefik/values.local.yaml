@@ -229,6 +229,12 @@ providers:
             entrypoints:
               - websecure
             tls: {}
+          netbox:
+            rule: Host(`netbox.local.timmybtech.com`)
+            service: netbox
+            entrypoints:
+              - websecure
+            tls: {}
         services:
           uptime-kuma:
             loadBalancer:
@@ -323,7 +329,10 @@ providers:
             loadBalancer:
               servers:
                 - url: http://192.168.86.174:8000
-
+          netbox:
+            loadBalancer:
+              servers:
+                - url: http://192.168.86.110:443
         serversTransports:
           nas-transport:
             insecureSkipVerify: true
