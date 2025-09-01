@@ -29,6 +29,9 @@ spec:
                 user: <PG_USER>
                 password: <PG_PASSWORD>
                 port: 5432
+              redis:
+                host: <REDIS_HOST>
+                password: <REDIS_PASSWORD>
               email:
                 host: "smtp.gmail.com"
                 port: 587
@@ -63,7 +66,7 @@ spec:
             enabled: false
 
           redis:
-              enabled: true
+              enabled: false
 
           metrics:
             enabled: true
