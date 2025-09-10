@@ -460,6 +460,16 @@ data:
             href: https://wallos.local.timmybtech.com/
             namespace: wallos
             app: wallos
+        - Trala:
+            icon: traefik.png
+            href: https://trala.local.timmybtech.com/
+            namespace: traefik
+            app: trala
+        - Termix:
+            icon: termix.png
+            href: https://termix.local.timmybtech.com/
+            namespace: termix
+            app: termix
         - SearXNG:
             icon: searxng.png
             href: https://searxng.timmybtech.com/
