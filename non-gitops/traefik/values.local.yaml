@@ -4,6 +4,7 @@ globalArguments:
 additionalArguments:
   - --serversTransport.insecureSkipVerify=true
   - --log.level=INFO
+  - --api.insecure=true
 experimental: # FOR CROWDSEC
   plugins: #
     crowdsec-bouncer: #
