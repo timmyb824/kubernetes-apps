@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: termix
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: termix
+    server: "https://kubernetes.default.svc"
+  source:
+    path: gitops/manifests/termix
+    repoURL: "https://github.com/timmyb824/kubernetes-apps.git"
+    targetRevision: HEAD
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: false
