@@ -1,0 +1,106 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: trala-config
+  namespace: traefik
+# Put your overrides in here or leave them blank
+data:
+  icon_overrides.yml: |
+    # Format: <traefik_router_name>: <icon_url_or_filename>images
+    # Example 1: Using a full URL
+    # firefly-core: https://selfh.st/content/images/2023/09/favicon-1.k-ingress-rewrite
+    # Example 2: Using a filename with .png extension
+    # unifi-controller: ubiquiti-unifi.png
+    # Example 3: Using a filename with .svg extension
+    # home-assistant: home-assistant.svg
+    # Example 4: Using a filename with .webp extension
+    # plex: plex.webp
+  services.yml: |
+    # Format: List router names to exclude from the dashboard
+    # service:
+    #   exclude:
+    #     # Example 1: Exclude the traefik-api router
+    #     - traefik-api
+    #     # Example 2: Exclude a private admin interface
+    #     - private-admin-panel
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: trala
+  namespace: traefik
+  labels:
+    app: trala
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: trala
+  template:
+    metadata:
+      labels:
+        app: trala
+    spec:
+      containers:
+        - name: trala
+          image: ghcr.io/dannybouwers/trala:latest
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: TRAEFIK_API_HOST
+              value: "http://traefik:8080"
+            - name: REFRESH_INTERVAL_SECONDS
+              value: "30"
+            - name: SEARCH_ENGINE_URL
+              value: "https://searxng.timmybtech.com/search?q="
+            - name: LOG_LEVEL
+              value: "info"
+          volumeMounts:
+            - name: config
+              mountPath: /config/icon_overrides.yml
+              subPath: icon_overrides.yml
+              readOnly: true
+            - name: config
+              mountPath: /config/services.yml
+              subPath: services.yml
+              readOnly: true
+      volumes:
+        - name: config
+          configMap:
+            name: trala-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: trala
+  namespace: traefik
+  labels:
+    app: trala
+spec:
+  selector:
+    app: trala
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+  type: ClusterIP
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: trala-internal
+  namespace: traefik
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`trala.local.timmybtech.com`)
+      kind: Rule
+      services:
+        - name: trala
+          port: 8080
+  tls:
+    secretName: local-timmybtech-com-tls
