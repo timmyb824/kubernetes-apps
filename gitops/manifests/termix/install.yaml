@@ -84,7 +84,7 @@ spec:
     - match: Host(`termix.local.timmybtech.com`)
       kind: Rule
       services:
-        - name: romm
+        - name: termix
           port: 8080
   tls:
     secretName: local-timmybtech-com-tls
