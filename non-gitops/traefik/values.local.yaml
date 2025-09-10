@@ -5,7 +5,6 @@ additionalArguments:
   - --serversTransport.insecureSkipVerify=true
   - --log.level=INFO
   - --api.insecure=true # for trala (almost removed dashboard middleware)
-  - --api.dashboard=true # for trala
 experimental: # FOR CROWDSEC
   plugins: #
     crowdsec-bouncer: #
