@@ -48,7 +48,7 @@ spec:
           imagePullPolicy: IfNotPresent
           env:
             - name: TRAEFIK_API_HOST
-              value: "https://traefik.local.timmybtech.com:8080"
+              value: "https://traefik.local.timmybtech.com"
             - name: REFRESH_INTERVAL_SECONDS
               value: "30"
             - name: SEARCH_ENGINE_URL
