@@ -7,35 +7,26 @@ data:
   NODE_ENV: "development"
   PORT_BACKEND: "4000"
   PORT_FRONTEND: "3000"
-  SYNC_FREQUENCY: "* * * * *"
-  # --- PostgreSQL (USE YOUR OWN CLUSTER PG) ---
-  # EXAMPLE: postgresql://admin:password@postgresql.default.svc.cluster.local:5432/open_archive
-  DATABASE_URL: "postgresql://admin:password@postgres:5432/open_archive"
+  SYNC_FREQUENCY: "*/5 * * * *"
+  DATABASE_URL: "postgresql://<path:secret/data/postgres_db#USER>:<path:secret/data/postgres_db#PASSWORD>@<path:secret/data/postgres_db#HOST_IP>:5432/open_archive"
   # --- Meilisearch ---
-  MEILI_MASTER_KEY: "aSampleMasterKey"
+  MEILI_MASTER_KEY: "<path:secret/data/argocd#OPENARCHIVER_MEILI_MASTER_KEY>"
   MEILI_HOST: "http://meilisearch:7700"
   # --- Redis / Valkey ---
-  REDIS_HOST: "valkey"
+  REDIS_HOST: "<path:secret/data/database#REDIS_HOST>"
   REDIS_PORT: "6379"
-  REDIS_PASSWORD: "defaultredispassword"
+  REDIS_PASSWORD: "<path:secret/data/database#REDIS_PASSWORD>"
   REDIS_TLS_ENABLED: "false"
   # --- Storage Settings ---
   STORAGE_TYPE: "local"
   BODY_SIZE_LIMIT: "100M"
   STORAGE_LOCAL_ROOT_PATH: "/var/data/open-archiver"
-  # --- S3 Settings (unused if STORAGE_TYPE=local) ---
-  STORAGE_S3_ENDPOINT: ""
-  STORAGE_S3_BUCKET: ""
-  STORAGE_S3_ACCESS_KEY_ID: ""
-  STORAGE_S3_SECRET_ACCESS_KEY: ""
-  STORAGE_S3_REGION: ""
-  STORAGE_S3_FORCE_PATH_STYLE: "false"
   # --- Security / Auth ---
   RATE_LIMIT_WINDOW_MS: "60000"
   RATE_LIMIT_MAX_REQUESTS: "100"
-  JWT_SECRET: "a-very-secret-key-that-you-should-change"
+  JWT_SECRET: "<path:secret/data/argocd#OPENARCHIVER_JWT_SECRET>"
   JWT_EXPIRES_IN: "7d"
-  ENCRYPTION_KEY: "<replace-with-hex-64>" # e.g. output of `openssl rand -hex 32`
+  ENCRYPTION_KEY: "<path:secret/data/argocd#OPENARCHIVER_ENCRYPTION_KEY>"
 ---
 # Persistent storage (uses cluster's default StorageClass; set storageClassName if desired)
 apiVersion: v1
@@ -44,132 +35,10 @@ metadata:
   name: archiver-data
 spec:
   accessModes: ["ReadWriteOnce"]
+  storageClassName: "nfs-csi-synologynas"
   resources:
     requests:
-      storage: 10Gi
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: valkey-data
-spec:
-  accessModes: ["ReadWriteOnce"]
-  resources:
-    requests:
-      storage: 2Gi
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: meili-data
-spec:
-  accessModes: ["ReadWriteOnce"]
-  resources:
-    requests:
-      storage: 10Gi
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: valkey
-  labels:
-    app: valkey
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: valkey
-  template:
-    metadata:
-      labels:
-        app: valkey
-    spec:
-      containers:
-        - name: valkey
-          image: valkey/valkey:8-alpine
-          # We need shell expansion for REDIS_PASSWORD in args
-          command: ["/bin/sh", "-c"]
-          args:
-            - exec valkey-server --requirepass "$REDIS_PASSWORD"
-          envFrom:
-            - configMapRef:
-                name: open-archiver-config
-          ports:
-            - name: redis
-              containerPort: 6379
-          volumeMounts:
-            - name: data
-              mountPath: /data
-      volumes:
-        - name: data
-          persistentVolumeClaim:
-            claimName: valkey-data
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: valkey
-  labels:
-    app: valkey
-spec:
-  selector:
-    app: valkey
-  ports:
-    - name: redis
-      port: 6379
-      targetPort: 6379
-  type: ClusterIP
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: meilisearch
-  labels:
-    app: meilisearch
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: meilisearch
-  template:
-    metadata:
-      labels:
-        app: meilisearch
-    spec:
-      containers:
-        - name: meilisearch
-          image: getmeili/meilisearch:v1.15
-          env:
-            - name: MEILI_MASTER_KEY
-              valueFrom:
-                configMapKeyRef:
-                  name: open-archiver-config
-                  key: MEILI_MASTER_KEY
-          ports:
-            - name: http
-              containerPort: 7700
-          volumeMounts:
-            - name: data
-              mountPath: /meili_data
-      volumes:
-        - name: data
-          persistentVolumeClaim:
-            claimName: meili-data
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: meilisearch
-  labels:
-    app: meilisearch
-spec:
-  selector:
-    app: meilisearch
-  ports:
-    - name: http
-      port: 7700
-      targetPort: 7700
-  type: ClusterIP
+      storage: 20Gi
 ---
 apiVersion: apps/v1
 kind: Deployment
