@@ -19,7 +19,8 @@ spec:
 apiVersion: v1
 data:
   DISABLE_SIGNUPS: "true"
-  MEILI_MASTER_KEY: <path:secret/data/argocd#HOARDER_MEILI_MASTER_KEY>
+  MEILI_ADDR: "http://<path:secret/data/database#MEILISEARCH_HOST>:7700"
+  MEILI_MASTER_KEY: <path:secret/data/database#MEILISEARCH_MASTER_KEY>
   NEXTAUTH_SECRET: <path:secret/data/argocd#HOARDER_NEXTAUTH_SECRET>
   NEXTAUTH_URL: https://hoarder.timmybtech.com
   OAUTH_ALLOW_DANGEROUS_EMAIL_ACCOUNT_LINKING: "true"
@@ -52,12 +53,12 @@ spec:
     spec:
       containers:
         - name: web
-          image: ghcr.io/karakeep-app/karakeep:0.26.0
+          image: ghcr.io/karakeep-app/karakeep:0.27.0
           ports:
             - containerPort: 3000
           env:
             - name: MEILI_ADDR
-              value: http://meilisearch:7700
+              value: <path:secret/data/database#MEILISEARCH_HOST>:7700
             - name: BROWSER_WEB_URL
               value: http://chrome:9222
             - name: DATA_DIR
@@ -167,58 +168,3 @@ spec:
       port: 9222
       targetPort: 9222
   type: ClusterIP
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: meilisearch-pvc
-spec:
-  storageClassName: "nfs-csi-synologynas"
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 8Gi
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: meilisearch
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: meilisearch
-  template:
-    metadata:
-      labels:
-        app: meilisearch
-    spec:
-      containers:
-        - name: meilisearch
-          image: getmeili/meilisearch:v1.12.8
-          env:
-            - name: MEILI_NO_ANALYTICS
-              value: "true"
-          volumeMounts:
-            - mountPath: /meili_data
-              name: meilisearch
-          envFrom:
-            - configMapRef:
-                name: hoarder-env
-      volumes:
-        - name: meilisearch
-          persistentVolumeClaim:
-            claimName: meilisearch-pvc
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: meilisearch
-spec:
-  selector:
-    app: meilisearch
-  ports:
-    - protocol: TCP
-      port: 7700
-      targetPort: 7700
