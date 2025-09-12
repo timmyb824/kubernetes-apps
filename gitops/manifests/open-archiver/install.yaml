@@ -1,7 +1,13 @@
 apiVersion: v1
+kind: Namespace
+metadata:
+  name: open-archiver
+---
+apiVersion: v1
 kind: ConfigMap
 metadata:
   name: open-archiver-config
+  namespace: open-archiver
 data:
   # --- Application Settings ---
   NODE_ENV: "development"
@@ -10,8 +16,8 @@ data:
   SYNC_FREQUENCY: "*/5 * * * *"
   DATABASE_URL: "postgresql://<path:secret/data/postgres_db#USER>:<path:secret/data/postgres_db#PASSWORD>@<path:secret/data/postgres_db#HOST_IP>:5432/open_archive"
   # --- Meilisearch ---
-  MEILI_MASTER_KEY: "<path:secret/data/argocd#OPENARCHIVER_MEILI_MASTER_KEY>"
-  MEILI_HOST: "http://meilisearch:7700"
+  MEILI_MASTER_KEY: "<path:secret/data/database#MEILISEARCH_MASTER_KEY>"
+  MEILI_HOST: "http://<path:secret/data/database#MEILISEARCH_HOST>:7700"
   # --- Redis / Valkey ---
   REDIS_HOST: "<path:secret/data/database#REDIS_HOST>"
   REDIS_PORT: "6379"
@@ -28,11 +34,11 @@ data:
   JWT_EXPIRES_IN: "7d"
   ENCRYPTION_KEY: "<path:secret/data/argocd#OPENARCHIVER_ENCRYPTION_KEY>"
 ---
-# Persistent storage (uses cluster's default StorageClass; set storageClassName if desired)
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: archiver-data
+  namespace: open-archiver
 spec:
   accessModes: ["ReadWriteOnce"]
   storageClassName: "nfs-csi-synologynas"
@@ -44,6 +50,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: open-archiver
+  namespace: open-archiver
   labels:
     app: open-archiver
 spec:
@@ -55,6 +62,7 @@ spec:
     metadata:
       labels:
         app: open-archiver
+        app.kubernetes.io/name: open-archiver
     spec:
       containers:
         - name: open-archiver
@@ -66,9 +74,8 @@ spec:
           ports:
             - name: frontend
               containerPort: 3000
-              # If backend is also exposed by the same container, uncomment:
-              # - name: backend
-              #   containerPort: 4000
+            - name: backend
+              containerPort: 4000
           volumeMounts:
             - name: data
               mountPath: /var/data/open-archiver
@@ -86,6 +93,13 @@ spec:
             initialDelaySeconds: 30
             periodSeconds: 20
             timeoutSeconds: 3
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "256m"
+            limits:
+              memory: "128Mi"
+              cpu: "512m"
       volumes:
         - name: data
           persistentVolumeClaim:
@@ -95,6 +109,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: open-archiver
+  namespace: open-archiver
   labels:
     app: open-archiver
 spec:
@@ -105,3 +120,22 @@ spec:
       port: 3000
       targetPort: 3000
   type: ClusterIP
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: open-archiver-internal
+  namespace: open-archiver
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`open-archiver.local.timmybtech.com`)
+      kind: Rule
+      services:
+        - name: open-archiver
+          port: 3000
+  tls:
+    secretName: local-timmybtech-com-tls

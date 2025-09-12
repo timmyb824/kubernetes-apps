@@ -64,6 +64,13 @@ spec:
               mountPath: /config/services.yml
               subPath: services.yml
               readOnly: true
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "256m"
+            limits:
+              memory: "128Mi"
+              cpu: "512m"
       volumes:
         - name: config
           configMap:
