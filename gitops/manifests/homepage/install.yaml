@@ -579,10 +579,6 @@ data:
             icon: adguard-home.png
             href: http://pihole2.homelab.lan:8080/
             ping: http://pihole2.homelab.lan:8080
-        - ActualBudget:
-            icon: actual-budget.png
-            href: https://budget.local.timmybtech.com/
-            ping: http://192.168.86.174:5006
         - Dozzle:
             icon: dozzle.png
             href: https://dozzle.local.timmybtech.com/
