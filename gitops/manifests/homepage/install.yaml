@@ -425,6 +425,11 @@ data:
             href: https://n8n.timmybtech.com/
             namespace: n8n
             app: n8n
+        - open-archiver:
+            icon: open-archiver.png
+            href: https://open-archiver.local.timmybtech.com/
+            namespace: open-archiver
+            app: open-archiver
         - Planka:
             icon: planka.png
             href: https://planka.local.timmybtech.com/
