@@ -1,0 +1,159 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: inboxzero
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: inboxzero-config
+  namespace: inboxzero
+data:
+  DATABASE_URL: "postgresql://<path:secret/data/postgres_db#USER>:<path:secret/data/postgres_db#PASSWORD>@<path:secret/data/postgres_db#HOST_IP>:5432/inboxzero?schema=public"
+  DIRECT_URL: "postgresql://<path:secret/data/postgres_db#USER>:<path:secret/data/postgres_db#PASSWORD>@<path:secret/data/postgres_db#HOST_IP>:5432/inboxzero?schema=public"
+  NEXT_PUBLIC_BASE_URL: http://localhost:3000
+  AUTH_SECRET: "<path:secret/data/argocd#INBOXZERO_AUTH_SECRET>"
+
+  # Gmail
+  GOOGLE_CLIENT_ID: "<path:secret/data/argocd#INBOXZERO_GOOGLE_CLIENT_ID>"
+  GOOGLE_CLIENT_SECRET: "<path:secret/data/argocd#INBOXZERO_GOOGLE_CLIENT_SECRET>"
+  GOOGLE_ENCRYPT_SECRET: "<path:secret/data/argocd#INBOXZERO_GOOGLE_ENCRYPT_SECRET>"
+  GOOGLE_ENCRYPT_SALT: "<path:secret/data/argocd#INBOXZERO_GOOGLE_ENCRYPT_SALT>"
+
+  # GOOGLE_PUBSUB_TOPIC_NAME: "projects/abc/topics/xyz"
+  # GOOGLE_PUBSUB_VERIFICATION_TOKEN: "# Generate a random secret here: https://generate-secret.vercel.app/32"
+
+  # LLM config
+  DEFAULT_LLM_PROVIDER: anthropic
+  # DEFAULT_LLM_MODEL=
+
+  # Set at least one of the following:
+  ANTHROPIC_API_KEY: "<path:secret/data/argocd#ANTHROPIC_API_KEY>"
+  # OPENROUTER_API_KEY=
+  # OPENAI_API_KEY=
+  # GOOGLE_API_KEY=
+  # GROQ_API_KEY=
+  # BEDROCK_ACCESS_KEY=
+  # BEDROCK_SECRET_KEY=
+  # BEDROCK_REGION=us-west-2
+  # OLLAMA_BASE_URL=http://localhost:11434/api
+  # NEXT_PUBLIC_OLLAMA_MODEL=phi3
+
+  # Economy LLM configuration (for large context windows where cost efficiency matters)
+  # ECONOMY_LLM_PROVIDER=
+  # ECONOMY_LLM_MODEL=
+
+  INTERNAL_API_KEY: "<path:secret/data/argocd#INBOXZERO_INTERNAL_API_KEY>"
+  API_KEY_SALT: "<path:secret/data/argocd#INBOXZERO_API_KEY_SALT>"
+
+  #redis config
+  REDIS_URL: "redis://:<path:secret/data/database#REDIS_PASSWORD>@<path:secret/data/database#REDIS_HOST>:6379"
+
+  # Optional:
+  # NEXT_PUBLIC_APP_HOME_PATH: /assistant # If you want the product to default to email client, set this to /mail
+  # LOG_ZOD_ERRORS: true
+  # CRON_SECRET=
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: inboxzero-data
+  namespace: inboxzero
+spec:
+  accessModes: ["ReadWriteOnce"]
+  storageClassName: "nfs-csi-synologynas"
+  resources:
+    requests:
+      storage: 32Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: inboxzero
+  namespace: inboxzero
+  labels:
+    app: inboxzero
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: inboxzero
+  template:
+    metadata:
+      labels:
+        app: inboxzero
+        app.kubernetes.io/name: inboxzero
+    spec:
+      containers:
+        - name: inboxzero
+          image: ghcr.io/elie222/inbox-zero:latest
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: inboxzero-config
+          ports:
+            - name: http
+              containerPort: 3000
+          volumeMounts:
+            - name: data
+              mountPath: /var/data/inboxzero
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 3
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 20
+            timeoutSeconds: 3
+          resources:
+            requests:
+              cpu: "500m"
+              memory: "512Mi"
+            limits:
+              cpu: "1.5"
+              memory: "2Gi"
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: inboxzero-data
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: inboxzero
+  namespace: inboxzero
+  labels:
+    app: inboxzero
+spec:
+  selector:
+    app: inboxzero
+  ports:
+    - name: http
+      port: 3000
+      targetPort: 3000
+  type: ClusterIP
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: inboxzero-internal
+  namespace: inboxzero
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`inboxzero.local.timmybtech.com`)
+      kind: Rule
+      services:
+        - name: inboxzero
+          port: 3000
+  tls:
+    secretName: local-timmybtech-com-tls
