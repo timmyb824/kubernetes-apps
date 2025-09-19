@@ -11,7 +11,7 @@ metadata:
 data:
   DATABASE_URL: "postgresql://<path:secret/data/postgres_db#USER>:<path:secret/data/postgres_db#PASSWORD>@<path:secret/data/postgres_db#HOST_IP>:5432/inboxzero?schema=public"
   DIRECT_URL: "postgresql://<path:secret/data/postgres_db#USER>:<path:secret/data/postgres_db#PASSWORD>@<path:secret/data/postgres_db#HOST_IP>:5432/inboxzero?schema=public"
-  NEXT_PUBLIC_BASE_URL: http://localhost:3000
+  NEXT_PUBLIC_BASE_URL: "https://inboxzero.local.timmybtech.com"
   AUTH_SECRET: "<path:secret/data/argocd#INBOXZERO_AUTH_SECRET>"
 
   # Gmail
