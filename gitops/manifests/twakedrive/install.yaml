@@ -1,0 +1,202 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: twakedrive
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: tdrive-mongo
+  namespace: twakedrive
+type: Opaque
+stringData:
+  DB_MONGO_URI: "<path:secret/data/database#MONGODB_CONN_STRING>/tdrive"
+  DB_MONGO_DATABASE: "tdrive"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: tdrive-config
+  namespace: twakedrive
+data:
+  DEV: "production"
+  SEARCH_DRIVER: "mongodb"
+  DB_DRIVER: "mongodb"
+  PUBSUB_TYPE: "local"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: tdrive-node-storage
+  namespace: twakedrive
+spec:
+  accessModes: ["ReadWriteMany"]
+  storageClassName: nfs-csi-synologynas
+  resources:
+    requests:
+      storage: 10Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: tdrive-frontend-drive-preview
+  namespace: twakedrive
+spec:
+  accessModes: ["ReadWriteMany"]
+  storageClassName: nfs-csi-synologynas
+  resources:
+    requests:
+      storage: 10Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: tdrive-frontend-uploads
+  namespace: twakedrive
+spec:
+  accessModes: ["ReadWriteMany"]
+  storageClassName: nfs-csi-synologynas
+  resources:
+    requests:
+      storage: 32Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tdrive-node
+  namespace: twakedrive
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tdrive-node
+  template:
+    metadata:
+      labels:
+        app: tdrive-node
+    spec:
+      containers:
+        - name: tdrive-node
+          image: twakedrive/tdrive-node:latest
+          env:
+            - name: STORAGE_DRIVER
+              value: "local"
+            - name: STORAGE_LOCAL_PATH
+              value: "/storage"
+            - name: DEV
+              valueFrom: { configMapKeyRef: { name: tdrive-config, key: DEV } }
+            - name: SEARCH_DRIVER
+              valueFrom:
+                { configMapKeyRef: { name: tdrive-config, key: SEARCH_DRIVER } }
+            - name: DB_DRIVER
+              valueFrom:
+                { configMapKeyRef: { name: tdrive-config, key: DB_DRIVER } }
+            - name: PUBSUB_TYPE
+              valueFrom:
+                { configMapKeyRef: { name: tdrive-config, key: PUBSUB_TYPE } }
+            - name: DB_MONGO_URI
+              valueFrom:
+                { secretKeyRef: { name: tdrive-mongo, key: DB_MONGO_URI } }
+            - name: DB_MONGO_DATABASE
+              valueFrom:
+                { secretKeyRef: { name: tdrive-mongo, key: DB_MONGO_DATABASE } }
+          ports:
+            - name: http
+              containerPort: 4000
+          volumeMounts:
+            - name: storage
+              mountPath: /storage
+      volumes:
+        - name: storage
+          persistentVolumeClaim:
+            claimName: tdrive-node-storage
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tdrive-node
+  namespace: twakedrive
+spec:
+  selector:
+    app: tdrive-node
+  ports:
+    - name: http
+      port: 4000
+      targetPort: http
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tdrive-frontend
+  namespace: twakedrive
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tdrive-frontend
+  template:
+    metadata:
+      labels:
+        app: tdrive-frontend
+    spec:
+      containers:
+        - name: frontend
+          image: twakedrive/tdrive-frontend:latest
+          env:
+            - name: DEV
+              value: "production"
+            - name: NODE_HOST
+              value: "http://tdrive-node:4000"
+            - name: SSL_CERTS
+              value: "off"
+          ports:
+            - name: http
+              containerPort: 80
+          volumeMounts:
+            - name: drive-preview
+              mountPath: /tdrive-core/web/medias
+            - name: uploads
+              mountPath: /tdrive-core/web/upload
+      volumes:
+        - name: drive-preview
+          persistentVolumeClaim:
+            claimName: tdrive-frontend-drive-preview
+        - name: uploads
+          persistentVolumeClaim:
+            claimName: tdrive-frontend-uploads
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tdrive-frontend
+  namespace: twakedrive
+spec:
+  selector:
+    app: tdrive-frontend
+  ports:
+    - name: http
+      port: 80
+      targetPort: http
+  type: ClusterIP
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: tdrive-internal
+  namespace: traefik
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`tdrive.local.timmybtech.com`)
+      kind: Rule
+      services:
+        - name: tdrive-frontend
+          port: 80
+  tls:
+    secretName: local-timmybtech-com-tls
