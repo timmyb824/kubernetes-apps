@@ -122,7 +122,7 @@ data:
         - target_label: origin_prometheus
           replacement: k3s-cluster
 
-      # Commenting out to save memory
+      # Commenting out to reduce memory
       # - job_name: 'kubernetes-apiservers'
       #   kubernetes_sd_configs:
       #   - role: endpoints
@@ -180,7 +180,11 @@ data:
       - job_name: 'kube-state-metrics'
         static_configs:
           - targets: ['kube-state-metrics.kube-system.svc.cluster.local:8080']
-
+        # Adding to reduce memory usage
+        metric_relabel_configs:
+          - source_labels: [__name__]
+            regex: 'kube_(pod_status_phase|pod_container_status_.*|deployment_.*|node_.*)'
+            action: keep
       - job_name: 'kubernetes-cadvisor'
         scheme: https
         tls_config:
@@ -197,6 +201,19 @@ data:
           regex: (.+)
           target_label: __metrics_path__
           replacement: /api/v1/nodes/${1}/proxy/metrics/cadvisor
+        # Adding to reduce memory usage
+        metric_relabel_configs:
+          # Only keep essential container metrics
+          - source_labels: [__name__]
+            regex: 'container_(cpu_usage_seconds_total|memory_working_set_bytes|network_receive_bytes_total|network_transmit_bytes_total|fs_usage_bytes|fs_limit_bytes)'
+            action: keep
+          # Drop pause containers
+          - source_labels: [container]
+            regex: '^$'
+            action: drop
+          - source_labels: [container]
+            regex: 'POD'
+            action: drop
 
       - job_name: 'kubernetes-service-endpoints'
         kubernetes_sd_configs:
