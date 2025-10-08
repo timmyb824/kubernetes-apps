@@ -277,7 +277,7 @@ providers:
           pve:
             loadBalancer:
               servers:
-                - url: https://192.168.86.160:8006
+                - url: https://192.168.86.199:8006
           homeassistant:
             loadBalancer:
               servers:

@@ -70,7 +70,7 @@ data:
   #         summary: High Memory Usage
   prometheus.yml: |-
     global:
-      scrape_interval: 60s
+      scrape_interval: 120s
       scrape_timeout: 55s
 
       external_labels:
@@ -122,17 +122,18 @@ data:
         - target_label: origin_prometheus
           replacement: k3s-cluster
 
-      - job_name: 'kubernetes-apiservers'
-        kubernetes_sd_configs:
-        - role: endpoints
-        scheme: https
-        tls_config:
-          ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
-        bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
-        relabel_configs:
-        - source_labels: [__meta_kubernetes_namespace, __meta_kubernetes_service_name, __meta_kubernetes_endpoint_port_name]
-          action: keep
-          regex: default;kubernetes;https
+      # Commenting out to save memory
+      # - job_name: 'kubernetes-apiservers'
+      #   kubernetes_sd_configs:
+      #   - role: endpoints
+      #   scheme: https
+      #   tls_config:
+      #     ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+      #   bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+      #   relabel_configs:
+      #   - source_labels: [__meta_kubernetes_namespace, __meta_kubernetes_service_name, __meta_kubernetes_endpoint_port_name]
+      #     action: keep
+      #     regex: default;kubernetes;https
 
       - job_name: 'kubernetes-nodes'
         scheme: https
@@ -366,7 +367,7 @@ spec:
         - name: prometheus
           image: prom/prometheus:v3.6.0
           args:
-            - "--storage.tsdb.retention.time=12h"
+            - "--storage.tsdb.retention.time=6h"
             - "--config.file=/etc/prometheus/prometheus.yml"
             - "--storage.tsdb.path=/prometheus/"
           ports:
