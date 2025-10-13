@@ -13,7 +13,7 @@ spec:
   project: default
   sources:
     - repoURL: registry-1.docker.io/bitnamicharts
-      targetRevision: 16.0.14
+      targetRevision: 16.0.13
       chart: rabbitmq
       helm:
         releaseName: rabbitmq
