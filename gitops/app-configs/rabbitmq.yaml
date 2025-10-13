@@ -18,6 +18,13 @@ spec:
       helm:
         releaseName: rabbitmq
         values: |
+          global:
+            imageRegistry: ""
+            imagePullSecrets: []
+            defaultStorageClass: ""
+            storageClass: ""
+            security:
+              allowInsecureImages: true
           image:
             registry: docker.io
             repository: bitnamilegacy/rabbitmq
