@@ -207,12 +207,12 @@ data:
           - source_labels: [__name__]
             regex: 'container_(cpu_usage_seconds_total|memory_working_set_bytes|network_receive_bytes_total|network_transmit_bytes_total|fs_usage_bytes|fs_limit_bytes)'
             action: keep
-          # Drop pause containers
-          - source_labels: [container]
-            regex: '^$'
+          # Drop pause containers (but keep network metrics which are pod-level)
+          - source_labels: [__name__, container]
+            regex: 'container_(cpu_usage_seconds_total|memory_working_set_bytes|fs_usage_bytes|fs_limit_bytes);^$'
             action: drop
-          - source_labels: [container]
-            regex: 'POD'
+          - source_labels: [__name__, container]
+            regex: 'container_(cpu_usage_seconds_total|memory_working_set_bytes|fs_usage_bytes|fs_limit_bytes);POD'
             action: drop
 
       - job_name: 'kubernetes-service-endpoints'
