@@ -205,14 +205,14 @@ data:
         metric_relabel_configs:
           # Only keep essential container metrics
           - source_labels: [__name__]
-            regex: 'container_(cpu_usage_seconds_total|memory_working_set_bytes|network_receive_bytes_total|network_transmit_bytes_total|fs_usage_bytes|fs_limit_bytes)'
+            regex: 'container_(cpu_usage_seconds_total|memory_working_set_bytes|network_receive_bytes_total|network_transmit_bytes_total|fs_usage_bytes|fs_limit_bytes|start_time_seconds)'
             action: keep
           # Drop pause containers (but keep network metrics which are pod-level)
           - source_labels: [__name__, container]
-            regex: 'container_(cpu_usage_seconds_total|memory_working_set_bytes|fs_usage_bytes|fs_limit_bytes);^$'
+            regex: 'container_(cpu_usage_seconds_total|memory_working_set_bytes|fs_usage_bytes|fs_limit_bytes|start_time_seconds);^$'
             action: drop
           - source_labels: [__name__, container]
-            regex: 'container_(cpu_usage_seconds_total|memory_working_set_bytes|fs_usage_bytes|fs_limit_bytes);POD'
+            regex: 'container_(cpu_usage_seconds_total|memory_working_set_bytes|fs_usage_bytes|fs_limit_bytes|start_time_seconds);POD'
             action: drop
 
       - job_name: 'kubernetes-service-endpoints'
