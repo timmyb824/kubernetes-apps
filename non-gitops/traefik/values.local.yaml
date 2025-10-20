@@ -236,6 +236,12 @@ providers:
             entrypoints:
               - websecure
             tls: {}
+          goaway:
+            rule: Host(`goaway.local.timmybtech.com`)
+            service: goaway
+            entrypoints:
+              - websecure
+            tls: {}
         services:
           uptime-kuma:
             loadBalancer:
@@ -334,6 +340,10 @@ providers:
             loadBalancer:
               servers:
                 - url: http://192.168.86.110:80
+          goaway:
+            loadBalancer:
+              servers:
+                - url: http://192.168.86.143:8080
         serversTransports:
           nas-transport:
             insecureSkipVerify: true
