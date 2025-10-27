@@ -242,6 +242,12 @@ providers:
             entrypoints:
               - websecure
             tls: {}
+          pocketid:
+            rule: Host(`pocketid.local.timmybtech.com`)
+            service: pocketid
+            entrypoints:
+              - websecure
+            tls: {}
         services:
           uptime-kuma:
             loadBalancer:
@@ -344,6 +350,10 @@ providers:
             loadBalancer:
               servers:
                 - url: http://192.168.86.143:8080
+          pocketid:
+            loadBalancer:
+              servers:
+                - url: http://192.168.86.66:1411
         serversTransports:
           nas-transport:
             insecureSkipVerify: true
