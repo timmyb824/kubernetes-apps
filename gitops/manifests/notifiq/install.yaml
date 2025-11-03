@@ -21,6 +21,12 @@ data:
   APPRISE_MATTERMOST_URL: "<path:secret/data/argocd#NOTIFIQ_APPRISE_MATTERMOST_URL>"
   APPRISE_GOTIFY_URL: "<path:secret/data/argocd#NOTIFIQ_APPRISE_GOTIFY_URL>"
   APPRISE_PUSHOVER_URL: "<path:secret/data/argocd#NOTIFIQ_APPRISE_PUSHOVER_URL>"
+  APPRISE_PUSHOVER_OBSERVABILITY_URL: "<path:secret/data/argocd#NOTIFIQ_APPRISE_PUSHOVER_OBSERVABILITY_URL>"
+  APPRISE_PUSHOVER_DEV_URL: "<path:secret/data/argocd#NOTIFIQ_APPRISE_PUSHOVER_DEV_URL>"
+  APPRISE_PUSHOVER_INFRA_URL: "<path:secret/data/argocd#NOTIFIQ_APPRISE_PUSHOVER_INFRA_URL>"
+  APPRISE_PUSHOVER_AUTOMATION_URL: "<path:secret/data/argocd#NOTIFIQ_APPRISE_PUSHOVER_AUTOMATION_URL>"
+  APPRISE_PUSHOVER_SECURITY_URL: "<path:secret/data/argocd#NOTIFIQ_APPRISE_PUSHOVER_SECURITY_URL>"
+  APPRISE_PUSHOVER_INFO_URL: "<path:secret/data/argocd#NOTIFIQ_APPRISE_PUSHOVER_INFO_URL>"
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -28,7 +34,7 @@ metadata:
   name: notifiq
   namespace: notifiq
 spec:
-  replicas: 0
+  replicas: 1
   selector:
     matchLabels:
       app: notifiq
