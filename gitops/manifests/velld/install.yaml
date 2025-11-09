@@ -13,7 +13,7 @@ metadata:
   namespace: velld
 data:
   NEXT_PUBLIC_API_URL: "https://velld-api.local.timmybtech.com"
-  ALLOW_REGISTER: "true"
+  ALLOW_REGISTER: "false"
 ---
 apiVersion: v1
 kind: Secret
@@ -26,7 +26,7 @@ stringData:
   ENCRYPTION_KEY: "<path:secret/data/argocd#VELLD_ENCRYPTION_KEY>"
   ADMIN_USERNAME_CREDENTIAL: "<path:secret/data/argocd#VELLD_ADMIN_USERNAME>"
   ADMIN_PASSWORD_CREDENTIAL: "<path:secret/data/argocd#VELLD_ADMIN_PASSWORD>"
-  ALLOW_REGISTER: "true"
+  ALLOW_REGISTER: "false"
   SMTP_HOST: "smtp.gmail.com"
   SMTP_PORT: "587"
   SMTP_USER: "<path:secret/data/google_smtp#SMTP_USER>"
