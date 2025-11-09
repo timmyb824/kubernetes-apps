@@ -27,11 +27,11 @@ stringData:
   ADMIN_USERNAME_CREDENTIAL: "<path:secret/data/argocd#VELLD_ADMIN_USERNAME>"
   ADMIN_PASSWORD_CREDENTIAL: "<path:secret/data/argocd#VELLD_ADMIN_PASSWORD>"
   ALLOW_REGISTER: "true"
-  SMTP_HOST: smtp.gmail.com
-  SMTP_PORT: 587
-  SMTP_USER: <path:secret/data/google_smtp#SMTP_USER>
-  SMTP_PASSWORD: <path:secret/data/google_smtp#SMTP_PASSWORD>
-  SMTP_FROM: <path:secret/data/google_smtp#SMTP_FROM>
+  SMTP_HOST: "smtp.gmail.com"
+  SMTP_PORT: "587"
+  SMTP_USER: "<path:secret/data/google_smtp#SMTP_USER>"
+  SMTP_PASSWORD: "<path:secret/data/google_smtp#SMTP_PASSWORD>"
+  SMTP_FROM: "<path:secret/data/google_smtp#SMTP_FROM>"
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
