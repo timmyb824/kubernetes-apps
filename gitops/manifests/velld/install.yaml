@@ -12,7 +12,7 @@ metadata:
   name: velld-config
   namespace: velld
 data:
-  NEXT_PUBLIC_API_URL: "https://velld.local.timmybtech.com/api"
+  NEXT_PUBLIC_API_URL: "https://velld.local.timmybtech.com"
   ALLOW_REGISTER: "true"
 ---
 apiVersion: v1
