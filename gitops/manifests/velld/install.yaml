@@ -1,0 +1,255 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: velld
+  labels:
+    app.kubernetes.io/name: velld
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: velld-config
+  namespace: velld
+data:
+  NEXT_PUBLIC_API_URL: "https://velld.local.timmybtech.com/api"
+  ALLOW_REGISTER: "false"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: velld-secrets
+  namespace: velld
+type: Opaque
+stringData:
+  JWT_SECRET: "<path:secret/data/argocd#VELLD_JWT_SECRET>"
+  ENCRYPTION_KEY: "<path:secret/data/argocd#VELLD_ENCRYPTION_KEY>"
+  ADMIN_USERNAME_CREDENTIAL: "<path:secret/data/argocd#VELLD_ADMIN_USERNAME>"
+  ADMIN_PASSWORD_CREDENTIAL: "<path:secret/data/argocd#VELLD_ADMIN_PASSWORD>"
+  ALLOW_REGISTER: "false"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: velld-data
+  namespace: velld
+spec:
+  accessModes: ["ReadWriteOnce"]
+  resources:
+    requests:
+      storage: 8Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: velld-backups
+  namespace: velld
+spec:
+  accessModes: ["ReadWriteOnce"]
+  resources:
+    requests:
+      storage: 32Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: velld-api
+  namespace: velld
+  labels:
+    app.kubernetes.io/name: velld-api
+spec:
+  selector:
+    app.kubernetes.io/name: velld-api
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: velld-api
+  namespace: velld
+  labels:
+    app.kubernetes.io/name: velld-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: velld-api
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: velld-api
+    spec:
+      containers:
+        - name: api
+          image: ghcr.io/dendianugerah/velld/api:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - secretRef:
+                name: velld-secrets
+          volumeMounts:
+            - name: data
+              mountPath: /app/data
+            - name: backups
+              mountPath: /app/backups
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            failureThreshold: 6
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            failureThreshold: 6
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: velld-data
+        - name: backups
+          persistentVolumeClaim:
+            claimName: velld-backups
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: velld-web
+  namespace: velld
+  labels:
+    app.kubernetes.io/name: velld-web
+spec:
+  selector:
+    app.kubernetes.io/name: velld-web
+  ports:
+    - name: http
+      port: 3000
+      targetPort: 3000
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: velld-web
+  namespace: velld
+  labels:
+    app.kubernetes.io/name: velld-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: velld-web
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: velld-web
+    spec:
+      containers:
+        - name: web
+          image: ghcr.io/dendianugerah/velld/web:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 3000
+          env:
+            # Web only needs the public API URL + allow flag
+            - name: NEXT_PUBLIC_API_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: velld-config
+                  key: NEXT_PUBLIC_API_URL
+            - name: ALLOW_REGISTER
+              valueFrom:
+                configMapKeyRef:
+                  name: velld-config
+                  key: ALLOW_REGISTER
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            failureThreshold: 6
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            failureThreshold: 6
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "96Mi"
+            limits:
+              cpu: "300m"
+              memory: "256Mi"
+---
+# Traefik v3: route /api -> API service (strip /api) and / -> web
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: velld-api-strip
+  namespace: velld
+spec:
+  stripPrefixRegex:
+    regex:
+      - "^/api"
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: velld-security
+  namespace: velld
+spec:
+  headers:
+    customResponseHeaders:
+      X-Frame-Options: "SAMEORIGIN"
+      X-Content-Type-Options: "nosniff"
+      Referrer-Policy: "strict-origin-when-cross-origin"
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: velld
+  namespace: velld
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`velld.local.timmybtech.com`) && PathPrefix(`/api`)
+      kind: Rule
+      priority: 12
+      services:
+        - name: velld-api
+          port: 8080
+      middlewares:
+        - name: velld-api-strip
+        - name: velld-security
+    - match: Host(`velld.local.timmybtech.com`) && PathPrefix(`/`)
+      kind: Rule
+      priority: 10
+      services:
+        - name: velld-web
+          port: 3000
+      middlewares:
+        - name: velld-security
+  tls:
+    secretName: local-timmybtech-com-tls

@@ -1,0 +1,232 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: calcom
+  labels:
+    app.kubernetes.io/name: calcom
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: calcom-config
+  namespace: calcom
+data:
+  NODE_ENV: "production"
+  TZ: "America/New_York"
+
+  NEXTAUTH_URL: "https://cal.timmybtech.com"
+  NEXT_PUBLIC_WEBAPP_URL: "https://cal.timmybtech.com"
+  NEXT_PUBLIC_API_V2_URL: "https://cal.timmybtech.com/api/v2"
+  API_URL: "https://cal.timmybtech.com/api/v2"
+
+  # Host allowlist (note inner quotes)
+  ALLOWED_HOSTNAMES: '"cal.timmybtech.com"'
+
+  # Optional but harmless
+  NEXT_PUBLIC_LOGGER_LEVEL: "3"
+  ORGANIZATIONS_ENABLED: "false"
+  CALCOM_TELEMETRY_DISABLED: "1"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: calcom-secrets
+  namespace: calcom
+type: Opaque
+stringData:
+  DATABASE_URL: "<path:secret/data/database#PG_CONN_STRING>/calcom"
+  DATABASE_DIRECT_URL: "<path:secret/data/database#PG_CONN_STRING>/calcom"
+
+  # Core app secrets (use strong unique values)
+  NEXTAUTH_SECRET: "<path:secret/data/argocd#CALCOM_NEXTAUTH_SECRET>"
+  CALENDSO_ENCRYPTION_KEY: "<path:secret/data/argocd#CALCOM_ENCRYPTION_KEY>"
+  JWT_SECRET: "<path:secret/data/argocd#CALCOM_JWT_SECRET>"
+
+  # Redis (DB index 3)
+  REDIS_URL: "<path:secret/data/database#REDIS_CONN_STRING>/3"
+
+  # (Optional) add API-only extras for later:
+  # NEXT_PUBLIC_VAPID_PUBLIC_KEY: "<path:...#VAPID_PUBLIC>"
+  # VAPID_PRIVATE_KEY: "<path:...#VAPID_PRIVATE>"
+  # STRIPE_WEBHOOK_SECRET: "<path:...#STRIPE_WEBHOOK_SECRET>"
+  # STRIPE_PRIVATE_KEY: "<path:...#STRIPE_PRIVATE_KEY>"
+  # AXIOM_TOKEN: "<path:...#AXIOM_TOKEN>"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: calcom-email
+  namespace: calcom
+type: Opaque
+stringData:
+  EMAIL_SERVER_HOST: "smtp.gmail.com"
+  EMAIL_SERVER_PORT: "587"
+  EMAIL_SERVER_USER: "<path:secret/data/google_smtp#SMTP_USER>"
+  EMAIL_SERVER_PASSWORD: "<path:secret/data/google_smtp#SMTP_PASSWORD>"
+  EMAIL_FROM: "notifications@timmybtech.com"
+  EMAIL_FROM_NAME: "Cal"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: calcom-web
+  namespace: calcom
+  labels:
+    app.kubernetes.io/name: calcom-web
+spec:
+  selector:
+    app.kubernetes.io/name: calcom-web
+  ports:
+    - name: http
+      port: 3000
+      targetPort: 3000
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: calcom-web
+  namespace: calcom
+  labels:
+    app.kubernetes.io/name: calcom-web
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: calcom-web
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: calcom-web
+    spec:
+      containers:
+        - name: calcom-web
+          image: calcom.docker.scarf.sh/calcom/cal.com
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 3000
+          envFrom:
+            - configMapRef:
+                name: calcom-config
+            - secretRef:
+                name: calcom-secrets
+            - secretRef:
+                name: calcom-email
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 20
+            periodSeconds: 10
+            failureThreshold: 6
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 40
+            periodSeconds: 10
+            failureThreshold: 6
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "256Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: calcom-api
+  namespace: calcom
+  labels:
+    app.kubernetes.io/name: calcom-api
+spec:
+  selector:
+    app.kubernetes.io/name: calcom-api
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: calcom-api
+  namespace: calcom
+  labels:
+    app.kubernetes.io/name: calcom-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: calcom-api
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: calcom-api
+    spec:
+      containers:
+        - name: calcom-api
+          # Replace with the image you build from apps/api/v2/Dockerfile
+          image: ghcr.io/your-org/calcom-api:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80
+          envFrom:
+            - configMapRef:
+                name: calcom-config
+            - secretRef:
+                name: calcom-secrets
+            - secretRef:
+                name: calcom-email
+          readinessProbe:
+            httpGet:
+              path: /api/v2
+              port: 80
+            initialDelaySeconds: 20
+            periodSeconds: 10
+            failureThreshold: 6
+          livenessProbe:
+            httpGet:
+              path: /api/v2
+              port: 80
+            initialDelaySeconds: 40
+            periodSeconds: 10
+            failureThreshold: 6
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "256Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: calcom
+  namespace: calcom
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`cal.timmybtech.com`) && PathPrefix(`/api/v2`)
+      kind: Rule
+      priority: 12
+      services:
+        - name: calcom-api
+          port: 80
+    - match: Host(`cal.timmybtech.com`) && PathPrefix(`/`)
+      kind: Rule
+      priority: 10
+      services:
+        - name: calcom-web
+          port: 3000
+  tls:
+    secretName: timmybtech-com-tls
