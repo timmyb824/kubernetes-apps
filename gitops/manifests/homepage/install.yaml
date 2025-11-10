@@ -460,6 +460,11 @@ data:
             href: https://vault.local.timmybtech.com/
             namespace: vault
             app: vault
+        - Velld:
+            icon: postgres.png
+            href: https://velld.local.timmybtech.com/
+            namespace: velld
+            app: velld-web
         - Wallos:
             icon: wallos.png
             href: https://wallos.local.timmybtech.com/
