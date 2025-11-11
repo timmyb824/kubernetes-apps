@@ -26,8 +26,8 @@ spec:
     - match: Host(`openfaas.local.timmybtech.com`)
       kind: Rule
       services:
-        - name: openfaas
-          port: 80
+        - name: gateway-external
+          port: 8080
   tls:
     secretName: local-timmybtech-com-tls
 ---
