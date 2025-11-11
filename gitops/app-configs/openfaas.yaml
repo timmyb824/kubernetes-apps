@@ -1,0 +1,37 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: openfaas
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  annotations:
+    avp.kubernetes.io/path: "secret/data/argocd"
+spec:
+  destination:
+    namespace: openfaas
+    server: "https://kubernetes.default.svc"
+  project: default
+  sources:
+    - repoURL: https://openfaas.github.io/faas-netes
+      targetRevision: 14.2.128
+      chart: openfaas
+      helm:
+        releaseName: openfaas
+        values: |
+          functionNamespace: openfaas-fn
+          generateBasicAuth: true
+          operator:
+            create: true
+
+    - repoURL: "https://github.com/timmyb824/kubernetes-apps.git"
+      path: "gitops/manifests/openfaas"
+      targetRevision: HEAD
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: false
+    syncOptions:
+      - CreateNamespace=true
+      - ApplyOutOfSync=true
