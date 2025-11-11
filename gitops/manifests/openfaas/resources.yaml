@@ -1,4 +1,16 @@
 ---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: basic-auth
+  namespace: openfaas
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+type: Opaque
+stringData:
+  basic-auth-user: <path:secret/data/argocd#OPENFAAS_USER>
+  basic-auth-password: <path:secret/data/argocd#OPENFAAS_PASSWORD>
+---
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
