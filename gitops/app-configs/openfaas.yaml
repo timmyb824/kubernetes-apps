@@ -20,7 +20,6 @@ spec:
         releaseName: openfaas
         values: |
           functionNamespace: openfaas-fn
-          generateBasicAuth: true
 
     - repoURL: "https://github.com/timmyb824/kubernetes-apps.git"
       path: "gitops/manifests/openfaas"
