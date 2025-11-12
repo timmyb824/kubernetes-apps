@@ -434,7 +434,7 @@ data:
             icon: kubernetes.png
             href: https://openfaas.local.timmybtech.com/
             namespace: openfaas
-            app: openfaas
+            app: gateway
         - Planka:
             icon: planka.png
             href: https://planka.local.timmybtech.com/
