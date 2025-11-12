@@ -430,6 +430,11 @@ data:
             href: https://open-archiver.local.timmybtech.com/
             namespace: open-archiver
             app: open-archiver
+        - OpenFaaS:
+            icon: openfaas.png
+            href: https://openfaas.local.timmybtech.com/
+            namespace: openfaas
+            app: gateway
         - Planka:
             icon: planka.png
             href: https://planka.local.timmybtech.com/
