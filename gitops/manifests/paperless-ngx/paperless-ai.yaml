@@ -28,11 +28,6 @@ spec:
       labels:
         app.kubernetes.io/name: paperless-ai
     spec:
-      securityContext:
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
-        fsGroupChangePolicy: "OnRootMismatch"
       containers:
         - name: paperless-ai
           image: clusterzx/paperless-ai
