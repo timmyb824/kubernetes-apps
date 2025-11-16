@@ -1,0 +1,114 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: paperless-ai-data
+  namespace: paperless-ngx
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 8Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: paperless-ai
+  namespace: paperless-ngx
+  labels:
+    app.kubernetes.io/name: paperless-ai
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: paperless-ai
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: paperless-ai
+    spec:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: "OnRootMismatch"
+      containers:
+        - name: paperless-ai
+          image: clusterzx/paperless-ai
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 3000
+              name: http
+          env:
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+            - name: PAPERLESS_AI_PORT
+              value: "3000"
+            - name: RAG_SERVICE_URL
+              value: "http://webserver.paperless-ngx.svc.cluster.local:8000"
+            - name: RAG_SERVICE_ENABLED
+              value: "true"
+          securityContext:
+            capabilities:
+              drop: ["ALL"]
+            allowPrivilegeEscalation: false
+          volumeMounts:
+            - name: paperless-ai-data
+              mountPath: /app/data
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            failureThreshold: 6
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            failureThreshold: 6
+      volumes:
+        - name: paperless-ai-data
+          persistentVolumeClaim:
+            claimName: paperless-ai-data
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: paperless-ai
+  namespace: paperless-ngx
+  labels:
+    app.kubernetes.io/name: paperless-ai
+spec:
+  selector:
+    app.kubernetes.io/name: paperless-ai
+  ports:
+    - name: http
+      port: 3000
+      targetPort: 3000
+  type: ClusterIP
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: paperless-ai-ingress
+  namespace: paperless-ngx
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`paperless-ai.local.timmybtech.com`)
+      kind: Rule
+      services:
+        - name: paperless-ai
+          port: 3000
+  tls:
+    secretName: local-timmybtech-com-tls
