@@ -20,69 +20,59 @@ spec:
       helm:
         releaseName: immich
         values: |
-          ## This chart relies on the common library chart from bjw-s
-          ## You can find it at https://github.com/bjw-s/helm-charts/tree/main/charts/library/common
-          ## Refer there for more detail about the supported values
-
-          # These entries are shared between all the Immich components
-
-          env:
-            DB_HOSTNAME:
-              valueFrom:
-                secretKeyRef:
-                  name: immich-db-secret
-                  key: DB_HOSTNAME
-            DB_USERNAME:
-              valueFrom:
-                secretKeyRef:
-                  name: immich-db-secret
-                  key: DB_USERNAME
-            DB_PASSWORD:
-              valueFrom:
-                secretKeyRef:
-                  name: immich-db-secret
-                  key: DB_PASSWORD
-            DB_DATABASE_NAME:
-              valueFrom:
-                secretKeyRef:
-                  name: immich-db-secret
-                  key: DB_DATABASE_NAME
-            DB_VECTOR_EXTENSION: "pgvector"
-            REDIS_HOSTNAME:
-              valueFrom:
-                secretKeyRef:
-                  name: immich-db-secret
-                  key: REDIS_HOSTNAME
-            REDIS_PORT:
-              valueFrom:
-                secretKeyRef:
-                  name: immich-db-secret
-                  key: REDIS_PORT
-            REDIS_PASSWORD:
-              valueFrom:
-                secretKeyRef:
-                  name: immich-db-secret
-                  key: REDIS_PASSWORD
-            IMMICH_MACHINE_LEARNING_URL: '{{ printf "http://%s-machine-learning:3003" .Release.Name }}'
-
-          postgresql:
-            enabled: false
-
-          image:
-            tag: v1.143.0
+        controllers:
+          main:
+            containers:
+              main:
+                image:
+                  tag: v2.0.0
+                env:
+                  DB_HOSTNAME:
+                    valueFrom:
+                      secretKeyRef:
+                        name: immich-db-secret
+                        key: DB_HOSTNAME
+                  DB_USERNAME:
+                    valueFrom:
+                      secretKeyRef:
+                        name: immich-db-secret
+                        key: DB_USERNAME
+                  DB_PASSWORD:
+                    valueFrom:
+                      secretKeyRef:
+                        name: immich-db-secret
+                        key: DB_PASSWORD
+                  DB_DATABASE_NAME:
+                    valueFrom:
+                      secretKeyRef:
+                        name: immich-db-secret
+                        key: DB_DATABASE_NAME
+                  DB_VECTOR_EXTENSION: "pgvector"
+                  REDIS_HOSTNAME:
+                    valueFrom:
+                      secretKeyRef:
+                        name: immich-db-secret
+                        key: REDIS_HOSTNAME
+                  REDIS_PORT:
+                    valueFrom:
+                      secretKeyRef:
+                        name: immich-db-secret
+                        key: REDIS_PORT
+                  REDIS_PASSWORD:
+                    valueFrom:
+                      secretKeyRef:
+                        name: immich-db-secret
+                        key: REDIS_PASSWORD
+                  IMMICH_MACHINE_LEARNING_URL: '{{ printf "http://%s-machine-learning:3003" .Release.Name }}'
 
           immich:
             metrics:
-              # Enabling this will create the service monitors needed to monitor immich with the prometheus operator
               enabled: true
             persistence:
-              # Main data store for all photos shared between different components.
               library:
                 existingClaim: immich-library-pvc
-            # configuration is immich-config.json converted to yaml
-            # ref: https://immich.app/docs/install/config-file/
-            #
-            configuration: {}
+            configuration:
+              {}
               # trash:
               #   enabled: false
               #   days: 30
@@ -90,18 +80,8 @@ spec:
               #   enabled: true
               #   template: "{{y}}/{{y}}-{{MM}}-{{dd}}/{{filename}}"
 
-          # Dependencies
-
-          postgresql:
+          valkey:
             enabled: false
-
-          redis:
-            enabled: false
-            architecture: standalone
-            auth:
-              enabled: false
-
-          # Immich components
 
           server:
             enabled: true
