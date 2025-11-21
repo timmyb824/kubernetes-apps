@@ -15,7 +15,7 @@ spec:
   project: default
   sources:
     - repoURL: https://immich-app.github.io/immich-charts
-      targetRevision: 0.9.3
+      targetRevision: 0.10.3
       chart: immich
       helm:
         releaseName: immich
@@ -48,7 +48,21 @@ spec:
                   name: immich-db-secret
                   key: DB_DATABASE_NAME
             DB_VECTOR_EXTENSION: "pgvector"
-            REDIS_HOSTNAME: '{{ printf "%s-redis-master" .Release.Name }}'
+            REDIS_HOSTNAME:
+              valueFrom:
+                secretKeyRef:
+                  name: immich-db-secret
+                  key: REDIS_HOSTNAME
+            REDIS_PORT:
+              valueFrom:
+                secretKeyRef:
+                  name: immich-db-secret
+                  key: REDIS_PORT
+            REDIS_PASSWORD:
+              valueFrom:
+                secretKeyRef:
+                  name: immich-db-secret
+                  key: REDIS_PASSWORD
             IMMICH_MACHINE_LEARNING_URL: '{{ printf "http://%s-machine-learning:3003" .Release.Name }}'
 
           postgresql:
@@ -84,7 +98,7 @@ spec:
             enabled: false
 
           redis:
-            enabled: true
+            enabled: false
             architecture: standalone
             auth:
               enabled: false
