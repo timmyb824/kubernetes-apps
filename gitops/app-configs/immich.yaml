@@ -102,13 +102,17 @@ spec:
 
           machine-learning:
             enabled: true
-            image:
-              repository: ghcr.io/immich-app/immich-machine-learning
-              pullPolicy: IfNotPresent
-            env:
-              TRANSFORMERS_CACHE: /cache
-              HF_XET_CACHE: /cache/huggingface-xet
-              MPLCONFIGDIR: /cache/matplotlib-config
+            controllers:
+              main:
+                containers:
+                  main:
+                    image:
+                      repository: ghcr.io/immich-app/immich-machine-learning
+                      pullPolicy: IfNotPresent
+                    env:
+                      TRANSFORMERS_CACHE: /cache
+                      HF_XET_CACHE: /cache/huggingface-xet
+                      MPLCONFIGDIR: /cache/matplotlib-config
             persistence:
               cache:
                 enabled: true
