@@ -25,7 +25,7 @@ spec:
               containers:
                 main:
                   image:
-                    tag: v2.0.0
+                    tag: v2.3.1
                   env:
                     DB_HOSTNAME:
                       valueFrom:
