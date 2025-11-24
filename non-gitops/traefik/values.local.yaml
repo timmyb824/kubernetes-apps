@@ -236,15 +236,9 @@ providers:
             entrypoints:
               - websecure
             tls: {}
-          goaway:
-            rule: Host(`goaway.local.timmybtech.com`)
-            service: goaway
-            entrypoints:
-              - websecure
-            tls: {}
-          pocketid:
-            rule: Host(`pocketid.local.timmybtech.com`)
-            service: pocketid
+          anyappstart:
+            rule: Host(`anyappstart.local.timmybtech.com`)
+            service: anyappstart
             entrypoints:
               - websecure
             tls: {}
@@ -346,14 +340,10 @@ providers:
             loadBalancer:
               servers:
                 - url: http://192.168.86.110:80
-          goaway:
+          anyappstart:
             loadBalancer:
               servers:
-                - url: http://192.168.86.143:8080
-          pocketid:
-            loadBalancer:
-              servers:
-                - url: http://192.168.86.66:1411
+                - url: http://192.168.86.174:8855
         serversTransports:
           nas-transport:
             insecureSkipVerify: true
