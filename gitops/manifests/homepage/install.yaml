@@ -578,6 +578,10 @@ data:
                 url: http://homelab-oci02.tailebee.ts.net:80
                 key: <ZABBIX_API_KEY>
     - VM/LXC hidden:
+        - AnyAppStart:
+            icon: sh-anyappstart.png
+            href: https://anyappstart.local.timmybtech.com/
+            ping: http://192.168.86.174:8855/
         - Ara:
             icon: ara-records-ansible.png
             href: https://ara-api.local.timmybtech.com/
