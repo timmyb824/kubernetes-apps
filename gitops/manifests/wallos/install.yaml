@@ -94,26 +94,6 @@ spec:
     io.kompose.service: wallos
 ---
 # WITHOUT AUTHENTIK
-# apiVersion: traefik.io/v1alpha1
-# kind: IngressRoute
-# metadata:
-#   name: wallos-ingress
-#   namespace: wallos
-#   annotations:
-#     kubernetes.io/ingress.class: traefik-external
-#     traefik.ingress.kubernetes.io/router.entrypoints: websecure
-# spec:
-#   entryPoints:
-#     - websecure
-#   routes:
-#     - match: Host(`wallos.local.timmybtech.com`)
-#       kind: Rule
-#       services:
-#         - name: wallos
-#           port: 8282
-#   tls:
-#     secretName: local-timmybtech-com-tls
-# WITH AUTHENTIK
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
@@ -127,21 +107,41 @@ spec:
     - websecure
   routes:
     - match: Host(`wallos.local.timmybtech.com`)
-      middlewares:
-        - name: authentik@file
-      priority: 10
       kind: Rule
       services:
         - name: wallos
           port: 8282
-    - match: "Host(`wallos.local.timmybtech.com`) && PathPrefix(`/outpost.goauthentik.io/`)"
-      kind: Rule
-      priority: 15
-      services:
-        # - name: ak-outpost-authentik-embedded-outpost.authentik.svc.cluster.local
-        #   port: 80
-        - name: ak-outpost-authentik-embedded-outpost
-          namespace: authentik
-          port: 9000
   tls:
     secretName: local-timmybtech-com-tls
+# WITH AUTHENTIK
+# apiVersion: traefik.io/v1alpha1
+# kind: IngressRoute
+# metadata:
+#   name: wallos-ingress
+#   namespace: wallos
+#   annotations:
+#     kubernetes.io/ingress.class: traefik-external
+#     traefik.ingress.kubernetes.io/router.entrypoints: websecure
+# spec:
+#   entryPoints:
+#     - websecure
+#   routes:
+#     - match: Host(`wallos.local.timmybtech.com`)
+#       middlewares:
+#         - name: authentik@file
+#       priority: 10
+#       kind: Rule
+#       services:
+#         - name: wallos
+#           port: 8282
+#     - match: "Host(`wallos.local.timmybtech.com`) && PathPrefix(`/outpost.goauthentik.io/`)"
+#       kind: Rule
+#       priority: 15
+#       services:
+#         # - name: ak-outpost-authentik-embedded-outpost.authentik.svc.cluster.local
+#         #   port: 80
+#         - name: ak-outpost-authentik-embedded-outpost
+#           namespace: authentik
+#           port: 9000
+#   tls:
+#     secretName: local-timmybtech-com-tls
