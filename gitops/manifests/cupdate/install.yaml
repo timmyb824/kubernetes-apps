@@ -85,6 +85,7 @@ spec:
     metadata:
       labels:
         app: cupdate
+        app.kubernetes.io/name: cupdate
     spec:
       serviceAccountName: cupdate
       automountServiceAccountToken: true
