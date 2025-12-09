@@ -1,0 +1,173 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: cupdate
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: cupdate
+  namespace: cupdate
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: cupdate
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cupdate
+subjects:
+  - kind: ServiceAccount
+    name: cupdate
+    namespace: cupdate
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: cupdate
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - pods
+      - nodes
+    verbs:
+      - list
+      - watch
+  - apiGroups:
+      - apps
+    resources:
+      - deployments
+      - daemonsets
+      - replicasets
+      - statefulsets
+    verbs:
+      - list
+      - watch
+  - apiGroups:
+      - batch
+    resources:
+      - cronjobs
+      - jobs
+    verbs:
+      - list
+      - watch
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cupdate-config
+  namespace: cupdate
+  labels:
+    app: cupdate
+data:
+  CUPDATE_API_ADDRESS: "0.0.0.0"
+  CUPDATE_CACHE_PATH: "/var/run/data/cachev1.boltdb"
+  CUPDATE_DB_PATH: "/var/run/data/dbv1.sqlite"
+  CUPDATE_LOGOS_PATH: "/var/run/data/logos"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cupdate
+  namespace: cupdate
+  labels:
+    app: cupdate
+spec:
+  selector:
+    matchLabels:
+      app: cupdate
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: cupdate
+    spec:
+      serviceAccountName: cupdate
+      automountServiceAccountToken: true
+      terminationGracePeriodSeconds: 120
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 2000
+        runAsGroup: 2000
+        fsGroup: 2000
+      containers:
+        - name: cupdate
+          image: ghcr.io/alexgustafsson/cupdate:0.22.2
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            privileged: false
+            capabilities:
+              drop:
+                - ALL
+          envFrom:
+            - configMapRef:
+                name: cupdate-config
+          volumeMounts:
+            - name: data
+              mountPath: /var/run/data
+            - name: tmp
+              mountPath: /tmp
+          ports:
+            - name: web
+              containerPort: 8080
+          resources:
+            requests:
+              cpu: "0.01"
+              memory: "32Mi"
+            limits:
+              memory: "128Mi"
+          livenessProbe:
+            httpGet:
+              path: /livez
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 5
+      volumes:
+        - name: "tmp"
+          emptyDir: {}
+        - name: "data"
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cupdate
+  namespace: cupdate
+spec:
+  ports:
+    - protocol: TCP
+      name: web
+      port: 8080
+  selector:
+    app: cupdate
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: cupdate-ingress
+  namespace: cupdate
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`cupdate.local.timmybtech.com`)
+      kind: Rule
+      services:
+        - name: cupdate
+          port: 8080
+  tls:
+    secretName: local-timmybtech-com-tls
