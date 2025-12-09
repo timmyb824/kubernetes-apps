@@ -242,6 +242,12 @@ providers:
             entrypoints:
               - websecure
             tls: {}
+          cupdate-podman:
+            rule: Host(`cupdate-podman.local.timmybtech.com`)
+            service: cupdate-podman
+            entrypoints:
+              - websecure
+            tls: {}
         services:
           uptime-kuma:
             loadBalancer:
@@ -344,6 +350,10 @@ providers:
             loadBalancer:
               servers:
                 - url: http://192.168.86.174:8855
+          cupdate-podman:
+            loadBalancer:
+              servers:
+                - url: http://192.168.86.174:8082
         serversTransports:
           nas-transport:
             insecureSkipVerify: true
