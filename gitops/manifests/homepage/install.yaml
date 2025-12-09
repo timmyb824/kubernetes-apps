@@ -386,7 +386,7 @@ data:
               key: <path:secret/data/homepage#PAPERLESS_API_AUTH_TOKEN>
     - Kubernetes hidden:
         - Cupdate:
-            icon: glance.png
+            icon: podman.png
             href: https://cupdate.local.timmybtech.com/
             namespace: cupdate
             app: cupdate
@@ -596,7 +596,7 @@ data:
             href: http://archivebox.local.timmybtech.com/
             ping: http://192.168.86.139:8000/
         - Cupdate Podman:
-            icon: glance.png
+            icon: podman.png
             href: https://cupdate-podman.local.timmybtech.com/
             ping: http://192.168.86.174:8082/
         - SNMP Exporter:
