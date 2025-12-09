@@ -595,6 +595,10 @@ data:
             icon: archivebox.png
             href: http://archivebox.local.timmybtech.com/
             ping: http://192.168.86.139:8000/
+        - Cupdate Podman:
+            icon: glance.png
+            href: https://cupdate-podman.local.timmybtech.com/
+            ping: http://192.168.86.174:8082/
         - SNMP Exporter:
             icon: prometheus.png
             href: http://192.168.86.174:9116/
