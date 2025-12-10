@@ -67,6 +67,9 @@ data:
   CUPDATE_CACHE_PATH: "/var/run/data/cachev1.boltdb"
   CUPDATE_DB_PATH: "/var/run/data/dbv1.sqlite"
   CUPDATE_LOGOS_PATH: "/var/run/data/logos"
+  CUPDATE_PROCESSING_INTERVAL: "2m"
+  CUPDATE_PROCESSING_ITEMS: "1"
+  CUPDATE_PROCESSING_MIN_AGE: "6h"
 ---
 apiVersion: apps/v1
 kind: Deployment
