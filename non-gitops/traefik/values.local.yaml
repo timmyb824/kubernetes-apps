@@ -1,3 +1,9 @@
+image:
+  registry: docker.io
+  repository: traefik
+  tag: "3.6.4"
+  pullPolicy: IfNotPresent
+
 globalArguments:
   - --global.sendanonymoususage=false
   - --global.checknewversion=false
