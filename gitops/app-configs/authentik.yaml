@@ -25,7 +25,7 @@ spec:
                 enabled: false
               postgresql:
                 host: <PG_HOST>
-                name: "authentik"
+                name: "authentik_utf8"
                 user: <PG_USER>
                 password: <PG_PASSWORD>
                 port: 5432
