@@ -79,6 +79,7 @@ metadata:
   labels:
     app: cupdate
 spec:
+  replicas: 0
   selector:
     matchLabels:
       app: cupdate
@@ -90,7 +91,6 @@ spec:
         app: cupdate
         app.kubernetes.io/name: cupdate
     spec:
-      replicas: 0
       serviceAccountName: cupdate
       automountServiceAccountToken: true
       terminationGracePeriodSeconds: 120
