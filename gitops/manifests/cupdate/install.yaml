@@ -90,7 +90,7 @@ spec:
         app: cupdate
         app.kubernetes.io/name: cupdate
     spec:
-      replicas: 1
+      replicas: 0
       serviceAccountName: cupdate
       automountServiceAccountToken: true
       terminationGracePeriodSeconds: 120
