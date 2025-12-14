@@ -13,7 +13,7 @@ spec:
   project: default
   source:
     repoURL: https://grafana.github.io/helm-charts
-    targetRevision: 0.11.0
+    targetRevision: 1.5.0
     chart: alloy
     helm:
       releaseName: alloy
