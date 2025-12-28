@@ -88,34 +88,6 @@ data:
         noTLSVerify: true
         headers:
           X-Forwarded-Proto: https
-    - hostname: gotify.timmybtech.com
-      service: https://traefik.traefik.svc.cluster.local:443
-      originRequest:
-        noTLSVerify: true
-        headers:
-          X-Forwarded-Proto: https
-    - hostname: igotify.timmybtech.com
-      service: https://traefik.traefik.svc.cluster.local:443
-      originRequest:
-        noTLSVerify: true
-        headers:
-          X-Forwarded-Proto: https
-    - hostname: grafana.timmybtech.com
-      service: https://traefik.traefik.svc.cluster.local:443
-      originRequest:
-        noTLSVerify: true
-        trustForwardHeader: true
-        headers:
-          X-Forwarded-Proto: https
-          X-Forwarded-Host: grafana.timmybtech.com
-    - hostname: grafana.timmybtech.com
-      service: https://traefik.traefik.svc.cluster.local:443
-      originRequest:
-        noTLSVerify: true
-        trustForwardHeader: true
-        headers:
-          X-Forwarded-Proto: https
-          X-Forwarded-Host: grafana.timmybtech.configMap
     - hostname: grafana2.timmybtech.com
       service: https://traefik.traefik.svc.cluster.local:443
       originRequest:
@@ -148,12 +120,6 @@ data:
         noTLSVerify: true
         headers:
           X-Forwarded-Proto: https
-    - hostname: mattermost.timmybtech.com
-      service: https://traefik.traefik.svc.cluster.local:443
-      originRequest:
-        noTLSVerify: true
-        headers:
-          X-Forwarded-Proto: https
     - hostname: n8n.timmybtech.com
       service: https://traefik.traefik.svc.cluster.local:443
       originRequest:
@@ -163,12 +129,6 @@ data:
           X-Forwarded-Proto: https
           X-Forwarded-Host: n8n.timmybtech.com
           X-Forwarded-For: n8n.timmybtech.com
-    - hostname: ntfy.timmybtech.com
-      service: https://traefik.traefik.svc.cluster.local:443
-      originRequest:
-        noTLSVerify: true
-        headers:
-          X-Forwarded-Proto: https
     - hostname: searxng.timmybtech.com
       service: https://traefik.traefik.svc.cluster.local:443
       originRequest:
