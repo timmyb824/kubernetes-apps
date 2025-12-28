@@ -14,3 +14,13 @@ data:
             health_check 5s
         }
     }
+  timmybtech.server: |
+    local.timmybtech.com:53 {
+        errors
+        cache 30
+        forward . 192.168.86.214 192.168.86.174 {
+            policy sequential
+            max_fails 2
+            health_check 5s
+        }
+    }
