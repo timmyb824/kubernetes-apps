@@ -147,7 +147,7 @@ spec:
                 memory: 256Mi
                 cpu: 250m
               limits:
-                memory: 256Mi
+                memory: 512Mi
                 cpu: 250m
             ingress:
               enabled: false
