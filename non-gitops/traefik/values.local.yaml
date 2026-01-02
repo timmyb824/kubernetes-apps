@@ -254,6 +254,12 @@ providers:
             entrypoints:
               - websecure
             tls: {}
+          scrutiny:
+            rule: Host(`scrutiny.local.timmybtech.com`)
+            service: scrutiny
+            entrypoints:
+              - websecure
+            tls: {}
         services:
           uptime-kuma:
             loadBalancer:
@@ -360,6 +366,10 @@ providers:
             loadBalancer:
               servers:
                 - url: http://192.168.86.174:8082
+          scrutiny:
+            loadBalancer:
+              servers:
+                - url: http://192.168.86.174:8091
         serversTransports:
           nas-transport:
             insecureSkipVerify: true
