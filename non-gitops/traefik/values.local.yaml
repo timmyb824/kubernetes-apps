@@ -260,6 +260,12 @@ providers:
             entrypoints:
               - websecure
             tls: {}
+          scanopy:
+            rule: Host(`scanopy.local.timmybtech.com`)
+            service: scanopy
+            entrypoints:
+              - websecure
+            tls: {}
         services:
           uptime-kuma:
             loadBalancer:
@@ -370,6 +376,10 @@ providers:
             loadBalancer:
               servers:
                 - url: http://192.168.86.174:8091
+          scanopy:
+            loadBalancer:
+              servers:
+                - url: http://192.168.86.174:60072
         serversTransports:
           nas-transport:
             insecureSkipVerify: true
