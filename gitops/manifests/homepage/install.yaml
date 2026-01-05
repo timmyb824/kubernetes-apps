@@ -639,6 +639,10 @@ data:
             icon: postgres.png
             href: https://pgweb.local.timmybtech.com/
             ping: http://192.168.86.174:8081
+        - Scanopy:
+            icon: sh-scanopy.png
+            href: https://scanopy.local.timmybtech.com/
+            ping: http://192.168.86.174:60072
         - Scrutiny:
             icon: scrutiny.png
             href: https://scrutiny.local.timmybtech.com/
