@@ -599,6 +599,10 @@ data:
             icon: podman.png
             href: https://cupdate-podman.local.timmybtech.com/
             ping: http://192.168.86.174:8082/
+        - Dockhand:
+            icon: podman.png
+            href: https://dockhand.local.timmybtech.com/
+            ping: http://192.168.86.174:3007/
         - SNMP Exporter:
             icon: prometheus.png
             href: http://192.168.86.174:9116/

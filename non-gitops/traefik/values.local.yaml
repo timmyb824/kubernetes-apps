@@ -266,6 +266,12 @@ providers:
             entrypoints:
               - websecure
             tls: {}
+          dockhand:
+            rule: Host(`dockhand.local.timmybtech.com`)
+            service: dockhand
+            entrypoints:
+              - websecure
+            tls: {}
         services:
           uptime-kuma:
             loadBalancer:
@@ -380,6 +386,10 @@ providers:
             loadBalancer:
               servers:
                 - url: http://192.168.86.174:60072
+          dockhand:
+            loadBalancer:
+              servers:
+                - url: http://192.168.86.174:3007
         serversTransports:
           nas-transport:
             insecureSkipVerify: true
