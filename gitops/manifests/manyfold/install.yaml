@@ -83,22 +83,22 @@ spec:
             capabilities:
               drop: ["ALL"]
               add: ["CHOWN", "DAC_OVERRIDE", "SETUID", "SETGID"]
-          # readinessProbe:
-          #   httpGet:
-          #     path: /
-          #     port: http
-          #   initialDelaySeconds: 60
-          #   periodSeconds: 10
-          #   timeoutSeconds: 3
-          #   failureThreshold: 6
-          # livenessProbe:
-          #   httpGet:
-          #     path: /
-          #     port: http
-          #   initialDelaySeconds: 180
-          #   periodSeconds: 20
-          #   timeoutSeconds: 3
-          #   failureThreshold: 6
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            timeoutSeconds: 3
+            failureThreshold: 6
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 180
+            periodSeconds: 20
+            timeoutSeconds: 3
+            failureThreshold: 6
           resources:
             requests:
               cpu: "250m"
