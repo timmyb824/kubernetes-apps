@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: manyfold
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: "https://github.com/timmyb824/kubernetes-apps.git"
+    targetRevision: HEAD
+    path: gitops/manifests/manyfold
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: manyfold
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: false
