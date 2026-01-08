@@ -74,6 +74,8 @@ spec:
             # App data / uploads / libraries (adjust path if you prefer)
             - name: data
               mountPath: /var/lib/manyfold
+            - name: run
+              mountPath: /run
           # Compose had: no-new-privileges, drop ALL, add CHOWN/DAC_OVERRIDE/SETUID/SETGID
           securityContext:
             allowPrivilegeEscalation: false
@@ -81,22 +83,22 @@ spec:
             capabilities:
               drop: ["ALL"]
               add: ["CHOWN", "DAC_OVERRIDE", "SETUID", "SETGID"]
-          readinessProbe:
-            httpGet:
-              path: /
-              port: http
-            initialDelaySeconds: 60
-            periodSeconds: 10
-            timeoutSeconds: 3
-            failureThreshold: 6
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
-            initialDelaySeconds: 180
-            periodSeconds: 20
-            timeoutSeconds: 3
-            failureThreshold: 6
+          # readinessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          #   initialDelaySeconds: 60
+          #   periodSeconds: 10
+          #   timeoutSeconds: 3
+          #   failureThreshold: 6
+          # livenessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          #   initialDelaySeconds: 180
+          #   periodSeconds: 20
+          #   timeoutSeconds: 3
+          #   failureThreshold: 6
           resources:
             requests:
               cpu: "250m"
@@ -108,6 +110,8 @@ spec:
         - name: data
           persistentVolumeClaim:
             claimName: manyfold-data
+        - name: run
+          emptyDir: {}
 ---
 apiVersion: v1
 kind: Service
