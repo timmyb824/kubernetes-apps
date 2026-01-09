@@ -71,8 +71,6 @@ spec:
               value: /tmp
             - name: BUNDLE_USER_HOME
               value: /tmp/bundle
-            - name: BUNDLE_APP_CONFIG
-              value: /tmp/bundle
           envFrom:
             - configMapRef:
                 name: manyfold-config
