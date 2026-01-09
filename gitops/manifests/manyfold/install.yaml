@@ -65,11 +65,13 @@ spec:
         - name: init-tmp
           image: busybox:1.36
           command:
-            [
-              "sh",
-              "-lc",
-              "mkdir -p /var/tmp/manyfold-tmp /tmp/bundle && chmod 700 /var/tmp/manyfold-tmp",
-            ]
+            - sh
+            - -lc
+            - |
+              mkdir -p /var/tmp/manyfold-tmp /tmp/bundle
+              chown -R 1000:1000 /var/tmp/manyfold-tmp /tmp/bundle
+              chmod 700 /var/tmp/manyfold-tmp
+              chmod 755 /tmp
           volumeMounts:
             - name: vartmp
               mountPath: /var/tmp
