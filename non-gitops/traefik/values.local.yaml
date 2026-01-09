@@ -272,6 +272,12 @@ providers:
             entrypoints:
               - websecure
             tls: {}
+          manyfold:
+            rule: Host(`manyfold.local.timmybtech.com`)
+            service: manyfold
+            entrypoints:
+              - websecure
+            tls: {}
         services:
           uptime-kuma:
             loadBalancer:
@@ -390,6 +396,10 @@ providers:
             loadBalancer:
               servers:
                 - url: http://192.168.86.174:3007
+          manyfold:
+            loadBalancer:
+              servers:
+                - url: http://192.168.86.174:3214
         serversTransports:
           nas-transport:
             insecureSkipVerify: true
