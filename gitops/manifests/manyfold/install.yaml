@@ -60,193 +60,58 @@ spec:
         app: manyfold
         app.kubernetes.io/name: manyfold
     spec:
-      terminationGracePeriodSeconds: 60
-
-      # Run everything (including the main container) as the manyfold user.
-      # This keeps permissions consistent with the initContainer chown.
-      securityContext:
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
-
-      initContainers:
-        - name: init-perms
-          image: busybox:1.36
-          # NOTE: init containers run as root by default, which is what we want
-          # so it can chown the emptyDir mounts.
-          command:
-            - sh
-            - -lc
-            - |
-              set -e
-              mkdir -p /run /var/tmp/manyfold-tmp /tmp/bundle
-
-              # Make sure the runtime dirs are owned by UID/GID 1000 for s6-overlay + Ruby
-              chown -R 1000:1000 /run /var/tmp/manyfold-tmp /tmp/bundle
-
-              # s6-overlay expects /run to be writable/executable
-              chmod 755 /run
-
-              # Provide a non-world-writable temp dir for Ruby/MiniMagick
-              chmod 700 /var/tmp/manyfold-tmp
-
-              # Keep /tmp usable (Manyfold/bundler uses it for HOME)
-              chmod 1777 /tmp
-          volumeMounts:
-            - name: run
-              mountPath: /run
-            - name: vartmp
-              mountPath: /var/tmp
-            - name: tmp
-              mountPath: /tmp
-
       containers:
         - name: manyfold
           image: ghcr.io/manyfold3d/manyfold:0.130.4
           imagePullPolicy: IfNotPresent
-
-          env:
-            - name: HOME
-              value: /tmp
-            - name: BUNDLE_USER_HOME
-              value: /tmp/bundle
-            - name: TMPDIR
-              value: /var/tmp/manyfold-tmp
-            - name: TMP
-              value: /var/tmp/manyfold-tmp
-            - name: TEMP
-              value: /var/tmp/manyfold-tmp
-
           envFrom:
             - configMapRef:
                 name: manyfold-config
-
           ports:
             - name: http
               containerPort: 3214
-
           volumeMounts:
-            - name: vartmp
-              mountPath: /var/tmp
-            - name: tmp
-              mountPath: /tmp
-            - name: run
-              mountPath: /run
+            # App data / uploads / libraries (adjust path if you prefer)
             - name: data
               mountPath: /var/lib/manyfold
-
+            - name: run
+              mountPath: /run
+          # Compose had: no-new-privileges, drop ALL, add CHOWN/DAC_OVERRIDE/SETUID/SETGID
           securityContext:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: false
             capabilities:
               drop: ["ALL"]
               add: ["CHOWN", "DAC_OVERRIDE", "SETUID", "SETGID"]
-
           readinessProbe:
             httpGet:
               path: /health
               port: http
+            initialDelaySeconds: 60
             periodSeconds: 10
-            timeoutSeconds: 10
+            timeoutSeconds: 3
             failureThreshold: 6
-
           livenessProbe:
             httpGet:
               path: /health
               port: http
+            initialDelaySeconds: 180
             periodSeconds: 20
-            timeoutSeconds: 10
+            timeoutSeconds: 3
             failureThreshold: 6
-
           resources:
             requests:
               cpu: "250m"
               memory: "512Mi"
             limits:
               cpu: "1"
-              memory: "2Gi"
-
+              memory: "1Gi"
       volumes:
         - name: data
           persistentVolumeClaim:
             claimName: manyfold-data
         - name: run
           emptyDir: {}
-        - name: tmp
-          emptyDir: {}
-        - name: vartmp
-          emptyDir: {}
----
-# apiVersion: apps/v1
-# kind: Deployment
-# metadata:
-#   name: manyfold
-#   namespace: manyfold
-#   labels:
-#     app: manyfold
-# spec:
-#   replicas: 1
-#   selector:
-#     matchLabels:
-#       app: manyfold
-#   template:
-#     metadata:
-#       labels:
-#         app: manyfold
-#         app.kubernetes.io/name: manyfold
-#     spec:
-#       containers:
-#         - name: manyfold
-#           image: ghcr.io/manyfold3d/manyfold:0.130.4
-#           imagePullPolicy: IfNotPresent
-#           envFrom:
-#             - configMapRef:
-#                 name: manyfold-config
-#           ports:
-#             - name: http
-#               containerPort: 3214
-#           volumeMounts:
-#             # App data / uploads / libraries (adjust path if you prefer)
-#             - name: data
-#               mountPath: /var/lib/manyfold
-#             - name: run
-#               mountPath: /run
-#           # Compose had: no-new-privileges, drop ALL, add CHOWN/DAC_OVERRIDE/SETUID/SETGID
-#           securityContext:
-#             allowPrivilegeEscalation: false
-#             readOnlyRootFilesystem: false
-#             capabilities:
-#               drop: ["ALL"]
-#               add: ["CHOWN", "DAC_OVERRIDE", "SETUID", "SETGID"]
-#           readinessProbe:
-#             httpGet:
-#               path: /health
-#               port: http
-#             initialDelaySeconds: 60
-#             periodSeconds: 10
-#             timeoutSeconds: 3
-#             failureThreshold: 6
-#           livenessProbe:
-#             httpGet:
-#               path: /health
-#               port: http
-#             initialDelaySeconds: 180
-#             periodSeconds: 20
-#             timeoutSeconds: 3
-#             failureThreshold: 6
-#           resources:
-#             requests:
-#               cpu: "250m"
-#               memory: "512Mi"
-#             limits:
-#               cpu: "1"
-#               memory: "1Gi"
-#       volumes:
-#         - name: data
-#           persistentVolumeClaim:
-#             claimName: manyfold-data
-#         - name: run
-#           emptyDir: {}
 ---
 apiVersion: v1
 kind: Service
