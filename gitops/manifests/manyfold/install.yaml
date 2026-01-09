@@ -62,17 +62,20 @@ spec:
     spec:
       terminationGracePeriodSeconds: 60
       initContainers:
-        - name: init-tmp
+        - name: init-perms
           image: busybox:1.36
           command:
             - sh
             - -lc
             - |
-              mkdir -p /var/tmp/manyfold-tmp /tmp/bundle
-              chown -R 1000:1000 /var/tmp/manyfold-tmp /tmp/bundle
+              mkdir -p /run /var/tmp/manyfold-tmp /tmp/bundle
+              chown -R 1000:1000 /run /var/tmp/manyfold-tmp /tmp/bundle
+              chmod 755 /run
               chmod 700 /var/tmp/manyfold-tmp
               chmod 755 /tmp
           volumeMounts:
+            - name: run
+              mountPath: /run
             - name: vartmp
               mountPath: /var/tmp
             - name: tmp
