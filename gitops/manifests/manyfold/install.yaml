@@ -94,14 +94,6 @@ spec:
               drop: ["ALL"]
               add: ["CHOWN", "DAC_OVERRIDE", "SETUID", "SETGID"]
 
-          startupProbe:
-            httpGet:
-              path: /health
-              port: http
-            periodSeconds: 5
-            timeoutSeconds: 5
-            failureThreshold: 60 # 5 minutes max startup
-
           readinessProbe:
             httpGet:
               path: /health
