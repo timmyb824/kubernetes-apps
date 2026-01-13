@@ -644,7 +644,7 @@ data:
             href: https://netbox.local.timmybtech.com/
             ping: http://192.168.86.110:8001
         - Omni-Tools:
-            icon: omni-tools.png
+            icon: sh-omnitools.png
             href: https://omni-tools.local.timmybtech.com/
             ping: http://192.168.86.174:8082
         - PGweb :
