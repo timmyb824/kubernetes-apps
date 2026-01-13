@@ -643,6 +643,10 @@ data:
             icon: netbox.png
             href: https://netbox.local.timmybtech.com/
             ping: http://192.168.86.110:8001
+        - Omni-Tools:
+            icon: omni-tools.png
+            href: https://omni-tools.local.timmybtech.com/
+            ping: http://192.168.86.174:8082
         - PGweb :
             icon: postgres.png
             href: https://pgweb.local.timmybtech.com/
