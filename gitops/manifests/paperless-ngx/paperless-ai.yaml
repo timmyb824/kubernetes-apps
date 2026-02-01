@@ -67,6 +67,13 @@ spec:
             initialDelaySeconds: 30
             periodSeconds: 10
             failureThreshold: 6
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "512Mi"
+            limits:
+              cpu: "500m"
+              memory: "900Mi"
       volumes:
         - name: paperless-ai-data
           persistentVolumeClaim:

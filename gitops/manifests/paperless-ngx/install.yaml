@@ -136,6 +136,13 @@ spec:
               name: paperless-export
             - mountPath: /usr/src/paperless/consume
               name: paperless-consume
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "256Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
       restartPolicy: Always
       volumes:
         - name: data
