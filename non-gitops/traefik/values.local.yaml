@@ -284,6 +284,12 @@ providers:
             entrypoints:
               - websecure
             tls: {}
+          lastsignal:
+            rule: Host(`lastsignal.local.timmybtech.com`)
+            service: lastsignal
+            entrypoints:
+              - websecure
+            tls: {}
         services:
           uptime-kuma:
             loadBalancer:
@@ -410,6 +416,10 @@ providers:
             loadBalancer:
               servers:
                 - url: http://192.168.86.174:8092
+          lastsignal:
+            loadBalancer:
+              servers:
+                - url: http://192.168.86.174:8094
         serversTransports:
           nas-transport:
             insecureSkipVerify: true
