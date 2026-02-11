@@ -627,6 +627,10 @@ data:
             icon: it-tools.png
             href: https://it-tools.local.timmybtech.com/
             ping: http://192.168.86.174:5884
+        - Lastsignal:
+            icon: sh-lastsignal.png
+            href: https://lastsignal.local.timmybtech.com/
+            ping: http://192.168.86.174:8094
         - Loki:
             icon: loki.png
             href: https://loki.local.timmybtech.com/
