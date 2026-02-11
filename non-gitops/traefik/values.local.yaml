@@ -4,9 +4,10 @@ image:
   tag: "3.6.4"
   pullPolicy: IfNotPresent
 
-globalArguments:
-  - --global.sendanonymoususage=false
-  - --global.checknewversion=false
+global:
+  arguments:
+    - --global.sendanonymoususage=false
+    - --global.checknewversion=false
 additionalArguments:
   - --serversTransport.insecureSkipVerify=true
   - --log.level=INFO
@@ -32,14 +33,16 @@ deployment:
         secretName: timmybtech-com-tls
 ports:
   web:
-    redirections:
-      entryPoint:
-        to: websecure
-        scheme: https
-        permanent: true
+    http:
+      redirections:
+        entryPoint:
+          to: websecure
+          scheme: https
+          permanent: true
   websecure:
-    tls:
-      enabled: true
+    http:
+      tls:
+        enabled: true
 ingressRoute:
   dashboard:
     enabled: false
