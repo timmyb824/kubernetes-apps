@@ -440,11 +440,6 @@ data:
             href: https://openfaas.local.timmybtech.com/
             namespace: openfaas
             app: gateway
-        - Planka:
-            icon: planka.png
-            href: https://planka.local.timmybtech.com/
-            namespace: planka
-            app: planka
         - Paperless-AI:
             icon: paperless.png
             href: https://paperless-ai.local.timmybtech.com/
@@ -480,6 +475,11 @@ data:
             href: https://velld.local.timmybtech.com/
             namespace: velld
             app: velld-web
+        - Vikunja:
+            icon: vikunja.png
+            href: https://vikunja.local.timmybtech.com/
+            namespace: vikunja
+            app: vikunja
         - Wallos:
             icon: wallos.png
             href: https://wallos.local.timmybtech.com/
