@@ -415,16 +415,11 @@ data:
             href: https://kube-state-metrics.local.timmybtech.com/
             namespace: kube-system
             app: kube-state-metrics
-        - MinIO:
-            icon: minio.png
-            href: https://minio-ui.local.timmybtech.com/
-            namespace: minio
-            app: minio
         - Mealie:
             icon: mealie.png
             href: https://mealie.local.timmybtech.com/
-            namespace: minio
-            app: minio
+            namespace: mealie
+            app: mealie
         - n8n:
             icon: n8n.png
             href: https://n8n.timmybtech.com/
@@ -460,6 +455,11 @@ data:
             href: https://registry-ui.local.timmybtech.com/
             namespace: registry
             app: registry-ui
+        - rustFS:
+            icon: sh-rustfs.png
+            href: https://rustfs.local.timmybtech.com/
+            namespace: rustfs
+            app: rustfs
         - Umami:
             icon: umami.png
             href: https://umami.timmybtech.com/
