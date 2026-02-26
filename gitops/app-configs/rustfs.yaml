@@ -77,26 +77,7 @@ spec:
             runAsNonRoot: true
 
           ingress:
-            enabled: true
-            className: "traefik-external"
-            traefikAnnotations:
-              traefik.ingress.kubernetes.io/service.sticky.cookie: "true"
-              traefik.ingress.kubernetes.io/service.sticky.cookie.httponly: "true"
-              traefik.ingress.kubernetes.io/service.sticky.cookie.name: rustfs
-              traefik.ingress.kubernetes.io/service.sticky.cookie.samesite: none
-              traefik.ingress.kubernetes.io/service.sticky.cookie.secure: "true"
-            customAnnotations:
-              traefik.ingress.kubernetes.io/router.entrypoints: websecure
-            hosts:
-              - host: rustfs.local.timmybtech.com
-                paths:
-                  - path: /
-                    pathType: Prefix
-            tls:
-              enabled: true
-              certManager:
-                enabled: false
-              secretName: local-timmybtech-com-tls
+            enabled: false
 
           gatewayApi:
             enabled: false
