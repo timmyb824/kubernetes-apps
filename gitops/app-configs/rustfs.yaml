@@ -37,8 +37,8 @@ spec:
           secret:
             existingSecret: ""
             rustfs:
-              access_key: rustfsadmin
-              secret_key: rustfsadmin
+              access_key: <path:secret/data/argocd#RUSTFS_ACCESS_KEY>
+              secret_key: <path:secret/data/argocd#RUSTFS_SECRET_KEY>
 
           config:
             rustfs:
