@@ -121,7 +121,7 @@ spec:
                     "OAUTH_PKCE_ENABLED": "True"
                   }
                 }
-          image: ghcr.io/paperless-ngx/paperless-ngx:2.20.8
+          image: ghcr.io/paperless-ngx/paperless-ngx:2.20.9
           imagePullPolicy: IfNotPresent
           name: webserver
           ports:
