@@ -21,8 +21,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  annotations:
-    avp.kubernetes.io/path: "secret/data/postgres_db"
+  annotations: {}
   labels:
     service: n8n
   name: n8n
@@ -57,15 +56,15 @@ spec:
             - name: DB_TYPE
               value: postgresdb
             - name: DB_POSTGRESDB_HOST
-              value: <HOST_NAME>
+              value: <path:secret/data/postgres_db#HOST_NAME>
             - name: DB_POSTGRESDB_PORT
               value: "5432"
             - name: DB_POSTGRESDB_DATABASE
               value: n8n
             - name: DB_POSTGRESDB_USER
-              value: <USER>
+              value: <path:secret/data/postgres_db#USER>
             - name: DB_POSTGRESDB_PASSWORD
-              value: <PASSWORD>
+              value: <path:secret/data/postgres_db#PASSWORD>
             - name: N8N_PROTOCOL
               value: http
             - name: N8N_PORT
@@ -84,6 +83,8 @@ spec:
               value: https://n8n.timmybtech.com
             - name: NODE_OPTIONS
               value: --max-old-space-size=768
+            - name: OPENAI_API_KEY
+              value: <path:secret/data/argocd#OPENAI_API_KEY>
           image: n8nio/n8n:2.10.2
           name: n8n
           ports:
