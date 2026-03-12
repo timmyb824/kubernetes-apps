@@ -655,6 +655,10 @@ data:
             icon: sh-omnitools.png
             href: https://omni-tools.local.timmybtech.com/
             ping: http://192.168.86.174:8082
+        - OpenClaw:
+            icon: sh-openclaw.png
+            href: https://openclaw.tailebee.ts.net/
+            ping: http://192.168.86.93
         - PGweb :
             icon: postgres.png
             href: https://pgweb.local.timmybtech.com/
