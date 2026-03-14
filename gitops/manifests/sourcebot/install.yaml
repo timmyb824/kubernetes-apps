@@ -51,7 +51,7 @@ spec:
     spec:
       containers:
         - name: sourcebot
-          image: ghcr.io/sourcebot-dev/sourcebot:v4.13.1
+          image: ghcr.io/sourcebot-dev/sourcebot:v4.15.6
           imagePullPolicy: Always
           resources:
             requests:
