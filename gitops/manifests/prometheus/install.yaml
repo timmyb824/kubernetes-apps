@@ -362,6 +362,10 @@ data:
           - source_labels: [__address__]
             regex: (notifiq.local.timmybtech.com)
             target_label: instance
+
+      - job_name: "tempo"
+        static_configs:
+          - targets: ["tempo.monitoring.svc.cluster.local:3200"]
 ---
 apiVersion: apps/v1
 kind: Deployment
