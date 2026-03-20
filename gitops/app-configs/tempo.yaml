@@ -220,3 +220,4 @@ spec:
       selfHeal: false
     syncOptions:
       - ApplyOutOfSyncOnly=true
+      - CreateNamespace=true
