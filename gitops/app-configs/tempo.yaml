@@ -8,7 +8,7 @@ metadata:
   annotations: {}
 spec:
   destination:
-    namespace: tempo
+    namespace: monitoring
     server: "https://kubernetes.default.svc"
   project: default
   sources:
@@ -220,4 +220,3 @@ spec:
       selfHeal: false
     syncOptions:
       - ApplyOutOfSyncOnly=true
-      - CreateNamespace=true

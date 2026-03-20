@@ -1,0 +1,23 @@
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: otel-collector-private
+  namespace: monitoring
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`otel-collector.local.timmybtech.com`)
+      kind: Rule
+      services:
+        - name: opentelemetry-collector
+          port: 4317
+      middlewares:
+        - name: default-headers
+          namespace: traefik
+  tls:
+    secretName: local-timmybtech-com-tls
