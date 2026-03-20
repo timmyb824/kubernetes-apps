@@ -37,6 +37,7 @@ spec:
       services:
         - name: opentelemetry-collector
           port: 4318
+          scheme: http
       middlewares:
         - name: default-headers
           namespace: traefik
