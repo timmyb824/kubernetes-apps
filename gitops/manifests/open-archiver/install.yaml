@@ -44,7 +44,7 @@ spec:
   storageClassName: "nfs-csi-synologynas"
   resources:
     requests:
-      storage: 20Gi
+      storage: 40Gi
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -66,7 +66,7 @@ spec:
     spec:
       containers:
         - name: open-archiver
-          image: logiclabshq/open-archiver:latest
+          image: logiclabshq/open-archiver:v0.5.0
           imagePullPolicy: IfNotPresent
           envFrom:
             - configMapRef:
