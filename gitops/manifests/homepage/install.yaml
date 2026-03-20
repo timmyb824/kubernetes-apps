@@ -534,7 +534,10 @@ data:
             icon: proxmox.png
             href: https://192.168.86.199:8006
             ping: https://192.168.86.199:8006
-
+        - Proxmox 4:
+            icon: proxmox.png
+            href: https://192.168.86.217:8006
+            ping: https://192.168.86.217:8006
     - VM/LXC:
         - Dockhand:
             icon: podman.png
