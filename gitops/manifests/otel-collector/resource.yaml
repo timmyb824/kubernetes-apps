@@ -11,11 +11,32 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`otel-collector.local.timmybtech.com`)
+    - match: Host(`otel-collector-tls.local.timmybtech.com`)
       kind: Rule
       services:
         - name: opentelemetry-collector
           port: 4317
+          scheme: h2c
+      middlewares:
+        - name: default-headers
+          namespace: traefik
+  tls:
+    secretName: local-timmybtech-com-tls
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: otel-collector-http
+  namespace: monitoring
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`otel-collector-http.local.timmybtech.com`)
+      kind: Rule
+      services:
+        - name: opentelemetry-collector
+          port: 4318
       middlewares:
         - name: default-headers
           namespace: traefik
