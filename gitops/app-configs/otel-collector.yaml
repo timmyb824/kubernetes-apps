@@ -22,58 +22,56 @@ spec:
             repository: "otel/opentelemetry-collector-k8s"
           mode: deployment
 
-          # Base collector configuration.
-          # Supports templating. To escape existing instances of {{ }}, use {{` <original content> `}}.
-          # For example, {{ REDACTED_EMAIL }} becomes {{` {{ REDACTED_EMAIL }} `}}.
+          ports:
+            metrics:
+              enabled: true
+              containerPort: 8888
+              servicePort: 8888
+              protocol: TCP
+            jaeger-compact:
+              enabled: false
+            jaeger-grpc:
+              enabled: false
+            jaeger-thrift:
+              enabled: false
+            zipkin:
+              enabled: false
+
           config:
             exporters:
               debug: {}
               otlp/tempo:
-                endpoint: tempo.tempo.svc.cluster.local:4317
+                endpoint: tempo.monitoring.svc.cluster.local:4317
                 tls:
                   insecure: true
+
             extensions:
-              # The health_check extension is mandatory for this chart.
-              # Without the health_check extension the collector will fail the readiness and liveness probes.
-              # The health_check extension can be modified, but should never be removed.
               health_check:
                 endpoint: ${env:MY_POD_IP}:13133
+
             processors:
               batch: {}
-              # Default memory limiter configuration for the collector based on k8s resource limits.
               memory_limiter:
-                # check_interval is the time between measurements of memory usage.
                 check_interval: 5s
-                # By default limit_mib is set to 80% of ".Values.resources.limits.memory"
                 limit_percentage: 80
-                # By default spike_limit_mib is set to 25% of ".Values.resources.limits.memory"
                 spike_limit_percentage: 25
+
             receivers:
-              jaeger:
-                protocols:
-                  grpc:
-                    endpoint: ${env:MY_POD_IP}:14250
-                  thrift_http:
-                    endpoint: ${env:MY_POD_IP}:14268
-                  thrift_compact:
-                    endpoint: ${env:MY_POD_IP}:6831
               otlp:
                 protocols:
                   grpc:
                     endpoint: ${env:MY_POD_IP}:4317
                   http:
                     endpoint: ${env:MY_POD_IP}:4318
-              # if internalTelemetryViaOTLP.metrics.enabled = true, prometheus receiver will be removed
               prometheus:
                 config:
                   scrape_configs:
                     - job_name: opentelemetry-collector
-                      scrape_interval: 10s
+                      scrape_interval: 30s
                       static_configs:
                         - targets:
                             - ${env:MY_POD_IP}:8888
-              zipkin:
-                endpoint: ${env:MY_POD_IP}:9411
+
             service:
               telemetry:
                 resource:
@@ -109,7 +107,6 @@ spec:
                     - batch
                   receivers:
                     - otlp
-                    # if internalTelemetryViaOTLP.metrics.enabled = true, prometheus receiver will be removed
                     - prometheus
                 traces:
                   exporters:
@@ -120,8 +117,6 @@ spec:
                     - batch
                   receivers:
                     - otlp
-                    - jaeger
-                    - zipkin
     - repoURL: "https://github.com/timmyb824/kubernetes-apps.git"
       path: "gitops/manifests/otel-collector"
       targetRevision: HEAD
