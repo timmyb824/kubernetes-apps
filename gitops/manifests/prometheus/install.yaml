@@ -369,7 +369,7 @@ data:
 
       - job_name: "otel-collector"
         static_configs:
-          - targets: ["otel-collector.monitoring.svc.cluster.local:8888"]
+          - targets: ["opentelemetry-collector.monitoring.svc.cluster.local:8888"]
 ---
 apiVersion: apps/v1
 kind: Deployment
