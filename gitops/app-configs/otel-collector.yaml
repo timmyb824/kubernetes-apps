@@ -48,7 +48,7 @@ spec:
                 endpoint: http://prometheus-service.monitoring.svc.cluster.local:9090/api/v1/write
                 tls:
                   insecure: true
-              loki:
+              otlp/loki:
                 endpoint: https://loki.local.timmybtech.com/loki/api/v1/push
                 tls:
                   insecure: false
@@ -102,7 +102,7 @@ spec:
                 logs:
                   exporters:
                     - debug
-                    - loki
+                    - otlp/loki
                   processors:
                     - memory_limiter
                     - batch
