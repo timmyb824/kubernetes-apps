@@ -49,9 +49,9 @@ spec:
                 tls:
                   insecure: true
               otlp/loki:
-                endpoint: https://loki.local.timmybtech.com/loki/api/v1/push
+                endpoint: http://192.168.86.146:3100/loki/api/v1/push
                 tls:
-                  insecure: false
+                  insecure: true
 
             extensions:
               health_check:
