@@ -49,7 +49,7 @@ spec:
                 tls:
                   insecure: true
               otlp/loki:
-                endpoint: http://192.168.86.146:3100/loki/api/v1/push
+                endpoint: http://192.168.86.146:3100
                 tls:
                   insecure: true
 
