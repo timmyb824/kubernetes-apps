@@ -44,6 +44,14 @@ spec:
                 endpoint: tempo.monitoring.svc.cluster.local:4317
                 tls:
                   insecure: true
+              prometheusremotewrite:
+                endpoint: http://prometheus-service.monitoring.svc.cluster.local:9090/api/v1/write
+                tls:
+                  insecure: true
+              loki:
+                endpoint: https://loki.local.timmybtech.com/loki/api/v1/push
+                tls:
+                  insecure: false
 
             extensions:
               health_check:
@@ -94,6 +102,7 @@ spec:
                 logs:
                   exporters:
                     - debug
+                    - loki
                   processors:
                     - memory_limiter
                     - batch
@@ -102,6 +111,7 @@ spec:
                 metrics:
                   exporters:
                     - debug
+                    - prometheusremotewrite
                   processors:
                     - memory_limiter
                     - batch
