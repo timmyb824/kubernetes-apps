@@ -388,6 +388,13 @@ spec:
       labels:
         app: prometheus-server
     spec:
+      initContainers:
+        - name: remove-lock
+          image: busybox
+          command: ["rm", "-f", "/prometheus/lock"]
+          volumeMounts:
+            - name: prometheus-storage-volume
+              mountPath: /prometheus
       containers:
         - name: prometheus
           image: prom/prometheus:v3.10.0
@@ -395,7 +402,7 @@ spec:
             - "--storage.tsdb.retention.time=6h"
             - "--config.file=/etc/prometheus/prometheus.yml"
             - "--storage.tsdb.path=/prometheus/"
-            - "--web.enable-remote-write-receiver=true"
+            - "--web.enable-remote-write-receiver"
           ports:
             - containerPort: 9090
           resources:
