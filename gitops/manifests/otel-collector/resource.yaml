@@ -17,9 +17,6 @@ spec:
         - name: opentelemetry-collector
           port: 4317
           scheme: h2c
-      middlewares:
-        - name: default-headers
-          namespace: traefik
   tls:
     secretName: local-timmybtech-com-tls
 ---
@@ -37,9 +34,5 @@ spec:
       services:
         - name: opentelemetry-collector
           port: 4318
-          scheme: http
-      middlewares:
-        - name: default-headers
-          namespace: traefik
   tls:
     secretName: local-timmybtech-com-tls
