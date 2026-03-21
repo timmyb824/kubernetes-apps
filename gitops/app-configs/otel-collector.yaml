@@ -106,7 +106,7 @@ spec:
                 logs:
                   exporters:
                     - debug
-                    - otlp/loki
+                    - otlphttp/loki
                   processors:
                     - memory_limiter
                     - batch
