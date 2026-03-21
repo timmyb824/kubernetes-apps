@@ -52,8 +52,8 @@ spec:
                 endpoint: http://prometheus-service.monitoring.svc.cluster.local:8080/api/v1/otlp
                 tls:
                   insecure: true
-              otlp/loki:
-                endpoint: http://192.168.86.146:3100
+              otlphttp/loki:
+                endpoint: http://192.168.86.146:3100/otlp
                 tls:
                   insecure: true
 
