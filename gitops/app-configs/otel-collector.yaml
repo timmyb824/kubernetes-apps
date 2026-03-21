@@ -44,8 +44,8 @@ spec:
                 endpoint: tempo.monitoring.svc.cluster.local:4317
                 tls:
                   insecure: true
-              prometheusremotewrite:
-                endpoint: http://prometheus-service.monitoring.svc.cluster.local:8080/api/v1/write
+              otlphttp/metrics:
+                endpoint: http://prometheus-service.monitoring.svc.cluster.local:8080/api/v1/otlp
                 tls:
                   insecure: true
               otlp/loki:
@@ -111,7 +111,7 @@ spec:
                 metrics:
                   exporters:
                     - debug
-                    - prometheusremotewrite
+                    - otlphttp/metrics
                   processors:
                     - memory_limiter
                     - batch
