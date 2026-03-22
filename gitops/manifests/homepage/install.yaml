@@ -252,7 +252,7 @@ data:
       Proxmox:
         icon: mdi-server
         style: row
-        columns: 2
+        columns: 3
       Storage:
         icon: mdi-database-check
         style: row
