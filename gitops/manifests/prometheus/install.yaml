@@ -399,7 +399,8 @@ spec:
         - name: prometheus
           image: prom/prometheus:v3.10.0
           args:
-            - "--storage.tsdb.retention.time=6h"
+            - "--storage.tsdb.retention.time=12h"
+            - --storage.tsdb.retention.size=3GB
             - "--config.file=/etc/prometheus/prometheus.yml"
             - "--storage.tsdb.path=/prometheus/"
             - "--web.enable-remote-write-receiver"
@@ -408,11 +409,11 @@ spec:
             - containerPort: 9090
           resources:
             requests:
-              cpu: 500m
-              memory: 1Gi
+              cpu: "500m"
+              memory: "512Mi"
             limits:
-              cpu: 1
-              memory: 2Gi
+              cpu: "1"
+              memory: "1Gi"
           volumeMounts:
             - name: prometheus-config-volume
               mountPath: /etc/prometheus/
