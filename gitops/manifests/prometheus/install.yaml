@@ -388,6 +388,8 @@ spec:
       labels:
         app: prometheus-server
     spec:
+      nodeSelector:
+        kubernetes.io/hostname: k3s-0-worker
       initContainers:
         - name: remove-lock
           image: busybox
