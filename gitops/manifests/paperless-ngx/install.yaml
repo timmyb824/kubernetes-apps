@@ -81,6 +81,8 @@ spec:
         io.kompose.service: webserver
         app.kubernetes.io/name: paperless-ngx
     spec:
+      nodeSelector:
+        kubernetes.io/hostname: k3s-2-worker
       containers:
         - env:
             - name: PAPERLESS_DBHOST
