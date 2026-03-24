@@ -70,7 +70,7 @@ data:
   #         summary: High Memory Usage
   prometheus.yml: |-
     global:
-      scrape_interval: 120s
+      scrape_interval: 300s
       scrape_timeout: 55s
 
       external_labels:
@@ -151,6 +151,20 @@ data:
           regex: (.+)
           target_label: __metrics_path__
           replacement: /api/v1/nodes/${1}/proxy/metrics
+        metric_relabel_configs:
+          # Drop deprecated beta labels
+          - action: labeldrop
+            regex: "beta_kubernetes_io_.*"
+          # Drop k3s upgrade plan label - useless for homelab
+          - action: labeldrop
+            regex: "plan_upgrade_cattle_io_.*"
+          # Drop node role labels - redundant with instance label
+          - action: labeldrop
+            regex: "node_role_kubernetes_io_.*"
+          # Drop high cardinality apiserver histograms
+          - source_labels: [__name__]
+            regex: "apiserver_request_sli_duration_seconds_bucket|apiserver_watch_cache_read_wait_seconds_bucket|apiserver_request_body_size_bytes_bucket|apiserver_watch_events_sizes_bucket"
+            action: drop
 
       - job_name: 'kubernetes-pods'
         kubernetes_sd_configs:
@@ -176,6 +190,11 @@ data:
         - source_labels: [__meta_kubernetes_pod_name]
           action: replace
           target_label: kubernetes_pod_name
+        metric_relabel_configs:
+            - action: labeldrop
+              regex: "beta_kubernetes_io_.*"
+            - action: labeldrop
+              regex: "plan_upgrade_cattle_io_.*"
 
       - job_name: 'kube-state-metrics'
         static_configs:
@@ -185,6 +204,7 @@ data:
           - source_labels: [__name__]
             regex: 'kube_(pod_status_phase|pod_container_status_.*|deployment_.*|node_.*)'
             action: keep
+
       - job_name: 'kubernetes-cadvisor'
         scheme: https
         tls_config:
@@ -214,6 +234,12 @@ data:
           - source_labels: [__name__, container]
             regex: 'container_(cpu_usage_seconds_total|memory_working_set_bytes|fs_usage_bytes|fs_limit_bytes|start_time_seconds);POD'
             action: drop
+          - action: labeldrop
+            regex: "beta_kubernetes_io_.*"
+          - action: labeldrop
+            regex: "plan_upgrade_cattle_io_.*"
+          - action: labeldrop
+            regex: "node_role_kubernetes_io_.*"
 
       - job_name: 'kubernetes-service-endpoints'
         kubernetes_sd_configs:
@@ -407,6 +433,9 @@ spec:
             - "--storage.tsdb.path=/prometheus/"
             - "--web.enable-remote-write-receiver"
             - "--enable-feature=otlp-write-receiver"
+            - "--query.max-concurrency=2"
+            - "--storage.tsdb.min-block-duration=30m"
+            - "--storage.tsdb.max-block-duration=1h"
           ports:
             - containerPort: 9090
           resources:
