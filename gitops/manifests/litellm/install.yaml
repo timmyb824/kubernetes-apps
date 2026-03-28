@@ -85,13 +85,27 @@ spec:
             - name: config
               mountPath: /app/config.yaml
               subPath: config.yaml
+          readinessProbe:
+            httpGet:
+              path: /health/readiness
+            port: 4000
+            initialDelaySeconds: 60
+            periodSeconds: 15
+            failureThreshold: 5
+          livenessProbe:
+            httpGet:
+              path: /health/liveliness
+              port: 4000
+            initialDelaySeconds: 90
+            periodSeconds: 30
+            failureThreshold: 3
           resources:
             requests:
-              cpu: "500m"
-              memory: "512Mi"
+              memory: 512Mi
+              cpu: 100m
             limits:
-              cpu: "1"
-              memory: "1Gi"
+              memory: 1500Mi
+              cpu: 500m
       volumes:
         - name: config
           configMap:
