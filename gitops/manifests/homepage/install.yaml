@@ -415,6 +415,11 @@ data:
             href: https://kube-state-metrics.local.timmybtech.com/
             namespace: kube-system
             app: kube-state-metrics
+        - LiteLLM:
+            icon: sh-litellm.png
+            href: https://litellm.timmybtech.com/ui
+            namespace: litellm
+            app: litellm
         - Mealie:
             icon: mealie.png
             href: https://mealie.local.timmybtech.com/
