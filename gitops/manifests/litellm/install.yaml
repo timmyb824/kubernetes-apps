@@ -88,7 +88,7 @@ spec:
           readinessProbe:
             httpGet:
               path: /health/readiness
-            port: 4000
+              port: 4000
             initialDelaySeconds: 60
             periodSeconds: 15
             failureThreshold: 5
