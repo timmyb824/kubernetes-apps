@@ -94,10 +94,10 @@ spec:
           resources:
             limits:
               cpu: "500m"
-              memory: "756Mi"
+              memory: "512Mi"
             requests:
               cpu: "250m"
-              memory: "378Mi"
+              memory: "1Gi"
       volumes:
         - name: config
           configMap:
