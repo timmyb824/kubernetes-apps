@@ -85,12 +85,6 @@ spec:
             - name: config
               mountPath: /app/config.yaml
               subPath: config.yaml
-          readinessProbe:
-            httpGet:
-              path: /health/readiness
-              port: 4000
-            initialDelaySeconds: 15
-            periodSeconds: 10
           resources:
             requests:
               cpu: "500m"
