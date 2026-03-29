@@ -396,6 +396,10 @@ data:
       - job_name: "otel-collector"
         static_configs:
           - targets: ["opentelemetry-collector.monitoring.svc.cluster.local:8888"]
+
+      - job_name: "litellm"
+        static_configs:
+          - targets: ["litellm.litellm.svc.cluster.local:4000"]
 ---
 apiVersion: apps/v1
 kind: Deployment
