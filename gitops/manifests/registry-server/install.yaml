@@ -34,7 +34,7 @@ spec:
     spec:
       containers:
         - name: registry
-          image: registry:3.0.0
+          image: registry:3.1.0
           imagePullPolicy: IfNotPresent
           env:
             - name: REGISTRY_HTTP_HEADERS_Access-Control-Allow-Origin
