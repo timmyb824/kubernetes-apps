@@ -1,0 +1,109 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: node-problem-detector
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  annotations: {}
+spec:
+  destination:
+    namespace: kubeops
+    server: "https://kubernetes.default.svc"
+  project: default
+  source:
+    repoURL: oci://ghcr.io/deliveryhero/helm-charts/node-problem-detector
+    targetRevision: 2.4.0
+    chart: node-problem-detector
+    helm:
+      releaseName: node-problem-detector
+      values: |
+        settings:
+          # Custom monitor definitions to add to Node Problem Detector - to be
+          # mounted at /custom-config. These are in addition to pre-packaged monitor
+          # definitions provided within the default docker image available at /config:
+          # https://github.com/kubernetes/node-problem-detector/tree/master/config
+          # settings.custom_monitor_definitions -- Custom plugin monitor config files
+          custom_monitor_definitions:
+            filesystem-monitor.json: |
+              {
+                "plugin": "filelog",
+                "pluginConfig": {
+                  "timestamp": "^(\\w{3} \\d{2} \\d{2}:\\d{2}:\\d{2})",
+                  "message": "kernel: (.*)",
+                  "timestampFormat": "Jan 02 15:04:05"
+                },
+                "logPath": "/var/log/kern.log",
+                "lookback": "5m",
+                "bufferSize": 10,
+                "source": "filesystem-monitor",
+                "conditions": [
+                  {
+                    "type": "CorruptFilesystem",
+                    "status": "False",
+                    "reason": "FilesystemIsOK",
+                    "message": "Filesystem is functioning normally"
+                  }
+                ],
+                "rules": [
+                  {
+                    "type": "permanent",
+                    "condition": "CorruptFilesystem",
+                    "reason": "FilesystemCorruptionDetected",
+                    "message": "Filesystem corruption detected",
+                    "pattern": "EXT4-fs error.*"
+                  },
+                  {
+                    "type": "permanent",
+                    "condition": "CorruptFilesystem",
+                    "reason": "DiskIOError",
+                    "message": "Disk I/O error detected",
+                    "pattern": "Buffer I/O error on dev.*"
+                  },
+                  {
+                    "type": "permanent",
+                    "condition": "CorruptFilesystem",
+                    "reason": "DiskReadError",
+                    "message": "Disk read error detected",
+                    "pattern": "end_request: I/O error, dev.*"
+                  }
+                ]
+              }
+          # settings.log_monitors -- User-specified custom monitor definitions
+          log_monitors:
+            - /config/kernel-monitor.json
+            - /config/containerd-monitor.json
+            - /config/readonly-monitor.json
+            - /custom-config/filesystem-monitor.json
+            # An example of activating a custom log monitor definition in
+            # Node Problem Detector
+            # - /custom-config/docker-monitor-filelog.json
+          custom_plugin_monitors: []
+
+          # The period at which k8s-exporter does forcibly sync with apiserver
+          # settings.heartBeatPeriod -- Syncing interval with API server
+          heartBeatPeriod: 5m0s
+
+        logDir:
+          # logDir.host -- log directory on k8s host
+          host: /var/log/
+          # logDir.pod -- log directory in pod (volume mount), use logDir.host if empty
+          pod: ""
+
+        image:
+          repository: registry.k8s.io/node-problem-detector/node-problem-detector
+          tag: v1.35.1
+          pullPolicy: IfNotPresent
+
+        metrics:
+          enabled: true
+
+        maxUnavailable: 1
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: false
+    syncOptions:
+      - CreateNamespace=true
+      - ApplyOutOfSyncOnly=true
