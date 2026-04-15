@@ -72,7 +72,6 @@ spec:
           # settings.log_monitors -- User-specified custom monitor definitions
           log_monitors:
             - /config/kernel-monitor.json
-            - /config/containerd-monitor.json
             - /config/readonly-monitor.json
             - /custom-config/filesystem-monitor.json
             # An example of activating a custom log monitor definition in
