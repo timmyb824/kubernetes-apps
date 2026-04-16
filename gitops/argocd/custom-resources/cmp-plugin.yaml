@@ -26,4 +26,3 @@ data:
           - "-s"
           - "argocd-vault-plugin-credentials"
       lockRepo: false
----

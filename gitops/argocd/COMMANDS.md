@@ -26,3 +26,14 @@ argocd account update-password \
   --current-password <current-user-password> \
   --new-password <new-user-password>
 ```
+
+## Update ArgoCD
+
+Get latest version from https://github.com/argoproj/argo-cd/releases:
+
+```bash
+kubectl apply -n argocd --server-side --force-conflicts -f https://raw.githubusercontent.com/argoproj/argo-cd/<version>/manifests/install.yaml
+```
+
+Last updated: 2026-04-16
+Comment: No additional changes were needed. Custom resources were already in place.

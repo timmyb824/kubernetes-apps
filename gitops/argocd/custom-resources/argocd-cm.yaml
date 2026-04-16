@@ -27,7 +27,7 @@ data:
     connectors:
     - config:
         issuer: ${AUTHENTIK_ARGOCD_ISSUER}
-        clientID: ${AUTHENTIK_ARGOCDCLIENT_ID}
+        clientID: ${AUTHENTIK_ARGOCD_CLIENT_ID}
         clientSecret: $dex.authentik.clientSecret
         insecureEnableGroups: true
         scopes:
@@ -38,19 +38,19 @@ data:
       type: oidc
       id: authentik
   resource.customizations: |
-    installation.mattermost.com/Mattermost:
-      ignoreDifferences: |
-        jsonPointers:
-        - /spec/size
-        - /version
     rbac.authorization.k8s.io/ClusterRole:
       ignoreDifferences: |
         jsonPointers:
         - /rules
-    kyverno.io/ClusterPolicy:
-      ignoreDifferences: |
-        jsonPointers:
-        - /spec/skipBackgroundRequests
+  # installation.mattermost.com/Mattermost:
+  #   ignoreDifferences: |
+  #     jsonPointers:
+  #     - /spec/size
+  #     - /version
+  # kyverno.io/ClusterPolicy:
+  #   ignoreDifferences: |
+  #     jsonPointers:
+  #     - /spec/skipBackgroundRequests
   # resource.exclusions: |
   #   - apiGroups:
   #       - apiextensions.k8s.io
