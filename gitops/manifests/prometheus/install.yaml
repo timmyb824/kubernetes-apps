@@ -400,6 +400,10 @@ data:
       - job_name: "litellm"
         static_configs:
           - targets: ["litellm.litellm.svc.cluster.local:4000"]
+
+      - job_name: "node-problem-detecotor"
+        statis_configs:
+          - targets: ["node-problem-detector.kubeops.svc.cluster.local:20257"]
 ---
 apiVersion: apps/v1
 kind: Deployment
