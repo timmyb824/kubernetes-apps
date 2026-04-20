@@ -101,7 +101,7 @@ spec:
         fsGroup: 2000
       containers:
         - name: cupdate
-          image: ghcr.io/alexgustafsson/cupdate:0.24.4
+          image: ghcr.io/alexgustafsson/cupdate:0.24.5
           securityContext:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
