@@ -14,7 +14,7 @@ spec:
     server: "https://kubernetes.default.svc"
   source:
     repoURL: https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner
-    targetRevision: 4.0.17
+    targetRevision: 4.0.18
     chart: nfs-subdir-external-provisioner
     helm:
       releaseName: nfs-synologynas
