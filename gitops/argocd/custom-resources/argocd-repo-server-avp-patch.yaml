@@ -1,3 +1,4 @@
+#### Upgrading sets automountServiceAccountToken back to false - run this patch to set it back to true ####
 # patch command: kubectl -n argocd patch deployment argocd-repo-server --patch-file argocd-repo-server-avp-patch.yaml
 # unpatch command: kubectl -n argocd patch deployment argocd-repo-server --type='json' -p='[{"op": "remove", "path": "/spec/template/spec/containers/0"}]'
 # apiVersion: apps/v1
@@ -21,18 +22,16 @@ spec:
           env:
             - name: AVP_VERSION
               value: 1.18.1
-          command: [sh, -c]
+          command: [ sh, -c ]
           args:
             - >-
-              curl -L https://github.com/argoproj-labs/argocd-vault-plugin/releases/download/v$(AVP_VERSION)/argocd-vault-plugin_$(AVP_VERSION)_linux_amd64 -o argocd-vault-plugin &&
-              chmod +x argocd-vault-plugin &&
-              mv argocd-vault-plugin /custom-tools/
+              curl -L https://github.com/argoproj-labs/argocd-vault-plugin/releases/download/v$(AVP_VERSION)/argocd-vault-plugin_$(AVP_VERSION)_linux_amd64 -o argocd-vault-plugin && chmod +x argocd-vault-plugin && mv argocd-vault-plugin /custom-tools/
           volumeMounts:
             - mountPath: /custom-tools
               name: custom-tools
       containers:
         - name: avp
-          command: [/var/run/argocd/argocd-cmp-server]
+          command: [ /var/run/argocd/argocd-cmp-server ]
           image: registry.access.redhat.com/ubi8
           securityContext:
             runAsNonRoot: true
