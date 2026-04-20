@@ -14,7 +14,7 @@ spec:
   project: default
   sources:
     - repoURL: https://openfaas.github.io/faas-netes
-      targetRevision: 14.2.128
+      targetRevision: 15.0.4
       chart: openfaas
       helm:
         releaseName: openfaas
