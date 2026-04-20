@@ -15,7 +15,7 @@ spec:
   project: default
   sources:
     - repoURL: https://charts.rustfs.com
-      targetRevision: 0.0.83
+      targetRevision: 0.0.93
       chart: rustfs
       helm:
         releaseName: rustfs
