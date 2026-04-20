@@ -141,10 +141,10 @@ spec:
           resources:
             requests:
               cpu: "100m"
-              memory: "256Mi"
+              memory: "600Mi"
             limits:
               cpu: "500m"
-              memory: "768Mi"
+              memory: "800Mi"
       restartPolicy: Always
       volumes:
         - name: data
