@@ -18,12 +18,18 @@ spec:
       chart: tailscale-operator
       helm:
         releaseName: tailscale-operator
-        parameters:
-          - name: oauth.clientId
-            value: <0AUTH_CLIENT_ID_K8S>
-          - name: oauth.clientSecret
-            value: <0AUTH_CLIENT_SECRET_K8S>
-
+        values: |
+          oauth:
+            clientId: <0AUTH_CLIENT_ID_K8S>
+            clientSecret: <0AUTH_CLIENT_SECRET_K8S>
+          operatorConfig:
+            resources:
+              requests:
+                cpu: 10m
+                memory: 175Mi
+              limits:
+                cpu: 100m
+                memory: 250Mi
     - repoURL: "https://github.com/timmyb824/kubernetes-apps.git"
       path: "gitops/manifests/tailscale"
       targetRevision: HEAD
