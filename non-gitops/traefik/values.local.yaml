@@ -439,6 +439,13 @@ additionalVolumeMounts:
     readOnly: true
 rbac:
   enabled: true
+resources:
+  limits:
+    cpu: 500m
+    memory: 256Mi
+  requests:
+    cpu: 250m
+    memory: 128Mi
 service:
   enabled: true
   type: LoadBalancer
