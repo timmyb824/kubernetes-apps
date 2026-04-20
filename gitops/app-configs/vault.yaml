@@ -13,7 +13,7 @@ spec:
   project: default
   sources:
     - repoURL: https://helm.releases.hashicorp.com
-      targetRevision: 0.31.0
+      targetRevision: 0.32.0
       chart: vault
       helm:
         releaseName: vault
@@ -46,11 +46,11 @@ spec:
             externalVaultAddr: ""
             image:
               repository: "hashicorp/vault-k8s"
-              tag: "1.7.1"
+              tag: "1.7.3"
               pullPolicy: Always
             agentImage:
               repository: "hashicorp/vault"
-              tag: "1.21.1"
+              tag: "1.21.2"
               pullPolicy: Always
             agentDefaults:
               cpuLimit: "500m"
@@ -135,7 +135,7 @@ spec:
               secretKey: "license"
             image:
               repository: "hashicorp/vault"
-              tag: "1.21.1"
+              tag: "1.21.2"
               pullPolicy: Always
             updateStrategyType: "OnDelete" #RollingUpdate
             # Supported log levels include: trace, debug, info, warn, error
@@ -338,7 +338,7 @@ spec:
             enabled: false
             image:
               repository: "hashicorp/vault-csi-provider"
-              tag: "1.7.0"
+              tag: "1.7.1"
               pullPolicy: IfNotPresent
             volumes: null
             volumeMounts: null
