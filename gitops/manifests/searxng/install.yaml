@@ -45,6 +45,18 @@ data:
       - 'Self Information'
       - 'Tracker URL remover'
       - 'Ahmia blacklist'
+
+    engines:
+      - name: ahmia
+        disabled: true
+      - name: torch
+        disabled: true
+      # - name: wikidata
+      #   disabled: true
+      - name: karmasearch
+        disabled: true
+      - name: karmasearch videos
+        disabled: true
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
