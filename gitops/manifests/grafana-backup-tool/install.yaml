@@ -22,7 +22,6 @@ data:
   AWS_DEFAULT_REGION: "us-east-1"
   AWS_ACCESS_KEY_ID: <AWS_ACCESS_KEY_ID>
   AWS_SECRET_ACCESS_KEY: <AWS_SECRET_ACCESS_KEY>
-  RUSTFS_ALLOW_ARCHIVE_CONTENT_ENCODING: "true"
 ---
 # Run grafana-backup-tool daily and store backups in an S3
 # compatible object storage such as minio

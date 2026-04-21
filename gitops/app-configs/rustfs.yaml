@@ -56,6 +56,10 @@ spec:
                 time: hour
                 keep_files: 30
 
+          extraEnv:
+            - name: RUSTFS_ALLOW_ARCHIVE_CONTENT_ENCODING
+              value: "true"
+
           podAnnotations:
             app.kubernetes.io/name: rustfs
 
