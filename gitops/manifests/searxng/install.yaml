@@ -29,7 +29,9 @@ data:
       default_lang: "auto"
 
     server:
-      base_url: http://localhost:8080/
+      base_url: https://searxng.timmybtech.com
+      port: 8080
+      bind_address: "127.0.0.1"
       limiter: false
       image_proxy: true
       public_instance: false
