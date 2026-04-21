@@ -95,6 +95,7 @@ spec:
               name: searxng-config
             - mountPath: /data
               name: searxng-claim0
+      enableServiceLinks: false
       volumes:
         - name: searxng-config
           configMap:
