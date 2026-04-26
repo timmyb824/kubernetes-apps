@@ -24,3 +24,9 @@ data:
             health_check 5s
         }
     }
+  tailscale.server: |
+    ts.net:53 {
+        errors
+        cache 30
+        forward . 100.100.100.100
+    }
