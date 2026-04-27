@@ -296,6 +296,12 @@ providers:
             entrypoints:
               - websecure
             tls: {}
+          pialert:
+            rule: Host(`pialert.local.timmybtech.com`)
+            service: pialert
+            entrypoints:
+              - websecure
+            tls: {}
         services:
           uptime-kuma:
             loadBalancer:
@@ -426,6 +432,10 @@ providers:
             loadBalancer:
               servers:
                 - url: http://192.168.86.174:8094
+          pialert:
+            loadBalancer:
+              servers:
+                - url: http://192.168.86.26/pialert
         serversTransports:
           nas-transport:
             insecureSkipVerify: true
