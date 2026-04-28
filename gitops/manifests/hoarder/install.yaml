@@ -19,8 +19,8 @@ spec:
 apiVersion: v1
 data:
   DISABLE_SIGNUPS: "true"
-  MEILI_ADDR: "http://<path:secret/data/database#MEILISEARCH_HOST>:7700"
-  MEILI_MASTER_KEY: <path:secret/data/database#MEILISEARCH_MASTER_KEY>
+  # MEILI_ADDR: "http://<path:secret/data/database#MEILISEARCH_HOST>:7700"
+  # MEILI_MASTER_KEY: <path:secret/data/database#MEILISEARCH_MASTER_KEY>
   NEXTAUTH_SECRET: <path:secret/data/argocd#HOARDER_NEXTAUTH_SECRET>
   NEXTAUTH_URL: https://hoarder.timmybtech.com
   OAUTH_ALLOW_DANGEROUS_EMAIL_ACCOUNT_LINKING: "true"
@@ -57,8 +57,6 @@ spec:
           ports:
             - containerPort: 3000
           env:
-            - name: MEILI_ADDR
-              value: <path:secret/data/database#MEILISEARCH_HOST>:7700
             - name: BROWSER_WEB_URL
               value: http://chrome:9222
             - name: DATA_DIR
