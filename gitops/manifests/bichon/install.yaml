@@ -53,6 +53,8 @@ spec:
               value: /data
             - name: BICHON_LOG_LEVEL
               value: info
+            - name: BICHON_ENCRYPT_PASSWORD
+              value: <path:secret/data/argocd#BICHON_ENCRYPT_PASSWORD>
           resources:
             limits:
               cpu: 500m
