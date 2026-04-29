@@ -435,11 +435,6 @@ data:
             href: https://n8n.timmybtech.com/
             namespace: n8n
             app: n8n
-        - Open-Archiver:
-            icon: sh-open-archiver.png
-            href: https://open-archiver.local.timmybtech.com/
-            namespace: open-archiver
-            app: open-archiver
         - OpenFaaS:
             icon: kubernetes.png
             href: https://openfaas.local.timmybtech.com/

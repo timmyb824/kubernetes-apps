@@ -43,6 +43,7 @@ spec:
   selector:
     matchLabels:
       app: mealie
+      app.kubernetes.io/name: mealie
   template:
     metadata:
       labels:
