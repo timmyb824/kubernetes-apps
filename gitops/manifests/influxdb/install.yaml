@@ -22,7 +22,6 @@ spec:
       labels:
         app: influxdb
         app.kubernetes.io/name: influxdb
-
     spec:
       containers:
         - image: influxdb:2.8.0
