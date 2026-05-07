@@ -56,12 +56,12 @@ spec:
             - name: BICHON_ENCRYPT_PASSWORD
               value: <path:secret/data/argocd#BICHON_ENCRYPT_PASSWORD>
           resources:
-            limits:
-              cpu: 500m
-              memory: 512Mi
             requests:
-              cpu: 100m
-              memory: 128Mi
+              cpu: 25m
+              memory: 384Mi
+            limits:
+              cpu: 250m
+              memory: 600Mi
           volumeMounts:
             - mountPath: /data
               name: bichon-data
