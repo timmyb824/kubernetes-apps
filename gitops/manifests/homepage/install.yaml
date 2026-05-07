@@ -607,6 +607,10 @@ data:
             icon: dozzle.png
             href: https://dozzle.local.timmybtech.com/
             ping: http://192.168.86.174:9999
+        - Filebrowser:
+            icon: sh-filebrowser-quantum.png
+            href: https://filebrowser.local.timmybtech.com/
+            ping: http://192.168.86.33:8080
         - Healthchecks:
             icon: healthchecks.png
             href: https://healthchecks.timmybtech.com/
