@@ -657,7 +657,7 @@ data:
             ping: http://192.168.86.174:8081
         - PiAlert:
             icon: sh-pi-alert.png
-            href: http://192.168.86.26/pialert/
+            href: https://pialert.local.timmybtech.com/
             ping: http://192.168.86.26
         - Scanopy:
             icon: sh-scanopy.png
