@@ -4,14 +4,14 @@ metadata:
   name: changedetectionio
   namespace: argocd
   finalizers:
-  - resources-finalizer.argocd.argoproj.io
+    - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
     namespace: changedetection
     server: "https://kubernetes.default.svc"
   source:
     path: gitops/manifests/changedetectionio
-    repoURL: "https://github.com/timmyb824/kubernetes-apps.git"
+    repoURL: "https://github.com/timmyb824/homelab-kubernetes-apps.git"
     targetRevision: HEAD
   project: default
   syncPolicy:
@@ -19,4 +19,4 @@ spec:
       prune: false
       selfHeal: false
     syncOptions:
-    - CreateNamespace=true
+      - CreateNamespace=true

@@ -63,7 +63,7 @@ spec:
                 cpu: 100m
                 memory: 64Mi
 
-    - repoURL: "https://github.com/timmyb824/kubernetes-apps.git"
+    - repoURL: "https://github.com/timmyb824/homelab-kubernetes-apps.git"
       path: "gitops/manifests/kyverno"
       targetRevision: HEAD
 

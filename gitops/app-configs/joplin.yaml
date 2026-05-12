@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: "https://github.com/timmyb824/kubernetes-apps.git"
+    repoURL: "https://github.com/timmyb824/homelab-kubernetes-apps.git"
     targetRevision: HEAD
     path: gitops/manifests/joplin
   destination:

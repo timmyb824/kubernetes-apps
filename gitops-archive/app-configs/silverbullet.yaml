@@ -4,14 +4,14 @@ metadata:
   name: silverbullet
   namespace: argocd
   finalizers:
-  - resources-finalizer.argocd.argoproj.io
+    - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
     namespace: silverbullet
     server: "https://kubernetes.default.svc"
   source:
     path: gitops/manifests/silverbullet
-    repoURL: "https://github.com/timmyb824/kubernetes-apps.git"
+    repoURL: "https://github.com/timmyb824/homelab-kubernetes-apps.git"
     targetRevision: HEAD
   project: default
   syncPolicy:

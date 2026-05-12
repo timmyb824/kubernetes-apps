@@ -4,14 +4,14 @@ metadata:
   name: olivetin
   namespace: argocd
   finalizers:
-  - resources-finalizer.argocd.argoproj.io
+    - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
     namespace: olivetin
     server: "https://kubernetes.default.svc"
   source:
     path: gitops/manifests/olivetin
-    repoURL: "https://github.com/timmyb824/kubernetes-apps.git"
+    repoURL: "https://github.com/timmyb824/homelab-kubernetes-apps.git"
     targetRevision: HEAD
   project: default
   syncPolicy:

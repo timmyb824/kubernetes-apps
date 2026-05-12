@@ -120,7 +120,7 @@ spec:
             metrics:
               enabled: true
 
-    - repoURL: "https://github.com/timmyb824/kubernetes-apps.git"
+    - repoURL: "https://github.com/timmyb824/homelab-kubernetes-apps.git"
       path: "gitops/manifests/crowdsec"
       targetRevision: HEAD
 

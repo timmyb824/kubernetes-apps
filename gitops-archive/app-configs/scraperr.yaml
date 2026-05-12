@@ -66,7 +66,7 @@ spec:
                   path: /data/scraperr/media
           replicaCount: 1
 
-    - repoURL: "https://github.com/timmyb824/kubernetes-apps.git"
+    - repoURL: "https://github.com/timmyb824/homelab-kubernetes-apps.git"
       path: "gitops/manifests/scraperr"
       targetRevision: HEAD
 

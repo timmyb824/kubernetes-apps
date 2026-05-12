@@ -72,7 +72,7 @@ spec:
             serviceMonitor:
               enabled: false
 
-    - repoURL: "https://github.com/timmyb824/kubernetes-apps.git"
+    - repoURL: "https://github.com/timmyb824/homelab-kubernetes-apps.git"
       path: "gitops/manifests/netbird"
       targetRevision: HEAD
 

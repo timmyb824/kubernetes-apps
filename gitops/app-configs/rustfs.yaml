@@ -122,7 +122,7 @@ spec:
             dataStorageSize: 32Gi
             logStorageSize: 8Gi
 
-    - repoURL: "https://github.com/timmyb824/kubernetes-apps.git"
+    - repoURL: "https://github.com/timmyb824/homelab-kubernetes-apps.git"
       path: "gitops/manifests/rustfs"
       targetRevision: HEAD
 

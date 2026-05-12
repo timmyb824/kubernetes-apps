@@ -1,3 +1,4 @@
+---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -11,7 +12,7 @@ spec:
     server: "https://kubernetes.default.svc"
   source:
     path: gitops/manifests/prometheus
-    repoURL: "https://github.com/timmyb824/kubernetes-apps.git"
+    repoURL: "https://github.com/timmyb824/homelab-kubernetes-apps.git"
     targetRevision: HEAD
   project: default
   syncPolicy:
