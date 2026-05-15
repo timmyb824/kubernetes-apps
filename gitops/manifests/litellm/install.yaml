@@ -92,6 +92,9 @@ data:
         litellm_params:
           model: openrouter/openai/gpt-5.1-codex
           api_key: os.environ/OPENROUTER_API_KEY
+        model_info:
+          input_cost_per_token: 0.00000125      # $1.25/1M
+          output_cost_per_token: 0.00001      # $10/1M
 
       - model_name: gpt-5.1-codex-mini-or
         litellm_params:
@@ -112,6 +115,9 @@ data:
         litellm_params:
           model: openrouter/openai/gpt-4o
           api_key: os.environ/OPENROUTER_API_KEY
+        model_info:
+          input_cost_per_token: 0.0000025      # $2.5/1M
+          output_cost_per_token: 0.00001      # $10/1M
 
       - model_name: gpt-4o-mini-or
         litellm_params:
@@ -127,11 +133,17 @@ data:
         litellm_params:
           model: openrouter/anthropic/claude-haiku-4-5
           api_key: os.environ/OPENROUTER_API_KEY
+        model_info:
+          input_cost_per_token: 0.000001      # $1/1M
+          output_cost_per_token: 0.000005     # $5/1M
 
       - model_name: claude-sonnet-4.6-or
         litellm_params:
           model: openrouter/anthropic/claude-sonnet-4-6
           api_key: os.environ/OPENROUTER_API_KEY
+      model_info:
+        input_cost_per_token: 0.000003      # $3/1M
+        output_cost_per_token: 0.000015    # $15/1M
 
       - model_name: claude-sonnet-4-or
         litellm_params:
