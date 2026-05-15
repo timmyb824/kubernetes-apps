@@ -270,6 +270,7 @@ stringData:
   LITELLM_MASTER_KEY: "<path:secret/data/argocd#LITELLM_MASTER_KEY>"
   OPENROUTER_API_KEY: "<path:secret/data/argocd#OPENROUTER_LITELLM_KEY>"
   DATABASE_URL: "<path:secret/data/database#PG_CONN_STRING>/litellm?schema=public"
+  REDIS_URL: "<path:secret/data/database#REDIS_CONN_STRING>/4"
 ---
 apiVersion: apps/v1
 kind: Deployment
