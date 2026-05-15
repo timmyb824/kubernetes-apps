@@ -70,7 +70,7 @@ data:
   #         summary: High Memory Usage
   prometheus.yml: |-
     global:
-      scrape_interval: 300s
+      scrape_interval: 120s
       scrape_timeout: 55s
 
       external_labels:
