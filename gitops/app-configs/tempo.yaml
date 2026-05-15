@@ -26,12 +26,12 @@ spec:
 
             updateStrategy: RollingUpdate
             resources:
-            requests:
-              cpu: 1000m
-              memory: 2Gi
-            limits:
-              cpu: 2000m
-              memory: 4Gi
+              requests:
+                cpu: 1000m
+                memory: 2Gi
+              limits:
+                cpu: 2000m
+                memory: 4Gi
 
             multitenancyEnabled: false
             reportingEnabled: false
