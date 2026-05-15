@@ -325,6 +325,7 @@ data:
               type: authentik
               url: https://authentik.timmybtech.com
               key: <AUTHENTIK_TOKEN>
+              version: 2
         - Traefik-k8s:
             icon: traefik.png
             href: https://traefik.local.timmybtech.com/
