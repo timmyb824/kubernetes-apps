@@ -141,8 +141,7 @@ data:
 
       - model_name: claude-sonnet-4.6-poe
         litellm_params:
-          model: openai/claude-sonnet-4.6
-          api_base: https://api.poe.com/v1
+          model: poe/claude-sonnet-4.6
           api_key: os.environ/POE_API_KEY
 
       - model_name: claude-sonnet-4-poe
