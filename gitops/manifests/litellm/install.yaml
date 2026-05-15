@@ -282,6 +282,7 @@ spec:
       containers:
         - name: litellm
           image: ghcr.io/berriai/litellm:main-latest
+          imagePullPolicy: Always
           args:
             - "--config"
             - "/app/config.yaml"
