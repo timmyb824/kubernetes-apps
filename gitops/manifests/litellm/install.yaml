@@ -141,9 +141,9 @@ data:
         litellm_params:
           model: openrouter/anthropic/claude-sonnet-4-6
           api_key: os.environ/OPENROUTER_API_KEY
-      model_info:
-        input_cost_per_token: 0.000003      # $3/1M
-        output_cost_per_token: 0.000015    # $15/1M
+        model_info:
+          input_cost_per_token: 0.000003      # $3/1M
+          output_cost_per_token: 0.000015    # $15/1M
 
       - model_name: claude-sonnet-4-or
         litellm_params:
