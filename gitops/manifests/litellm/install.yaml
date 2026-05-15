@@ -249,6 +249,7 @@ data:
       success_callback: ["prometheus"]
       telemetry: false
       drop_params: true
+      enable_redis_auth_cache: true
 
     general_settings:
       master_key: os.environ/LITELLM_MASTER_KEY
