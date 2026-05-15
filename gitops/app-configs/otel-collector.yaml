@@ -22,6 +22,15 @@ spec:
             repository: otel/opentelemetry-collector-contrib
           mode: deployment
 
+
+          resources:
+            limits:
+              cpu: 250m
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 256Mi
+
           ports:
             metrics:
               enabled: true

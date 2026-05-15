@@ -31,7 +31,7 @@ spec:
                 memory: 2Gi
               limits:
                 cpu: 2000m
-                memory: 4Gi
+                memory: 3Gi
 
             multitenancyEnabled: false
             reportingEnabled: false
