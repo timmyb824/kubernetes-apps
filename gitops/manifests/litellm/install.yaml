@@ -246,7 +246,8 @@ data:
           api_key: os.environ/OPENROUTER_API_KEY
 
     litellm_settings:
-      success_callback: ["prometheus"]
+      success_callback: ["prometheus", "otel"]
+      otel_exporter_otlp_endpoint: http://opentelemetry-collector.monitoring.svc.cluster.local:4318
       telemetry: false
       drop_params: true
       cache: true
