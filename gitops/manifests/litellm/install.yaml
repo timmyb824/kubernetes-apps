@@ -285,6 +285,7 @@ data:
     litellm_settings:
       success_callback: ["prometheus"]
       telemetry: false
+      drop_params: true
 
     general_settings:
       master_key: os.environ/LITELLM_MASTER_KEY
