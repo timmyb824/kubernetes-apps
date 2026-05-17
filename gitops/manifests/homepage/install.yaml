@@ -660,6 +660,14 @@ data:
             icon: sh-pi-alert.png
             href: https://pialert.local.timmybtech.com/
             ping: http://192.168.86.26
+        - Pulse:
+            icon: proxmox.png
+            href: https://pulse.local.timmybtech.com/
+            ping: http://192.168.86.174:7655
+        - Patchmon:
+            icon: patchman.png
+            href: https://patchmon.local.timmybtech.com/
+            ping: http://192.168.86.40:3000
         - Scanopy:
             icon: sh-scanopy.png
             href: https://scanopy.local.timmybtech.com/
@@ -672,10 +680,6 @@ data:
             icon: ansible.png
             href: https://semaphore.local.timmybtech.com/
             ping: http://192.168.86.174:3005
-        - Pulse:
-            icon: proxmox.png
-            href: https://pulse.local.timmybtech.com/
-            ping: http://192.168.86.174:7655
         - Your-Spotify:
             icon: spotify.png
             href: http://192.168.86.174:3003/
