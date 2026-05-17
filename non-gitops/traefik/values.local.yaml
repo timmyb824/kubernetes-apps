@@ -308,9 +308,9 @@ providers:
             entrypoints:
               - websecure
             tls: {}
-          patchman:
-            rule: Host(`patchman.local.timmybtech.com`)
-            service: patchman
+          patchmon:
+            rule: Host(`patchmon.local.timmybtech.com`)
+            service: patchmon
             entrypoints:
               - websecure
             tls: {}
@@ -448,10 +448,10 @@ providers:
             loadBalancer:
               servers:
                 - url: http://192.168.86.26/pialert
-            patchman:
-              loadBalancer:
-                servers:
-                  - url: http://192.168.86.40:3000
+          patchmon:
+            loadBalancer:
+              servers:
+                - url: http://192.168.86.40:3000
         serversTransports:
           nas-transport:
             insecureSkipVerify: true
