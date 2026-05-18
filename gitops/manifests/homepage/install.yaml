@@ -665,7 +665,7 @@ data:
             href: https://pulse.local.timmybtech.com/
             ping: http://192.168.86.174:7655
         - Patchmon:
-            icon: sh-patchman.png
+            icon: sh-patchmon.png
             href: https://patchmon.local.timmybtech.com/
             ping: http://192.168.86.40:3000
         - Scanopy:
