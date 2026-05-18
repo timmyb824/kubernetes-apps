@@ -452,6 +452,10 @@ providers:
             loadBalancer:
               servers:
                 - url: http://192.168.86.40:3000
+          filebrowser:
+            loadBalancer:
+              servers:
+                - url: http://192.168.86.33:8080
         serversTransports:
           nas-transport:
             insecureSkipVerify: true
