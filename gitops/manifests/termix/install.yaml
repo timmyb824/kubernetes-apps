@@ -37,7 +37,7 @@ spec:
       containers:
         - name: termix
           image: ghcr.io/lukegus/termix:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           env:
             - name: PORT
               value: "8080"
