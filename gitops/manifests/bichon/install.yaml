@@ -43,7 +43,7 @@ spec:
       enableServiceLinks: false
       containers:
         - name: bichon
-          image: rustmailer/bichon:1.0.2
+          image: rustmailer/bichon:1.1.3
           imagePullPolicy: Always
           ports:
             - containerPort: 15630
