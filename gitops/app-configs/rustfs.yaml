@@ -59,6 +59,8 @@ spec:
           extraEnv:
             - name: RUSTFS_ALLOW_ARCHIVE_CONTENT_ENCODING
               value: "true"
+            - name: RUSTFS_CORS_ALLOWED_ORIGINS
+              value: "https://rustfs.local.timmybtech.com,https://rustfs-endpoint.local.timmybtech.com,https://rustfs-endpoint.timmybtech.com,https://localhost:9000,https://localhost:9001"
 
           podAnnotations:
             app.kubernetes.io/name: rustfs
