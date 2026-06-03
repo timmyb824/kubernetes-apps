@@ -386,11 +386,6 @@ data:
               url: https://paperless.local.timmybtech.com
               key: <path:secret/data/homepage#PAPERLESS_API_AUTH_TOKEN>
     - Kubernetes hidden:
-        - Bichon:
-            icon: sh-bichon.png
-            href: https://bichon.local.timmybtech.com/
-            namespace: bichon
-            app: bichon
         - Cupdate:
             icon: podman.png
             href: https://cupdate.local.timmybtech.com/
@@ -592,6 +587,10 @@ data:
             icon: archivebox.png
             href: http://archivebox.local.timmybtech.com/
             ping: http://192.168.86.139:8000/
+         - Bichon:
+            icon: sh-bichon.png
+            href: https://bichon.local.timmybtech.com/
+            ping: http://192.168.86.43:15630
         - Cupdate Podman:
             icon: podman.png
             href: https://cupdate-podman.local.timmybtech.com/
