@@ -8,7 +8,7 @@ spec:
       restartPolicy: Never
       containers:
         - name: bichon-admin
-          image: rustmailer/bichon:1.4.1
+          image: rustmailer/bichon:1.4.2
           stdin: true
           tty: true
           command: ["bichon-admin"]
