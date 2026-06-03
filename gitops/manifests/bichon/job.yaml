@@ -1,0 +1,24 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: bichon-migration
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: bichon-admin
+          image: rustmailer/bichon-admin:1.0.1 # note: use 1.0.1, not 1.0.0
+          stdin: true
+          tty: true
+          command: ["bichon-admin"]
+          env:
+            - name: BICHON_ENCRYPT_PASSWORD
+              value: <path:secret/data/argocd#BICHON_ENCRYPT_PASSWORD>
+          volumeMounts:
+            - name: bichon-data
+              mountPath: /data
+      volumes:
+        - name: bichon-data
+          persistentVolumeClaim:
+            claimName: bichon-data
