@@ -22,7 +22,7 @@ spec:
           openaiBaseApiUrls:
             - "https://api.openai.com/v1"
             - "https://litellm.timmybtech.com/v1"
-          openaiApiKeys: []
+          openaiApiKeys:
             - "<path:secret/data/argocd#OPENAI_PROJECT_KEY>"
             - "<path:secret/data/argocd#OPENUI_LITELLM_KEY>"
           s3:
