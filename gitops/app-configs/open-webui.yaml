@@ -20,6 +20,8 @@ spec:
         values: |
           namespaceOverride: "open-webui"
           replicaCount: 1
+          ollama:
+            enabled: false
           openaiBaseApiUrls:
             - "https://api.openai.com/v1"
             - "https://litellm.timmybtech.com/v1"
@@ -30,6 +32,8 @@ spec:
             enabled: true
             manager: redis
             url: "<path:secret/data/database#REDIS_CONN_STRING>/5"
+            redis:
+              enabled: false
           persistence:
             enabled: true
             provider: s3
