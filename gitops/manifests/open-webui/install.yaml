@@ -2,7 +2,7 @@ apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
   name: open-webui-internal
-  namespace: monitoring
+  namespace: open-webui
   annotations:
     kubernetes.io/ingress.class: traefik-external
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
