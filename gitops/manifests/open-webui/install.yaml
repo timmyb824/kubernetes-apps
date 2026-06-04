@@ -14,6 +14,6 @@ spec:
       kind: Rule
       services:
         - name: open-webui
-          port: 6379
+          port: 80
   tls:
     secretName: local-timmybtech-com-tls
