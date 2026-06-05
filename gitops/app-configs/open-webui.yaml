@@ -50,6 +50,9 @@ spec:
               endpointUrl: "https://rustfs-endpoint.local.timmybtech.com"
               region: "us-east-1"
               bucket: "open-webui"
+          extraEnvVars:
+            - name: WEBUI_URL
+              value: "https://openui.local.timmybtech.com"
           databaseUrl: "<path:secret/data/database#PGQL_CONN_STRING>/openwebui"
           sso:
             enabled: true
