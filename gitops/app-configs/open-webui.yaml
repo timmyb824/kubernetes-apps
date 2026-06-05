@@ -57,6 +57,7 @@ spec:
           sso:
             enabled: true
             enableSignup: false
+            mergeAccountsByEmail: true
             oidc:
               enabled: true
               clientId: "<path:secret/data/argocd#OPENUI_AUTHENTIK_CLIENT_ID>"
