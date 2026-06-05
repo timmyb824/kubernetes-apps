@@ -27,10 +27,12 @@ spec:
           openaiBaseApiUrls:
             - "https://api.openai.com/v1"
             - "https://litellm.timmybtech.com/v1"
+            - "http://hermes.homelab.lan:8642/v1"
           openaiApiKeys:
             # - "<path:secret/data/argocd#OPENUI_PIPELINE_KEY>" # enabled when pipelines are enabled
             - "<path:secret/data/argocd#OPENAI_PROJECT_KEY>"
             - "<path:secret/data/argocd#OPENUI_LITELLM_KEY>"
+            - "<path:secret/data/argocd#OPENUI_HERMES_API_KEY>"
           websocket:
             enabled: true
             manager: redis
