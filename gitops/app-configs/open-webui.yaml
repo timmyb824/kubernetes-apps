@@ -52,7 +52,7 @@ spec:
               bucket: "open-webui"
           databaseUrl: "<path:secret/data/database#PGQL_CONN_STRING>/openwebui"
           sso:
-            enabled: false
+            enabled: true
             enableSignup: false
           oidc:
             enabled: true
