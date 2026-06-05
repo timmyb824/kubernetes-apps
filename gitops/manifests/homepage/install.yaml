@@ -436,6 +436,11 @@ data:
             href: https://openfaas.local.timmybtech.com/
             namespace: openfaas
             app: gateway
+        - Open-WebUI:
+            icon: sh-open-webui.png
+            href: https://openui.local.timmybtech.com/
+            namespace: open-webui
+            app: open-webui
         - Paperless-AI:
             icon: paperless.png
             href: https://paperless-ai.local.timmybtech.com/
@@ -651,6 +656,10 @@ data:
             icon: sh-openclaw.png
             href: https://openclaw.tailebee.ts.net/
             ping: http://192.168.86.93
+        - Hermes:
+            icon: sh-hermes.png
+            href: https://hermes.homelab.lan/
+            ping: http://192.168.86.108
         - PGweb :
             icon: postgres.png
             href: https://pgweb.local.timmybtech.com/

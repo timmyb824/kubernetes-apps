@@ -51,15 +51,15 @@ spec:
               region: "us-east-1"
               bucket: "open-webui"
           databaseUrl: "<path:secret/data/database#PGQL_CONN_STRING>/openwebui"
-          # sso:
-          #   enabled: false
-          #   enableSignup: false
-          # oidc:
-          #   enabled: true
-          #   clientId: "<path:secret/data/argocd#OPENUI_AUTHENTIK_CLIENT_ID>"
-          #   clientSecret: "<path:secret/data/argocd#OPENUI_AUTHENTIK_CLIENT_SECRET>"
-          #   providerUrl: "<path:secret/data/argocd#OPENUI_AUTHENTIK_PROVIDER_URL>"
-          #   providerName: "Authentik"
+          sso:
+            enabled: false
+            enableSignup: false
+          oidc:
+            enabled: true
+            clientId: "<path:secret/data/argocd#OPENUI_AUTHENTIK_CLIENT_ID>"
+            clientSecret: "<path:secret/data/argocd#OPENUI_AUTHENTIK_CLIENT_SECRET>"
+            providerUrl: "<path:secret/data/argocd#OPENUI_AUTHENTIK_PROVIDER_URL>"
+            providerName: "Authentik"
           resources:
             limits:
               cpu: 250m
