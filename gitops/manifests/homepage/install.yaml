@@ -657,7 +657,7 @@ data:
             href: https://openclaw.tailebee.ts.net/
             ping: http://192.168.86.93
         - Hermes:
-            icon: sh-hermes.png
+            icon: sh-hermes-agent.png
             href: https://hermes.homelab.lan/
             ping: http://192.168.86.108
         - PGweb :
