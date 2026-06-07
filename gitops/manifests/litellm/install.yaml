@@ -252,6 +252,9 @@ data:
         litellm_params:
           model: openrouter/google/gemini-3.5-flash
           api_key: os.environ/OPENROUTER_API_KEY
+        model_info:
+          input_cost_per_token: 0.0000015     # $1.5/1M
+          output_cost_per_token: 0.000009     # $9.0/1M
 
     litellm_settings:
       success_callback: ["prometheus", "otel"]
