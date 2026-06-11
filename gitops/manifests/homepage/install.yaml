@@ -252,7 +252,7 @@ data:
       Proxmox:
         icon: mdi-server
         style: row
-        columns: 3
+        columns: 5
       Storage:
         icon: mdi-database-check
         style: row
@@ -533,12 +533,20 @@ data:
             ping: https://192.168.86.160:8006
         - Proxmox 3:
             icon: proxmox.png
-            href: https://192.168.86.199:8006
+            href: https://pve.local.timmybtech.com/
             ping: https://192.168.86.199:8006
         - Proxmox 4:
             icon: proxmox.png
-            href: https://192.168.86.217:8006
+            href: https://pve.local.timmybtech.com/
             ping: https://192.168.86.217:8006
+        - Proxmox 5:
+            icon: proxmox.png
+            href: https://pve.local.timmybtech.com/
+            ping: https://192.168.86.41:8006
+        - Proxmox Backup Server:
+            icon: proxmox.png
+            href: https://pbs.local.timmybtech.com/
+            ping: https://192.168.86.66:8007
     - VM/LXC:
         - Dockhand:
             icon: podman.png
