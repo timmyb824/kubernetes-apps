@@ -320,6 +320,12 @@ providers:
             entrypoints:
               - websecure
             tls: {}
+          pbs:
+            rule: Host(`pbs.local.timmybtech.com`)
+            service: pbs
+            entrypoints:
+              - websecure
+            tls: {}
         services:
           uptime-kuma:
             loadBalancer:
@@ -466,6 +472,10 @@ providers:
             loadBalancer:
               servers:
                 - url: http://192.168.86.43:15630
+          pbs:
+            loadBalancer:
+              servers:
+                - url: https://192.168.86.66:8007
         serversTransports:
           nas-transport:
             insecureSkipVerify: true
