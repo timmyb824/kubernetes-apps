@@ -326,6 +326,12 @@ providers:
             entrypoints:
               - websecure
             tls: {}
+          proxcenter:
+            rule: Host(`proxcenter.local.timmybtech.com`)
+            service: proxcenter
+            entrypoints:
+              - websecure
+            tls: {}
         services:
           uptime-kuma:
             loadBalancer:
@@ -476,6 +482,10 @@ providers:
             loadBalancer:
               servers:
                 - url: https://192.168.86.66:8007
+          proxcenter:
+            loadBalancer:
+              servers:
+                - url: https://192.168.86.174:3000
         serversTransports:
           nas-transport:
             insecureSkipVerify: true
