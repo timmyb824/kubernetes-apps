@@ -485,7 +485,7 @@ providers:
           proxcenter:
             loadBalancer:
               servers:
-                - url: https://192.168.86.174:3000
+                - url: http://192.168.86.174:3000
         serversTransports:
           nas-transport:
             insecureSkipVerify: true
