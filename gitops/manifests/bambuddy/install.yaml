@@ -1,0 +1,138 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: bambuddy
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: bambuddy-data-pvc
+  namespace: bambuddy
+spec:
+  accessModes: ["ReadWriteOnce"]
+  storageClassName: nfs-csi-synologynas
+  resources:
+    requests:
+      storage: 10Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: bambuddy-logs-pvc
+  namespace: bambuddy
+spec:
+  accessModes: ["ReadWriteOnce"]
+  storageClassName: nfs-csi-synologynas
+  resources:
+    requests:
+      storage: 5Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bambuddy
+  namespace: bambuddy
+  labels:
+    app: bambuddy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bambuddy
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: bambuddy
+        app.kubernetes.io/name: bambuddy
+    spec:
+      enableServiceLinks: false
+      securityContext:
+        fsGroup: 1000
+      containers:
+        - name: bambuddy
+          image: ghcr.io/maziggy/bambuddy:0.2.4.6
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 8000
+              protocol: TCP
+            - name: ftp-control
+              containerPort: 990
+              protocol: TCP
+            - name: rtsp
+              containerPort: 322
+              protocol: TCP
+            - name: mqtt
+              containerPort: 8883
+              protocol: TCP
+          securityContext:
+            capabilities:
+              add:
+                - NET_BIND_SERVICE
+          env:
+            - name: TZ
+              value: America/New_York
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+            - name: PORT
+              value: "8000"
+          resources:
+            limits:
+              cpu: 1000m
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 256Mi
+          volumeMounts:
+            - name: data
+              mountPath: /app/data
+            - name: logs
+              mountPath: /app/logs
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: bambuddy-data-pvc
+        - name: logs
+          persistentVolumeClaim:
+            claimName: bambuddy-logs-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bambuddy
+  namespace: bambuddy
+  labels:
+    app: bambuddy
+spec:
+  selector:
+    app: bambuddy
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8000
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: bambuddy-internal
+  namespace: bambuddy
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`bambuddy.local.timmybtech.com`)
+      kind: Rule
+      services:
+        - name: bambuddy
+          port: 80
+  tls:
+    secretName: local-timmybtech-com-tls
