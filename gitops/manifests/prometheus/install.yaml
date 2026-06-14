@@ -405,6 +405,9 @@ data:
         static_configs:
           - targets: ["node-problem-detector.kubeops.svc.cluster.local:20257"]
 
+      - job_name: "bambuddy"
+        static_configs:
+          - targets: ["bambuddy.bambuddy.svc.cluster.local:8000/api/v1"]
 ---
 apiVersion: apps/v1
 kind: Deployment
