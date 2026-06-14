@@ -408,7 +408,7 @@ data:
       - job_name: "bambuddy"
         metrics_path: /api/v1/metrics
         static_configs:
-          - targets: ["bambuddy.bambuddy.svc.cluster.local:8000"]
+          - targets: ["bambuddy.bambuddy.svc.cluster.local:80"]
 ---
 apiVersion: apps/v1
 kind: Deployment
