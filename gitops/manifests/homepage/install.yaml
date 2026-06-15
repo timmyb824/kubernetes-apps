@@ -426,6 +426,11 @@ data:
             href: https://litellm.timmybtech.com/ui
             namespace: litellm
             app: litellm
+        - Manyfold:
+            icon: sh-manyfold.png
+            href: https://manyfold.local.timmybtech.com/
+            namespace: manyfold
+            app: manyfold
         - Mealie:
             icon: mealie.png
             href: https://mealie.local.timmybtech.com/
@@ -525,7 +530,6 @@ data:
                 url: http://192.168.86.174
                 username: <ADGUARD_USER>
                 password: <ADGUARD_PASSWORD>
-
     - Storage:
         - Synology:
             icon: synology.png
@@ -649,10 +653,6 @@ data:
             icon: loki.png
             href: https://loki.local.timmybtech.com/
             ping: http://192.168.86.146:3100/loki/api/v1/status/buildinfo
-        - Manyfold:
-            icon: sh-manyfold.png
-            href: https://manyfold.local.timmybtech.com/
-            ping: http://192.168.86.174:3214/
         - Nutalert:
             icon: sh-nutalert.png
             href: https://nutalert.local.timmybtech.com/
