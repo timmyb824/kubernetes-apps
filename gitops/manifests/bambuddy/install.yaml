@@ -28,6 +28,37 @@ spec:
     requests:
       storage: 5Gi
 ---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: manyfold-libraries-ro-pv
+spec:
+  capacity:
+    storage: 24Gi
+  accessModes:
+    - ReadOnlyMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: ""
+  mountOptions:
+    - ro
+  nfs:
+    server: 192.168.86.44
+    path: /volume1/kubernetes/manyfold-manyfold-libraries-pvc-pvc-1e282cbf-e05d-4595-94b4-0ce15713c9f4
+    readOnly: true
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: manyfold-libraries-pvc
+  namespace: bambuddy
+spec:
+  accessModes: ["ReadOnlyMany"]
+  storageClassName: ""
+  volumeName: manyfold-libraries-ro-pv
+  resources:
+    requests:
+      storage: 24Gi
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -93,6 +124,9 @@ spec:
               mountPath: /app/data
             - name: logs
               mountPath: /app/logs
+            - name: manyfold-libraries
+              mountPath: /mnt/manyfold-libraries
+              readOnly: true
       volumes:
         - name: data
           persistentVolumeClaim:
@@ -100,6 +134,10 @@ spec:
         - name: logs
           persistentVolumeClaim:
             claimName: bambuddy-logs-pvc
+        - name: manyfold-libraries
+          persistentVolumeClaim:
+            claimName: manyfold-libraries-pvc
+            readOnly: true
 ---
 apiVersion: v1
 kind: Service
