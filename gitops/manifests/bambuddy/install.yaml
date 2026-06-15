@@ -28,19 +28,6 @@ spec:
     requests:
       storage: 5Gi
 ---
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: manyfold-libraries-pvc
-  namespace: bambuddy
-spec:
-  accessModes: ["ReadOnlyMany"]
-  storageClassName: nfs-csi-synologynas
-  volumeName: "pvc-1e282cbf-e05d-4595-94b4-0ce15713c9f4"
-  resources:
-    requests:
-      storage: 24Gi
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -106,9 +93,6 @@ spec:
               mountPath: /app/data
             - name: logs
               mountPath: /app/logs
-            - name: manyfold-libraries
-              mountPath: /mnt/manyfold-libraries
-              readOnly: true
       volumes:
         - name: data
           persistentVolumeClaim:
@@ -116,10 +100,6 @@ spec:
         - name: logs
           persistentVolumeClaim:
             claimName: bambuddy-logs-pvc
-        - name: manyfold-libraries
-          persistentVolumeClaim:
-            claimName: manyfold-libraries-pvc
-            readOnly: true
 ---
 apiVersion: v1
 kind: Service
