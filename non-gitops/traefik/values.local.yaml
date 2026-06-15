@@ -278,12 +278,6 @@ providers:
             entrypoints:
               - websecure
             tls: {}
-          manyfold:
-            rule: Host(`manyfold.local.timmybtech.com`)
-            service: manyfold
-            entrypoints:
-              - websecure
-            tls: {}
           omni-tools:
             rule: Host(`omni-tools.local.timmybtech.com`)
             service: omni-tools
@@ -450,10 +444,6 @@ providers:
             loadBalancer:
               servers:
                 - url: http://192.168.86.174:3007
-          manyfold:
-            loadBalancer:
-              servers:
-                - url: http://192.168.86.174:3214
           omni-tools:
             loadBalancer:
               servers:
