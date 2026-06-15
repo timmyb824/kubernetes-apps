@@ -112,6 +112,8 @@ spec:
               value: "1000"
             - name: PORT
               value: "8000"
+            - name: BAMBUDDY_EXTERNAL_ROOTS
+              value: "/mnt/manyfold-libraries"
           resources:
             limits:
               cpu: 1000m
