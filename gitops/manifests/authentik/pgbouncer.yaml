@@ -42,6 +42,8 @@ spec:
               value: "200"
             - name: DEFAULT_POOL_SIZE
               value: "20"
+            - name: AUTH_TYPE
+              value: "scram-sha-256"
           resources:
             requests:
               cpu: "50m"
