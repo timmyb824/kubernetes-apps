@@ -23,11 +23,13 @@ spec:
               error_reporting:
                 enabled: false
               postgresql:
-                host: <path:secret/data/authentik#PG_HOST>
+                host: pgbouncer.authentik.svc.cluster.local
                 name: "authentik_utf8"
                 user: <path:secret/data/authentik#PG_USER>
                 password: <path:secret/data/authentik#PG_PASSWORD>
                 port: 5432
+                conn_max_age: 0
+                disable_server_side_cursors: true
               redis:
                 host: <path:secret/data/authentik#REDIS_HOST>
                 password: <path:secret/data/authentik#REDIS_PASSWORD>
