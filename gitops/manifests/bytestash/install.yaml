@@ -21,8 +21,7 @@ kind: Secret
 metadata:
   name: bytestash-secrets
   namespace: bytestash
-  annotations:
-    avp.kubernetes.io/path: "secret/data/bytestash"
+  annotations: {}
 type: Opaque
 stringData:
   JWT_SECRET: <path:secret/data/argocd#BYTESTASH_JWT_SECRET>
