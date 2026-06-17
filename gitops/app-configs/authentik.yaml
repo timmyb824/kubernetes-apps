@@ -23,7 +23,7 @@ spec:
               error_reporting:
                 enabled: false
               postgresql:
-                host: pgbouncer.authentik.svc.cluster.local
+                host: postgresql.homelab.lan
                 name: "authentik_utf8"
                 user: <path:secret/data/authentik#PG_USER>
                 password: <path:secret/data/authentik#PG_PASSWORD>
