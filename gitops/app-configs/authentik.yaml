@@ -23,7 +23,7 @@ spec:
               error_reporting:
                 enabled: false
               postgresql:
-                host: postgresql.homelab.lan
+                host: 192.168.86.181
                 name: "authentik_utf8"
                 user: <path:secret/data/authentik#PG_USER>
                 password: <path:secret/data/authentik#PG_PASSWORD>
