@@ -1,24 +1,12 @@
 apiVersion: v1
-kind: ConfigMap
+kind: Secret
 metadata:
-  name: pgbouncer-config
+  name: pgbouncer-auth
   namespace: authentik
-data:
-  pgbouncer.ini: |
-    [databases]
-    authentik_utf8 = host=postgresql.homelab.lan port=5432 dbname=authentik_utf8
-
-    [pgbouncer]
-    listen_addr = 0.0.0.0
-    listen_port = 5432
-    auth_type = scram-sha-256
-    auth_file = /etc/pgbouncer/userlist.txt
-    pool_mode = transaction
-    max_client_conn = 200
-    default_pool_size = 20
-    min_pool_size = 5
-    reserve_pool_size = 5
-    server_idle_timeout = 60
+type: Opaque
+stringData:
+  DB_USER: "<path:secret/data/authentik#PG_USER>" 
+  DB_PASSWORD: "<path:secret/data/authentik#PG_PASSWORD>"
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -37,20 +25,30 @@ spec:
     spec:
       containers:
         - name: pgbouncer
-          image: edoburu/pgbouncer:1.21.0
+          image: edoburu/pgbouncer:v1.25.2-p0
           ports:
             - containerPort: 5432
           envFrom:
             - secretRef:
                 name: pgbouncer-auth
-          volumeMounts:
-            - name: config
-              mountPath: /etc/pgbouncer/pgbouncer.ini
-              subPath: pgbouncer.ini
-      volumes:
-        - name: config
-          configMap:
-            name: pgbouncer-config
+          env:
+            - name: DB_HOST
+              value: "postgresql.homelab.lan"
+            - name: DB_NAME
+              value: "authentik_utf8"
+            - name: POOL_MODE
+              value: "transaction"
+            - name: MAX_CLIENT_CONN
+              value: "200"
+            - name: DEFAULT_POOL_SIZE
+              value: "20"
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "32Mi"
+            limits:
+              cpu: "200m"
+              memory: "128Mi"
 ---
 apiVersion: v1
 kind: Service
