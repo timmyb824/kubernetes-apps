@@ -1,0 +1,178 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: bytestash
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: bytestash-snippets-pvc
+  namespace: bytestash
+spec:
+  accessModes: ["ReadWriteOnce"]
+  storageClassName: nfs-csi-synologynas
+  resources:
+    requests:
+      storage: 10Gi
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: bytestash-secrets
+  namespace: bytestash
+  annotations:
+    avp.kubernetes.io/path: "secret/data/bytestash"
+type: Opaque
+stringData:
+  JWT_SECRET: <path:secret/data/argocd#BYTESTASH_JWT_SECRET>
+  OIDC_DISPLAY_NAME: "Authentik"
+  OIDC_ISSUER_URL: <path:secret/data/argocd#BYTESTASH_OIDC_ISSUER_URL>
+  OIDC_CLIENT_ID: <path:secret/data/argocd#BYTESTASH_OIDC_CLIENT_ID>
+  OIDC_CLIENT_SECRET: <path:secret/data/argocd#BYTESTASH_OIDC_CLIENT_SECRET>
+  OIDC_SCOPES: "openid profile email"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bytestash
+  namespace: bytestash
+  labels:
+    app: bytestash
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bytestash
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: bytestash
+        app.kubernetes.io/name: bytestash
+    spec:
+      enableServiceLinks: false
+      containers:
+        - name: bytestash
+          image: ghcr.io/jordan-dalby/bytestash:1.5.11
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 5000
+              protocol: TCP
+          env:
+            - name: BASE_PATH
+              value: ""
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: bytestash-secrets
+                  key: JWT_SECRET
+            - name: TOKEN_EXPIRY
+              value: "24h"
+            - name: ALLOW_NEW_ACCOUNTS
+              value: "true"
+            - name: DEBUG
+              value: "false"
+            - name: DISABLE_ACCOUNTS
+              value: "false"
+            - name: DISABLE_INTERNAL_ACCOUNTS
+              value: "false"
+            - name: OIDC_ENABLED
+              value: "true"
+            - name: OIDC_DISPLAY_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: bytestash-secrets
+                  key: OIDC_DISPLAY_NAME
+            - name: OIDC_ISSUER_URL
+              valueFrom:
+                secretKeyRef:
+                  name: bytestash-secrets
+                  key: OIDC_ISSUER_URL
+            - name: OIDC_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: bytestash-secrets
+                  key: OIDC_CLIENT_ID
+            - name: OIDC_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: bytestash-secrets
+                  key: OIDC_CLIENT_SECRET
+            - name: OIDC_SCOPES
+              valueFrom:
+                secretKeyRef:
+                  name: bytestash-secrets
+                  key: OIDC_SCOPES
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+          volumeMounts:
+            - name: snippets
+              mountPath: /data/snippets
+      volumes:
+        - name: snippets
+          persistentVolumeClaim:
+            claimName: bytestash-snippets-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bytestash
+  namespace: bytestash
+  labels:
+    app: bytestash
+spec:
+  selector:
+    app: bytestash
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 80
+      targetPort: 5000
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: bytestash-internal
+  namespace: bytestash
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`bytestash.local.timmybtech.com`)
+      kind: Rule
+      services:
+        - name: bytestash
+          port: 80
+  tls:
+    secretName: local-timmybtech-com-tls
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: bytestash-public
+  namespace: bytestash
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`bytestash.timmybtech.com`)
+      kind: Rule
+      services:
+        - name: bytestash
+          port: 80
+  tls:
+    secretName: timmybtech-com-tls
