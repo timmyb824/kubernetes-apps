@@ -13,7 +13,7 @@ spec:
   project: default
   sources:
     - repoURL: https://charts.goauthentik.io
-      targetRevision: 2026.2.2
+      targetRevision: 2026.2.3
       chart: authentik
       helm:
         releaseName: authentik
