@@ -391,6 +391,11 @@ data:
             href: https://bambuddy.local.timmybtech.com/
             namespace: bambuddy
             app: bambuddy
+        - Bytestash:
+            icon: sh-bytestash.png
+            href: https://bytestash.timmybtech.com/
+            namespace: bytestash
+            app: bytestash
         - Cupdate:
             icon: podman.png
             href: https://cupdate.local.timmybtech.com/
