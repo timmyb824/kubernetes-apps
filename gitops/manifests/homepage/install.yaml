@@ -557,6 +557,10 @@ data:
             icon: proxmox.png
             href: https://pve.local.timmybtech.com/
             ping: https://192.168.86.41:8006
+        - Proxmox 6:
+            icon: proxmox.png
+            href: https://pve.local.timmybtech.com/
+            ping: https://192.168.86.77:8006
         - Proxmox Backup Server:
             icon: proxmox.png
             href: https://pbs.local.timmybtech.com/
