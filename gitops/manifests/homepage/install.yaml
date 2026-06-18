@@ -252,7 +252,7 @@ data:
       Proxmox:
         icon: mdi-server
         style: row
-        columns: 5
+        columns: 4
       Storage:
         icon: mdi-database-check
         style: row
@@ -561,6 +561,14 @@ data:
             icon: proxmox.png
             href: https://pbs.local.timmybtech.com/
             ping: https://192.168.86.66:8007
+        - Pulse:
+            icon: proxmox.png
+            href: https://pulse.local.timmybtech.com/
+            ping: http://192.168.86.174:7655
+        - Proxcenter:
+            icon: proxmox.png
+            href: https://proxcenter.local.timmybtech.com/
+            ping: http://192.168.86.174:3000
     - VM/LXC:
         - Dockhand:
             icon: podman.png
@@ -686,14 +694,6 @@ data:
             icon: sh-pi-alert.png
             href: https://pialert.local.timmybtech.com/
             ping: http://192.168.86.26
-        - Pulse:
-            icon: proxmox.png
-            href: https://pulse.local.timmybtech.com/
-            ping: http://192.168.86.174:7655
-        - Proxcenter:
-            icon: proxmox.png
-            href: https://proxcenter.local.timmybtech.com/
-            ping: http://192.168.86.174:3000
         - Patchmon:
             icon: sh-patchmon.png
             href: https://patchmon.local.timmybtech.com/
