@@ -541,23 +541,23 @@ data:
             href: https://nas.local.timmybtech.com/
             ping: http://192.168.86.44:5000/
     - Proxmox:
-        - Proxmox2:
+        - PVE 2:
             icon: proxmox.png
             href: https://pve.local.timmybtech.com/
             ping: https://192.168.86.160:8006
-        - Proxmox 3:
+        - PVE 3:
             icon: proxmox.png
             href: https://pve.local.timmybtech.com/
             ping: https://192.168.86.199:8006
-        - Proxmox 4:
+        - PVE 4:
             icon: proxmox.png
             href: https://pve.local.timmybtech.com/
             ping: https://192.168.86.217:8006
-        - Proxmox 5:
+        - PVE 5:
             icon: proxmox.png
             href: https://pve.local.timmybtech.com/
             ping: https://192.168.86.41:8006
-        - Proxmox 6:
+        - PVE 6:
             icon: proxmox.png
             href: https://pve.local.timmybtech.com/
             ping: https://192.168.86.77:8006
