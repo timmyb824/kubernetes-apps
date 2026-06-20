@@ -188,12 +188,6 @@ providers:
             entrypoints:
               - websecure
             tls: {}
-          actualbudget:
-            rule: Host(`budget.local.timmybtech.com`)
-            service: actualbudget
-            entrypoints:
-              - websecure
-            tls: {}
           adguard:
             rule: Host(`adguard.local.timmybtech.com`)
             service: adguard
@@ -206,12 +200,6 @@ providers:
             entrypoints:
               - websecure
             tls: {}
-          dozzle:
-            rule: Host(`dozzle.local.timmybtech.com`)
-            service: dozzle
-            entrypoints:
-              - websecure
-            tls: {}
           semaphore:
             rule: Host(`semaphore.local.timmybtech.com`)
             service: semaphore
@@ -221,12 +209,6 @@ providers:
           pulse:
             rule: Host(`pulse.local.timmybtech.com`)
             service: pulse
-            entrypoints:
-              - websecure
-            tls: {}
-          zabbix:
-            rule: Host(`zabbix.local.timmybtech.com`)
-            service: zabbix
             entrypoints:
               - websecure
             tls: {}
@@ -245,12 +227,6 @@ providers:
           netbox:
             rule: Host(`netbox.local.timmybtech.com`)
             service: netbox
-            entrypoints:
-              - websecure
-            tls: {}
-          anyappstart:
-            rule: Host(`anyappstart.local.timmybtech.com`)
-            service: anyappstart
             entrypoints:
               - websecure
             tls: {}
@@ -384,10 +360,6 @@ providers:
             loadBalancer:
               servers:
                 - url: http://192.168.86.174:8009
-          actualbudget:
-            loadBalancer:
-              servers:
-                - url: http://192.168.86.174:5006
           adguard:
             loadBalancer:
               servers:
@@ -396,10 +368,6 @@ providers:
             loadBalancer:
               servers:
                 - url: http://192.168.86.174:80
-          dozzle:
-            loadBalancer:
-              servers:
-                - url: http://192.168.86.174:9999
           semaphore:
             loadBalancer:
               servers:
@@ -408,10 +376,6 @@ providers:
             loadBalancer:
               servers:
                 - url: http://192.168.86.174:7655
-          zabbix:
-            loadBalancer:
-              servers:
-                - url: http://homelab-oci02.tailebee.ts.net:80
           grafana2:
             loadBalancer:
               servers:
@@ -424,10 +388,6 @@ providers:
             loadBalancer:
               servers:
                 - url: http://192.168.86.110:80
-          anyappstart:
-            loadBalancer:
-              servers:
-                - url: http://192.168.86.174:8855
           cupdate-podman:
             loadBalancer:
               servers:

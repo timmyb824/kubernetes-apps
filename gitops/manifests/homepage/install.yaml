@@ -614,10 +614,6 @@ data:
                 url: http://<UPTIME_KUMA_IP>:3001
                 slug: bryant-homelab
     - VM/LXC hidden:
-        - AnyAppStart:
-            icon: sh-anyappstart.png
-            href: https://anyappstart.local.timmybtech.com/
-            ping: http://192.168.86.174:8855/
         - Ara:
             icon: ara-records-ansible.png
             href: https://ara-api.local.timmybtech.com/
