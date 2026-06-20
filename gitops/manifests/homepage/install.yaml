@@ -642,10 +642,6 @@ data:
             icon: adguard-home.png
             href: http://pihole2.homelab.lan:8080/
             ping: http://pihole2.homelab.lan:8080
-        - Dozzle:
-            icon: dozzle.png
-            href: https://dozzle.local.timmybtech.com/
-            ping: http://192.168.86.174:9999
         - Filebrowser:
             icon: sh-filebrowser-quantum.png
             href: https://filebrowser.local.timmybtech.com/
