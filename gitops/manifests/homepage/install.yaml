@@ -581,7 +581,6 @@ data:
             widget:
               type: dockhand
               url: https://dockhand.local.timmybtech.com
-              environment: pihole2
               username: <DOCKHAND_USER>
               password: <DOCKHAND_PASSWORD>
         - Grafana:
