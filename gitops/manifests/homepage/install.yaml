@@ -627,6 +627,10 @@ data:
             icon: sh-bichon.png
             href: https://bichon.local.timmybtech.com/
             ping: http://192.168.86.43:15630
+        - Calculators:
+            icon: sh-podman.png
+            href: https://calculators.local.timmybtech.com/
+            ping: http://192.168.86.53:8087
         - Cupdate Podman:
             icon: podman.png
             href: https://cupdate-podman.local.timmybtech.com/
