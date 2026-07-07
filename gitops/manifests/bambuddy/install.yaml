@@ -84,7 +84,7 @@ spec:
         fsGroup: 1000
       containers:
         - name: bambuddy
-          image: ghcr.io/maziggy/bambuddy:0.2.4.8
+          image: ghcr.io/maziggy/bambuddy:0.2.4.9
           imagePullPolicy: Always
           ports:
             - name: http
