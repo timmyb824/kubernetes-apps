@@ -308,6 +308,12 @@ providers:
             entrypoints:
               - websecure
             tls: {}
+          wazuh:
+            rule: Host(`wazuh.local.timmybtech.com`)
+            service: wazuh
+            entrypoints:
+              - websecure
+            tls: {}
         services:
           uptime-kuma:
             loadBalancer:
@@ -446,6 +452,10 @@ providers:
             loadBalancer:
               servers:
                 - url: http://192.168.86.53:8087
+          wazuh:
+            loadBalancer:
+              servers:
+                - url: https://192.168.86.50:443
         serversTransports:
           nas-transport:
             insecureSkipVerify: true
