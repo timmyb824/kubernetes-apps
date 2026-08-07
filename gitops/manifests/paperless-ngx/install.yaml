@@ -103,6 +103,8 @@ spec:
               value: <path:secret/data/argocd#PAPERLESS_ADMIN_USER>
             - name: PAPERLESS_ADMIN_PASSWORD
               value: <path:secret/data/argocd#PAPERLESS_ADMIN_PASSWORD>
+            - name: PAPERLESS_SECRET_KEY
+              value: <path:secret/data/argocd#PAPERLESS_SECRET_KEY>
             - name: PAPERLESS_APPS
               value: "allauth.socialaccount.providers.openid_connect"
             - name: PAPERLESS_SOCIALACCOUNT_PROVIDERS
