@@ -699,6 +699,10 @@ data:
             icon: sh-patchmon.png
             href: https://patchmon.local.timmybtech.com/
             ping: http://192.168.86.40:3000
+        - Redis Commander:
+            icon: sh-redis-commander.png
+            href: https://redis-commander.local.timmybtech.com/
+            ping: http://192.168.86.53:8081
         - Scanopy:
             icon: sh-scanopy.png
             href: https://scanopy.local.timmybtech.com/

@@ -67,7 +67,7 @@ providers:
   file:
     enabled: true
     watch: true
-    content: |
+    content:
       tls:
         certificates:
           - certFile: /certs/local/tls.crt
@@ -314,6 +314,12 @@ providers:
             entrypoints:
               - websecure
             tls: {}
+          redis-commander:
+            rule: Host(`redis-commander.local.timmybtech.com`)
+            service: redis-commander
+            entrypoints:
+              - websecure
+            tls: {}
         services:
           uptime-kuma:
             loadBalancer:
@@ -456,6 +462,10 @@ providers:
             loadBalancer:
               servers:
                 - url: https://192.168.86.50:443
+          redis-commander:
+            loadBalancer:
+              servers:
+                - url: http://192.168.86.53:8081
         serversTransports:
           nas-transport:
             insecureSkipVerify: true
@@ -487,9 +497,8 @@ service:
     externalTrafficPolicy: Local # FOR CROWDSEC
   loadBalancerSourceRanges: []
   externalIPs: []
-logs:
-  access:
-    enabled: false
-    format: json
-  general:
-    format: json
+accessLog:
+  enabled: false
+  format: json
+log:
+  format: json
