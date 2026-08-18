@@ -159,6 +159,12 @@ data:
         noTLSVerify: true
         headers:
           X-Forwarded-Proto: https
+    - hostname: name-picker.timmybtech.com
+      service: https://traefik.traefik.svc.cluster.local:443
+      originRequest:
+        noTLSVerify: true
+        headers:
+          X-Forwarded-Proto: https
     - service: http_status:404
 ---
 apiVersion: v1

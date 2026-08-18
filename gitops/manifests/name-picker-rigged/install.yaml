@@ -1,0 +1,105 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: name-picker-rigged
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: name-picker-rigged-data
+  namespace: name-picker-rigged
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: nfs-csi-synologynas
+  resources:
+    requests:
+      storage: 250Mi
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: name-picker-rigged-secret
+  namespace: name-picker-rigged
+type: Opaque
+stringData:
+  session-secret: "<path:secret/data/argocd#NAME_PICKER_RIGGED_SESSION_SECRET>"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: name-picker-rigged
+  namespace: name-picker-rigged
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: name-picker-rigged
+  template:
+    metadata:
+      labels:
+        app: name-picker-rigged
+    spec:
+      containers:
+        - name: name-picker-rigged
+          image: registry.local.timmybtech.com/name-picker-rigged:latest
+          ports:
+            - containerPort: 8000
+          env:
+            - name: SESSION_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: name-picker-rigged-secret
+                  key: session-secret
+          volumeMounts:
+            - name: data
+              mountPath: /data
+          readinessProbe:
+            httpGet: { path: /, port: 8000 }
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: name-picker-rigged-data
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: name-picker-rigged
+  namespace: name-picker-rigged
+spec:
+  selector:
+    app: name-picker-rigged
+  ports:
+    - port: 8000
+      targetPort: 8000
+  type: ClusterIP
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: name-picker-rigged-public
+  namespace: name-picker-rigged
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`name-picker.timmybtech.com`)
+      kind: Rule
+      services:
+        - name: name-picker-rigged
+          port: 8000
+  tls:
+    secretName: timmybtech-com-tls
