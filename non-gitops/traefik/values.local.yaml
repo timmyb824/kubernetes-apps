@@ -449,7 +449,7 @@ providers:
           pbs:
             loadBalancer:
               servers:
-                - url: https://192.168.86.66:8007
+                - url: https://192.168.86.23:8007
           proxcenter:
             loadBalancer:
               servers:
