@@ -461,7 +461,7 @@ providers:
           wazuh:
             loadBalancer:
               servers:
-                - url: https://192.168.86.50:443
+                - url: https://192.168.86.27:443
           redis-commander:
             loadBalancer:
               servers:
