@@ -553,10 +553,6 @@ data:
             icon: proxmox.png
             href: https://pve.local.timmybtech.com/
             ping: https://192.168.86.217:8006
-        - PVE 5:
-            icon: proxmox.png
-            href: https://pve.local.timmybtech.com/
-            ping: https://192.168.86.41:8006
         - PVE 6:
             icon: proxmox.png
             href: https://pve.local.timmybtech.com/
