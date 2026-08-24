@@ -560,7 +560,7 @@ data:
         - Proxmox Backup Server:
             icon: proxmox.png
             href: https://pbs.local.timmybtech.com/
-            ping: https://192.168.86.66:8007
+            ping: https://192.168.86.23:8007
         - Pulse:
             icon: proxmox.png
             href: https://pulse.local.timmybtech.com/
