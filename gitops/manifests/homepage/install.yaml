@@ -406,16 +406,11 @@ data:
             href: https://glance.local.timmybtech.com/
             namespace: glance
             app: glance
-        - Hoarder:
+        - Karakeep:
             icon: hoarder.png
             href: https://hoarder.timmybtech.com/
             namespace: hoarder
             app: hoarder
-        - Joplin:
-            icon: joplin.png
-            href: http://joplin.timmybtech.com/joplin
-            namespace: joplin
-            app: joplin-server
         - InfluxDB:
             icon: influxdb.png
             href: https://influxdb.local.timmybtech.com/

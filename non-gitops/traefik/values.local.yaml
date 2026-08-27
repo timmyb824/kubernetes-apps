@@ -146,12 +146,6 @@ providers:
             entrypoints:
               - websecure
             tls: {}
-          netalertx:
-            rule: Host(`netalertx.local.timmybtech.com`)
-            service: netalertx
-            entrypoints:
-              - websecure
-            tls: {}
           nutalert:
             rule: Host(`nutalert.local.timmybtech.com`)
             service: nutalert
@@ -350,10 +344,6 @@ providers:
             loadBalancer:
               servers:
                 - url: http://192.168.86.174:8084
-          netalertx:
-            loadBalancer:
-              servers:
-                - url: http://192.168.86.147:20211
           nutalert:
             loadBalancer:
               servers:
