@@ -45,7 +45,7 @@ spec:
       containers:
         - name: trala
           image: ghcr.io/dannybouwers/trala:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           env:
             - name: TRAEFIK_API_HOST
               value: "https://traefik.local.timmybtech.com"
