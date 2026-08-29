@@ -709,7 +709,7 @@ data:
         - Wazuh:
             icon: sh-wazuh.png
             href: https://wazuh.local.timmybtech.com/
-            ping: https://192.168.86.50:443
+            ping: https://192.168.86.27:443
         - Your-Spotify:
             icon: spotify.png
             href: http://192.168.86.174:3003/
