@@ -49,6 +49,12 @@ spec:
           env:
             - name: TRAEFIK_API_HOST
               value: "https://traefik.local.timmybtech.com"
+            - name: TRAEFIK_ENABLE_BASIC_AUTH
+              value: "true"
+            - name: TRAEFIK_BASIC_AUTH_USERNAME
+              value: "<path:secret/data/homepage#TRAEFIK_USER>"
+            - name: TRAEFIK_BASIC_AUTH_PASSWORD
+              value: "<path:secret/data/homepage#TRAEFIK_PASSWORD>"
             - name: REFRESH_INTERVAL_SECONDS
               value: "30"
             - name: SEARCH_ENGINE_URL
