@@ -496,11 +496,6 @@ data:
             href: https://wallos.local.timmybtech.com/
             namespace: wallos
             app: wallos
-        - Trala:
-            icon: traefik.png
-            href: https://trala.local.timmybtech.com/
-            namespace: traefik
-            app: trala
         - Termix:
             icon: sh-termix.png
             href: https://termix.local.timmybtech.com/
