@@ -1,0 +1,72 @@
+# Public API instance (PLAN.md §5): mounts only the REDACTED snapshot, so it
+# physically cannot leak internal detail; exposed publicly in slice #7.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: homelab-live-status-public
+  namespace: homelab-live-status
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: homelab-live-status-public
+  template:
+    metadata:
+      labels:
+        app: homelab-live-status-public
+    spec:
+      containers:
+        - name: api
+          image: registry.local.timmybtech.com/homelab-live-status:latest
+          imagePullPolicy: Always
+          command:
+            [
+              "python",
+              "-m",
+              "uvicorn",
+              "homelab_live_status.api:app",
+              "--host",
+              "0.0.0.0",
+              "--port",
+              "8000",
+            ]
+          ports:
+            - containerPort: 8000
+          env:
+            - name: SNAPSHOT_FILE
+              value: /data/snapshot.json
+          volumeMounts:
+            - name: snapshot
+              mountPath: /data
+              readOnly: true
+          livenessProbe:
+            httpGet:
+              path: /api/health
+              port: 8000
+          readinessProbe:
+            httpGet:
+              path: /api/health
+              port: 8000
+          resources:
+            requests:
+              cpu: 25m
+              memory: 64Mi
+            limits:
+              cpu: 500m
+              memory: 128Mi
+      volumes:
+        - name: snapshot
+          configMap:
+            name: homelab-status-public
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: homelab-live-status-public
+  namespace: homelab-live-status
+spec:
+  selector:
+    app: homelab-live-status-public
+  ports:
+    - port: 80
+      targetPort: 8000
