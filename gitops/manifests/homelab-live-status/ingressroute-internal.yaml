@@ -12,17 +12,24 @@ spec:
   entryPoints:
     - websecure
   routes:
+    # Auth callback must reach the outpost on the SAME host (forward-auth
+    # pattern, same as uptime-kuma): Authentik redirects back to
+    # https://status.local.timmybtech.com/outpost.goauthentik.io/callback
+    - match: Host(`status.local.timmybtech.com`) && PathPrefix(`/outpost.goauthentik.io/`)
+      kind: Rule
+      priority: 10
+      services:
+        - name: ak-outpost-authentik-embedded-outpost
+          namespace: authentik
+          port: 9000
+    # Everything else: forward-auth middleware gates access, then proxies
+    # to the actual backend.
     - match: Host(`status.local.timmybtech.com`)
       kind: Rule
       middlewares:
         - name: authentik@file
       services:
-        # - name: homelab-live-status-internal
-        #   port: 80
-        # - name: ak-outpost-authentik-embedded-outpost.authentik.svc.cluster.local
-        #   port: 80
-        - name: ak-outpost-authentik-embedded-outpost
-          namespace: authentik
-          port: 9000
+        - name: homelab-live-status-internal
+          port: 80
   tls:
     secretName: local-timmybtech-com-tls
