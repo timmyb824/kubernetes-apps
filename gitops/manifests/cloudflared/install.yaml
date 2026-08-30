@@ -46,6 +46,13 @@ spec:
             failureThreshold: 1
             initialDelaySeconds: 10
             periodSeconds: 10
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 500m
+              memory: 256Mi
           volumeMounts:
             - name: config
               mountPath: /etc/cloudflared/config
@@ -96,6 +103,12 @@ data:
         headers:
           X-Forwarded-Proto: https
           X-Forwarded-Host: grafana2.timmybtech.com
+    - hostname: status.timmybtech.com
+      service: https://traefik.traefik.svc.cluster.local:443
+      originRequest:
+        noTLSVerify: true
+        headers:
+          X-Forwarded-Proto: https
     - hostname: healthchecks.timmybtech.com
       service: https://traefik.traefik.svc.cluster.local:443
       originRequest:
