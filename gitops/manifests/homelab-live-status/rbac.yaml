@@ -1,0 +1,47 @@
+# Namespace-scoped: read/write the two snapshot ConfigMaps.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: homelab-live-status
+  namespace: homelab-live-status
+rules:
+  - apiGroups: [""]
+    resources: ["configmaps"]
+    verbs: ["get", "create", "update"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: homelab-live-status
+  namespace: homelab-live-status
+subjects:
+  - kind: ServiceAccount
+    name: homelab-live-status
+    namespace: homelab-live-status
+roleRef:
+  kind: Role
+  name: homelab-live-status
+  apiGroup: rbac.authorization.k8s.io
+---
+# Cluster-scoped: the k3s collector lists nodes (Ready condition + roles).
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: homelab-live-status
+rules:
+  - apiGroups: [""]
+    resources: ["nodes"]
+    verbs: ["get", "list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: homelab-live-status
+subjects:
+  - kind: ServiceAccount
+    name: homelab-live-status
+    namespace: homelab-live-status
+roleRef:
+  kind: ClusterRole
+  name: homelab-live-status
+  apiGroup: rbac.authorization.k8s.io

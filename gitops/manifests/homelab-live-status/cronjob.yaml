@@ -1,0 +1,37 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: homelab-live-status
+  namespace: homelab-live-status
+spec:
+  schedule: "*/5 * * * *"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      backoffLimit: 1
+      template:
+        spec:
+          serviceAccountName: homelab-live-status
+          restartPolicy: Never
+          containers:
+            - name: collector
+              image: registry.local.timmybtech.com/homelab-live-status:latest
+              imagePullPolicy: Always
+              envFrom:
+                - secretRef:
+                    name: homelab-live-status-secrets
+              env:
+                - name: OUTPUT_MODE
+                  value: "configmap"
+                - name: TRAEFIK_API_URL
+                  value: "https://traefik.local.timmybtech.com"
+                - name: STATIC_HOSTS_JSON
+                  value: '[{"name": "coredns", "probe_type": "dns", "target": "192.168.86.220:53/adguard.homelab.lan"}]'
+              resources:
+                requests:
+                  cpu: 50m
+                  memory: 128Mi
+                limits:
+                  memory: 256Mi
