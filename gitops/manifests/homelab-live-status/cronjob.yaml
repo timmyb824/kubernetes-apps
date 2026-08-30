@@ -28,7 +28,7 @@ spec:
                 - name: TRAEFIK_API_URL
                   value: "https://traefik.local.timmybtech.com"
                 - name: STATIC_HOSTS_JSON
-                  value: '[{"name": "coredns", "probe_type": "dns", "target": "192.168.86.220:53/adguard.homelab.lan"}]'
+                  value: '[{"name": "coredns-custom", "probe_type": "dns", "target": "192.168.86.220:53/adguard.homelab.lan"}]'
               resources:
                 requests:
                   cpu: 50m

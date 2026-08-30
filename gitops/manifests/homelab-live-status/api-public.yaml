@@ -35,6 +35,9 @@ spec:
           env:
             - name: SNAPSHOT_FILE
               value: /data/snapshot.json
+            # Allow the status page on the personal site to fetch cross-origin
+            - name: CORS_ORIGINS
+              value: "https://timothybryantjr.com"
           volumeMounts:
             - name: snapshot
               mountPath: /data
