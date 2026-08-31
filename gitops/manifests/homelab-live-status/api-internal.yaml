@@ -35,6 +35,9 @@ spec:
           env:
             - name: SNAPSHOT_FILE
               value: /data/snapshot.json
+            # Internal instance also serves the operator console at /
+            - name: SERVE_CONSOLE
+              value: "1"
           volumeMounts:
             - name: snapshot
               mountPath: /data
