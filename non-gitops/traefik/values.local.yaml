@@ -314,6 +314,12 @@ providers:
             entrypoints:
               - websecure
             tls: {}
+          pve-ups:
+            rule: Host(`pve-ups.local.timmybtech.com`)
+            service: pve-ups
+            entrypoints:
+              - websecure
+            tls: {}
         services:
           uptime-kuma:
             loadBalancer:
@@ -352,6 +358,10 @@ providers:
             loadBalancer:
               servers:
                 - url: https://192.168.86.199:8006
+          pve-ups:
+            loadBalancer:
+              servers:
+                - url: http://192.168.86.53:8080
           homeassistant:
             loadBalancer:
               servers:
