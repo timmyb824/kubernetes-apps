@@ -12,6 +12,7 @@ kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/
 kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.16.0/cert-manager.crds.yaml
 kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.16.2/cert-manager.crds.yaml
 kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.19.2/cert-manager.crds.yaml
+kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.21.0/cert-manager.crds.yaml
 kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.21.1/cert-manager.crds.yaml
 
 # New install with helm
@@ -22,6 +23,7 @@ helm upgrade cert-manager jetstack/cert-manager --namespace cert-manager --value
 helm upgrade cert-manager jetstack/cert-manager --namespace cert-manager --values=values.local.yaml --version v1.16.2 # last run Jan 5, 2025
 helm upgrade cert-manager jetstack/cert-manager --namespace cert-manager --values=values.local.yaml --version v1.17.1 # last run Mar 30, 2025
 helm upgrade cert-manager jetstack/cert-manager --namespace cert-manager --values=values.local.yaml --version v1.19.2 # last run December 15, 2025
+helm upgrade cert-manager jetstack/cert-manager --namespace cert-manager --values=values.local.yaml --version v1.19.2 # last run July 23, 2026
 helm upgrade cert-manager jetstack/cert-manager --namespace cert-manager --values=values.local.yaml --version v1.21.1 # last run August 3, 2026
 
 # Deploying the cloudflare secret, issuers, and certificates
