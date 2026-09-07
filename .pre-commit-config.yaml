@@ -22,7 +22,7 @@ repos:
       - id: ripsecrets
 
   - repo: https://github.com/trufflesecurity/trufflehog
-    rev: v3.97.2
+    rev: v3.97.4
     hooks:
       - id: trufflehog
         name: TruffleHog
@@ -32,7 +32,7 @@ repos:
         stages: ["pre-commit"]
 
   - repo: https://github.com/timmyb824/sops-file-encryption-check
-    rev: latest
+    rev: v1.0.0
     hooks:
       - id: sops-encryption-check
 #

@@ -25,6 +25,8 @@ metadata:
 type: Opaque
 stringData:
   session-secret: "<path:secret/data/argocd#NAME_PICKER_RIGGED_SESSION_SECRET>"
+  umami-website-id: "<path:secret/data/argocd#NAME_PICKER_RIGGED_UMAMI_WEBSITE_ID>"
+
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -54,6 +56,13 @@ spec:
                 secretKeyRef:
                   name: name-picker-rigged-secret
                   key: session-secret
+        - name: UMAMI_SCRIPT_URL
+          value: "https://umami.timmybtech.com/script.js"
+        - name: UMAMI_WEBSITE_ID
+          valueFrom:
+            secretKeyRef:
+              name: name-picker-rigged-secret
+              key: umami-website-id
           volumeMounts:
             - name: data
               mountPath: /data
