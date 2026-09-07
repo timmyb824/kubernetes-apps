@@ -56,13 +56,13 @@ spec:
                 secretKeyRef:
                   name: name-picker-rigged-secret
                   key: session-secret
-        - name: UMAMI_SCRIPT_URL
-          value: "https://umami.timmybtech.com/script.js"
-        - name: UMAMI_WEBSITE_ID
-          valueFrom:
-            secretKeyRef:
-              name: name-picker-rigged-secret
-              key: umami-website-id
+            - name: UMAMI_SCRIPT_URL
+              value: "https://umami.timmybtech.com/script.js"
+            - name: UMAMI_WEBSITE_ID
+              valueFrom:
+                secretKeyRef:
+                  name: name-picker-rigged-secret
+                  key: umami-website-id
           volumeMounts:
             - name: data
               mountPath: /data
